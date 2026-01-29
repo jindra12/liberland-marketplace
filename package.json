@@ -1,0 +1,24 @@
+{
+  "name": "liberland-marketplace",
+  "version": "1.0.0",
+  "description": "Syndicated marketplace for all goods and services",
+  "main": "./dist/index.js",
+  "repository": "git@github.com:jindra12/liberland-marketplace.git",
+  "author": "jindra12.underdark@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn tsc",
+    "start": "yarn build && node ./dist/index.js"
+  },
+  "dependencies": {
+    "@payloadcms/db-mongodb": "^3.73.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.10",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "neo4j-driver": "^6.0.1",
+    "payload": "^3.73.0",
+    "typescript": "^5.9.3"
+  }
+}
