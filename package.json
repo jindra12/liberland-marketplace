@@ -5,20 +5,21 @@
   "main": "./dist/index.js",
   "repository": "git@github.com:jindra12/liberland-marketplace.git",
   "author": "jindra12.underdark@gmail.com",
+  "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "yarn tsc",
-    "start": "yarn build && node ./dist/index.js"
+    "build": "PAYLOAD_CONFIG_PATH=src/payload.config.ts tsx src/index.ts"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "^3.73.0",
+    "@payloadcms/db-mongodb": "^3.74.0",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.10",
+    "create-payload-app": "^3.74.0",
     "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "neo4j-driver": "^6.0.1",
-    "payload": "^3.73.0",
+    "payload": "^3.74.0",
     "typescript": "^5.9.3"
   }
 }
