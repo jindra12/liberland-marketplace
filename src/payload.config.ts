@@ -13,7 +13,6 @@ import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
-import { getServerSideURL } from './utilities/getURL'
 import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
@@ -64,7 +63,7 @@ export default buildConfig({
     url: process.env.DATABASE_URL || '',
   }),
   collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs],
-  cors: [getServerSideURL()].filter(Boolean),
+  cors: '*',
   globals: [Header, Footer],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
@@ -90,4 +89,9 @@ export default buildConfig({
     },
     tasks: [],
   },
+  graphQL: {
+    disable: false,
+    disableIntrospectionInProduction: false,
+    disablePlaygroundInProduction: false,
+  }
 })
