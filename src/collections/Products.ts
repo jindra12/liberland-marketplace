@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { Currencies, isoCodes, type IsoCode } from '@sctg/currencies'
+import { authenticated } from '@/access/authenticated';
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin';
+import { anyone } from '@/access/anyone';
 
 const currencyOptions = (Object.keys(isoCodes) as IsoCode[])
   .sort()
@@ -10,6 +13,12 @@ const currencyOptions = (Object.keys(isoCodes) as IsoCode[])
 
 export const Products: CollectionConfig = {
   slug: 'products',
+  access: {
+    create: authenticated,
+    delete: onlyOwnDocsOrAdmin,
+    read: anyone,
+    update: onlyOwnDocsOrAdmin,
+  },
   labels: {
     singular: 'Product / Service',
     plural: 'Products & Services',
