@@ -2285,6 +2285,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.15.0.tgz#8184bcb37791e6d3c3c13a9bfbe4af263f66665f"
   integrity sha512-ojSshQPKwVvSMR8yT2L/QtUkV5SXi/IfDiJ4/8d6UbTPjiHVmxZzUAzGD8Tzks1b9+qQkZa0isUOvYObedITaw==
 
+"@sctg/currencies@^0.9.8":
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/@sctg/currencies/-/currencies-0.9.8.tgz#4bb638cc392d58d7f6783ac2d3ba588ee27b75ba"
+  integrity sha512-qpQiMKTYVr1MHsAqMbz2ZqdNEodGlJLbAjDpJo/TNRyqA0fc8VwGd6TUxY2cRJVhKRmEnvYzdc/N0MVdwlki+w==
+
 "@sinclair/typebox@0.25.24":
   version "0.25.24"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.25.24.tgz#8c7688559979f7079aacaf31aa881c3aa410b718"
