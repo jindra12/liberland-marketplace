@@ -1,3 +1,6 @@
+import { anyone } from '@/access/anyone'
+import { authenticated } from '@/access/authenticated'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
 export const Companies: CollectionConfig = {
@@ -6,6 +9,12 @@ export const Companies: CollectionConfig = {
     useAsTitle: 'name',
     group: 'Directory',
     defaultColumns: ['name', 'website', 'phone', 'email'],
+  },
+  access: {
+    create: authenticated,
+    delete: onlyOwnDocsOrAdmin,
+    read: anyone,
+    update: onlyOwnDocsOrAdmin,
   },
   fields: [
     { name: 'name', type: 'text', required: true },
