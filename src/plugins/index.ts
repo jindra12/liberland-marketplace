@@ -3,7 +3,7 @@ import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
-import { Plugin } from 'payload'
+import { Plugin } from 'payload';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
@@ -13,6 +13,7 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
+import { addCreatedBy } from './addCreatedBy'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
@@ -25,6 +26,7 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
+  addCreatedBy,
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {
@@ -87,6 +89,9 @@ export const plugins: Plugin[] = [
     searchOverrides: {
       fields: ({ defaultFields }) => {
         return [...defaultFields, ...searchFields]
+      },
+      admin: {
+        group: false,
       },
     },
   }),

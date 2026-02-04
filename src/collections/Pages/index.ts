@@ -1,7 +1,5 @@
 import type { CollectionConfig } from 'payload'
 
-import { authenticated } from '../../access/authenticated'
-import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
@@ -20,14 +18,17 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { anyone } from '@/access/anyone'
+import { authenticated } from '@/access/authenticated'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
   access: {
     create: authenticated,
-    delete: authenticated,
-    read: authenticatedOrPublished,
-    update: authenticated,
+    delete: onlyOwnDocsOrAdmin,
+    read: anyone,
+    update: onlyOwnDocsOrAdmin,
   },
   // This config controls what's populated by default when a page is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -38,6 +39,7 @@ export const Pages: CollectionConfig<'pages'> = {
   },
   admin: {
     hidden: true,
+    group: false,
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>

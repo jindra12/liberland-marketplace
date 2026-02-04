@@ -162,6 +162,7 @@ export interface UserAuthOperations {
  */
 export interface Page {
   id: string;
+  createdBy: string | User;
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
@@ -227,10 +228,37 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  isAdmin?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
   id: string;
+  createdBy: string | User;
   title: string;
   heroImage?: (string | null) | Media;
   content: {
@@ -281,6 +309,7 @@ export interface Post {
  */
 export interface Media {
   id: string;
+  createdBy: string | User;
   alt?: string | null;
   caption?: {
     root: {
@@ -400,6 +429,7 @@ export interface FolderInterface {
  */
 export interface Category {
   id: string;
+  createdBy: string | User;
   title: string;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
@@ -417,31 +447,6 @@ export interface Category {
     | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -791,6 +796,7 @@ export interface Form {
  */
 export interface Identity {
   id: string;
+  createdBy: string | User;
   name: string;
   website?: string | null;
   updatedAt: string;
@@ -802,6 +808,7 @@ export interface Identity {
  */
 export interface Company {
   id: string;
+  createdBy: string | User;
   name: string;
   website?: string | null;
   phone?: string | null;
@@ -816,6 +823,7 @@ export interface Company {
  */
 export interface Job {
   id: string;
+  createdBy: string | User;
   title: string;
   company: string | Company;
   location?: string | null;
@@ -899,10 +907,19 @@ export interface Search {
   id: string;
   title?: string | null;
   priority?: number | null;
-  doc: {
-    relationTo: 'posts';
-    value: string | Post;
-  };
+  doc:
+    | {
+        relationTo: 'jobs';
+        value: string | Job;
+      }
+    | {
+        relationTo: 'companies';
+        value: string | Company;
+      }
+    | {
+        relationTo: 'identities';
+        value: string | Identity;
+      };
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -1135,6 +1152,7 @@ export interface PayloadMigration {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  createdBy?: T;
   title?: T;
   hero?:
     | T
@@ -1270,6 +1288,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  createdBy?: T;
   title?: T;
   heroImage?: T;
   content?: T;
@@ -1301,6 +1320,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  createdBy?: T;
   alt?: T;
   caption?: T;
   folder?: T;
@@ -1395,6 +1415,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
+  createdBy?: T;
   title?: T;
   generateSlug?: T;
   slug?: T;
@@ -1416,6 +1437,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  isAdmin?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1438,6 +1460,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "identities_select".
  */
 export interface IdentitiesSelect<T extends boolean = true> {
+  createdBy?: T;
   name?: T;
   website?: T;
   updatedAt?: T;
@@ -1448,6 +1471,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
  * via the `definition` "companies_select".
  */
 export interface CompaniesSelect<T extends boolean = true> {
+  createdBy?: T;
   name?: T;
   website?: T;
   phone?: T;
@@ -1461,6 +1485,7 @@ export interface CompaniesSelect<T extends boolean = true> {
  * via the `definition` "jobs_select".
  */
 export interface JobsSelect<T extends boolean = true> {
+  createdBy?: T;
   title?: T;
   company?: T;
   location?: T;
