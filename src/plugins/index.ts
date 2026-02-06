@@ -18,6 +18,7 @@ import { addCreatedBy } from './addCreatedBy'
 import { authenticated } from '@/access/authenticated'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
+import { cryptoAdapter } from '@/payments/cryptoAdapter'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
@@ -52,6 +53,9 @@ export const plugins: Plugin[] = [
         ...defaultCollection,
         fields: mergeFields(defaultCollection.fields, productFields),
       }),
+    },
+    payments: {
+      paymentMethods: [cryptoAdapter()],
     },
   }),
   redirectsPlugin({
