@@ -1,6 +1,7 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
-import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
 export const Jobs: CollectionConfig = {
@@ -28,6 +29,7 @@ export const Jobs: CollectionConfig = {
       type: 'relationship',
       relationTo: 'companies',
       required: true,
+      filterOptions: onlyOwnDocsOrAdminFilter,
     },
 
     { name: 'location', type: 'text' },
@@ -59,12 +61,7 @@ export const Jobs: CollectionConfig = {
               name: 'currency',
               type: 'select',
               defaultValue: 'USD',
-              options: [
-                { label: 'USD', value: 'USD' },
-                { label: 'EUR', value: 'EUR' },
-                { label: 'GBP', value: 'GBP' },
-                { label: 'CZK', value: 'CZK' },
-              ],
+              options: getCurrencies(),
             },
           ],
         },

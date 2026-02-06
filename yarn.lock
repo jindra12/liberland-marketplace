@@ -1692,6 +1692,15 @@
     find-node-modules "^2.1.3"
     range-parser "^1.2.1"
 
+"@payloadcms/plugin-ecommerce@^3.74.0":
+  version "3.74.0"
+  resolved "https://registry.yarnpkg.com/@payloadcms/plugin-ecommerce/-/plugin-ecommerce-3.74.0.tgz#cc6eb27b498ea149b9e055c14ed37d90e472c41b"
+  integrity sha512-/xdEFNmxuvV+BPPnAH6liNNda8KKL9JLcYShVx7+vBdIIBo4LlCoYr+22P5+ZuXDD2IKXQeHxkXHycP0dcX4Qw==
+  dependencies:
+    "@payloadcms/translations" "3.74.0"
+    "@payloadcms/ui" "3.74.0"
+    qs-esm "7.0.2"
+
 "@payloadcms/plugin-form-builder@3.74.0":
   version "3.74.0"
   resolved "https://registry.yarnpkg.com/@payloadcms/plugin-form-builder/-/plugin-form-builder-3.74.0.tgz#50ea37302f8ccd9c4e223ad22425c598be86f8ad"

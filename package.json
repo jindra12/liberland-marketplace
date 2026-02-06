@@ -27,6 +27,7 @@
     "@payloadcms/db-mongodb": "3.74.0",
     "@payloadcms/live-preview-react": "3.74.0",
     "@payloadcms/next": "3.74.0",
+    "@payloadcms/plugin-ecommerce": "^3.74.0",
     "@payloadcms/plugin-form-builder": "3.74.0",
     "@payloadcms/plugin-nested-docs": "3.74.0",
     "@payloadcms/plugin-redirects": "3.74.0",

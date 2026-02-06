@@ -1,7 +1,11 @@
+import { User } from '@/payload-types';
 import type { Access } from 'payload'
 
 export const onlyOwnDocsOrAdmin: Access = ({ req }) => {
-    const user = req.user
+    return onlyOwnDocsOrAdminFilter({ user: req.user });
+};
+
+export const onlyOwnDocsOrAdminFilter = ({ user }: { user?: Partial<User> | null }) => {
     if (!user) {
         return false;
     }
@@ -13,4 +17,4 @@ export const onlyOwnDocsOrAdmin: Access = ({ req }) => {
     return {
         createdBy: { equals: user.id },
     };
-}
+};
