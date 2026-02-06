@@ -1,6 +1,6 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
-import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
 export const Companies: CollectionConfig = {
@@ -30,6 +30,7 @@ export const Companies: CollectionConfig = {
         allowCreate: true,
         allowEdit: true,
       },
+      filterOptions: onlyOwnDocsOrAdminFilter,
     },
   ],
 }

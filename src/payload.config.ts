@@ -16,7 +16,6 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
-import { Products } from './collections/Products'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -63,7 +62,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs, Products],
+  collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs],
   cors: '*',
   globals: [Header, Footer],
   plugins,

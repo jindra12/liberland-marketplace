@@ -3,6 +3,7 @@ import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
+import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
 import { Plugin } from 'payload';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
@@ -14,6 +15,9 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
+import { authenticated } from '@/access/authenticated'
+import { mergeFields } from '@/utilities/mergeFields'
+import { productFields } from '@/fields/productFields'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
@@ -27,6 +31,29 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 export const plugins: Plugin[] = [
   addCreatedBy,
+  ecommercePlugin({
+    access: {
+      adminOnlyFieldAccess: ({ req }) => req.user?.isAdmin || false,
+      adminOrPublishedStatus: ({ req }) =>
+        req.user?.isAdmin
+          ? true
+          : { _status: { equals: 'published' } },
+      isAdmin: ({ req }) => req.user?.isAdmin || false,
+      isAuthenticated: authenticated,
+      isCustomer: ({ req }) => !req.user?.isAdmin,
+      isDocumentOwner: ({ req }) =>
+        req.user?.isAdmin
+          ? true
+          : { customer: { equals: req.user?.id } },
+    },
+    customers: { slug: 'users' },
+    products: {
+      productsCollectionOverride: ({ defaultCollection }) => ({
+        ...defaultCollection,
+        fields: mergeFields(defaultCollection.fields, productFields),
+      }),
+    },
+  }),
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {
