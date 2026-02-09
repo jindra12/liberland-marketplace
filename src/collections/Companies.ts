@@ -22,6 +22,11 @@ export const Companies: CollectionConfig = {
     { name: 'phone', type: 'text' },
     { name: 'email', type: 'email' },
     {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+    },
+    {
       name: 'identity',
       type: 'relationship',
       relationTo: 'identities',
