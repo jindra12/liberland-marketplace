@@ -52,5 +52,6 @@ export const contact: (args: ContactArgs) => RequiredDataFromCollectionSlug<'pag
       },
     ],
     title: 'Contact',
+    createdBy: contactForm.id,
   }
 }

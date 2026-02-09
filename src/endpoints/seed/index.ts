@@ -111,22 +111,22 @@ export const seed = async ({
       collection: 'media',
       data: image1,
       file: image1Buffer,
-    }),
+    } as any),
     payload.create({
       collection: 'media',
       data: image2,
       file: image2Buffer,
-    }),
+    } as any),
     payload.create({
       collection: 'media',
       data: image2,
       file: image3Buffer,
-    }),
+    } as any),
     payload.create({
       collection: 'media',
       data: imageHero1,
       file: hero1Buffer,
-    }),
+    } as any),
     categories.map((category) =>
       payload.create({
         collection: 'categories',
@@ -134,7 +134,7 @@ export const seed = async ({
           title: category,
           slug: category,
         },
-      }),
+      } as any),
     ),
   ])
 
@@ -148,7 +148,7 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post1({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
+    data: post1({ heroImage: image1Doc as any, blockImage: image2Doc as any, author: demoAuthor }),
   })
 
   const post2Doc = await payload.create({
@@ -157,7 +157,7 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post2({ heroImage: image2Doc, blockImage: image3Doc, author: demoAuthor }),
+    data: post2({ heroImage: image2Doc as any, blockImage: image3Doc as any, author: demoAuthor }),
   })
 
   const post3Doc = await payload.create({
@@ -166,7 +166,7 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
+    data: post3({ heroImage: image3Doc as any, blockImage: image1Doc as any, author: demoAuthor }),
   })
 
   // update each post with related posts
@@ -206,7 +206,7 @@ export const seed = async ({
     payload.create({
       collection: 'pages',
       depth: 0,
-      data: home({ heroImage: imageHomeDoc, metaImage: image2Doc }),
+      data: home({ heroImage: imageHomeDoc as any, metaImage: image2Doc as any }),
     }),
     payload.create({
       collection: 'pages',

@@ -8,6 +8,7 @@ export const post2: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
 }) => {
   return {
     slug: 'global-gaze',
+    createdBy: author.id,
     _status: 'published',
     authors: [author],
     content: {
