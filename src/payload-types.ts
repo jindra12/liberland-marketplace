@@ -474,6 +474,7 @@ export interface Category {
   id: string;
   createdBy: string | User;
   title: string;
+  image?: (string | null) | Media;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -842,6 +843,7 @@ export interface Identity {
   createdBy: string | User;
   name: string;
   website?: string | null;
+  image?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -856,6 +858,7 @@ export interface Company {
   website?: string | null;
   phone?: string | null;
   email?: string | null;
+  image?: (string | null) | Media;
   identity: string | Identity;
   updatedAt: string;
   createdAt: string;
@@ -1059,6 +1062,7 @@ export interface Job {
       | null;
   };
   postedAt: string;
+  image?: (string | null) | Media;
   description?: {
     root: {
       type: string;
@@ -1362,6 +1366,7 @@ export interface Product {
       | 'ZMW'
       | 'ZWL';
   };
+  image?: (string | null) | Media;
   properties?:
     | {
         key: string;
@@ -1574,6 +1579,10 @@ export interface Search {
     | {
         relationTo: 'identities';
         value: string | Identity;
+      }
+    | {
+        relationTo: 'products';
+        value: string | Product;
       };
   slug?: string | null;
   meta?: {
@@ -2104,6 +2113,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   createdBy?: T;
   title?: T;
+  image?: T;
   generateSlug?: T;
   slug?: T;
   parent?: T;
@@ -2150,6 +2160,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
   createdBy?: T;
   name?: T;
   website?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2163,6 +2174,7 @@ export interface CompaniesSelect<T extends boolean = true> {
   website?: T;
   phone?: T;
   email?: T;
+  image?: T;
   identity?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2185,6 +2197,7 @@ export interface JobsSelect<T extends boolean = true> {
         currency?: T;
       };
   postedAt?: T;
+  image?: T;
   description?: T;
   applyUrl?: T;
   updatedAt?: T;
@@ -2272,6 +2285,7 @@ export interface ProductsSelect<T extends boolean = true> {
         amount?: T;
         currency?: T;
       };
+  image?: T;
   properties?:
     | T
     | {

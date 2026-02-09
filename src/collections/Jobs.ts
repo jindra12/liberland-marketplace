@@ -74,7 +74,11 @@ export const Jobs: CollectionConfig = {
       required: true,
       defaultValue: () => new Date().toISOString(),
     },
-
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+    },
     { name: 'description', type: 'richText' },
     { name: 'applyUrl', type: 'text' },
   ],

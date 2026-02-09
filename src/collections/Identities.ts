@@ -19,5 +19,10 @@ export const Identities: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+    },
   ],
 }

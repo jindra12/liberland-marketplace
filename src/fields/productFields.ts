@@ -52,6 +52,11 @@ export const productFields: Field[] = [
     ],
   },
   {
+    name: "image",
+    type: "upload",
+    relationTo: "media",
+  },
+  {
     name: 'properties',
     type: 'array',
     fields: [
