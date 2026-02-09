@@ -28,7 +28,7 @@ export async function generateStaticParams() {
     },
   })
 
-  const params = posts.docs.map(({ slug }) => {
+  const params = posts.docs.filter(({ slug }) => slug).map(({ slug }) => {
     return { slug }
   })
 

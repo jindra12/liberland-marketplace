@@ -85,4 +85,5 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
   },
   title: 'Home',
   layout: [],
+  createdBy: '',
 }

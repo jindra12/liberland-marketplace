@@ -13,6 +13,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
   return {
     slug: 'home',
     _status: 'published',
+    createdBy: '',
     hero: {
       type: 'highImpact',
       links: [
