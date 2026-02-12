@@ -1,12 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+import { anyone } from '@/access/anyone'
 import { adminOrSelf } from '@/access/adminOrSelf'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   access: {
     admin: ({ req }) => req.user?.isAdmin || false,
-    create: ({ req }) => req.user?.isAdmin || false,
+    create: anyone,
     delete: adminOrSelf,
     read: adminOrSelf,
     update: adminOrSelf,
