@@ -276,6 +276,7 @@ export interface Page {
 export interface User {
   id: string;
   name?: string | null;
+  googleSub?: string | null;
   isAdmin?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -2134,6 +2135,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  googleSub?: T;
   isAdmin?: T;
   updatedAt?: T;
   createdAt?: T;
