@@ -10,18 +10,27 @@ const createdByField: Field = {
   type: 'relationship',
   relationTo: 'users',
   required: true,
+  maxDepth: 0,
   admin: { hidden: true, readOnly: true },
 }
 
-const setCreatedBy: CollectionBeforeChangeHook = ({ operation, data, req }) => {
+const setCreatedBy: CollectionBeforeChangeHook = ({ operation, data, originalDoc, req }) => {
   const next = { ...data };
 
   if (operation === 'create') {
-    next.createdBy = req.user?.id;
+    if (!next.createdBy && req.user?.id) {
+      next.createdBy = req.user.id;
+    }
     return next;
   }
 
-  delete next.createdBy;
+  const existingCreatedBy =
+    typeof originalDoc?.createdBy === 'object' ? originalDoc.createdBy?.id : originalDoc?.createdBy;
+
+  if (existingCreatedBy) {
+    next.createdBy = existingCreatedBy;
+  }
+
   return next;
 };
 
