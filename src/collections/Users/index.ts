@@ -1,15 +1,15 @@
 import type { CollectionConfig } from 'payload'
 
-import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { adminOrSelf } from '@/access/adminOrSelf'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   access: {
     admin: ({ req }) => req.user?.isAdmin || false,
-    create: onlyOwnDocsOrAdmin,
-    delete: onlyOwnDocsOrAdmin,
-    read: onlyOwnDocsOrAdmin,
-    update: onlyOwnDocsOrAdmin,
+    create: ({ req }) => req.user?.isAdmin || false,
+    delete: adminOrSelf,
+    read: adminOrSelf,
+    update: adminOrSelf,
   },
   admin: {
     defaultColumns: ['name', 'email'],
