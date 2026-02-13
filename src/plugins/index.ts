@@ -7,6 +7,7 @@ import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
 import { Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
+import { oidcProvider } from 'better-auth/plugins'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -38,6 +39,10 @@ export const plugins: Plugin[] = [
     hidePluginCollections: true,
     betterAuthOptions: {
       baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+      trustedOrigins: (process.env.OIDC_REDIRECT_URLS || '')
+        .split(',')
+        .filter(Boolean)
+        .map((url) => new URL(url).origin),
       emailAndPassword: {
         enabled: true,
       },
@@ -47,6 +52,27 @@ export const plugins: Plugin[] = [
           clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
         },
       },
+      plugins: [
+        oidcProvider({
+          loginPage: '/admin/login',
+          requirePKCE: true,
+          allowDynamicClientRegistration: false,
+          trustedClients: process.env.OIDC_CLIENT_ID
+            ? [
+                {
+                  clientId: process.env.OIDC_CLIENT_ID,
+                  clientSecret: process.env.OIDC_CLIENT_SECRET || '',
+                  name: 'Frontend App',
+                  type: 'web' as const,
+                  redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
+                  metadata: null,
+                  skipConsent: true,
+                  disabled: false,
+                },
+              ]
+            : [],
+        }),
+      ],
     },
     users: {
       slug: 'users',
