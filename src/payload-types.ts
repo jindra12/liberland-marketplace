@@ -104,6 +104,10 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
+    users: {
+      account: 'accounts';
+      session: 'sessions';
+    };
     variantTypes: {
       options: 'variantOptions';
     };
@@ -235,37 +239,16 @@ export interface User {
    * The role/ roles of the user
    */
   role?: ('admin' | 'user')[] | null;
-}
-/**
- * Sessions are active sessions for users. They are used to authenticate users with a session token
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sessions".
- */
-export interface Session {
-  id: string;
-  /**
-   * The date and time when the session will expire
-   */
-  expiresAt: string;
-  /**
-   * The unique session token
-   */
-  token: string;
-  createdAt: string;
-  updatedAt: string;
-  /**
-   * The IP address of the device
-   */
-  ipAddress?: string | null;
-  /**
-   * The user agent information of the device
-   */
-  userAgent?: string | null;
-  /**
-   * The user that the session belongs to
-   */
-  user: string | User;
+  account?: {
+    docs?: (string | Account)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  session?: {
+    docs?: (string | Session)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
 }
 /**
  * Accounts are used to store user accounts for authentication providers
@@ -317,6 +300,37 @@ export interface Account {
   password?: string | null;
   createdAt: string;
   updatedAt: string;
+}
+/**
+ * Sessions are active sessions for users. They are used to authenticate users with a session token
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions".
+ */
+export interface Session {
+  id: string;
+  /**
+   * The date and time when the session will expire
+   */
+  expiresAt: string;
+  /**
+   * The unique session token
+   */
+  token: string;
+  createdAt: string;
+  updatedAt: string;
+  /**
+   * The IP address of the device
+   */
+  ipAddress?: string | null;
+  /**
+   * The user agent information of the device
+   */
+  userAgent?: string | null;
+  /**
+   * The user that the session belongs to
+   */
+  user: string | User;
 }
 /**
  * Verifications are used to verify authentication requests
@@ -1999,6 +2013,8 @@ export interface UsersSelect<T extends boolean = true> {
   createdAt?: T;
   updatedAt?: T;
   role?: T;
+  account?: T;
+  session?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
