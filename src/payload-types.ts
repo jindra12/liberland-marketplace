@@ -844,6 +844,10 @@ export interface Identity {
   name: string;
   website?: string | null;
   image?: (string | null) | Media;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -859,6 +863,10 @@ export interface Company {
   phone?: string | null;
   email?: string | null;
   image?: (string | null) | Media;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
   identity: string | Identity;
   updatedAt: string;
   createdAt: string;
@@ -1063,21 +1071,10 @@ export interface Job {
   };
   postedAt: string;
   image?: (string | null) | Media;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
   applyUrl?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1367,6 +1364,10 @@ export interface Product {
       | 'ZWL';
   };
   image?: (string | null) | Media;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
   properties?:
     | {
         key: string;
@@ -2161,6 +2162,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
   name?: T;
   website?: T;
   image?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2175,6 +2177,7 @@ export interface CompaniesSelect<T extends boolean = true> {
   phone?: T;
   email?: T;
   image?: T;
+  description?: T;
   identity?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2286,6 +2289,7 @@ export interface ProductsSelect<T extends boolean = true> {
         currency?: T;
       };
   image?: T;
+  description?: T;
   properties?:
     | T
     | {
