@@ -23,7 +23,7 @@ export const Media: CollectionConfig = {
     delete: onlyOwnDocsOrAdmin,
     read: anyone,
     update: onlyOwnDocsOrAdmin,
-    admin: ({ req }) => req.user?.isAdmin || false,
+    admin: ({ req }) => req.user?.role?.includes('admin') || false,
   },
   fields: [
     {
