@@ -17,26 +17,26 @@ export const Users: CollectionConfig = {
     useAsTitle: 'name',
   },
   hooks: {
-    beforeChange: [async ({
-      req, operation, data
-    }) => {
-      const next = { ...data };
-      if (operation === 'create') {
-        const existing = await req.payload.find({
-          collection: 'users',
-          limit: 1,
-        });
-        const isFirstUser = existing.totalDocs === 0;
-        if (isFirstUser) {
-          return {
-            ...next,
-            isAdmin: true,
+    beforeChange: [
+      async ({ req, operation, data }) => {
+        const next = { ...data }
+        if (operation === 'create') {
+          const existing = await req.payload.find({
+            collection: 'users',
+            limit: 1,
+          })
+          const isFirstUser = existing.totalDocs === 0
+          if (isFirstUser) {
+            return {
+              ...next,
+              isAdmin: true,
+            }
           }
         }
-      }
-      delete next.isAdmin;
-      return next;
-    }]
+        delete next.isAdmin
+        return next
+      },
+    ],
   },
   auth: true,
   fields: [
