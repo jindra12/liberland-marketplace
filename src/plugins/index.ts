@@ -13,7 +13,6 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 
-import type { CollectionConfig, Field } from 'payload'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
@@ -30,29 +29,6 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   const url = getServerSideURL()
 
   return doc?.slug ? `${url}/${doc.slug}` : url
-}
-
-/**
- * The payload-auth plugin adds explicit createdAt/updatedAt date fields with
- * `required: true` to every collection it creates. Payload CMS also adds its
- * own createdAt/updatedAt via Mongoose timestamps, causing a "field is invalid"
- * validation error when the duplicate required date field receives no value
- * during internal operations like login/session creation.
- *
- * This helper relaxes the plugin's timestamp fields so they never block
- * validation, while Payload's built-in timestamps continue to manage the
- * actual values.
- */
-function fixTimestampFields(collection: CollectionConfig): CollectionConfig {
-  return {
-    ...collection,
-    fields: collection.fields.map((f) => {
-      if ('name' in f && (f.name === 'createdAt' || f.name === 'updatedAt')) {
-        return { ...f, required: false, validate: () => true as const } as typeof f
-      }
-      return f
-    }),
-  }
 }
 
 export const plugins: Plugin[] = [
@@ -79,16 +55,6 @@ export const plugins: Plugin[] = [
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
       allowedFields: ['name'],
-      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
-    },
-    sessions: {
-      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
-    },
-    accounts: {
-      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
-    },
-    verifications: {
-      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
     },
   }),
   ecommercePlugin({
