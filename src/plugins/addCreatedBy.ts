@@ -14,23 +14,15 @@ const createdByField: Field = {
   admin: { hidden: true, readOnly: true },
 }
 
-const setCreatedBy: CollectionBeforeChangeHook = ({ operation, data, originalDoc, req }) => {
+const setCreatedBy: CollectionBeforeChangeHook = ({ operation, data, req, originalDoc }) => {
   const next = { ...data };
 
   if (operation === 'create') {
-    if (!next.createdBy && req.user?.id) {
-      next.createdBy = req.user.id;
-    }
+    next.createdBy = req.user?.id;
     return next;
   }
 
-  const existingCreatedBy =
-    typeof originalDoc?.createdBy === 'object' ? originalDoc.createdBy?.id : originalDoc?.createdBy;
-
-  if (existingCreatedBy) {
-    next.createdBy = existingCreatedBy;
-  }
-
+  next.createdBy = originalDoc?.createdBy;
   return next;
 };
 
