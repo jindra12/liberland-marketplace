@@ -4,14 +4,16 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
-import { Plugin } from 'payload';
+import { Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 
+import type { CollectionConfig, Field } from 'payload'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
@@ -30,8 +32,60 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   return doc?.slug ? `${url}/${doc.slug}` : url
 }
 
+/**
+ * The payload-auth plugin adds explicit createdAt/updatedAt date fields with
+ * `required: true` to every collection it creates. Payload CMS also adds its
+ * own createdAt/updatedAt via Mongoose timestamps, causing a "field is invalid"
+ * validation error when the duplicate required date field receives no value
+ * during internal operations like login/session creation.
+ *
+ * This helper relaxes the plugin's timestamp fields so they never block
+ * validation, while Payload's built-in timestamps continue to manage the
+ * actual values.
+ */
+function fixTimestampFields(collection: CollectionConfig): CollectionConfig {
+  return {
+    ...collection,
+    fields: collection.fields.map((f) => {
+      if ('name' in f && (f.name === 'createdAt' || f.name === 'updatedAt')) {
+        return { ...f, required: false, validate: () => true as const } as typeof f
+      }
+      return f
+    }),
+  }
+}
+
 export const plugins: Plugin[] = [
   addCreatedBy,
+  betterAuthPlugin({
+    betterAuthOptions: {
+      socialProviders: {
+        google: {
+          clientId: process.env.GOOGLE_CLIENT_ID || '',
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+        },
+      },
+    },
+    users: {
+      collectionOverrides: ({ collection }) => {
+        const fixed = fixTimestampFields(collection)
+        return {
+          ...fixed,
+          // Remove 'join' fields — they require MongoDB 5.1+ ($lookup with pipeline + localField)
+          fields: fixed.fields.filter((f) => !('type' in f && f.type === 'join')),
+        }
+      },
+    },
+    sessions: {
+      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
+    },
+    accounts: {
+      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
+    },
+    verifications: {
+      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
+    },
+  }),
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.isAdmin || false,
