@@ -10,7 +10,7 @@ export const onlyOwnDocsOrAdminFilter = ({ user }: { user?: Partial<User> | null
         return false;
     }
 
-    if (user.isAdmin) {
+    if (user.role?.includes('admin')) {
         return true;
     }
 

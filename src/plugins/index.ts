@@ -4,8 +4,9 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
-import { Plugin } from 'payload';
+import { Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -32,18 +33,42 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 export const plugins: Plugin[] = [
   addCreatedBy,
+  betterAuthPlugin({
+    disableDefaultPayloadAuth: true,
+    hidePluginCollections: true,
+    betterAuthOptions: {
+      baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+      emailAndPassword: {
+        enabled: true,
+      },
+      socialProviders: {
+        google: {
+          clientId: process.env.GOOGLE_CLIENT_ID || '',
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+        },
+      },
+    },
+    users: {
+      slug: 'users',
+      adminRoles: ['admin'],
+      defaultRole: 'user',
+      defaultAdminRole: 'admin',
+      roles: ['user', 'admin'],
+      allowedFields: ['name'],
+    },
+  }),
   ecommercePlugin({
     access: {
-      adminOnlyFieldAccess: ({ req }) => req.user?.isAdmin || false,
+      adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
       adminOrPublishedStatus: ({ req }) =>
-        req.user?.isAdmin
+        req.user?.role?.includes('admin')
           ? true
           : { _status: { equals: 'published' } },
-      isAdmin: ({ req }) => req.user?.isAdmin || false,
+      isAdmin: ({ req }) => req.user?.role?.includes('admin') || false,
       isAuthenticated: authenticated,
-      isCustomer: ({ req }) => !req.user?.isAdmin,
+      isCustomer: ({ req }) => !req.user?.role?.includes('admin'),
       isDocumentOwner: ({ req }) =>
-        req.user?.isAdmin
+        req.user?.role?.includes('admin')
           ? true
           : { customer: { equals: req.user?.id } },
     },
