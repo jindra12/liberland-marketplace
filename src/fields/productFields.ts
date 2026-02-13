@@ -1,3 +1,4 @@
+import { markdownField } from "@/fields/markdownField";
 import { getCurrencies } from "@/utilities/getCurrencies";
 import { Field } from "payload";
 
@@ -56,6 +57,10 @@ export const productFields: Field[] = [
     type: "upload",
     relationTo: "media",
   },
+  markdownField({
+    name: 'description',
+    label: 'Description',
+  }),
   {
     name: 'properties',
     type: 'array',
