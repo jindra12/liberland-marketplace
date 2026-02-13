@@ -1,6 +1,7 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { markdownField } from '@/fields/markdownField'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
@@ -79,7 +80,10 @@ export const Jobs: CollectionConfig = {
       type: "upload",
       relationTo: "media",
     },
-    { name: 'description', type: 'richText' },
+    markdownField({
+      name: 'description',
+      label: 'Description',
+    }),
     { name: 'applyUrl', type: 'text' },
   ],
 }

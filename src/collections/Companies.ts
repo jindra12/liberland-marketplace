@@ -1,5 +1,6 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
+import { markdownField } from '@/fields/markdownField'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
@@ -26,6 +27,10 @@ export const Companies: CollectionConfig = {
       type: "upload",
       relationTo: "media",
     },
+    markdownField({
+      name: 'description',
+      label: 'Description',
+    }),
     {
       name: 'identity',
       type: 'relationship',
