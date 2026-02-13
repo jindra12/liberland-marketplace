@@ -39,6 +39,10 @@ export const plugins: Plugin[] = [
     hidePluginCollections: true,
     betterAuthOptions: {
       baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+      trustedOrigins: (process.env.OIDC_REDIRECT_URLS || '')
+        .split(',')
+        .filter(Boolean)
+        .map((url) => new URL(url).origin),
       emailAndPassword: {
         enabled: true,
       },
