@@ -16,7 +16,6 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
-import { googleLoginEndpoint } from './endpoints/googleLogin'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -64,7 +63,6 @@ export default buildConfig({
     url: process.env.DATABASE_URL || '',
   }),
   collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs],
-  endpoints: [googleLoginEndpoint],
   cors: '*',
   globals: [Header, Footer],
   plugins,

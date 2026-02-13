@@ -45,17 +45,6 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'googleSub',
-      type: 'text',
-      index: true,
-      admin: { hidden: true },
-      access: {
-        update: () => false,
-        create: () => false,
-        read: () => true,
-      },
-    },
-    {
       name: 'isAdmin',
       type: 'checkbox',
       defaultValue: false,
