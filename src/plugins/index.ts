@@ -58,7 +58,13 @@ function fixTimestampFields(collection: CollectionConfig): CollectionConfig {
 export const plugins: Plugin[] = [
   addCreatedBy,
   betterAuthPlugin({
+    disableDefaultPayloadAuth: true,
+    hidePluginCollections: true,
     betterAuthOptions: {
+      baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+      emailAndPassword: {
+        enabled: true,
+      },
       socialProviders: {
         google: {
           clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -67,6 +73,12 @@ export const plugins: Plugin[] = [
       },
     },
     users: {
+      slug: 'users',
+      adminRoles: ['admin'],
+      defaultRole: 'user',
+      defaultAdminRole: 'admin',
+      roles: ['user', 'admin'],
+      allowedFields: ['name'],
       collectionOverrides: ({ collection }) => {
         const fixed = fixTimestampFields(collection)
         return {
@@ -88,16 +100,16 @@ export const plugins: Plugin[] = [
   }),
   ecommercePlugin({
     access: {
-      adminOnlyFieldAccess: ({ req }) => req.user?.isAdmin || false,
+      adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
       adminOrPublishedStatus: ({ req }) =>
-        req.user?.isAdmin
+        req.user?.role?.includes('admin')
           ? true
           : { _status: { equals: 'published' } },
-      isAdmin: ({ req }) => req.user?.isAdmin || false,
+      isAdmin: ({ req }) => req.user?.role?.includes('admin') || false,
       isAuthenticated: authenticated,
-      isCustomer: ({ req }) => !req.user?.isAdmin,
+      isCustomer: ({ req }) => !req.user?.role?.includes('admin'),
       isDocumentOwner: ({ req }) =>
-        req.user?.isAdmin
+        req.user?.role?.includes('admin')
           ? true
           : { customer: { equals: req.user?.id } },
     },

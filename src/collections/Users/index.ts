@@ -6,7 +6,7 @@ import { adminOrSelf } from '@/access/adminOrSelf'
 export const Users: CollectionConfig = {
   slug: 'users',
   access: {
-    admin: ({ req }) => req.user?.isAdmin || false,
+    admin: ({ req }) => req.user?.role?.includes('admin') || false,
     create: anyone,
     delete: adminOrSelf,
     read: adminOrSelf,
@@ -19,38 +19,20 @@ export const Users: CollectionConfig = {
   hooks: {
     beforeChange: [
       async ({ req, operation, data }) => {
-        const next = { ...data }
         if (operation === 'create') {
           const existing = await req.payload.find({
             collection: 'users',
             limit: 1,
           })
-          const isFirstUser = existing.totalDocs === 0
-          if (isFirstUser) {
-            return {
-              ...next,
-              isAdmin: true,
-            }
+          if (existing.totalDocs === 0) {
+            return { ...data, role: ['admin'] }
           }
         }
-        delete next.isAdmin
-        return next
+        return data
       },
     ],
   },
   auth: true,
-  fields: [
-    {
-      name: 'isAdmin',
-      type: 'checkbox',
-      defaultValue: false,
-      admin: { position: 'sidebar' },
-      access: {
-        update: ({ req }) => req.user?.isAdmin || false,
-        create: ({ req }) => req.user?.isAdmin || false,
-        read: () => true,
-      },
-    },
-  ],
+  fields: [],
   timestamps: true,
 }
