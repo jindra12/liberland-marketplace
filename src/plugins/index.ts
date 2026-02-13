@@ -79,14 +79,7 @@ export const plugins: Plugin[] = [
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
       allowedFields: ['name'],
-      collectionOverrides: ({ collection }) => {
-        const fixed = fixTimestampFields(collection)
-        return {
-          ...fixed,
-          // Remove 'join' fields — they require MongoDB 5.1+ ($lookup with pipeline + localField)
-          fields: fixed.fields.filter((f) => !('type' in f && f.type === 'join')),
-        }
-      },
+      collectionOverrides: ({ collection }) => fixTimestampFields(collection),
     },
     sessions: {
       collectionOverrides: ({ collection }) => fixTimestampFields(collection),
