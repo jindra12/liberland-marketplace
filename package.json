@@ -25,6 +25,7 @@
   "dependencies": {
     "@payloadcms/admin-bar": "3.74.0",
     "@payloadcms/db-mongodb": "3.74.0",
+    "@payloadcms/email-nodemailer": "^3.76.1",
     "@payloadcms/live-preview-react": "3.74.0",
     "@payloadcms/next": "3.74.0",
     "@payloadcms/plugin-ecommerce": "3.74.0",
@@ -53,6 +54,7 @@
     "lucide-react": "^0.378.0",
     "next": "15.4.11",
     "next-sitemap": "^4.2.3",
+    "nodemailer": "^8.0.1",
     "payload": "3.74.0",
     "payload-auth": "^1.8.4",
     "prism-react-renderer": "^2.3.1",
@@ -72,6 +74,7 @@
     "@testing-library/react": "16.3.0",
     "@types/escape-html": "^1.0.2",
     "@types/node": "22.5.4",
+    "@types/nodemailer": "^7.0.9",
     "@types/react": "19.2.9",
     "@types/react-dom": "19.2.3",
     "@types/sanitize-html": "^2.16.0",

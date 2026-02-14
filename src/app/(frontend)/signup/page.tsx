@@ -37,7 +37,12 @@ export default function SignupPage() {
     setLoading(true)
 
     try {
-      const result = await authClient.signUp.email({ name, email, password })
+      const result = await authClient.signUp.email({
+        name,
+        email,
+        password,
+        callbackURL: '/verify-email-success',
+      })
       if (result.error) {
         setError(result.error.message || 'Sign up failed')
         setLoading(false)
