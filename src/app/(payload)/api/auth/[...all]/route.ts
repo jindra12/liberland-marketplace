@@ -1,7 +1,17 @@
 import config from '@payload-config'
 import { getPayloadAuth } from 'payload-auth/better-auth'
 
-const payloadAuth = await getPayloadAuth(config)
+export const dynamic = 'force-dynamic'
+
+let payloadAuthPromise: ReturnType<typeof getPayloadAuth> | null = null
+
+const getPayloadAuthInstance = async () => {
+  if (!payloadAuthPromise) {
+    payloadAuthPromise = getPayloadAuth(config)
+  }
+
+  return payloadAuthPromise
+}
 
 const ALLOWED_ORIGINS = (process.env.OIDC_REDIRECT_URLS || '')
   .split(',')
@@ -23,6 +33,7 @@ function isAllowedOrigin(req: Request): string | null {
 }
 
 async function handler(req: Request) {
+  const payloadAuth = await getPayloadAuthInstance()
   const origin = isAllowedOrigin(req)
 
   if (req.method === 'OPTIONS' && origin) {

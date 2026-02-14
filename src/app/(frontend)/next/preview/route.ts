@@ -7,6 +7,8 @@ import { NextRequest } from 'next/server'
 
 import configPromise from '@payload-config'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest): Promise<Response> {
   const payload = await getPayload({ config: configPromise })
 
