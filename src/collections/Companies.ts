@@ -1,4 +1,3 @@
-import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
@@ -40,7 +39,6 @@ export const Companies: CollectionConfig = {
         allowCreate: true,
         allowEdit: true,
       },
-      filterOptions: onlyOwnDocsOrAdminFilter,
     },
     {
       name: 'allowedIdentities',
