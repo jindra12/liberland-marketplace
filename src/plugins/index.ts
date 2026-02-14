@@ -8,6 +8,7 @@ import { Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { oidcProvider } from 'better-auth/plugins'
+import nodemailer from 'nodemailer'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -22,6 +23,15 @@ import { authenticated } from '@/access/authenticated'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
+
+const smtpTransport = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+})
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
@@ -46,6 +56,25 @@ export const plugins: Plugin[] = [
         .map((url) => new URL(url).origin),
       emailAndPassword: {
         enabled: true,
+      },
+      emailVerification: {
+        sendOnSignUp: true,
+        autoSignInAfterVerification: true,
+        sendVerificationEmail: async ({ user, url }) => {
+          const fromAddress = process.env.SMTP_FROM_ADDRESS || 'noreply@liberland.org'
+          const fromName = process.env.SMTP_FROM_NAME || 'Liberland Marketplace'
+          await smtpTransport.sendMail({
+            from: `"${fromName}" <${fromAddress}>`,
+            to: user.email,
+            subject: 'Verify your email — Liberland Marketplace',
+            html: `
+              <h1>Welcome to Liberland Marketplace!</h1>
+              <p>Please verify your email address by clicking the link below:</p>
+              <p><a href="${url}">Verify Email</a></p>
+              <p>If you did not create an account, you can safely ignore this email.</p>
+            `,
+          })
+        },
       },
       socialProviders: {
         google: {
