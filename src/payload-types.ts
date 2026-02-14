@@ -1126,6 +1126,8 @@ export interface Company {
    */
   description?: string | null;
   identity: string | Identity;
+  allowedIdentities?: (string | Identity)[] | null;
+  disallowedIdentities?: (string | Identity)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1139,7 +1141,9 @@ export interface Job {
   title: string;
   company: string | Company;
   location?: string | null;
-  employmentType: 'full-time' | 'part-time' | 'contract' | 'internship';
+  isActive?: boolean | null;
+  positions: number;
+  employmentType: 'full-time' | 'part-time' | 'contract' | 'internship' | 'gig';
   salaryRange?: {
     min?: number | null;
     max?: number | null;
@@ -1327,8 +1331,196 @@ export interface Job {
         )
       | null;
   };
+  bounty?: {
+    amount?: number | null;
+    currency?:
+      | (
+          | 'AED'
+          | 'AFN'
+          | 'ALL'
+          | 'AMD'
+          | 'ANG'
+          | 'AOA'
+          | 'ARS'
+          | 'AUD'
+          | 'AWG'
+          | 'AZN'
+          | 'BAM'
+          | 'BBD'
+          | 'BDT'
+          | 'BGN'
+          | 'BHD'
+          | 'BIF'
+          | 'BMD'
+          | 'BND'
+          | 'BOB'
+          | 'BOV'
+          | 'BRL'
+          | 'BSD'
+          | 'BTN'
+          | 'BWP'
+          | 'BYN'
+          | 'BZD'
+          | 'CAD'
+          | 'CDF'
+          | 'CHE'
+          | 'CHF'
+          | 'CHW'
+          | 'CLF'
+          | 'CLP'
+          | 'CNY'
+          | 'COP'
+          | 'COU'
+          | 'CRC'
+          | 'CUC'
+          | 'CUP'
+          | 'CVE'
+          | 'CZK'
+          | 'DJF'
+          | 'DKK'
+          | 'DOP'
+          | 'DZD'
+          | 'EGP'
+          | 'ERN'
+          | 'ETB'
+          | 'EUR'
+          | 'FJD'
+          | 'FKP'
+          | 'GBP'
+          | 'GEL'
+          | 'GHS'
+          | 'GIP'
+          | 'GMD'
+          | 'GNF'
+          | 'GTQ'
+          | 'GYD'
+          | 'HKD'
+          | 'HNL'
+          | 'HRK'
+          | 'HTG'
+          | 'HUF'
+          | 'IDR'
+          | 'ILS'
+          | 'INR'
+          | 'IQD'
+          | 'IRR'
+          | 'ISK'
+          | 'JMD'
+          | 'JOD'
+          | 'JPY'
+          | 'KES'
+          | 'KGS'
+          | 'KHR'
+          | 'KMF'
+          | 'KPW'
+          | 'KRW'
+          | 'KWD'
+          | 'KYD'
+          | 'KZT'
+          | 'LAK'
+          | 'LBP'
+          | 'LKR'
+          | 'LRD'
+          | 'LSL'
+          | 'LYD'
+          | 'MAD'
+          | 'MDL'
+          | 'MGA'
+          | 'MKD'
+          | 'MMK'
+          | 'MNT'
+          | 'MOP'
+          | 'MRU'
+          | 'MUR'
+          | 'MVR'
+          | 'MWK'
+          | 'MXN'
+          | 'MXV'
+          | 'MYR'
+          | 'MZN'
+          | 'NAD'
+          | 'NGN'
+          | 'NIO'
+          | 'NOK'
+          | 'NPR'
+          | 'NZD'
+          | 'OMR'
+          | 'PAB'
+          | 'PEN'
+          | 'PGK'
+          | 'PHP'
+          | 'PKR'
+          | 'PLN'
+          | 'PYG'
+          | 'QAR'
+          | 'RON'
+          | 'RSD'
+          | 'RUB'
+          | 'RWF'
+          | 'SAR'
+          | 'SBD'
+          | 'SCR'
+          | 'SDG'
+          | 'SEK'
+          | 'SGD'
+          | 'SHP'
+          | 'SLL'
+          | 'SOS'
+          | 'SRD'
+          | 'SSP'
+          | 'STN'
+          | 'SVC'
+          | 'SYP'
+          | 'SZL'
+          | 'THB'
+          | 'TJS'
+          | 'TMT'
+          | 'TND'
+          | 'TOP'
+          | 'TRY'
+          | 'TTD'
+          | 'TWD'
+          | 'TZS'
+          | 'UAH'
+          | 'UGX'
+          | 'USD'
+          | 'USN'
+          | 'UYI'
+          | 'UYU'
+          | 'UYW'
+          | 'UZS'
+          | 'VES'
+          | 'VND'
+          | 'VUV'
+          | 'WST'
+          | 'XAF'
+          | 'XAG'
+          | 'XAU'
+          | 'XBA'
+          | 'XBB'
+          | 'XBC'
+          | 'XBD'
+          | 'XCD'
+          | 'XDR'
+          | 'XOF'
+          | 'XPD'
+          | 'XPF'
+          | 'XPT'
+          | 'XSU'
+          | 'XTS'
+          | 'XUA'
+          | 'XXX'
+          | 'YER'
+          | 'ZAR'
+          | 'ZMW'
+          | 'ZWL'
+        )
+      | null;
+  };
   postedAt: string;
   image?: (string | null) | Media;
+  allowedIdentities?: (string | Identity)[] | null;
+  disallowedIdentities?: (string | Identity)[] | null;
   /**
    * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
    */
@@ -2553,6 +2745,8 @@ export interface CompaniesSelect<T extends boolean = true> {
   image?: T;
   description?: T;
   identity?: T;
+  allowedIdentities?: T;
+  disallowedIdentities?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2565,6 +2759,8 @@ export interface JobsSelect<T extends boolean = true> {
   title?: T;
   company?: T;
   location?: T;
+  isActive?: T;
+  positions?: T;
   employmentType?: T;
   salaryRange?:
     | T
@@ -2573,8 +2769,16 @@ export interface JobsSelect<T extends boolean = true> {
         max?: T;
         currency?: T;
       };
+  bounty?:
+    | T
+    | {
+        amount?: T;
+        currency?: T;
+      };
   postedAt?: T;
   image?: T;
+  allowedIdentities?: T;
+  disallowedIdentities?: T;
   description?: T;
   applyUrl?: T;
   updatedAt?: T;
