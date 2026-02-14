@@ -34,6 +34,8 @@ export const Jobs: CollectionConfig = {
     },
 
     { name: 'location', type: 'text' },
+    { name: 'isActive', type: 'checkbox', defaultValue: true },
+    { name: 'positions', type: 'number', required: true, min: 1, defaultValue: 1 },
 
     {
       name: 'employmentType',
@@ -45,6 +47,7 @@ export const Jobs: CollectionConfig = {
         { label: 'Part-time', value: 'part-time' },
         { label: 'Contract', value: 'contract' },
         { label: 'Internship', value: 'internship' },
+        { label: 'Gig', value: 'gig' },
       ],
     },
 
@@ -68,6 +71,24 @@ export const Jobs: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'bounty',
+      type: 'group',
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'amount', type: 'number', min: 0 },
+            {
+              name: 'currency',
+              type: 'select',
+              defaultValue: 'USD',
+              options: getCurrencies(),
+            },
+          ],
+        },
+      ],
+    },
 
     {
       name: 'postedAt',
@@ -79,6 +100,30 @@ export const Jobs: CollectionConfig = {
       name: "image",
       type: "upload",
       relationTo: "media",
+    },
+    {
+      name: 'allowedIdentities',
+      label: 'Allowed identities',
+      type: 'relationship',
+      relationTo: 'identities',
+      hasMany: true,
+      index: true,
+      admin: {
+        allowCreate: true,
+        allowEdit: true,
+      },
+    },
+    {
+      name: 'disallowedIdentities',
+      label: 'Disallowed identities',
+      type: 'relationship',
+      relationTo: 'identities',
+      hasMany: true,
+      index: true,
+      admin: {
+        allowCreate: true,
+        allowEdit: true,
+      },
     },
     markdownField({
       name: 'description',

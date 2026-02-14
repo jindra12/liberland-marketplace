@@ -42,5 +42,29 @@ export const Companies: CollectionConfig = {
       },
       filterOptions: onlyOwnDocsOrAdminFilter,
     },
+    {
+      name: 'allowedIdentities',
+      label: 'Allowed identities',
+      type: 'relationship',
+      relationTo: 'identities',
+      hasMany: true,
+      index: true,
+      admin: {
+        allowCreate: true,
+        allowEdit: true,
+      },
+    },
+    {
+      name: 'disallowedIdentities',
+      label: 'Disallowed identities',
+      type: 'relationship',
+      relationTo: 'identities',
+      hasMany: true,
+      index: true,
+      admin: {
+        allowCreate: true,
+        allowEdit: true,
+      },
+    },
   ],
 }
