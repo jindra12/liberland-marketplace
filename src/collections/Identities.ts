@@ -14,7 +14,7 @@ export const Identities: CollectionConfig = {
   access: {
     create: authenticated,
     delete: onlyOwnDocsOrAdmin,
-    read: anyone,
+    read: onlyOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [

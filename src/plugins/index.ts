@@ -17,6 +17,7 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
+import { hideAdminCollections } from './hideAdminCollections'
 import { authenticated } from '@/access/authenticated'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
@@ -76,7 +77,7 @@ export const plugins: Plugin[] = [
     },
     users: {
       slug: 'users',
-      adminRoles: ['admin'],
+      adminRoles: ['admin', 'user'],
       defaultRole: 'user',
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
@@ -183,4 +184,5 @@ export const plugins: Plugin[] = [
     },
     token: process.env.BLOB_READ_WRITE_TOKEN,
   }),
+  hideAdminCollections,
 ]
