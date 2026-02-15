@@ -23,6 +23,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@bradgarropy/use-countdown": "^2.0.1",
     "@payloadcms/admin-bar": "3.74.0",
     "@payloadcms/db-mongodb": "3.74.0",
     "@payloadcms/email-nodemailer": "3.74.0",

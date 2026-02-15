@@ -1,6 +1,7 @@
 'use client'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { PublishButton, useAuth } from '@payloadcms/ui'
+import useCountdown from '@bradgarropy/use-countdown'
 import type { User } from '@/payload-types'
 import './index.scss'
 
@@ -12,31 +13,15 @@ export default function VerifiedPublishButton() {
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
-  const [secondsLeft, setSecondsLeft] = useState(0)
-  const cooldownRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const countdown = useCountdown({
+    seconds: COOLDOWN_SECONDS,
+    autoStart: false,
+  })
 
-  useEffect(() => {
-    return () => {
-      if (cooldownRef.current) clearInterval(cooldownRef.current)
-    }
-  }, [])
-
-  const startCooldown = useCallback(() => {
-    setSecondsLeft(COOLDOWN_SECONDS)
-    cooldownRef.current = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev <= 1) {
-          if (cooldownRef.current) clearInterval(cooldownRef.current)
-          cooldownRef.current = null
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-  }, [])
+  const isCoolingDown = countdown.isRunning
 
   const handleResend = useCallback(async () => {
-    if (!user?.email || sending || secondsLeft > 0) return
+    if (!user?.email || sending) return
 
     setSending(true)
     setError('')
@@ -57,17 +42,19 @@ export default function VerifiedPublishButton() {
       }
 
       setSent(true)
-      startCooldown()
+      countdown.reset({ minutes: 0, seconds: COOLDOWN_SECONDS })
     } catch {
       setError('Could not send email. Try again later.')
     } finally {
       setSending(false)
     }
-  }, [user?.email, sending, secondsLeft, startCooldown])
+  }, [user?.email, sending, countdown])
 
   if (user?.role?.includes('admin') || user?.emailVerified) {
     return <PublishButton />
   }
+
+  const secondsLeft = countdown.minutes * 60 + countdown.seconds
 
   return (
     <div className={baseClass}>
@@ -77,13 +64,13 @@ export default function VerifiedPublishButton() {
       <span className={`${baseClass}__message`}>Verify your email to publish</span>
       <button
         type="button"
-        disabled={sending || secondsLeft > 0}
+        disabled={sending || isCoolingDown}
         onClick={handleResend}
         className={`${baseClass}__resend`}
       >
         {sending
           ? 'Sending...'
-          : secondsLeft > 0
+          : isCoolingDown
             ? `Resend in ${secondsLeft}s`
             : 'Resend verification email'}
       </button>
