@@ -11,6 +11,10 @@ export const Jobs: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Careers',
     defaultColumns: ['title', 'company', 'location', 'employmentType', 'postedAt', '_status'],
+    baseFilter: ({ req }) => {
+      const filter = onlyOwnDocsOrAdminFilter({ user: req.user })
+      return typeof filter === 'object' ? filter : null
+    },
   },
   versions: {
     drafts: true,
