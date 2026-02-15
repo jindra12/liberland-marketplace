@@ -14,17 +14,38 @@ const createdByField: Field = {
   admin: { hidden: true, readOnly: true },
 }
 
-const setCreatedBy: CollectionBeforeChangeHook = ({ operation, data, req, originalDoc }) => {
-  const next = { ...data };
+const getRelationshipID = (value: unknown): string | null => {
+  if (!value) return null
 
-  if (operation === 'create') {
-    next.createdBy = req.user?.id;
-    return next;
+  if (typeof value === 'string') return value
+  if (typeof value === 'number') return String(value)
+
+  if (typeof value === 'object') {
+    const relation = value as { id?: unknown; value?: unknown }
+
+    if (typeof relation.id === 'string') return relation.id
+    if (typeof relation.id === 'number') return String(relation.id)
+    if (typeof relation.value === 'string') return relation.value
+    if (typeof relation.value === 'number') return String(relation.value)
   }
 
-  next.createdBy = originalDoc?.createdBy;
-  return next;
-};
+  return null
+}
+
+const setCreatedBy: CollectionBeforeChangeHook = ({ operation, data, req, originalDoc }) => {
+  const next = { ...data }
+  const requestUserID = getRelationshipID(req.user?.id)
+  const originalCreatedByID = getRelationshipID(originalDoc?.createdBy)
+
+  if (operation === 'create') {
+    next.createdBy = requestUserID
+    return next
+  }
+
+  // Preserve original owner, but self-heal legacy documents that never had createdBy.
+  next.createdBy = originalCreatedByID ?? requestUserID
+  return next
+}
 
 export const addCreatedBy = (config: Config): Config => ({
   ...config,
@@ -34,7 +55,7 @@ export const addCreatedBy = (config: Config): Config => ({
     const fields = collection.fields ?? []
     const hasCreatedBy = fields.some(
       (f) => typeof f === 'object' && f !== null && 'name' in f && f.name === 'createdBy',
-    );
+    )
 
     return {
       ...collection,
@@ -45,4 +66,4 @@ export const addCreatedBy = (config: Config): Config => ({
       },
     }
   }),
-});
+})
