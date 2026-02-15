@@ -27,7 +27,7 @@ export default function LoginPage() {
     if (queryString) {
       return `/api/auth/oauth2/authorize${queryString}`
     }
-    return process.env.NEXT_PUBLIC_FRONTEND_URL || '/'
+    return '/'
   }
 
   const handleEmailLogin = async (e: FormEvent) => {
