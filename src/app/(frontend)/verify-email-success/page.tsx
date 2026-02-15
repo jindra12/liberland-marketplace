@@ -38,7 +38,7 @@ function VerifyEmailContent() {
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-4">
         <Button asChild className="w-full">
-          <Link href="/">Continue to Marketplace</Link>
+          <a href={process.env.NEXT_PUBLIC_FRONTEND_URL || '/'}>Continue to Marketplace</a>
         </Button>
       </CardContent>
     </Card>

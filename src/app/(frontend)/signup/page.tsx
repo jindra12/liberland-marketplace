@@ -28,7 +28,7 @@ export default function SignupPage() {
     if (queryString) {
       return `/api/auth/oauth2/authorize${queryString}`
     }
-    return '/'
+    return process.env.NEXT_PUBLIC_FRONTEND_URL || '/'
   }
 
   const handleSignup = async (e: FormEvent) => {
