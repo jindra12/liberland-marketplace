@@ -20,9 +20,11 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
 import { hideAdminCollections } from './hideAdminCollections'
 import { authenticated } from '@/access/authenticated'
+import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
+import { protectUserFields } from './protectUserFields'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -113,6 +115,7 @@ export const plugins: Plugin[] = [
       allowedFields: ['name'],
     },
   }),
+  protectUserFields,
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
@@ -132,7 +135,24 @@ export const plugins: Plugin[] = [
     products: {
       productsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
+        admin: {
+          ...defaultCollection.admin,
+          components: {
+            ...defaultCollection.admin?.components,
+            edit: {
+              ...defaultCollection.admin?.components?.edit,
+              PublishButton: '@/components/VerifiedPublishButton',
+            },
+          },
+        },
         fields: mergeFields(defaultCollection.fields, productFields),
+        hooks: {
+          ...defaultCollection.hooks,
+          beforeChange: [
+            ...(defaultCollection.hooks?.beforeChange ?? []),
+            requireVerifiedEmailToPublish,
+          ],
+        },
       }),
     },
     payments: {

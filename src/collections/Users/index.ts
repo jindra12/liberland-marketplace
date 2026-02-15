@@ -31,6 +31,18 @@ export const Users: CollectionConfig = {
         }
         return data
       },
+      ({ req, operation, data, originalDoc }) => {
+        if (operation !== 'update') return data
+        if (!req.user) return data
+        if (req.user.role?.includes('admin')) return data
+
+        return {
+          ...data,
+          role: originalDoc?.role,
+          email: originalDoc?.email,
+          emailVerified: originalDoc?.emailVerified,
+        }
+      },
     ],
   },
   auth: true,

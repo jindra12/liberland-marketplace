@@ -2,15 +2,24 @@ import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { markdownField } from '@/fields/markdownField'
+import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
+  hooks: {
+    beforeChange: [requireVerifiedEmailToPublish],
+  },
   admin: {
     useAsTitle: 'title',
     group: 'Careers',
     defaultColumns: ['title', 'company', 'location', 'employmentType', 'postedAt', '_status'],
+    components: {
+      edit: {
+        PublishButton: '@/components/VerifiedPublishButton',
+      },
+    },
     baseFilter: ({ req }) => {
       const filter = onlyOwnDocsOrAdminFilter({ user: req.user })
       return typeof filter === 'object' ? filter : null
