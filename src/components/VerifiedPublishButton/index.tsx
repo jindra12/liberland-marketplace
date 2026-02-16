@@ -43,6 +43,7 @@ export default function VerifiedPublishButton() {
 
       setSent(true)
       countdown.reset({ minutes: 0, seconds: COOLDOWN_SECONDS })
+      countdown.start()
     } catch {
       setError('Could not send email. Try again later.')
     } finally {
