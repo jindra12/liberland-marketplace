@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@bradgarropy/use-countdown':
+        specifier: ^2.0.1
+        version: 2.0.1(react@19.2.1)
       '@payloadcms/admin-bar':
         specifier: 3.74.0
         version: 3.74.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -347,6 +350,12 @@ packages:
 
   '@borewit/text-codec@0.2.1':
     resolution: {integrity: sha512-k7vvKPbf7J2fZ5klGRD9AeKfUvojuZIQ3BT5u7Jfv+puwXkUBUT5PVyMDfJZpy30CBDXGMgw7fguK/lpOMBvgw==}
+
+  '@bradgarropy/use-countdown@2.0.1':
+    resolution: {integrity: sha512-bDiPpQGDO3q9woB9FhbRt2exkjX0bZfF9PC8js1kBjTw18c4wIirWNcf1nLr6dgHxzs3dRQXQvDrQi1sWuYZJg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
 
   '@bytecodealliance/preview2-shim@0.17.6':
     resolution: {integrity: sha512-n3cM88gTen5980UOBAD6xDcNNL3ocTK8keab21bpx1ONdA+ARj7uD1qoFxOWCyKlkpSi195FH+GeAut7Oc6zZw==}
@@ -2999,6 +3008,10 @@ packages:
 
   dataloader@2.2.3:
     resolution: {integrity: sha512-y2krtASINtPFS1rSDjacrFgn1dcUuoREVabwlOGOe4SdxenREqwjwjElAdwvbGM7kgZz9a3KVicWR7vcz8rnzA==}
+
+  date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
 
   date-fns@3.6.0:
     resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
@@ -6152,6 +6165,12 @@ snapshots:
 
   '@borewit/text-codec@0.2.1': {}
 
+  '@bradgarropy/use-countdown@2.0.1(react@19.2.1)':
+    dependencies:
+      date-fns: 2.30.0
+      react: 19.2.1
+      tslib: 2.8.1
+
   '@bytecodealliance/preview2-shim@0.17.6': {}
 
   '@corex/deepmerge@4.0.43': {}
@@ -8714,6 +8733,10 @@ snapshots:
       is-data-view: 1.0.2
 
   dataloader@2.2.3: {}
+
+  date-fns@2.30.0:
+    dependencies:
+      '@babel/runtime': 7.28.6
 
   date-fns@3.6.0: {}
 
