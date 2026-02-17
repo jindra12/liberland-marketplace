@@ -4,7 +4,7 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
-import { Plugin } from 'payload'
+import type { Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { oidcProvider } from 'better-auth/plugins'
@@ -27,6 +27,7 @@ import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { protectUserFields } from './protectUserFields'
+import { comments } from './comments'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -48,6 +49,7 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
+  comments,
   addCreatedBy,
   betterAuthPlugin({
     disableDefaultPayloadAuth: true,
