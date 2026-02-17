@@ -27,6 +27,7 @@ import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { protectUserFields } from './protectUserFields'
+import { seedOIDCClient } from './seedOIDCClient'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -118,6 +119,7 @@ export const plugins: Plugin[] = [
     },
   }),
   protectUserFields,
+  seedOIDCClient,
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
