@@ -28,6 +28,9 @@ import { productFields } from '@/fields/productFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
+import { seedOIDCClient } from './seedOIDCClient'
+import { addOIDCTokenStrategy } from './oidcTokenStrategy'
+import { fixOAuthClientId } from './fixOAuthClientId'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -95,17 +98,17 @@ export const plugins: Plugin[] = [
           allowDynamicClientRegistration: false,
           trustedClients: process.env.OIDC_CLIENT_ID
             ? [
-                {
-                  clientId: process.env.OIDC_CLIENT_ID,
-                  clientSecret: process.env.OIDC_CLIENT_SECRET || '',
-                  name: 'Frontend App',
-                  type: 'web' as const,
-                  redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
-                  metadata: null,
-                  skipConsent: true,
-                  disabled: false,
-                },
-              ]
+              {
+                clientId: process.env.OIDC_CLIENT_ID,
+                clientSecret: process.env.OIDC_CLIENT_SECRET || '',
+                name: 'Frontend App',
+                type: 'web' as const,
+                redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
+                metadata: null,
+                skipConsent: true,
+                disabled: false,
+              },
+            ]
             : [],
         }),
       ],
@@ -120,6 +123,9 @@ export const plugins: Plugin[] = [
     },
   }),
   protectUserFields,
+  fixOAuthClientId,
+  addOIDCTokenStrategy,
+  seedOIDCClient,
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
