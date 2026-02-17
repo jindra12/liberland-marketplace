@@ -1540,6 +1540,9 @@ export interface Job {
 export interface Comment {
   id: string;
   createdBy?: (string | null) | User;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
   content: string;
   replyPost:
     | {

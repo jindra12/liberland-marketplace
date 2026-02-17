@@ -2,6 +2,7 @@ import commentsPluginImport from 'payload-plugin-comments'
 import type { CollectionConfig, Config, Field, Plugin } from 'payload'
 
 import { anyone } from '@/access/anyone'
+import { markdownField } from '@/fields/markdownField'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { setCommentAuthor } from '@/hooks/setCommentAuthor'
 
@@ -18,7 +19,7 @@ const commentTargets = ['jobs', 'companies', 'products', 'identities'] as const
 const baseComments = commentsPlugin({
   slug: 'comments',
   fields: [
-    { name: 'content', type: 'textarea', required: true },
+    { ...markdownField({ name: 'content', label: 'Content' }), required: true },
     { name: 'replyPost', type: 'relationship', relationTo: [...commentTargets], required: true },
     { name: 'replyComment', type: 'relationship', relationTo: 'comments' },
     { name: 'anonymousHash', type: 'text', admin: { hidden: true, readOnly: true } },
