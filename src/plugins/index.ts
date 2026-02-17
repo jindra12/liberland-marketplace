@@ -28,6 +28,7 @@ import { productFields } from '@/fields/productFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { protectUserFields } from './protectUserFields'
 import { seedOIDCClient } from './seedOIDCClient'
+import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -119,6 +120,7 @@ export const plugins: Plugin[] = [
     },
   }),
   protectUserFields,
+  addOIDCTokenStrategy,
   seedOIDCClient,
   ecommercePlugin({
     access: {
