@@ -1,15 +1,31 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
 export const Companies: CollectionConfig = {
   slug: 'companies',
+  hooks: {
+    beforeChange: [requireVerifiedEmailToPublish],
+  },
+  versions: {
+    drafts: true,
+  },
   admin: {
     useAsTitle: 'name',
     group: 'Directory',
-    defaultColumns: ['name', 'website', 'phone', 'email'],
+    defaultColumns: ['name', 'website', 'phone', 'email', '_status'],
+    components: {
+      edit: {
+        PublishButton: '@/components/VerifiedPublishButton',
+      },
+    },
+    baseFilter: ({ req }) => {
+      const filter = onlyOwnDocsOrAdminFilter({ user: req.user })
+      return typeof filter === 'object' ? filter : null
+    },
   },
   access: {
     create: authenticated,
@@ -40,7 +56,6 @@ export const Companies: CollectionConfig = {
         allowCreate: true,
         allowEdit: true,
       },
-      filterOptions: onlyOwnDocsOrAdminFilter,
     },
     {
       name: 'allowedIdentities',

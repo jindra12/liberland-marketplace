@@ -1,0 +1,36 @@
+.verified-publish-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+
+  &__message {
+    font-size: 12px;
+    color: var(--theme-error-500);
+  }
+
+  &__resend {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 12px;
+    color: var(--theme-text);
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+
+  &__success {
+    font-size: 12px;
+    color: var(--theme-success-500);
+  }
+
+  &__error {
+    font-size: 12px;
+    color: var(--theme-error-500);
+  }
+}

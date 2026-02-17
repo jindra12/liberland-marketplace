@@ -6,7 +6,7 @@ import { adminOrSelf } from '@/access/adminOrSelf'
 export const Users: CollectionConfig = {
   slug: 'users',
   access: {
-    admin: ({ req }) => req.user?.role?.includes('admin') || false,
+    admin: ({ req }) => Boolean(req.user),
     create: anyone,
     delete: adminOrSelf,
     read: adminOrSelf,
@@ -15,6 +15,7 @@ export const Users: CollectionConfig = {
   admin: {
     defaultColumns: ['name', 'email'],
     useAsTitle: 'name',
+    hidden: ({ user }) => !user?.role?.includes('admin'),
   },
   hooks: {
     beforeChange: [
@@ -29,6 +30,18 @@ export const Users: CollectionConfig = {
           }
         }
         return data
+      },
+      ({ req, operation, data, originalDoc }) => {
+        if (operation !== 'update') return data
+        if (!req.user) return data
+        if (req.user.role?.includes('admin')) return data
+
+        return {
+          ...data,
+          role: originalDoc?.role,
+          email: originalDoc?.email,
+          emailVerified: originalDoc?.emailVerified,
+        }
       },
     ],
   },

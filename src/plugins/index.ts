@@ -8,6 +8,7 @@ import { Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { oidcProvider } from 'better-auth/plugins'
+import nodemailer from 'nodemailer'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -17,10 +18,24 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
+import { hideAdminCollections } from './hideAdminCollections'
 import { authenticated } from '@/access/authenticated'
+import { anyone } from '@/access/anyone'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
+import { protectUserFields } from './protectUserFields'
+
+const smtpTransport = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+})
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
@@ -45,6 +60,25 @@ export const plugins: Plugin[] = [
         .map((url) => new URL(url).origin),
       emailAndPassword: {
         enabled: true,
+      },
+      emailVerification: {
+        sendOnSignUp: true,
+        autoSignInAfterVerification: true,
+        sendVerificationEmail: async ({ user, url }) => {
+          const fromAddress = process.env.SMTP_FROM_ADDRESS || 'noreply@liberland.org'
+          const fromName = process.env.SMTP_FROM_NAME || 'Liberland Marketplace'
+          await smtpTransport.sendMail({
+            from: `"${fromName}" <${fromAddress}>`,
+            to: user.email,
+            subject: 'Verify your email — Liberland Marketplace',
+            html: `
+              <h1>Welcome to Liberland Marketplace!</h1>
+              <p>Please verify your email address by clicking the link below:</p>
+              <p><a href="${url}">Verify Email</a></p>
+              <p>If you did not create an account, you can safely ignore this email.</p>
+            `,
+          })
+        },
       },
       socialProviders: {
         google: {
@@ -76,13 +110,14 @@ export const plugins: Plugin[] = [
     },
     users: {
       slug: 'users',
-      adminRoles: ['admin'],
+      adminRoles: ['admin', 'user'],
       defaultRole: 'user',
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
       allowedFields: ['name'],
     },
   }),
+  protectUserFields,
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
@@ -102,7 +137,31 @@ export const plugins: Plugin[] = [
     products: {
       productsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
+        access: {
+          ...defaultCollection.access,
+          create: authenticated,
+          read: anyone,
+          update: onlyOwnDocsOrAdmin,
+          delete: onlyOwnDocsOrAdmin,
+        },
+        admin: {
+          ...defaultCollection.admin,
+          components: {
+            ...defaultCollection.admin?.components,
+            edit: {
+              ...defaultCollection.admin?.components?.edit,
+              PublishButton: '@/components/VerifiedPublishButton',
+            },
+          },
+        },
         fields: mergeFields(defaultCollection.fields, productFields),
+        hooks: {
+          ...defaultCollection.hooks,
+          beforeChange: [
+            ...(defaultCollection.hooks?.beforeChange ?? []),
+            requireVerifiedEmailToPublish,
+          ],
+        },
       }),
     },
     payments: {
@@ -183,4 +242,5 @@ export const plugins: Plugin[] = [
     },
     token: process.env.BLOB_READ_WRITE_TOKEN,
   }),
+  hideAdminCollections,
 ]
