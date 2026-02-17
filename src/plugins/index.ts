@@ -20,6 +20,8 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
 import { hideAdminCollections } from './hideAdminCollections'
 import { authenticated } from '@/access/authenticated'
+import { anyone } from '@/access/anyone'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
@@ -135,6 +137,13 @@ export const plugins: Plugin[] = [
     products: {
       productsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
+        access: {
+          ...defaultCollection.access,
+          create: authenticated,
+          read: anyone,
+          update: onlyOwnDocsOrAdmin,
+          delete: onlyOwnDocsOrAdmin,
+        },
         admin: {
           ...defaultCollection.admin,
           components: {
