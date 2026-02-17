@@ -87,6 +87,7 @@ export interface Config {
     identities: Identity;
     companies: Company;
     jobs: Job;
+    comments: Comment;
     addresses: Address;
     variants: Variant;
     variantTypes: VariantType;
@@ -137,6 +138,7 @@ export interface Config {
     identities: IdentitiesSelect<false> | IdentitiesSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     variants: VariantsSelect<false> | VariantsSelect<true>;
     variantTypes: VariantTypesSelect<false> | VariantTypesSelect<true>;
@@ -1533,84 +1535,36 @@ export interface Job {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "addresses".
+ * via the `definition` "comments".
  */
-export interface Address {
+export interface Comment {
   id: string;
-  customer?: (string | null) | User;
-  title?: string | null;
-  firstName?: string | null;
-  lastName?: string | null;
-  company?: string | null;
-  addressLine1?: string | null;
-  addressLine2?: string | null;
-  city?: string | null;
-  state?: string | null;
-  postalCode?: string | null;
-  country:
-    | 'US'
-    | 'GB'
-    | 'CA'
-    | 'AU'
-    | 'AT'
-    | 'BE'
-    | 'BR'
-    | 'BG'
-    | 'CY'
-    | 'CZ'
-    | 'DK'
-    | 'EE'
-    | 'FI'
-    | 'FR'
-    | 'DE'
-    | 'GR'
-    | 'HK'
-    | 'HU'
-    | 'IN'
-    | 'IE'
-    | 'IT'
-    | 'JP'
-    | 'LV'
-    | 'LT'
-    | 'LU'
-    | 'MY'
-    | 'MT'
-    | 'MX'
-    | 'NL'
-    | 'NZ'
-    | 'NO'
-    | 'PL'
-    | 'PT'
-    | 'RO'
-    | 'SG'
-    | 'SK'
-    | 'SI'
-    | 'ES'
-    | 'SE'
-    | 'CH';
-  phone?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variants".
- */
-export interface Variant {
-  id: string;
+  createdBy?: (string | null) | User;
   /**
-   * Used for administrative purposes, not shown to customers. This is populated by default.
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
    */
-  title?: string | null;
-  product: string | Product;
-  options: (string | VariantOption)[];
-  inventory?: number | null;
-  priceInUSDEnabled?: boolean | null;
-  priceInUSD?: number | null;
+  content: string;
+  replyPost:
+    | {
+        relationTo: 'jobs';
+        value: string | Job;
+      }
+    | {
+        relationTo: 'companies';
+        value: string | Company;
+      }
+    | {
+        relationTo: 'products';
+        value: string | Product;
+      }
+    | {
+        relationTo: 'identities';
+        value: string | Identity;
+      };
+  replyComment?: (string | null) | Comment;
+  anonymousHash?: string | null;
   updatedAt: string;
   createdAt: string;
-  deletedAt?: string | null;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1864,6 +1818,87 @@ export interface VariantOption {
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variants".
+ */
+export interface Variant {
+  id: string;
+  /**
+   * Used for administrative purposes, not shown to customers. This is populated by default.
+   */
+  title?: string | null;
+  product: string | Product;
+  options: (string | VariantOption)[];
+  inventory?: number | null;
+  priceInUSDEnabled?: boolean | null;
+  priceInUSD?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "addresses".
+ */
+export interface Address {
+  id: string;
+  customer?: (string | null) | User;
+  title?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  company?: string | null;
+  addressLine1?: string | null;
+  addressLine2?: string | null;
+  city?: string | null;
+  state?: string | null;
+  postalCode?: string | null;
+  country:
+    | 'US'
+    | 'GB'
+    | 'CA'
+    | 'AU'
+    | 'AT'
+    | 'BE'
+    | 'BR'
+    | 'BG'
+    | 'CY'
+    | 'CZ'
+    | 'DK'
+    | 'EE'
+    | 'FI'
+    | 'FR'
+    | 'DE'
+    | 'GR'
+    | 'HK'
+    | 'HU'
+    | 'IN'
+    | 'IE'
+    | 'IT'
+    | 'JP'
+    | 'LV'
+    | 'LT'
+    | 'LU'
+    | 'MY'
+    | 'MT'
+    | 'MX'
+    | 'NL'
+    | 'NZ'
+    | 'NO'
+    | 'PL'
+    | 'PT'
+    | 'RO'
+    | 'SG'
+    | 'SK'
+    | 'SI'
+    | 'ES'
+    | 'SE'
+    | 'CH';
+  phone?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2228,6 +2263,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'jobs';
         value: string | Job;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: string | Comment;
       } | null)
     | ({
         relationTo: 'addresses';
@@ -2786,6 +2825,19 @@ export interface JobsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  createdBy?: T;
+  content?: T;
+  replyPost?: T;
+  replyComment?: T;
+  anonymousHash?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

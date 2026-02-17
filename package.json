@@ -58,6 +58,7 @@
     "nodemailer": "^8.0.1",
     "payload": "3.74.0",
     "payload-auth": "^1.8.4",
+    "payload-plugin-comments": "^1.0.2",
     "prism-react-renderer": "^2.3.1",
     "react": "19.2.1",
     "react-dom": "19.2.1",

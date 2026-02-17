@@ -113,6 +113,9 @@ importers:
       payload-auth:
         specifier: ^1.8.4
         version: 1.8.4(84aa9f26927ca62a78a461d5605deecb)
+      payload-plugin-comments:
+        specifier: ^1.0.2
+        version: 1.0.2
       prism-react-renderer:
         specifier: ^2.3.1
         version: 2.4.1(react@19.2.1)
@@ -4693,6 +4696,9 @@ packages:
       payload: '>=3.69.0 <4'
       react: '>=19.2.1 <20'
       react-dom: '>=19.2.1 <20'
+
+  payload-plugin-comments@1.0.2:
+    resolution: {integrity: sha512-lqU8VhAJB0PrTeIRiWPsK+MqZeynEPWucUuV8cPmffyu5s6dFKn+MkXIn+WxE/Y2g1nQavdNmyOCvdNBv6GDmQ==}
 
   payload@3.74.0:
     resolution: {integrity: sha512-8K8w5+/JehKgRl/xXtmAI1uMHJc9542x/TCdw1n7WbE+E1+j/oAwa/cV2FvF0zVA5ASTvGqOhVpb8bd9wApTUA==}
@@ -10891,6 +10897,8 @@ snapshots:
       uncrypto: 0.1.3
     transitivePeerDependencies:
       - '@tanstack/react-start'
+
+  payload-plugin-comments@1.0.2: {}
 
   payload@3.74.0(graphql@16.12.0)(typescript@5.7.3):
     dependencies:
