@@ -243,6 +243,7 @@ export interface User {
   image?: string | null;
   createdAt: string;
   updatedAt: string;
+  identity?: string | null;
   /**
    * The role/ roles of the user
    */
@@ -2373,6 +2374,7 @@ export interface UsersSelect<T extends boolean = true> {
   image?: T;
   createdAt?: T;
   updatedAt?: T;
+  identity?: T;
   role?: T;
   account?: T;
   session?: T;
