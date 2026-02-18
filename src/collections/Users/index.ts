@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '@/access/anyone'
 import { adminOrSelf } from '@/access/adminOrSelf'
+import { createDefaultCompany } from '@/hooks/createDefaultCompany'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -18,6 +19,7 @@ export const Users: CollectionConfig = {
     hidden: ({ user }) => !user?.role?.includes('admin'),
   },
   hooks: {
+    afterChange: [createDefaultCompany],
     beforeChange: [
       async ({ req, operation, data }) => {
         if (operation === 'create') {
