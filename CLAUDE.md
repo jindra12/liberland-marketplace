@@ -76,6 +76,7 @@ See `.env.example` for full list. Copy to `.env` before running.
 After making changes that affect frontend behavior (UI changes, new features, bug fixes to interactions), **proactively** use the `playwright-cli` skill to visually verify the changes in the browser. This means:
 - Start the dev server if not already running
 - Navigate to the affected page(s) on backend running on localhost:3000 or the related frontend project running on localhost:3001
+- If you need login use user claudetest2@gmail.com password claudetest2@gmail.com
 - Verify the change works as expected (elements render, interactions behave correctly)
 - If issues are found, fix them and re-test
 - Do this without being asked — it's part of the workflow for UI-affecting changes

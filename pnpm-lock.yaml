@@ -68,9 +68,6 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.0.2
         version: 1.2.4(@types/react@19.2.9)(react@19.2.1)
-      '@sctg/currencies':
-        specifier: ^0.9.8
-        version: 0.9.8
       '@uiw/react-md-editor':
         specifier: ^4.0.11
         version: 4.0.11(@types/react@19.2.9)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -2004,9 +2001,6 @@ packages:
 
   '@rushstack/eslint-patch@1.15.0':
     resolution: {integrity: sha512-ojSshQPKwVvSMR8yT2L/QtUkV5SXi/IfDiJ4/8d6UbTPjiHVmxZzUAzGD8Tzks1b9+qQkZa0isUOvYObedITaw==}
-
-  '@sctg/currencies@0.9.8':
-    resolution: {integrity: sha512-qpQiMKTYVr1MHsAqMbz2ZqdNEodGlJLbAjDpJo/TNRyqA0fc8VwGd6TUxY2cRJVhKRmEnvYzdc/N0MVdwlki+w==}
 
   '@simplewebauthn/browser@13.2.2':
     resolution: {integrity: sha512-FNW1oLQpTJyqG5kkDg5ZsotvWgmBaC6jCHR7Ej0qUNep36Wl9tj2eZu7J5rP+uhXgHaLk+QQ3lqcw2vS5MX1IA==}
@@ -7717,8 +7711,6 @@ snapshots:
   '@rtsao/scc@1.1.0': {}
 
   '@rushstack/eslint-patch@1.15.0': {}
-
-  '@sctg/currencies@0.9.8': {}
 
   '@simplewebauthn/browser@13.2.2': {}
 
