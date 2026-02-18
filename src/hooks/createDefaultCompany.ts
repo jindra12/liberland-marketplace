@@ -16,6 +16,7 @@ export const createDefaultCompany: CollectionAfterChangeHook = async ({
       name,
       description,
       email: doc.email,
+      ...(doc.identity ? { identity: doc.identity } : {}),
       _status: 'draft',
     },
     user: doc,

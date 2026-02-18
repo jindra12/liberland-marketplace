@@ -3,6 +3,7 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { authClient } from '@/lib/auth-client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -10,6 +11,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { GoogleLogo } from '@/components/icons/GoogleLogo'
 import { ComingSoonProviders } from '@/components/ComingSoonProviders'
+import { cn } from '@/utilities/ui'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
+import type { Identity, Media } from '@/payload-types'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -19,9 +23,18 @@ export default function SignupPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [queryString, setQueryString] = useState('')
+  const [identities, setIdentities] = useState<Identity[]>([])
+  const [selectedIdentity, setSelectedIdentity] = useState<string | null>(null)
 
   useEffect(() => {
     setQueryString(window.location.search)
+
+    fetch('/api/identities?depth=1&limit=100')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.docs) setIdentities(data.docs)
+      })
+      .catch(() => {})
   }, [])
 
   const getRedirectURL = () => {
@@ -29,6 +42,12 @@ export default function SignupPage() {
       return `/api/auth/oauth2/authorize${queryString}`
     }
     return process.env.NEXT_PUBLIC_FRONTEND_URL || '/'
+  }
+
+  const getIdentityImageUrl = (identity: Identity): string | null => {
+    if (!identity.image) return null
+    if (typeof identity.image === 'string') return null
+    return getMediaUrl((identity.image as Media).url)
   }
 
   const handleSignup = async (e: FormEvent) => {
@@ -42,6 +61,7 @@ export default function SignupPage() {
         email,
         password,
         callbackURL: '/verify-email-success',
+        ...(selectedIdentity ? { identity: selectedIdentity } : {}),
       })
       if (result.error) {
         setError(result.error.message || 'Sign up failed')
@@ -89,6 +109,51 @@ export default function SignupPage() {
             <span className="text-muted-foreground text-sm">or</span>
             <div className="bg-border h-px flex-1" />
           </div>
+
+          {identities.length > 0 && (
+            <div className="flex flex-col gap-2">
+              <Label>Select your identity (optional)</Label>
+              <div className="grid grid-cols-3 gap-3">
+                {identities.map((identity) => {
+                  const imageUrl = getIdentityImageUrl(identity)
+                  const isSelected = selectedIdentity === identity.id
+                  return (
+                    <button
+                      key={identity.id}
+                      type="button"
+                      onClick={() =>
+                        setSelectedIdentity(isSelected ? null : identity.id)
+                      }
+                      className={cn(
+                        'flex flex-col items-center gap-2 rounded-lg border-2 p-3 transition-colors',
+                        isSelected
+                          ? 'border-primary ring-primary ring-2'
+                          : 'border-border hover:border-primary/50',
+                      )}
+                    >
+                      <div className="relative size-12 overflow-hidden rounded-full bg-muted">
+                        {imageUrl ? (
+                          <Image
+                            src={imageUrl}
+                            alt={identity.name}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <span className="flex size-full items-center justify-center text-lg font-semibold">
+                            {identity.name.charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-center text-xs font-medium leading-tight">
+                        {identity.name}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
 
           <form onSubmit={handleSignup} className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">

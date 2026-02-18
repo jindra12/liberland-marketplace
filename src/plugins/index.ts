@@ -91,6 +91,15 @@ export const plugins: Plugin[] = [
           clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
         },
       },
+      user: {
+        additionalFields: {
+          identity: {
+            type: 'string',
+            required: false,
+            input: true,
+          },
+        },
+      },
       plugins: [
         oidcProvider({
           loginPage: '/login',
@@ -119,7 +128,7 @@ export const plugins: Plugin[] = [
       defaultRole: 'user',
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
-      allowedFields: ['name'],
+      allowedFields: ['name', 'identity'],
     },
   }),
   protectUserFields,
