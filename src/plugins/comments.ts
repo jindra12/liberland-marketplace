@@ -5,6 +5,7 @@ import { anyone } from '@/access/anyone'
 import { markdownField } from '@/fields/markdownField'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { setCommentAuthor } from '@/hooks/setCommentAuthor'
+import { syncCommentReplyPostLookup } from '@/hooks/syncCommentReplyPostLookup'
 
 type CommentsPluginFactory = (options?: Record<string, unknown>) => Plugin
 
@@ -23,6 +24,18 @@ const baseComments = commentsPlugin({
     { name: 'replyPost', type: 'relationship', relationTo: [...commentTargets], required: true },
     { name: 'replyComment', type: 'relationship', relationTo: 'comments' },
     { name: 'anonymousHash', type: 'text', admin: { hidden: true, readOnly: true } },
+    {
+      name: 'replyPostRelationTo',
+      type: 'text',
+      index: true,
+      admin: { hidden: true, readOnly: true },
+    },
+    {
+      name: 'replyPostValue',
+      type: 'text',
+      index: true,
+      admin: { hidden: true, readOnly: true },
+    },
   ],
   collectionsAllowingComments: [...commentTargets],
   autoPublish: true,
@@ -57,7 +70,11 @@ export const comments: Plugin = async (config: Config): Promise<Config> => {
         ),
         hooks: {
           ...collection.hooks,
-          beforeChange: [setCommentAuthor, ...(collection.hooks?.beforeChange ?? [])],
+          beforeChange: [
+            setCommentAuthor,
+            syncCommentReplyPostLookup,
+            ...(collection.hooks?.beforeChange ?? []),
+          ],
         },
       }
     }),

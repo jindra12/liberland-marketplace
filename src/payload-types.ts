@@ -1563,6 +1563,8 @@ export interface Comment {
       };
   replyComment?: (string | null) | Comment;
   anonymousHash?: string | null;
+  replyPostRelationTo?: string | null;
+  replyPostValue?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2836,6 +2838,8 @@ export interface CommentsSelect<T extends boolean = true> {
   replyPost?: T;
   replyComment?: T;
   anonymousHash?: T;
+  replyPostRelationTo?: T;
+  replyPostValue?: T;
   updatedAt?: T;
   createdAt?: T;
 }
