@@ -15,7 +15,7 @@ const commentsPlugin = (
     : (commentsPluginImport as unknown as { default: CommentsPluginFactory }).default
 ) as CommentsPluginFactory
 
-const commentTargets = ['jobs', 'companies', 'products', 'identities'] as const
+const commentTargets = ['jobs', 'companies', 'products', 'identities', 'startups'] as const
 
 const baseComments = commentsPlugin({
   slug: 'comments',
