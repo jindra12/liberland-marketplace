@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-    "backfill:comment-replypost-lookup": "cross-env NODE_OPTIONS=--no-deprecation payload run src/scripts/backfillCommentReplyPostLookup.ts",
     "deploy": "pnpm vercel --prod",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
