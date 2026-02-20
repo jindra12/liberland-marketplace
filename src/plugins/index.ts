@@ -31,6 +31,7 @@ import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
+import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -175,6 +176,7 @@ export const plugins: Plugin[] = [
         hooks: {
           ...defaultCollection.hooks,
           beforeChange: [
+            syncCompanyIdentityId,
             ...(defaultCollection.hooks?.beforeChange ?? []),
             requireVerifiedEmailToPublish,
           ],

@@ -1144,6 +1144,7 @@ export interface Job {
   createdBy: string | User;
   title: string;
   company: string | Company;
+  companyIdentityId?: string | null;
   location?: string | null;
   isActive?: boolean | null;
   positions: number;
@@ -1223,6 +1224,7 @@ export interface Product {
   priceInUSD?: number | null;
   name: string;
   company: string | Company;
+  companyIdentityId?: string | null;
   url?: string | null;
   price: {
     amount: number;
@@ -2260,6 +2262,7 @@ export interface JobsSelect<T extends boolean = true> {
   createdBy?: T;
   title?: T;
   company?: T;
+  companyIdentityId?: T;
   location?: T;
   isActive?: T;
   positions?: T;
@@ -2376,6 +2379,7 @@ export interface ProductsSelect<T extends boolean = true> {
   priceInUSD?: T;
   name?: T;
   company?: T;
+  companyIdentityId?: T;
   url?: T;
   price?:
     | T

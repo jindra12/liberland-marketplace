@@ -15,6 +15,15 @@ export const productFields: Field[] = [
     relationTo: 'companies',
     required: true,
   },
+  {
+    name: 'companyIdentityId',
+    type: 'text',
+    index: true,
+    admin: {
+      hidden: true,
+      readOnly: true,
+    },
+  },
 
   {
     name: 'url',
