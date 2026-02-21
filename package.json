@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-    "deploy": "pnpm vercel --prod",
+    "deploy:test": "pnpm vercel --prod",
+    "deploy": "pm2 delete liberstake-market; pnpm build; pm2 start ./dist/index.js -f --name liberstake-market; pm2 startup; pm2 save",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
