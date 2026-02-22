@@ -42,6 +42,11 @@ const smtpTransport = nodemailer.createTransport({
   },
 })
 
+const betterAuthSecret = process.env.BETTER_AUTH_SECRET
+if (!betterAuthSecret) {
+  throw new Error('Missing BETTER_AUTH_SECRET environment variable')
+}
+
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
 }
@@ -59,6 +64,7 @@ export const plugins: Plugin[] = [
     disableDefaultPayloadAuth: true,
     hidePluginCollections: true,
     betterAuthOptions: {
+      secret: betterAuthSecret,
       baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
       trustedOrigins: (process.env.OIDC_REDIRECT_URLS || '')
         .split(',')
