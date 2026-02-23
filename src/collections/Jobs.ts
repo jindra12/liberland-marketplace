@@ -3,13 +3,14 @@ import { authenticated } from '@/access/authenticated'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { markdownField } from '@/fields/markdownField'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
   hooks: {
-    beforeChange: [requireVerifiedEmailToPublish],
+    beforeChange: [syncCompanyIdentityId, requireVerifiedEmailToPublish],
   },
   admin: {
     useAsTitle: 'title',
@@ -44,6 +45,15 @@ export const Jobs: CollectionConfig = {
       relationTo: 'companies',
       required: true,
       filterOptions: onlyOwnDocsOrAdminFilter,
+    },
+    {
+      name: 'companyIdentityId',
+      type: 'text',
+      index: true,
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
     },
 
     { name: 'location', type: 'text' },

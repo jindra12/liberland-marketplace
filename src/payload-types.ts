@@ -87,6 +87,7 @@ export interface Config {
     identities: Identity;
     companies: Company;
     jobs: Job;
+    startups: Startup;
     comments: Comment;
     addresses: Address;
     variants: Variant;
@@ -138,6 +139,7 @@ export interface Config {
     identities: IdentitiesSelect<false> | IdentitiesSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
+    startups: StartupsSelect<false> | StartupsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     variants: VariantsSelect<false> | VariantsSelect<true>;
@@ -1144,6 +1146,7 @@ export interface Job {
   createdBy: string | User;
   title: string;
   company: string | Company;
+  companyIdentityId?: string | null;
   location?: string | null;
   isActive?: boolean | null;
   positions: number;
@@ -1166,6 +1169,37 @@ export interface Job {
    */
   description?: string | null;
   applyUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "startups".
+ */
+export interface Startup {
+  id: string;
+  createdBy: string | User;
+  title: string;
+  company: string | Company;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
+  image?: (string | null) | Media;
+  identity: string | Identity;
+  fundsNeeded?: {
+    amount?: number | null;
+    currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
+  };
+  lookingFor?:
+    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
+    | null;
+  alreadyHave?:
+    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
+    | null;
+  stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
+  involvedUsers?: (string | User)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1197,6 +1231,10 @@ export interface Comment {
     | {
         relationTo: 'identities';
         value: string | Identity;
+      }
+    | {
+        relationTo: 'startups';
+        value: string | Startup;
       };
   replyComment?: (string | null) | Comment;
   anonymousHash?: string | null;
@@ -1223,6 +1261,7 @@ export interface Product {
   priceInUSD?: number | null;
   name: string;
   company: string | Company;
+  companyIdentityId?: string | null;
   url?: string | null;
   price: {
     amount: number;
@@ -1530,6 +1569,10 @@ export interface Search {
     | {
         relationTo: 'products';
         value: string | Product;
+      }
+    | {
+        relationTo: 'startups';
+        value: string | Startup;
       };
   slug?: string | null;
   meta?: {
@@ -1723,6 +1766,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'jobs';
         value: string | Job;
+      } | null)
+    | ({
+        relationTo: 'startups';
+        value: string | Startup;
       } | null)
     | ({
         relationTo: 'comments';
@@ -2260,6 +2307,7 @@ export interface JobsSelect<T extends boolean = true> {
   createdBy?: T;
   title?: T;
   company?: T;
+  companyIdentityId?: T;
   location?: T;
   isActive?: T;
   positions?: T;
@@ -2283,6 +2331,31 @@ export interface JobsSelect<T extends boolean = true> {
   disallowedIdentities?: T;
   description?: T;
   applyUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "startups_select".
+ */
+export interface StartupsSelect<T extends boolean = true> {
+  createdBy?: T;
+  title?: T;
+  company?: T;
+  description?: T;
+  image?: T;
+  identity?: T;
+  fundsNeeded?:
+    | T
+    | {
+        amount?: T;
+        currency?: T;
+      };
+  lookingFor?: T;
+  alreadyHave?: T;
+  stage?: T;
+  involvedUsers?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2376,6 +2449,7 @@ export interface ProductsSelect<T extends boolean = true> {
   priceInUSD?: T;
   name?: T;
   company?: T;
+  companyIdentityId?: T;
   url?: T;
   price?:
     | T

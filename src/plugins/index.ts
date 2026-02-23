@@ -31,6 +31,7 @@ import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
+import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -40,6 +41,11 @@ const smtpTransport = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
 })
+
+const betterAuthSecret = process.env.BETTER_AUTH_SECRET
+if (!betterAuthSecret) {
+  throw new Error('Missing BETTER_AUTH_SECRET environment variable')
+}
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
@@ -58,6 +64,7 @@ export const plugins: Plugin[] = [
     disableDefaultPayloadAuth: true,
     hidePluginCollections: true,
     betterAuthOptions: {
+      secret: betterAuthSecret,
       baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
       trustedOrigins: (process.env.OIDC_REDIRECT_URLS || '')
         .split(',')
@@ -175,6 +182,7 @@ export const plugins: Plugin[] = [
         hooks: {
           ...defaultCollection.hooks,
           beforeChange: [
+            syncCompanyIdentityId,
             ...(defaultCollection.hooks?.beforeChange ?? []),
             requireVerifiedEmailToPublish,
           ],
@@ -242,7 +250,7 @@ export const plugins: Plugin[] = [
     },
   }),
   searchPlugin({
-    collections: ['jobs', 'companies', 'identities', 'products'],
+    collections: ['jobs', 'companies', 'identities', 'products', 'startups'],
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {
       fields: ({ defaultFields }) => {

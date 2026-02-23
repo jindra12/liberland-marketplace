@@ -1,6 +1,6 @@
 import type { CollectionConfig, Config, GlobalConfig } from 'payload'
 
-const USER_VISIBLE_SLUGS = ['companies', 'jobs', 'identities', 'products']
+const USER_VISIBLE_SLUGS = ['companies', 'jobs', 'identities', 'products', 'startups']
 
 const hideForNonAdmin = ({ user }: { user: any }) => !user?.role?.includes('admin')
 
