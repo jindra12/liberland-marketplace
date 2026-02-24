@@ -2,6 +2,7 @@ import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { markdownField } from '@/fields/markdownField'
+import { serverURLField } from '@/fields/serverURLField'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import { getCurrencies } from '@/utilities/getCurrencies'
@@ -36,6 +37,7 @@ export const Jobs: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    serverURLField(),
     { name: 'title', type: 'text', required: true },
 
     // Each job connected to a company

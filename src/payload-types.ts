@@ -1104,6 +1104,10 @@ export interface Form {
 export interface Identity {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   */
+  serverURL?: string | null;
   name: string;
   website?: string | null;
   image?: (string | null) | Media;
@@ -1121,6 +1125,10 @@ export interface Identity {
 export interface Company {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   */
+  serverURL?: string | null;
   name: string;
   website?: string | null;
   phone?: string | null;
@@ -1144,6 +1152,10 @@ export interface Company {
 export interface Job {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   */
+  serverURL?: string | null;
   title: string;
   company: string | Company;
   companyIdentityId?: string | null;
@@ -1180,6 +1192,10 @@ export interface Job {
 export interface Startup {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   */
+  serverURL?: string | null;
   title: string;
   company: string | Company;
   /**
@@ -1259,6 +1275,10 @@ export interface Product {
   };
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   */
+  serverURL?: string | null;
   name: string;
   company: string | Company;
   companyIdentityId?: string | null;
@@ -2273,6 +2293,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface IdentitiesSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   name?: T;
   website?: T;
   image?: T;
@@ -2286,6 +2307,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
  */
 export interface CompaniesSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   name?: T;
   website?: T;
   phone?: T;
@@ -2305,6 +2327,7 @@ export interface CompaniesSelect<T extends boolean = true> {
  */
 export interface JobsSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   title?: T;
   company?: T;
   companyIdentityId?: T;
@@ -2341,6 +2364,7 @@ export interface JobsSelect<T extends boolean = true> {
  */
 export interface StartupsSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   title?: T;
   company?: T;
   description?: T;
@@ -2447,6 +2471,7 @@ export interface ProductsSelect<T extends boolean = true> {
   variants?: T;
   priceInUSDEnabled?: T;
   priceInUSD?: T;
+  serverURL?: T;
   name?: T;
   company?: T;
   companyIdentityId?: T;
