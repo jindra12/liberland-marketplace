@@ -126,7 +126,7 @@ export const Jobs: CollectionConfig = {
     },
     {
       name: 'allowedIdentities',
-      label: 'Allowed identities',
+      label: 'Allowed tribes',
       type: 'relationship',
       relationTo: 'identities',
       hasMany: true,
@@ -138,7 +138,7 @@ export const Jobs: CollectionConfig = {
     },
     {
       name: 'disallowedIdentities',
-      label: 'Disallowed identities',
+      label: 'Disallowed tribes',
       type: 'relationship',
       relationTo: 'identities',
       hasMany: true,

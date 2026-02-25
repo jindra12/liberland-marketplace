@@ -21,7 +21,7 @@ import { addCreatedBy } from './addCreatedBy'
 import { hideAdminCollections } from './hideAdminCollections'
 import { authenticated } from '@/access/authenticated'
 import { anyone } from '@/access/anyone'
-import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
@@ -165,11 +165,18 @@ export const plugins: Plugin[] = [
           ...defaultCollection.access,
           create: authenticated,
           read: anyone,
-          update: onlyOwnDocsOrAdmin,
-          delete: onlyOwnDocsOrAdmin,
+          update: onlyOwnProductsOrAdmin,
+          delete: onlyOwnProductsOrAdmin,
         },
         admin: {
           ...defaultCollection.admin,
+          useAsTitle: 'name',
+          defaultColumns: [
+            'name',
+            ...((defaultCollection.admin?.defaultColumns || []).filter(
+              (column) => column !== 'name',
+            ) as string[]),
+          ],
           components: {
             ...defaultCollection.admin?.components,
             edit: {
