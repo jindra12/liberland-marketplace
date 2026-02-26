@@ -88,6 +88,7 @@ export interface Config {
     companies: Company;
     jobs: Job;
     startups: Startup;
+    syndications: Syndication;
     comments: Comment;
     addresses: Address;
     variants: Variant;
@@ -140,6 +141,7 @@ export interface Config {
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     startups: StartupsSelect<false> | StartupsSelect<true>;
+    syndications: SyndicationsSelect<false> | SyndicationsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     variants: VariantsSelect<false> | VariantsSelect<true>;
@@ -1222,6 +1224,23 @@ export interface Startup {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "syndications".
+ */
+export interface Syndication {
+  id: string;
+  createdBy: string | User;
+  name: string;
+  url: string;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "comments".
  */
 export interface Comment {
@@ -1790,6 +1809,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'startups';
         value: string | Startup;
+      } | null)
+    | ({
+        relationTo: 'syndications';
+        value: string | Syndication;
       } | null)
     | ({
         relationTo: 'comments';
@@ -2380,6 +2403,19 @@ export interface StartupsSelect<T extends boolean = true> {
   alreadyHave?: T;
   stage?: T;
   involvedUsers?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "syndications_select".
+ */
+export interface SyndicationsSelect<T extends boolean = true> {
+  createdBy?: T;
+  name?: T;
+  url?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
