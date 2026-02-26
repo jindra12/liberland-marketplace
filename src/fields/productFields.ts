@@ -29,17 +29,6 @@ export const productFields: Field[] = [
     name: 'url',
     type: 'text',
     required: false,
-    validate: (val?: string | null) => {
-      if (!val) {
-        return true
-      }
-      try {
-        new URL(val);
-        return true;
-      } catch {
-        return 'Please enter a valid URL.'
-      }
-    },
   },
 
   {

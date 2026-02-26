@@ -6,6 +6,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Identities: CollectionConfig = {
   slug: 'identities',
+  labels: {
+    singular: 'Tribe',
+    plural: 'Tribes',
+  },
   admin: {
     useAsTitle: 'name',
     group: 'Directory',
