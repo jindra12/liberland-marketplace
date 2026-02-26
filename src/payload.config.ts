@@ -22,6 +22,7 @@ import { Syndications } from './collections/Syndications'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const payloadDebug = process.env.PAYLOAD_DEBUG === 'true'
 
 export default buildConfig({
   admin: {
@@ -81,6 +82,12 @@ export default buildConfig({
   cors: '*',
   globals: [Header, Footer],
   plugins,
+  debug: payloadDebug,
+  logger: {
+    options: {
+      level: process.env.PAYLOAD_LOG_LEVEL || 'info',
+    },
+  },
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {

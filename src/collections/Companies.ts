@@ -51,6 +51,7 @@ export const Companies: CollectionConfig = {
     }),
     {
       name: 'identity',
+      label: 'Tribe',
       type: 'relationship',
       relationTo: 'identities',
       required: true,
@@ -61,7 +62,7 @@ export const Companies: CollectionConfig = {
     },
     {
       name: 'allowedIdentities',
-      label: 'Allowed identities',
+      label: 'Allowed tribes',
       type: 'relationship',
       relationTo: 'identities',
       hasMany: true,
@@ -73,7 +74,7 @@ export const Companies: CollectionConfig = {
     },
     {
       name: 'disallowedIdentities',
-      label: 'Disallowed identities',
+      label: 'Disallowed tribes',
       type: 'relationship',
       relationTo: 'identities',
       hasMany: true,

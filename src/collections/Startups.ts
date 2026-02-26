@@ -73,6 +73,7 @@ export const Startups: CollectionConfig = {
     },
     {
       name: 'identity',
+      label: 'Tribe',
       type: 'relationship',
       relationTo: 'identities',
       required: true,
