@@ -1,8 +1,10 @@
 import { markdownField } from "@/fields/markdownField";
+import { serverURLField } from '@/fields/serverURLField'
 import { getCurrencies } from "@/utilities/getCurrencies";
 import { Field } from "payload";
 
 export const productFields: Field[] = [
+  serverURLField(),
   {
     name: 'name',
     type: 'text',

@@ -1,6 +1,7 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { serverURLField } from '@/fields/serverURLField'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
@@ -34,6 +35,7 @@ export const Companies: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    serverURLField(),
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },
     { name: 'phone', type: 'text' },

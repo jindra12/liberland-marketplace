@@ -1,6 +1,7 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { serverURLField } from '@/fields/serverURLField'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
 import { joinStartup, leaveStartup } from '@/endpoints/involvedUsers'
@@ -49,6 +50,7 @@ export const Startups: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    serverURLField(),
     { name: 'title', type: 'text', required: true },
     {
       name: 'company',

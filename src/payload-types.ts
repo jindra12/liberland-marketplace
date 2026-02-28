@@ -88,6 +88,7 @@ export interface Config {
     companies: Company;
     jobs: Job;
     startups: Startup;
+    syndications: Syndication;
     comments: Comment;
     addresses: Address;
     variants: Variant;
@@ -140,6 +141,7 @@ export interface Config {
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     startups: StartupsSelect<false> | StartupsSelect<true>;
+    syndications: SyndicationsSelect<false> | SyndicationsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     variants: VariantsSelect<false> | VariantsSelect<true>;
@@ -1104,6 +1106,10 @@ export interface Form {
 export interface Identity {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
   name: string;
   website?: string | null;
   image?: (string | null) | Media;
@@ -1121,6 +1127,10 @@ export interface Identity {
 export interface Company {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
   name: string;
   website?: string | null;
   phone?: string | null;
@@ -1144,6 +1154,10 @@ export interface Company {
 export interface Job {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
   title: string;
   company: string | Company;
   companyIdentityId?: string | null;
@@ -1180,6 +1194,10 @@ export interface Job {
 export interface Startup {
   id: string;
   createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
   title: string;
   company: string | Company;
   /**
@@ -1200,6 +1218,23 @@ export interface Startup {
     | null;
   stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
   involvedUsers?: (string | User)[] | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "syndications".
+ */
+export interface Syndication {
+  id: string;
+  createdBy: string | User;
+  name: string;
+  url: string;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1259,6 +1294,10 @@ export interface Product {
   };
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
   name: string;
   company: string | Company;
   companyIdentityId?: string | null;
@@ -1772,6 +1811,10 @@ export interface PayloadLockedDocument {
         value: string | Startup;
       } | null)
     | ({
+        relationTo: 'syndications';
+        value: string | Syndication;
+      } | null)
+    | ({
         relationTo: 'comments';
         value: string | Comment;
       } | null)
@@ -2273,6 +2316,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface IdentitiesSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   name?: T;
   website?: T;
   image?: T;
@@ -2286,6 +2330,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
  */
 export interface CompaniesSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   name?: T;
   website?: T;
   phone?: T;
@@ -2305,6 +2350,7 @@ export interface CompaniesSelect<T extends boolean = true> {
  */
 export interface JobsSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   title?: T;
   company?: T;
   companyIdentityId?: T;
@@ -2341,6 +2387,7 @@ export interface JobsSelect<T extends boolean = true> {
  */
 export interface StartupsSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
   title?: T;
   company?: T;
   description?: T;
@@ -2356,6 +2403,19 @@ export interface StartupsSelect<T extends boolean = true> {
   alreadyHave?: T;
   stage?: T;
   involvedUsers?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "syndications_select".
+ */
+export interface SyndicationsSelect<T extends boolean = true> {
+  createdBy?: T;
+  name?: T;
+  url?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2447,6 +2507,7 @@ export interface ProductsSelect<T extends boolean = true> {
   variants?: T;
   priceInUSDEnabled?: T;
   priceInUSD?: T;
+  serverURL?: T;
   name?: T;
   company?: T;
   companyIdentityId?: T;

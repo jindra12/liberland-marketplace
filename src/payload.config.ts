@@ -18,6 +18,7 @@ import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
 import { Startups } from './collections/Startups'
+import { Syndications } from './collections/Syndications'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -77,7 +78,7 @@ export default buildConfig({
       },
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs, Startups],
+  collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs, Startups, Syndications],
   cors: '*',
   globals: [Header, Footer],
   plugins,
