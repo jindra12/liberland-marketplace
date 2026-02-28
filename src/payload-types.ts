@@ -1107,7 +1107,7 @@ export interface Identity {
   id: string;
   createdBy: string | User;
   /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
   name: string;
@@ -1128,7 +1128,7 @@ export interface Company {
   id: string;
   createdBy: string | User;
   /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
   name: string;
@@ -1155,7 +1155,7 @@ export interface Job {
   id: string;
   createdBy: string | User;
   /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
   title: string;
@@ -1195,7 +1195,7 @@ export interface Startup {
   id: string;
   createdBy: string | User;
   /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
   title: string;
@@ -1295,7 +1295,7 @@ export interface Product {
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
   /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3000).
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
   name: string;
