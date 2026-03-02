@@ -158,6 +158,38 @@ export const plugins: Plugin[] = [
           : { customer: { equals: req.user?.id } },
     },
     customers: { slug: 'users' },
+    carts: {
+      cartsCollectionOverride: ({ defaultCollection }) => ({
+        ...defaultCollection,
+        fields: defaultCollection.fields.map((field) => {
+          if ('name' in field && field.name === 'secret') {
+            const secretField = field as any
+
+            return {
+              ...secretField,
+              access: {
+                // Allow filtering carts by secret in GraphQL/Local API.
+                read: () => true,
+              },
+            } as any
+          }
+          return field
+        }),
+        hooks: {
+          ...defaultCollection.hooks,
+          afterRead: [
+            ...(defaultCollection.hooks?.afterRead ?? []),
+            ({ doc, req }) => {
+              // Keep secret only in the initial cart creation response.
+              if (!req.context?.newCartSecret) {
+                delete (doc as { secret?: string }).secret
+              }
+              return doc
+            },
+          ],
+        },
+      }),
+    },
     products: {
       productsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
@@ -264,7 +296,7 @@ export const plugins: Plugin[] = [
         return [...defaultFields, ...searchFields]
       },
       admin: {
-        group: false,
+        group: 'Directory',
       },
     },
   }),
