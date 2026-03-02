@@ -1,6 +1,6 @@
-import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
 import { joinStartup, leaveStartup } from '@/endpoints/involvedUsers'
@@ -45,7 +45,7 @@ export const Startups: CollectionConfig = {
   access: {
     create: authenticated,
     delete: onlyOwnDocsOrAdmin,
-    read: anyone,
+    read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
