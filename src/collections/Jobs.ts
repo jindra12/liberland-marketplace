@@ -1,6 +1,6 @@
-import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { markdownField } from '@/fields/markdownField'
 import { serverURLField } from '@/fields/serverURLField'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
@@ -33,7 +33,7 @@ export const Jobs: CollectionConfig = {
   access: {
     create: authenticated,
     delete: onlyOwnDocsOrAdmin,
-    read: anyone,
+    read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [

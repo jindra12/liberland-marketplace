@@ -1,7 +1,7 @@
-import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
 import { serverURLField } from '@/fields/serverURLField'
+import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
@@ -31,7 +31,7 @@ export const Companies: CollectionConfig = {
   access: {
     create: authenticated,
     delete: onlyOwnDocsOrAdmin,
-    read: anyone,
+    read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
