@@ -1,14 +1,26 @@
 import { authenticated } from '@/access/authenticated'
+import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
+import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import {
+  updateIdentityItemCountAfterChange,
+  updateIdentityItemCountAfterDelete,
+} from '@/hooks/updateIdentityItemCount'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
 export const Companies: CollectionConfig = {
   slug: 'companies',
+  defaultSort: '-completenessScore',
   hooks: {
-    beforeChange: [requireVerifiedEmailToPublish],
+    beforeChange: [
+      computeCompletenessScore(['website', 'phone', 'email', 'image', 'description']),
+      requireVerifiedEmailToPublish,
+    ],
+    afterChange: [updateIdentityItemCountAfterChange('identity')],
+    afterDelete: [updateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
     drafts: true,
@@ -82,5 +94,6 @@ export const Companies: CollectionConfig = {
         allowEdit: true,
       },
     },
+    completenessScoreField,
   ],
 }

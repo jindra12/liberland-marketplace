@@ -18,6 +18,7 @@ import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
 import { Startups } from './collections/Startups'
+import { backfillEndpoint } from './endpoints/backfill'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -79,6 +80,7 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs, Startups],
   cors: '*',
+  endpoints: [backfillEndpoint],
   globals: [Header, Footer],
   plugins,
   debug: payloadDebug,
