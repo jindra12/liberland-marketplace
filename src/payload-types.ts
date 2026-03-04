@@ -1117,6 +1117,7 @@ export interface Identity {
    * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
    */
   description?: string | null;
+  itemCount?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1150,6 +1151,7 @@ export interface Company {
   identity: string | Identity;
   allowedIdentities?: (string | Identity)[] | null;
   disallowedIdentities?: (string | Identity)[] | null;
+  completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1190,6 +1192,7 @@ export interface Job {
    */
   description?: string | null;
   applyUrl?: string | null;
+  completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1225,6 +1228,7 @@ export interface Startup {
     | null;
   stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
   involvedUsers?: (string | User)[] | null;
+  completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1329,6 +1333,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
@@ -2351,6 +2356,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
   website?: T;
   image?: T;
   description?: T;
+  itemCount?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2376,6 +2382,7 @@ export interface CompaniesSelect<T extends boolean = true> {
   identity?: T;
   allowedIdentities?: T;
   disallowedIdentities?: T;
+  completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2413,6 +2420,7 @@ export interface JobsSelect<T extends boolean = true> {
   disallowedIdentities?: T;
   description?: T;
   applyUrl?: T;
+  completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2439,6 +2447,7 @@ export interface StartupsSelect<T extends boolean = true> {
   alreadyHave?: T;
   stage?: T;
   involvedUsers?: T;
+  completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2564,6 +2573,7 @@ export interface ProductsSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;

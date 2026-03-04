@@ -34,8 +34,13 @@ import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
+import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import { cryptoRateRefreshJob } from './cryptoRateRefreshJob'
+import {
+  updateIdentityItemCountAfterChange,
+  updateIdentityItemCountAfterDelete,
+} from '@/hooks/updateIdentityItemCount'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -221,6 +226,7 @@ export const plugins: Plugin[] = [
     products: {
       productsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
+        defaultSort: '-completenessScore',
         access: {
           ...defaultCollection.access,
           create: authenticated,
@@ -250,8 +256,17 @@ export const plugins: Plugin[] = [
           ...defaultCollection.hooks,
           beforeChange: [
             syncCompanyIdentityId,
+            computeCompletenessScore(['url', 'image', 'description', 'properties']),
             ...(defaultCollection.hooks?.beforeChange ?? []),
             requireVerifiedEmailToPublish,
+          ],
+          afterChange: [
+            ...(defaultCollection.hooks?.afterChange ?? []),
+            updateIdentityItemCountAfterChange('companyIdentityId'),
+          ],
+          afterDelete: [
+            ...(defaultCollection.hooks?.afterDelete ?? []),
+            updateIdentityItemCountAfterDelete('companyIdentityId'),
           ],
         },
       }),

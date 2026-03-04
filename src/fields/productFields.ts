@@ -1,3 +1,4 @@
+import { completenessScoreField } from "@/fields/completenessScoreField";
 import { markdownField } from "@/fields/markdownField";
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
@@ -63,4 +64,5 @@ export const productFields: Field[] = [
       },
     ],
   },
+  completenessScoreField,
 ];

@@ -1,8 +1,14 @@
 import { authenticated } from '@/access/authenticated'
+import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { serverURLField } from '@/fields/serverURLField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
+import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import {
+  updateIdentityItemCountAfterChange,
+  updateIdentityItemCountAfterDelete,
+} from '@/hooks/updateIdentityItemCount'
 import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
 import { joinStartup, leaveStartup } from '@/endpoints/involvedUsers'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
@@ -22,9 +28,22 @@ const resourceOptions = [
 
 export const Startups: CollectionConfig = {
   slug: 'startups',
+  defaultSort: '-completenessScore',
   endpoints: [joinStartup, leaveStartup],
   hooks: {
-    beforeChange: [requireVerifiedEmailToPublish, validateInvolvedUsers],
+    beforeChange: [
+      computeCompletenessScore([
+        'description',
+        'image',
+        'fundsNeeded.amount',
+        'lookingFor',
+        'alreadyHave',
+      ]),
+      requireVerifiedEmailToPublish,
+      validateInvolvedUsers,
+    ],
+    afterChange: [updateIdentityItemCountAfterChange('identity')],
+    afterDelete: [updateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
     drafts: true,
@@ -136,5 +155,6 @@ export const Startups: CollectionConfig = {
       relationTo: 'users',
       hasMany: true,
     },
+    completenessScoreField,
   ],
 }

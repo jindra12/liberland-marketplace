@@ -27,13 +27,27 @@ export const Identities: CollectionConfig = {
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
     },
     markdownField({
       name: 'description',
       label: 'Description',
     }),
+    {
+      name: 'itemCount',
+      type: 'number',
+      defaultValue: 0,
+      index: true,
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+      access: {
+        create: () => false,
+        update: () => false,
+      },
+    },
   ],
 }

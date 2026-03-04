@@ -1,17 +1,37 @@
 import { authenticated } from '@/access/authenticated'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
+import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { serverURLField } from '@/fields/serverURLField'
+import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
+import {
+  updateIdentityItemCountAfterChange,
+  updateIdentityItemCountAfterDelete,
+} from '@/hooks/updateIdentityItemCount'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
+  defaultSort: '-completenessScore',
   hooks: {
-    beforeChange: [syncCompanyIdentityId, requireVerifiedEmailToPublish],
+    beforeChange: [
+      syncCompanyIdentityId,
+      computeCompletenessScore([
+        'location',
+        'image',
+        'description',
+        'applyUrl',
+        'salaryRange.min',
+        'bounty.amount',
+      ]),
+      requireVerifiedEmailToPublish,
+    ],
+    afterChange: [updateIdentityItemCountAfterChange('companyIdentityId')],
+    afterDelete: [updateIdentityItemCountAfterDelete('companyIdentityId')],
   },
   admin: {
     useAsTitle: 'title',
@@ -155,5 +175,6 @@ export const Jobs: CollectionConfig = {
       label: 'Description',
     }),
     { name: 'applyUrl', type: 'text' },
+    completenessScoreField,
   ],
 }
