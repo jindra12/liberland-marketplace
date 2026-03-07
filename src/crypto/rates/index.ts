@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import type { ChainPoolRate, NativeStablePoolRates, OrderCryptoPrice, SupportedChain } from '../types'
 import { getEthereumPoolRate } from './ethereum'
 import { getSolanaPoolRate } from './solana'
@@ -6,17 +7,18 @@ import { getTronPoolRate } from './tron'
 const ALL_CHAINS: SupportedChain[] = ['ethereum', 'solana', 'tron']
 
 const unique = <T>(values: T[]): T[] => [...new Set(values)]
+const toDecimalString = (value: BigNumber.Value): string => new BigNumber(value).toFixed()
 
 const toRateSnapshot = (orderAmount: number | null, rate: ChainPoolRate): OrderCryptoPrice => {
   const expectedNativeAmount =
     typeof orderAmount === 'number' && Number.isFinite(orderAmount) && orderAmount > 0
-      ? orderAmount * rate.nativePerStable
+      ? toDecimalString(new BigNumber(orderAmount).times(rate.nativePerStable))
       : undefined
 
   return {
     chain: rate.chain,
     stablePerNative: rate.stablePerNative,
-    nativePerStable: rate.nativePerStable,
+    nativePerStable: toDecimalString(rate.nativePerStable),
     expectedNativeAmount,
     fetchedAt: new Date(rate.fetchedAt).toISOString(),
   }

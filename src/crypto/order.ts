@@ -72,7 +72,8 @@ export const getOrderCryptoPriceEntries = (order: Order): OrderCryptoPriceEntry[
         entry &&
         isSupportedChain(entry.chain) &&
         typeof entry.fetchedAt === 'string' &&
-        typeof entry.nativePerStable === 'number' &&
+        typeof entry.nativePerStable === 'string' &&
+        entry.nativePerStable.trim().length > 0 &&
         typeof entry.stablePerNative === 'number',
       ),
   )

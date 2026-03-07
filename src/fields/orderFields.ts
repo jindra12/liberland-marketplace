@@ -8,32 +8,32 @@ const chainOptions = [
 
 const adminOnlyUpdateAccess: FieldAccess = ({ req }) => req.user?.role?.includes('admin') || false
 
-const buildPriceValueFields = (): Field[] => [
+const buildPriceValueFields = ({ required = false }: { required?: boolean } = {}): Field[] => [
   {
     name: 'stablePerNative',
     label: 'Stable Per Native',
     type: 'number',
-    required: true,
+    required,
     admin: { readOnly: true },
   },
   {
     name: 'nativePerStable',
     label: 'Native Per Stable',
-    type: 'number',
-    required: true,
+    type: 'text',
+    required,
     admin: { readOnly: true },
   },
   {
     name: 'expectedNativeAmount',
     label: 'Expected Native Amount',
-    type: 'number',
+    type: 'text',
     admin: { readOnly: true },
   },
   {
     name: 'fetchedAt',
     label: 'Fetched At',
     type: 'date',
-    required: true,
+    required,
     admin: { readOnly: true },
   },
 ]
@@ -50,7 +50,7 @@ const buildChainPriceGroupField = ({
   type: 'group',
   access: {
     create: () => false,
-    update: adminOnlyUpdateAccess,
+    update: () => false,
   },
   admin: { readOnly: true },
   fields: buildPriceValueFields(),
@@ -92,7 +92,7 @@ export const orderFields: Field[] = [
     },
     access: {
       create: () => false,
-      update: adminOnlyUpdateAccess,
+      update: () => false,
     },
     fields: [
       {
@@ -102,7 +102,7 @@ export const orderFields: Field[] = [
         options: chainOptions,
         admin: { readOnly: true },
       },
-      ...buildPriceValueFields(),
+      ...buildPriceValueFields({ required: true }),
     ],
   },
   buildChainPriceGroupField({

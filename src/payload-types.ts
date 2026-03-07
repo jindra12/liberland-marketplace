@@ -1309,10 +1309,6 @@ export interface Product {
   company: string | Company;
   companyIdentityId?: string | null;
   url?: string | null;
-  price: {
-    amount: number;
-    currency: 'USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM';
-  };
   orderable?: boolean | null;
   /**
    * Optional single payout wallet. If product wallet is empty, company wallet is used.
@@ -1514,29 +1510,29 @@ export interface Order {
     | {
         chain: 'ethereum' | 'solana' | 'tron';
         stablePerNative: number;
-        nativePerStable: number;
-        expectedNativeAmount?: number | null;
+        nativePerStable: string;
+        expectedNativeAmount?: string | null;
         fetchedAt: string;
         id?: string | null;
       }[]
     | null;
-  ethPrice: {
-    stablePerNative: number;
-    nativePerStable: number;
-    expectedNativeAmount?: number | null;
-    fetchedAt: string;
+  ethPrice?: {
+    stablePerNative?: number | null;
+    nativePerStable?: string | null;
+    expectedNativeAmount?: string | null;
+    fetchedAt?: string | null;
   };
-  solanaPrice: {
-    stablePerNative: number;
-    nativePerStable: number;
-    expectedNativeAmount?: number | null;
-    fetchedAt: string;
+  solanaPrice?: {
+    stablePerNative?: number | null;
+    nativePerStable?: string | null;
+    expectedNativeAmount?: string | null;
+    fetchedAt?: string | null;
   };
-  tronPrice: {
-    stablePerNative: number;
-    nativePerStable: number;
-    expectedNativeAmount?: number | null;
-    fetchedAt: string;
+  tronPrice?: {
+    stablePerNative?: number | null;
+    nativePerStable?: string | null;
+    expectedNativeAmount?: string | null;
+    fetchedAt?: string | null;
   };
   transactionHashes?:
     | {
@@ -2570,12 +2566,6 @@ export interface ProductsSelect<T extends boolean = true> {
   company?: T;
   companyIdentityId?: T;
   url?: T;
-  price?:
-    | T
-    | {
-        amount?: T;
-        currency?: T;
-      };
   orderable?: T;
   cryptoAddresses?:
     | T

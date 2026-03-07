@@ -85,10 +85,10 @@ describe('crypto/rates integration (mocked chain providers)', () => {
     expect(tron).toBeDefined()
 
     // 500 stable * 0.0004 ETH/stable = 0.2 ETH expected.
-    expect(eth?.expectedNativeAmount).toBeCloseTo(0.2, 12)
+    expect(eth?.expectedNativeAmount).toBe('0.2')
 
     // 500 stable * 4 TRX/stable = 2000 TRX expected.
-    expect(tron?.expectedNativeAmount).toBeCloseTo(2000, 12)
+    expect(tron?.expectedNativeAmount).toBe('2000')
 
     // Fetched timestamp is converted to ISO string in snapshots.
     expect(eth?.fetchedAt).toBe(new Date(ETH_RATE.fetchedAt).toISOString())

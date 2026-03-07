@@ -10,9 +10,8 @@ type WalletCollection = 'companies' | 'products' | 'variants'
 type ProductWalletDoc = {
   company?: unknown
   cryptoAddresses?: unknown
-  price?: {
-    amount?: unknown
-  } | null
+  priceInUSD?: unknown
+  priceInUSDEnabled?: unknown
 }
 
 type CompanyWalletDoc = {
@@ -269,7 +268,11 @@ const resolveWalletForProduct = async ({
 }
 
 const getProductUnitAmount = (product: ProductWalletDoc): number | null => {
-  const amount = isRecord(product.price) ? Number(product.price.amount) : Number.NaN
+  if (product.priceInUSDEnabled !== true) {
+    return null
+  }
+
+  const amount = Number(product.priceInUSD)
 
   if (!Number.isFinite(amount) || amount <= 0) {
     return null
@@ -365,7 +368,7 @@ export const resolveProductPaymentTargetsFromItems = async ({
 
     const unitAmount = getProductUnitAmount(product)
     if (unitAmount === null) {
-      throw new Error(`Product ${productID} has invalid or missing numeric price.amount.`)
+      throw new Error(`Product ${productID} must have Enable USD price turned on with a valid numeric priceInUSD.`)
     }
 
     const wallet = await resolveWalletForProduct({

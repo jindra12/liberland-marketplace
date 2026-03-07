@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import { getSolanaVerificationConfig } from '../env'
 import { getOrderById, getOrderCreatedAtMs, getOrderCryptoPriceEntries, getOrderTransactionHashEntries } from '../order'
 import { getPayloadInstance } from '../payload'
@@ -24,16 +25,18 @@ const toPriceMap = (prices: OrderCryptoPrice[]): Record<SupportedChain, OrderCry
   }
 }
 
-const getNativePerStable = (price?: OrderCryptoPrice): number | null => {
-  if (typeof price?.nativePerStable !== 'number') {
+const getNativePerStable = (price?: OrderCryptoPrice): string | null => {
+  const raw = price?.nativePerStable
+  if (typeof raw !== 'string' || raw.trim().length === 0) {
     return null
   }
 
-  if (!Number.isFinite(price.nativePerStable) || price.nativePerStable <= 0) {
+  const parsed = new BigNumber(raw)
+  if (!parsed.isFinite() || parsed.lte(0)) {
     return null
   }
 
-  return price.nativePerStable
+  return parsed.toFixed()
 }
 
 const buildGroupKey = ({
@@ -79,11 +82,11 @@ const verifyGroup = async ({
 }: {
   group: VerificationGroup
   minTimestampMs: number
-  nativePerStable: number
+  nativePerStable: string
   orderID: string
   solanaTokenMint: string | null
 }): Promise<VerifyTransactionResult> => {
-  const expectedNativeAmount = group.expectedStableAmount * nativePerStable
+  const expectedNativeAmount = new BigNumber(group.expectedStableAmount).times(nativePerStable).toFixed()
 
   if (group.chain === 'ethereum') {
     return verifyEthereumNativeTransfer({

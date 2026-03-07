@@ -71,19 +71,19 @@ describe('crypto/verification aggregation integration', () => {
       {
         chain: 'ethereum',
         fetchedAt: '2026-03-06T12:00:00.000Z',
-        nativePerStable: 0.002,
+        nativePerStable: '0.002',
         stablePerNative: 500,
       },
       {
         chain: 'solana',
         fetchedAt: '2026-03-06T12:00:00.000Z',
-        nativePerStable: 0.01,
+        nativePerStable: '0.01',
         stablePerNative: 100,
       },
       {
         chain: 'tron',
         fetchedAt: '2026-03-06T12:00:00.000Z',
-        nativePerStable: 4,
+        nativePerStable: '4',
         stablePerNative: 0.25,
       },
     ])
@@ -159,8 +159,8 @@ describe('crypto/verification aggregation integration', () => {
     const firstCall = vi.mocked(verifyEthereumNativeTransfer).mock.calls[0][0]
     const secondCall = vi.mocked(verifyEthereumNativeTransfer).mock.calls[1][0]
 
-    expect(firstCall.expectedAmount).toBeCloseTo(0.1, 12)
-    expect(secondCall.expectedAmount).toBeCloseTo(0.08, 12)
+    expect(firstCall.expectedAmount).toBe('0.1')
+    expect(secondCall.expectedAmount).toBe('0.08')
 
     // Result carries grouped product IDs for traceability.
     const grouped = result.results.filter((entry) => entry.transactionHash === '0xhash-shared')

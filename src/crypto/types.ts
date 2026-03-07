@@ -53,9 +53,9 @@ export type VerifyTransactionResult = {
 
 export type OrderCryptoPrice = {
   chain: SupportedChain
-  expectedNativeAmount?: number
+  expectedNativeAmount?: string | null
   fetchedAt: string
-  nativePerStable: number
+  nativePerStable: string
   stablePerNative: number
 }
 
