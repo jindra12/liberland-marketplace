@@ -1135,6 +1135,13 @@ export interface Company {
   website?: string | null;
   phone?: string | null;
   email?: string | null;
+  /**
+   * Optional single payout wallet. If product wallet is empty, company wallet is used.
+   */
+  cryptoAddresses?: {
+    chain?: ('ethereum' | 'solana' | 'tron') | null;
+    address?: string | null;
+  };
   image?: (string | null) | Media;
   /**
    * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
@@ -1305,6 +1312,14 @@ export interface Product {
   price: {
     amount: number;
     currency: 'USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM';
+  };
+  orderable?: boolean | null;
+  /**
+   * Optional single payout wallet. If product wallet is empty, company wallet is used.
+   */
+  cryptoAddresses?: {
+    chain?: ('ethereum' | 'solana' | 'tron') | null;
+    address?: string | null;
   };
   image?: (string | null) | Media;
   /**
@@ -1494,6 +1509,43 @@ export interface Order {
   status?: OrderStatus;
   amount?: number | null;
   currency?: 'USD' | null;
+  payerAddress?: string | null;
+  cryptoPrices?:
+    | {
+        chain: 'ethereum' | 'solana' | 'tron';
+        stablePerNative: number;
+        nativePerStable: number;
+        expectedNativeAmount?: number | null;
+        fetchedAt: string;
+        id?: string | null;
+      }[]
+    | null;
+  ethPrice: {
+    stablePerNative: number;
+    nativePerStable: number;
+    expectedNativeAmount?: number | null;
+    fetchedAt: string;
+  };
+  solanaPrice: {
+    stablePerNative: number;
+    nativePerStable: number;
+    expectedNativeAmount?: number | null;
+    fetchedAt: string;
+  };
+  tronPrice: {
+    stablePerNative: number;
+    nativePerStable: number;
+    expectedNativeAmount?: number | null;
+    fetchedAt: string;
+  };
+  transactionHashes?:
+    | {
+        product: string | Product;
+        chain: 'ethereum' | 'solana' | 'tron';
+        transactionHash: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2335,6 +2387,12 @@ export interface CompaniesSelect<T extends boolean = true> {
   website?: T;
   phone?: T;
   email?: T;
+  cryptoAddresses?:
+    | T
+    | {
+        chain?: T;
+        address?: T;
+      };
   image?: T;
   description?: T;
   identity?: T;
@@ -2518,6 +2576,13 @@ export interface ProductsSelect<T extends boolean = true> {
         amount?: T;
         currency?: T;
       };
+  orderable?: T;
+  cryptoAddresses?:
+    | T
+    | {
+        chain?: T;
+        address?: T;
+      };
   image?: T;
   description?: T;
   properties?:
@@ -2588,6 +2653,49 @@ export interface OrdersSelect<T extends boolean = true> {
   status?: T;
   amount?: T;
   currency?: T;
+  payerAddress?: T;
+  cryptoPrices?:
+    | T
+    | {
+        chain?: T;
+        stablePerNative?: T;
+        nativePerStable?: T;
+        expectedNativeAmount?: T;
+        fetchedAt?: T;
+        id?: T;
+      };
+  ethPrice?:
+    | T
+    | {
+        stablePerNative?: T;
+        nativePerStable?: T;
+        expectedNativeAmount?: T;
+        fetchedAt?: T;
+      };
+  solanaPrice?:
+    | T
+    | {
+        stablePerNative?: T;
+        nativePerStable?: T;
+        expectedNativeAmount?: T;
+        fetchedAt?: T;
+      };
+  tronPrice?:
+    | T
+    | {
+        stablePerNative?: T;
+        nativePerStable?: T;
+        expectedNativeAmount?: T;
+        fetchedAt?: T;
+      };
+  transactionHashes?:
+    | T
+    | {
+        product?: T;
+        chain?: T;
+        transactionHash?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

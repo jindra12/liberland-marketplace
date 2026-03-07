@@ -1,6 +1,7 @@
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
 import { serverURLField } from '@/fields/serverURLField'
+import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
@@ -40,6 +41,7 @@ export const Companies: CollectionConfig = {
     { name: 'website', type: 'text' },
     { name: 'phone', type: 'text' },
     { name: 'email', type: 'email' },
+    cryptoAddressesField(),
     {
       name: "image",
       type: "upload",

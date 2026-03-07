@@ -1,5 +1,6 @@
 import { markdownField } from "@/fields/markdownField";
 import { serverURLField } from '@/fields/serverURLField'
+import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { getCurrencies } from "@/utilities/getCurrencies";
 import { Field } from "payload";
 
@@ -52,6 +53,12 @@ export const productFields: Field[] = [
       },
     ],
   },
+  {
+    name: 'orderable',
+    type: 'checkbox',
+    defaultValue: true,
+  },
+  cryptoAddressesField(),
   {
     name: "image",
     type: "upload",

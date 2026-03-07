@@ -25,7 +25,9 @@ import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
+import { orderFields } from '@/fields/orderFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
+import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
@@ -224,6 +226,19 @@ export const plugins: Plugin[] = [
             syncCompanyIdentityId,
             ...(defaultCollection.hooks?.beforeChange ?? []),
             requireVerifiedEmailToPublish,
+          ],
+        },
+      }),
+    },
+    orders: {
+      ordersCollectionOverride: ({ defaultCollection }) => ({
+        ...defaultCollection,
+        fields: mergeFields(defaultCollection.fields, orderFields),
+        hooks: {
+          ...defaultCollection.hooks,
+          beforeChange: [
+            ...(defaultCollection.hooks?.beforeChange ?? []),
+            lockOrderCryptoPricesOnCreate,
           ],
         },
       }),
