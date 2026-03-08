@@ -1516,24 +1516,6 @@ export interface Order {
         id?: string | null;
       }[]
     | null;
-  ethPrice?: {
-    stablePerNative?: number | null;
-    nativePerStable?: string | null;
-    expectedNativeAmount?: string | null;
-    fetchedAt?: string | null;
-  };
-  solanaPrice?: {
-    stablePerNative?: number | null;
-    nativePerStable?: string | null;
-    expectedNativeAmount?: string | null;
-    fetchedAt?: string | null;
-  };
-  tronPrice?: {
-    stablePerNative?: number | null;
-    nativePerStable?: string | null;
-    expectedNativeAmount?: string | null;
-    fetchedAt?: string | null;
-  };
   transactionHashes?:
     | {
         product: string | Product;
@@ -2653,30 +2635,6 @@ export interface OrdersSelect<T extends boolean = true> {
         expectedNativeAmount?: T;
         fetchedAt?: T;
         id?: T;
-      };
-  ethPrice?:
-    | T
-    | {
-        stablePerNative?: T;
-        nativePerStable?: T;
-        expectedNativeAmount?: T;
-        fetchedAt?: T;
-      };
-  solanaPrice?:
-    | T
-    | {
-        stablePerNative?: T;
-        nativePerStable?: T;
-        expectedNativeAmount?: T;
-        fetchedAt?: T;
-      };
-  tronPrice?:
-    | T
-    | {
-        stablePerNative?: T;
-        nativePerStable?: T;
-        expectedNativeAmount?: T;
-        fetchedAt?: T;
       };
   transactionHashes?:
     | T

@@ -28,6 +28,7 @@ import { productFields } from '@/fields/productFields'
 import { orderFields } from '@/fields/orderFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
+import { computeOrderAmountOnCreate } from '@/hooks/computeOrderAmountOnCreate'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
@@ -262,6 +263,7 @@ export const plugins: Plugin[] = [
               return next
             },
             ...(defaultCollection.hooks?.beforeChange ?? []),
+            computeOrderAmountOnCreate,
             lockOrderCryptoPricesOnCreate,
           ],
         },

@@ -1,4 +1,5 @@
 import { PublicKey } from '@solana/web3.js'
+import BigNumber from 'bignumber.js'
 import type { Payload, PayloadRequest } from 'payload'
 import { normalizeEthereumAddress } from './ethereum'
 import { normalizeTronAddress } from './tron'
@@ -26,6 +27,8 @@ type ResolvedWallet = {
   address: string
   chain: SupportedChain
 }
+
+const USD_BASE_DIVISOR = 100
 
 export type ProductPaymentTarget = {
   chain: SupportedChain
@@ -278,7 +281,7 @@ const getProductUnitAmount = (product: ProductWalletDoc): number | null => {
     return null
   }
 
-  return amount
+  return new BigNumber(amount).div(USD_BASE_DIVISOR).toNumber()
 }
 
 export const resolveProductIDsForItems = async ({

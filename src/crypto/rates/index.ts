@@ -4,7 +4,6 @@ import { getEthereumPoolRate } from './ethereum'
 import { getSolanaPoolRate } from './solana'
 import { getTronPoolRate } from './tron'
 
-const ALL_CHAINS: SupportedChain[] = ['ethereum', 'solana', 'tron']
 const DEFAULT_RATE_FETCH_TIMEOUT_MS = 8_000
 
 const unique = <T>(values: T[]): T[] => [...new Set(values)]
@@ -75,51 +74,14 @@ const getRateByChain = async (chain: SupportedChain): Promise<ChainPoolRate> => 
   return getTronPoolRate()
 }
 
-type ChainFetchErrorHandler = (args: { chain: SupportedChain; error: unknown }) => void
-
-const getRatesByChains = async ({
-  chains,
-  onChainError,
-}: {
-  chains: SupportedChain[]
-  onChainError?: ChainFetchErrorHandler
-}): Promise<ChainPoolRate[]> => {
-  const timeoutMs = parseTimeoutMs()
-  const settled = await Promise.allSettled(
-    chains.map((chain) =>
-      withTimeout({
-        chain,
-        promise: getRateByChain(chain),
-        timeoutMs,
-      }),
-    ),
-  )
-  const rates: ChainPoolRate[] = []
-
-  settled.forEach((result, index) => {
-    const chain = chains[index]
-    if (result.status === 'fulfilled') {
-      rates.push(result.value)
-      return
-    }
-
-    onChainError?.({
-      chain,
-      error: result.reason,
-    })
-  })
-
-  return rates
-}
-
 export const buildOrderCryptoPrices = async ({
   chains,
   orderAmount,
 }: {
-  chains?: SupportedChain[]
+  chains: SupportedChain[]
   orderAmount: number | null
 }): Promise<OrderCryptoPrice[]> => {
-  const effectiveChains = chains && chains.length > 0 ? unique(chains) : ALL_CHAINS
+  const effectiveChains = unique(chains)
   const timeoutMs = parseTimeoutMs()
   const rates = await Promise.all(
     effectiveChains.map((chain) =>
@@ -130,24 +92,6 @@ export const buildOrderCryptoPrices = async ({
       }),
     ),
   )
-
-  return rates.map((rate) => toRateSnapshot(orderAmount, rate))
-}
-
-export const buildOrderCryptoPricesBestEffort = async ({
-  chains,
-  onChainError,
-  orderAmount,
-}: {
-  chains?: SupportedChain[]
-  onChainError?: ChainFetchErrorHandler
-  orderAmount: number | null
-}): Promise<OrderCryptoPrice[]> => {
-  const effectiveChains = chains && chains.length > 0 ? unique(chains) : ALL_CHAINS
-  const rates = await getRatesByChains({
-    chains: effectiveChains,
-    onChainError,
-  })
 
   return rates.map((rate) => toRateSnapshot(orderAmount, rate))
 }

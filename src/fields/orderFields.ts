@@ -38,24 +38,6 @@ const buildPriceValueFields = ({ required = false }: { required?: boolean } = {}
   },
 ]
 
-const buildChainPriceGroupField = ({
-  label,
-  name,
-}: {
-  label: string
-  name: string
-}): Field => ({
-  name,
-  label,
-  type: 'group',
-  access: {
-    create: () => false,
-    update: () => false,
-  },
-  admin: { readOnly: true },
-  fields: buildPriceValueFields(),
-})
-
 export const orderFields: Field[] = [
   {
     name: 'payerAddress',
@@ -105,18 +87,6 @@ export const orderFields: Field[] = [
       ...buildPriceValueFields({ required: true }),
     ],
   },
-  buildChainPriceGroupField({
-    name: 'ethPrice',
-    label: 'ETH Price',
-  }),
-  buildChainPriceGroupField({
-    name: 'solanaPrice',
-    label: 'Solana Price',
-  }),
-  buildChainPriceGroupField({
-    name: 'tronPrice',
-    label: 'Tron Price',
-  }),
   {
     name: 'transactionHashes',
     label: 'Transaction Hashes',

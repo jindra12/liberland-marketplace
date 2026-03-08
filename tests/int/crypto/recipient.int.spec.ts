@@ -53,7 +53,7 @@ describe('crypto/recipient integration with fake payload db', () => {
           id: 'prod_fallback_eth',
           company: 'comp_eth',
           priceInUSDEnabled: true,
-          priceInUSD: 10,
+          priceInUSD: 1000,
           // no product-level wallet => fallback to company wallet
           cryptoAddresses: null,
         },
@@ -61,7 +61,7 @@ describe('crypto/recipient integration with fake payload db', () => {
           id: 'prod_override_sol',
           company: 'comp_eth',
           priceInUSDEnabled: true,
-          priceInUSD: 5,
+          priceInUSD: 500,
           // product-level wallet overrides company wallet
           cryptoAddresses: {
             chain: 'solana',
@@ -138,7 +138,7 @@ describe('crypto/recipient integration with fake payload db', () => {
           id: 'prod_without_wallet',
           company: 'comp_without_wallet',
           priceInUSDEnabled: true,
-          priceInUSD: 15,
+          priceInUSD: 1500,
           cryptoAddresses: null,
         },
       },
