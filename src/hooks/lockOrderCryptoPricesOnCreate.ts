@@ -1,5 +1,5 @@
 import type { CollectionBeforeChangeHook } from 'payload'
-import { buildOrderCryptoPrices } from '@/crypto/rates'
+import { buildOrderCryptoPrices, buildOrderCryptoPricesBestEffort } from '@/crypto/rates'
 import type { SupportedChain } from '@/crypto/types'
 
 const isSupportedChain = (chain: unknown): chain is SupportedChain =>
@@ -37,7 +37,11 @@ const toGroupPrice = (price?: PriceSnapshot) => {
   }
 }
 
-export const lockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = async ({ data, operation }) => {
+export const lockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = async ({
+  data,
+  operation,
+  req,
+}) => {
   if (operation !== 'create') {
     return data
   }
@@ -45,11 +49,23 @@ export const lockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = async (
   const next = { ...(data ?? {}) }
   const orderAmount = typeof next.amount === 'number' ? next.amount : null
   const chains = extractTransactionChains(next.transactionHashes)
+  const startedAtMs = Date.now()
 
-  const prices = await buildOrderCryptoPrices({
-    orderAmount,
-    chains,
-  })
+  const prices =
+    chains.length > 0
+      ? await buildOrderCryptoPrices({
+        orderAmount,
+        chains,
+      })
+      : await buildOrderCryptoPricesBestEffort({
+        orderAmount,
+        onChainError: ({ chain, error }) => {
+          const message = error instanceof Error ? error.message : String(error)
+          req.payload.logger.warn(
+            `[lockOrderCryptoPricesOnCreate] Failed to fetch ${chain} pool rate during order create: ${message}`,
+          )
+        },
+      })
   const priceByChain = prices.reduce<Record<SupportedChain, PriceSnapshot | undefined>>(
     (acc, price) => {
       acc[price.chain] = price
@@ -66,6 +82,14 @@ export const lockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = async (
   next.ethPrice = toGroupPrice(priceByChain.ethereum)
   next.solanaPrice = toGroupPrice(priceByChain.solana)
   next.tronPrice = toGroupPrice(priceByChain.tron)
+
+  const elapsedMs = Date.now() - startedAtMs
+  if (elapsedMs > 3_000) {
+    const chainLabel = chains.length > 0 ? chains.join(',') : 'all'
+    req.payload.logger.warn(
+      `[lockOrderCryptoPricesOnCreate] Price locking took ${elapsedMs}ms (chains=${chainLabel}, resolved=${prices.length}).`,
+    )
+  }
 
   return next
 }

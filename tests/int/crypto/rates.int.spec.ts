@@ -25,7 +25,7 @@ vi.mock('@/crypto/rates/tron', () => ({
 import { getEthereumPoolRate } from '@/crypto/rates/ethereum'
 import { getSolanaPoolRate } from '@/crypto/rates/solana'
 import { getTronPoolRate } from '@/crypto/rates/tron'
-import { buildOrderCryptoPrices, getNativeStablePoolRates } from '@/crypto/rates'
+import { buildOrderCryptoPrices, buildOrderCryptoPricesBestEffort, getNativeStablePoolRates } from '@/crypto/rates'
 
 const ETH_RATE: ChainPoolRate = {
   chain: 'ethereum',
@@ -103,6 +103,22 @@ describe('crypto/rates integration (mocked chain providers)', () => {
     expect(vi.mocked(getEthereumPoolRate)).toHaveBeenCalledTimes(1)
     expect(vi.mocked(getSolanaPoolRate)).toHaveBeenCalledTimes(1)
     expect(vi.mocked(getTronPoolRate)).toHaveBeenCalledTimes(1)
+  })
+
+  it('can continue with partial chain failures in best-effort mode', async () => {
+    vi.mocked(getEthereumPoolRate).mockRejectedValueOnce(new Error('RPC unavailable'))
+
+    const failures: string[] = []
+    const prices = await buildOrderCryptoPricesBestEffort({
+      orderAmount: 100,
+      onChainError: ({ chain }) => failures.push(chain),
+    })
+
+    expect(failures).toEqual(['ethereum'])
+    expect(prices).toHaveLength(2)
+    expect(prices.find((entry) => entry.chain === 'ethereum')).toBeUndefined()
+    expect(prices.find((entry) => entry.chain === 'solana')).toBeDefined()
+    expect(prices.find((entry) => entry.chain === 'tron')).toBeDefined()
   })
 
   it('returns raw pool rates grouped by chain for dashboard-like consumers', async () => {

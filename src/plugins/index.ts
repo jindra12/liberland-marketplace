@@ -233,10 +233,34 @@ export const plugins: Plugin[] = [
     orders: {
       ordersCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
+        access: {
+          ...defaultCollection.access,
+          // Allow checkout flows to create orders through GraphQL/API.
+          create: () => true,
+        },
         fields: mergeFields(defaultCollection.fields, orderFields),
         hooks: {
           ...defaultCollection.hooks,
           beforeChange: [
+            ({ data, operation, req }) => {
+              if (operation !== 'create' || !data) {
+                return data
+              }
+
+              const isAdmin = req.user?.role?.includes('admin') || false
+              if (isAdmin) {
+                return data
+              }
+
+              const next = { ...data }
+
+              // Non-admin checkout creates must not set lifecycle/admin fields.
+              next.status = 'processing'
+              next.transactions = []
+              next.customer = req.user?.id ?? null
+
+              return next
+            },
             ...(defaultCollection.hooks?.beforeChange ?? []),
             lockOrderCryptoPricesOnCreate,
           ],

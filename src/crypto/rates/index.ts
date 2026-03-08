@@ -5,9 +5,50 @@ import { getSolanaPoolRate } from './solana'
 import { getTronPoolRate } from './tron'
 
 const ALL_CHAINS: SupportedChain[] = ['ethereum', 'solana', 'tron']
+const DEFAULT_RATE_FETCH_TIMEOUT_MS = 8_000
 
 const unique = <T>(values: T[]): T[] => [...new Set(values)]
 const toDecimalString = (value: BigNumber.Value): string => new BigNumber(value).toFixed()
+
+const parseTimeoutMs = (): number => {
+  const raw = process.env.CRYPTO_RATE_FETCH_TIMEOUT_MS
+  if (!raw) {
+    return DEFAULT_RATE_FETCH_TIMEOUT_MS
+  }
+
+  const parsed = Number.parseInt(raw, 10)
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    return DEFAULT_RATE_FETCH_TIMEOUT_MS
+  }
+
+  return parsed
+}
+
+const withTimeout = async <T>({
+  chain,
+  promise,
+  timeoutMs,
+}: {
+  chain: SupportedChain
+  promise: Promise<T>
+  timeoutMs: number
+}): Promise<T> =>
+  new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`Timed out fetching ${chain} rate after ${timeoutMs}ms.`))
+    }, timeoutMs)
+
+    promise.then(
+      (value) => {
+        clearTimeout(timer)
+        resolve(value)
+      },
+      (error) => {
+        clearTimeout(timer)
+        reject(error)
+      },
+    )
+  })
 
 const toRateSnapshot = (orderAmount: number | null, rate: ChainPoolRate): OrderCryptoPrice => {
   const expectedNativeAmount =
@@ -34,6 +75,43 @@ const getRateByChain = async (chain: SupportedChain): Promise<ChainPoolRate> => 
   return getTronPoolRate()
 }
 
+type ChainFetchErrorHandler = (args: { chain: SupportedChain; error: unknown }) => void
+
+const getRatesByChains = async ({
+  chains,
+  onChainError,
+}: {
+  chains: SupportedChain[]
+  onChainError?: ChainFetchErrorHandler
+}): Promise<ChainPoolRate[]> => {
+  const timeoutMs = parseTimeoutMs()
+  const settled = await Promise.allSettled(
+    chains.map((chain) =>
+      withTimeout({
+        chain,
+        promise: getRateByChain(chain),
+        timeoutMs,
+      }),
+    ),
+  )
+  const rates: ChainPoolRate[] = []
+
+  settled.forEach((result, index) => {
+    const chain = chains[index]
+    if (result.status === 'fulfilled') {
+      rates.push(result.value)
+      return
+    }
+
+    onChainError?.({
+      chain,
+      error: result.reason,
+    })
+  })
+
+  return rates
+}
+
 export const buildOrderCryptoPrices = async ({
   chains,
   orderAmount,
@@ -42,7 +120,34 @@ export const buildOrderCryptoPrices = async ({
   orderAmount: number | null
 }): Promise<OrderCryptoPrice[]> => {
   const effectiveChains = chains && chains.length > 0 ? unique(chains) : ALL_CHAINS
-  const rates = await Promise.all(effectiveChains.map((chain) => getRateByChain(chain)))
+  const timeoutMs = parseTimeoutMs()
+  const rates = await Promise.all(
+    effectiveChains.map((chain) =>
+      withTimeout({
+        chain,
+        promise: getRateByChain(chain),
+        timeoutMs,
+      }),
+    ),
+  )
+
+  return rates.map((rate) => toRateSnapshot(orderAmount, rate))
+}
+
+export const buildOrderCryptoPricesBestEffort = async ({
+  chains,
+  onChainError,
+  orderAmount,
+}: {
+  chains?: SupportedChain[]
+  onChainError?: ChainFetchErrorHandler
+  orderAmount: number | null
+}): Promise<OrderCryptoPrice[]> => {
+  const effectiveChains = chains && chains.length > 0 ? unique(chains) : ALL_CHAINS
+  const rates = await getRatesByChains({
+    chains: effectiveChains,
+    onChainError,
+  })
 
   return rates.map((rate) => toRateSnapshot(orderAmount, rate))
 }

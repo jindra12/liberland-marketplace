@@ -1,5 +1,5 @@
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { normalizeEthereumAddress } from '../ethereum'
+import { withEthereumProviderFailover } from '../ethereumProvider'
 import { getEthereumBaseConfig } from '../env'
 import { hasHashBeenUsed, normalizeTransactionHash } from '../hash'
 import { decimalToUnits } from '../math'
@@ -26,11 +26,9 @@ export const verifyEthereumNativeTransfer = async (
     }
 
     const config = getEthereumBaseConfig()
-    const provider = new JsonRpcProvider(config.rpcUrl)
-    const [tx, receipt] = await Promise.all([
-      provider.getTransaction(transactionHash),
-      provider.getTransactionReceipt(transactionHash),
-    ])
+    const [tx, receipt] = await withEthereumProviderFailover((provider) =>
+      Promise.all([provider.getTransaction(transactionHash), provider.getTransactionReceipt(transactionHash)]),
+    )
 
     if (!tx || !receipt) {
       return {
@@ -81,7 +79,7 @@ export const verifyEthereumNativeTransfer = async (
       }
     }
 
-    const block = await provider.getBlock(receipt.blockNumber)
+    const block = await withEthereumProviderFailover((provider) => provider.getBlock(receipt.blockNumber))
     const observedTimestampMs = block.timestamp * 1000
 
     if (observedTimestampMs < input.minTimestampMs) {

@@ -1,6 +1,8 @@
 import type { StableTokenSymbol } from './types'
+import { getThirdwebRpcUrlForEvmChain } from './thirdweb'
 
 type EthereumBaseConfig = {
+  fallbackRpcUrls: string[]
   nativeDecimals: number
   nativeSymbol: string
   rpcUrl: string
@@ -62,6 +64,15 @@ const getEnv = (names: string[], required = false): string | undefined => {
   return undefined
 }
 
+const getEnvValues = (names: string[]): string[] => {
+  const values = names
+    .map((name) => process.env[name])
+    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+    .map((value) => value.trim())
+
+  return [...new Set(values)]
+}
+
 const parseIntEnv = (names: string[], fallback: number): number => {
   const raw = getEnv(names)
   if (!raw) {
@@ -91,8 +102,21 @@ const parseStableTokenSymbol = (names: string[], fallback: StableTokenSymbol): S
 }
 
 export const getEthereumBaseConfig = (): EthereumBaseConfig => {
+  const configuredRpcUrls = getEnvValues(['CRYPTO_ETH_RPC_URL', 'ETH_RPC_URL'])
+  const thirdwebRpcUrl = getThirdwebRpcUrlForEvmChain(1)
+  const rpcCandidates = [thirdwebRpcUrl, ...configuredRpcUrls].filter(
+    (value): value is string => typeof value === 'string' && value.trim().length > 0,
+  )
+
+  if (rpcCandidates.length === 0) {
+    throw new Error(
+      'Missing required Ethereum RPC configuration. Configure THIRDWEB_SECRET_KEY / THIRDWEB_CLIENT_ID or CRYPTO_ETH_RPC_URL.',
+    )
+  }
+
   return {
-    rpcUrl: getEnv(['CRYPTO_ETH_RPC_URL', 'ETH_RPC_URL'], true)!,
+    rpcUrl: rpcCandidates[0],
+    fallbackRpcUrls: rpcCandidates.slice(1),
     nativeSymbol: getEnv(['CRYPTO_ETH_NATIVE_TOKEN_SYMBOL'], false) || 'ETH',
     stableSymbol: parseStableTokenSymbol(['CRYPTO_ETH_STABLE_TOKEN_SYMBOL'], 'USDC'),
     nativeDecimals: parseIntEnv(['CRYPTO_ETH_NATIVE_TOKEN_DECIMALS'], 18),
