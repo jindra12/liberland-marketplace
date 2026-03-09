@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { getSolanaVerificationConfig } from '../env'
+import { quantizeNativeAmount } from '../nativeAmount'
 import { getOrderById, getOrderCreatedAtMs, getOrderCryptoPriceEntries, getOrderTransactionHashEntries } from '../order'
 import { getPayloadInstance } from '../payload'
 import { resolveProductPaymentTargetsFromItems } from '../recipient'
@@ -78,15 +78,16 @@ const verifyGroup = async ({
   minTimestampMs,
   nativePerStable,
   orderID,
-  solanaTokenMint,
 }: {
   group: VerificationGroup
   minTimestampMs: number
   nativePerStable: string
   orderID: string
-  solanaTokenMint: string | null
 }): Promise<VerifyTransactionResult> => {
-  const expectedNativeAmount = new BigNumber(group.expectedStableAmount).times(nativePerStable).toFixed()
+  const expectedNativeAmount = quantizeNativeAmount(
+    group.chain,
+    new BigNumber(group.expectedStableAmount).times(nativePerStable),
+  )
 
   if (group.chain === 'ethereum') {
     return verifyEthereumNativeTransfer({
@@ -100,22 +101,12 @@ const verifyGroup = async ({
   }
 
   if (group.chain === 'solana') {
-    if (!solanaTokenMint) {
-      return {
-        chain: 'solana',
-        error: 'Solana verification config is missing.',
-        ok: false,
-        transactionHash: group.transactionHash,
-      }
-    }
-
     return verifySolanaPayTransaction({
       chain: 'solana',
       expectedAmount: expectedNativeAmount,
       minTimestampMs,
-      orderIdToExclude: orderID,
+      orderId: orderID,
       recipientAddress: group.recipientAddress,
-      splTokenMintAddress: solanaTokenMint,
       transactionHash: group.transactionHash,
     })
   }
@@ -240,9 +231,6 @@ export const verifyTransactionOccurred = async (orderId: string): Promise<Verify
 
   const priceMap = toPriceMap(getOrderCryptoPriceEntries(order))
   const minTimestampMs = getOrderCreatedAtMs(order)
-  const solanaConfig = Array.from(groupsByKey.values()).some((group) => group.chain === 'solana')
-    ? getSolanaVerificationConfig()
-    : null
 
   for (const group of groupsByKey.values()) {
     const nativePerStable = getNativePerStable(priceMap[group.chain])
@@ -263,7 +251,6 @@ export const verifyTransactionOccurred = async (orderId: string): Promise<Verify
       minTimestampMs,
       nativePerStable,
       orderID: order.id,
-      solanaTokenMint: solanaConfig?.splTokenMintAddress || null,
     })
 
     results.push({

@@ -4,6 +4,7 @@ import { Connection, PublicKey } from '@solana/web3.js'
 import { getSolanaBaseConfig } from '../env'
 import { hasHashBeenUsed, normalizeTransactionHash } from '../hash'
 import type { VerifySolanaPayTransactionInput, VerifyTransactionResult } from '../types'
+import { getSolanaOrderReference } from './solanaReference'
 
 const resolveTimestampMs = (txBlockTimeSeconds?: number | null, referenceBlockTimeSeconds?: number | null): number => {
   const seconds = txBlockTimeSeconds ?? referenceBlockTimeSeconds
@@ -21,13 +22,13 @@ export const verifySolanaPayTransaction = async (
     const config = getSolanaBaseConfig()
     const connection = new Connection(config.rpcUrl, { commitment: 'confirmed' })
     const recipient = new PublicKey(input.recipientAddress)
-    const splTokenMint = new PublicKey(input.splTokenMintAddress)
+    const reference = getSolanaOrderReference(input.orderId)
     const transactionHash = normalizeTransactionHash(input.transactionHash, 'solana')
     if (
       await hasHashBeenUsed({
         chain: 'solana',
         transactionHash,
-        orderIdToExclude: input.orderIdToExclude,
+        orderIdToExclude: input.orderId,
       })
     ) {
       return {
@@ -41,7 +42,7 @@ export const verifySolanaPayTransaction = async (
     await validateTransfer(connection, transactionHash, {
       recipient,
       amount: new BigNumber(String(input.expectedAmount)),
-      splToken: splTokenMint,
+      reference,
     })
 
     const tx = await connection.getTransaction(transactionHash, {

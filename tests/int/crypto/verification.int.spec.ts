@@ -34,12 +34,6 @@ vi.mock('@/crypto/verification/tron', () => ({
   verifyTronNativeTransfer: vi.fn(),
 }))
 
-vi.mock('@/crypto/env', () => ({
-  getSolanaVerificationConfig: vi.fn(() => ({
-    splTokenMintAddress: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-  })),
-}))
-
 import {
   getOrderById,
   getOrderCreatedAtMs,

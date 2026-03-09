@@ -27,10 +27,6 @@ type SolanaRateConfig = SolanaBaseConfig & {
   stableVaultAddress: string
 }
 
-type SolanaVerificationConfig = SolanaBaseConfig & {
-  splTokenMintAddress: string
-}
-
 type TronBaseConfig = {
   apiUrl: string
   nativeDecimals: number
@@ -133,15 +129,6 @@ export const getSolanaRateConfig = (): SolanaRateConfig => {
     poolAddress: getEnv(['CRYPTO_SOL_POOL_ADDRESS'], false) || 'RAYDIUM_VAULT_POOL',
     nativeVaultAddress: getEnv(['CRYPTO_SOL_POOL_NATIVE_VAULT_ADDRESS'], true)!,
     stableVaultAddress: getEnv(['CRYPTO_SOL_POOL_STABLE_VAULT_ADDRESS'], true)!,
-  }
-}
-
-export const getSolanaVerificationConfig = (): SolanaVerificationConfig => {
-  const base = getSolanaBaseConfig()
-
-  return {
-    ...base,
-    splTokenMintAddress: getEnv(['CRYPTO_SOL_SPL_TOKEN_MINT_ADDRESS'], true)!,
   }
 }
 

@@ -22,9 +22,8 @@ export type VerifySolanaPayTransactionInput = {
   chain: 'solana'
   expectedAmount: number | string
   minTimestampMs: number
-  orderIdToExclude?: string
+  orderId: string
   recipientAddress: string
-  splTokenMintAddress: string
   transactionHash: string
 }
 

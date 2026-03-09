@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import type { Payload } from 'payload'
 import type { ChainPoolRate, OrderCryptoPrice, SupportedChain } from '../types'
+import { quantizeNativeAmount } from '../nativeAmount'
 import { withTimeout } from '../timeout'
 import { getEthereumPoolRate } from './ethereum'
 import { getSolanaPoolRate } from './solana'
@@ -85,7 +86,7 @@ const readCacheValue = async ({
 const toRateSnapshot = (orderAmount: number | null, rate: ChainPoolRate): OrderCryptoPrice => {
   const expectedNativeAmount =
     typeof orderAmount === 'number' && Number.isFinite(orderAmount) && orderAmount > 0
-      ? toDecimalString(new BigNumber(orderAmount).times(rate.nativePerStable))
+      ? quantizeNativeAmount(rate.chain, new BigNumber(orderAmount).times(rate.nativePerStable))
       : undefined
 
   return {

@@ -115,4 +115,20 @@ describe('crypto/rates integration (mocked chain providers)', () => {
       tron: TRON_RATE,
     })
   })
+
+  it('quantizes expected native amount to the chain precision', async () => {
+    vi.mocked(getSolanaPoolRate).mockResolvedValue({
+      ...SOL_RATE,
+      nativePerStable: 0.12345678998765433,
+      stablePerNative: 8.100000007290001,
+    })
+
+    const prices = await buildOrderCryptoPrices({
+      chains: ['solana'],
+      orderAmount: 1,
+    })
+
+    expect(prices).toHaveLength(1)
+    expect(prices[0]?.expectedNativeAmount).toBe('0.123456789')
+  })
 })
