@@ -45,17 +45,17 @@ export const orderFields: Field[] = [
     type: 'text',
     access: {
       create: () => true,
-      update: () => false,
+      update: () => true,
     },
     hooks: {
       beforeChange: [
-        ({ operation, originalDoc, value }) => {
-          if (operation === 'update') {
+        ({ originalDoc, value }) => {
+          if (typeof value === 'undefined') {
             return originalDoc?.payerAddress ?? null
           }
 
           if (typeof value !== 'string') {
-            return value
+            return value ?? null
           }
 
           const trimmed = value.trim()

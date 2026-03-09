@@ -79,28 +79,14 @@ const decodeUintFromWord = (resultHex: string, index: number, method: string): b
   return BigInt(`0x${chunk}`)
 }
 
-const getTronEndpointCandidates = (config: {
-  eventServerUrl?: string
-  fullNodeUrl: string
-  solidityNodeUrl?: string
-}): string[] => {
-  return Array.from(
-    new Set(
-      [config.fullNodeUrl, config.solidityNodeUrl, config.eventServerUrl]
-        .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
-        .map(trimTrailingSlashes),
-    ),
-  )
-}
-
 const callTronConstantMethod = async ({
   contractAddressHex,
-  endpoints,
+  endpoint,
   functionSelector,
   proApiKey,
 }: {
   contractAddressHex: string
-  endpoints: string[]
+  endpoint: string
   functionSelector: string
   proApiKey?: string
 }): Promise<TriggerConstantResponse> => {
@@ -109,60 +95,47 @@ const callTronConstantMethod = async ({
     ...(proApiKey ? { 'TRON-PRO-API-KEY': proApiKey } : {}),
   }
 
-  const errors: string[] = []
+  const response = await fetch(`${endpoint}/wallet/triggerconstantcontract`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      owner_address: TRON_RATE_CALLER_ADDRESS_HEX,
+      contract_address: contractAddressHex,
+      function_selector: functionSelector,
+      visible: false,
+    }),
+  })
 
-  for (const endpoint of endpoints) {
-    try {
-      const response = await fetch(`${endpoint}/wallet/triggerconstantcontract`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          owner_address: TRON_RATE_CALLER_ADDRESS_HEX,
-          contract_address: contractAddressHex,
-          function_selector: functionSelector,
-          visible: false,
-        }),
-      })
-
-      if (!response.ok) {
-        errors.push(`${endpoint}: HTTP ${response.status}`)
-        continue
-      }
-
-      const payload = (await response.json()) as TriggerConstantResponse
-      // Validate payload shape here so we can failover to another endpoint if needed.
-      getConstantResultHex(payload, functionSelector)
-      return payload
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error)
-      errors.push(`${endpoint}: ${message}`)
-    }
+  if (!response.ok) {
+    throw new Error(`TRON constant call ${functionSelector} failed at ${endpoint}: HTTP ${response.status}`)
   }
 
-  throw new Error(`TRON constant call ${functionSelector} failed across endpoints: ${errors.join(' | ')}`)
+  const payload = (await response.json()) as TriggerConstantResponse
+  getConstantResultHex(payload, functionSelector)
+  return payload
 }
 
 export const getTronPoolRate = async (): Promise<ChainPoolRate> => {
   const config = getTronRateConfig()
   const poolAddressForCalls = normalizeTronAddress(config.poolAddress)
-  const endpoints = getTronEndpointCandidates(config)
+  const endpoint = trimTrailingSlashes(config.apiUrl)
 
   const [token0Result, token1Result, reservesResult] = await Promise.all([
     callTronConstantMethod({
       contractAddressHex: poolAddressForCalls,
-      endpoints,
+      endpoint,
       functionSelector: 'token0()',
       proApiKey: config.proApiKey,
     }),
     callTronConstantMethod({
       contractAddressHex: poolAddressForCalls,
-      endpoints,
+      endpoint,
       functionSelector: 'token1()',
       proApiKey: config.proApiKey,
     }),
     callTronConstantMethod({
       contractAddressHex: poolAddressForCalls,
-      endpoints,
+      endpoint,
       functionSelector: 'getReserves()',
       proApiKey: config.proApiKey,
     }),

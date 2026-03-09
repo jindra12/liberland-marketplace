@@ -2,7 +2,6 @@ import type { StableTokenSymbol } from './types'
 import { getThirdwebRpcUrlForEvmChain } from './thirdweb'
 
 type EthereumBaseConfig = {
-  fallbackRpcUrls: string[]
   nativeDecimals: number
   nativeSymbol: string
   rpcUrl: string
@@ -33,12 +32,10 @@ type SolanaVerificationConfig = SolanaBaseConfig & {
 }
 
 type TronBaseConfig = {
-  eventServerUrl?: string
-  fullNodeUrl: string
+  apiUrl: string
   nativeDecimals: number
   nativeSymbol: string
   proApiKey?: string
-  solidityNodeUrl?: string
   stableDecimals: number
   stableSymbol: StableTokenSymbol
 }
@@ -62,15 +59,6 @@ const getEnv = (names: string[], required = false): string | undefined => {
   }
 
   return undefined
-}
-
-const getEnvValues = (names: string[]): string[] => {
-  const values = names
-    .map((name) => process.env[name])
-    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
-    .map((value) => value.trim())
-
-  return [...new Set(values)]
 }
 
 const parseIntEnv = (names: string[], fallback: number): number => {
@@ -102,21 +90,15 @@ const parseStableTokenSymbol = (names: string[], fallback: StableTokenSymbol): S
 }
 
 export const getEthereumBaseConfig = (): EthereumBaseConfig => {
-  const configuredRpcUrls = getEnvValues(['CRYPTO_ETH_RPC_URL', 'ETH_RPC_URL'])
   const thirdwebRpcUrl = getThirdwebRpcUrlForEvmChain(1)
-  const rpcCandidates = [thirdwebRpcUrl, ...configuredRpcUrls].filter(
-    (value): value is string => typeof value === 'string' && value.trim().length > 0,
-  )
-
-  if (rpcCandidates.length === 0) {
+  if (!thirdwebRpcUrl) {
     throw new Error(
-      'Missing required Ethereum RPC configuration. Configure THIRDWEB_SECRET_KEY / THIRDWEB_CLIENT_ID or CRYPTO_ETH_RPC_URL.',
+      'Missing Thirdweb credentials. Configure THIRDWEB_SECRET_KEY / THIRDWEB_SECRET or THIRDWEB_CLIENT_ID.',
     )
   }
 
   return {
-    rpcUrl: rpcCandidates[0],
-    fallbackRpcUrls: rpcCandidates.slice(1),
+    rpcUrl: thirdwebRpcUrl,
     nativeSymbol: getEnv(['CRYPTO_ETH_NATIVE_TOKEN_SYMBOL'], false) || 'ETH',
     stableSymbol: parseStableTokenSymbol(['CRYPTO_ETH_STABLE_TOKEN_SYMBOL'], 'USDC'),
     nativeDecimals: parseIntEnv(['CRYPTO_ETH_NATIVE_TOKEN_DECIMALS'], 18),
@@ -137,7 +119,7 @@ export const getEthereumRateConfig = (): EthereumRateConfig => {
 
 export const getSolanaBaseConfig = (): SolanaBaseConfig => {
   return {
-    rpcUrl: getEnv(['CRYPTO_SOL_RPC_URL', 'SOLANA_NET'], true)!,
+    rpcUrl: getEnv(['CRYPTO_SOL_RPC_URL'], true)!,
     nativeSymbol: getEnv(['CRYPTO_SOL_NATIVE_TOKEN_SYMBOL'], false) || 'SOL',
     stableSymbol: parseStableTokenSymbol(['CRYPTO_SOL_STABLE_TOKEN_SYMBOL'], 'USDC'),
   }
@@ -165,10 +147,7 @@ export const getSolanaVerificationConfig = (): SolanaVerificationConfig => {
 
 export const getTronBaseConfig = (): TronBaseConfig => {
   return {
-    // Prefer TRONWEB_API when present so Pro API key auth works consistently.
-    fullNodeUrl: getEnv(['TRONWEB_API', 'TRONWEB_FULLNODE'], true)!,
-    solidityNodeUrl: getEnv(['TRONWEB_API'], false),
-    eventServerUrl: getEnv(['TRONWEB_API'], false),
+    apiUrl: getEnv(['TRONWEB_API'], true)!,
     proApiKey: getEnv(['TRONWEB_SECRET'], false),
     nativeSymbol: getEnv(['CRYPTO_TRON_NATIVE_TOKEN_SYMBOL'], false) || 'TRX',
     stableSymbol: parseStableTokenSymbol(['CRYPTO_TRON_STABLE_TOKEN_SYMBOL'], 'USDT'),

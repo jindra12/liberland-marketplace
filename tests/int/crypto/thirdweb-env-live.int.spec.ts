@@ -9,12 +9,11 @@ const hasThirdwebCredentials =
 
 describe('crypto/env Thirdweb live selection', () => {
   it.skipIf(!hasThirdwebCredentials)(
-    'selects Thirdweb RPC as primary Ethereum provider when Thirdweb credentials are configured',
+    'selects Thirdweb RPC for Ethereum when credentials are configured',
     () => {
       const config = getEthereumBaseConfig()
 
       expect(config.rpcUrl).toContain('.rpc.thirdweb.com')
-      expect(config.fallbackRpcUrls.length).toBeGreaterThanOrEqual(0)
     },
   )
 })

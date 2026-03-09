@@ -1,5 +1,5 @@
 import { normalizeEthereumAddress } from '../ethereum'
-import { withEthereumProviderFailover } from '../ethereumProvider'
+import { withEthereumProvider } from '../ethereumProvider'
 import { getEthereumBaseConfig } from '../env'
 import { hasHashBeenUsed, normalizeTransactionHash } from '../hash'
 import { decimalToUnits } from '../math'
@@ -26,7 +26,7 @@ export const verifyEthereumNativeTransfer = async (
     }
 
     const config = getEthereumBaseConfig()
-    const [tx, receipt] = await withEthereumProviderFailover((provider) =>
+    const [tx, receipt] = await withEthereumProvider((provider) =>
       Promise.all([provider.getTransaction(transactionHash), provider.getTransactionReceipt(transactionHash)]),
     )
 
@@ -79,7 +79,7 @@ export const verifyEthereumNativeTransfer = async (
       }
     }
 
-    const block = await withEthereumProviderFailover((provider) => provider.getBlock(receipt.blockNumber))
+    const block = await withEthereumProvider((provider) => provider.getBlock(receipt.blockNumber))
     const observedTimestampMs = block.timestamp * 1000
 
     if (observedTimestampMs < input.minTimestampMs) {

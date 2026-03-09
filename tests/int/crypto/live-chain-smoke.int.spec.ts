@@ -30,18 +30,13 @@ const getLiveChainStatus = (chain: Chain): LiveChainStatus => {
   }
 }
 
-const getTronCandidateBaseURLs = (): string[] => {
-  const fullNode = process.env.TRONWEB_FULLNODE?.trim()
+const getTronAPIBaseURL = (): string => {
   const api = process.env.TRONWEB_API?.trim()
-  const candidates = Array.from(new Set([fullNode, api].filter(Boolean) as string[])).map((value) =>
-    value.replace(/\/+$/, ''),
-  )
-
-  if (candidates.length === 0) {
-    throw new Error('Missing TRONWEB_FULLNODE / TRONWEB_API for live TRON smoke test.')
+  if (!api) {
+    throw new Error('Missing TRONWEB_API for live TRON smoke test.')
   }
 
-  return candidates
+  return api.replace(/\/+$/, '')
 }
 
 describe.runIf(RUN_LIVE)('crypto live chain smoke tests (default-on)', () => {
@@ -110,38 +105,21 @@ describe.runIf(RUN_LIVE)('crypto live chain smoke tests (default-on)', () => {
       'content-type': 'application/json',
       ...(process.env.TRONWEB_SECRET ? { 'TRON-PRO-API-KEY': process.env.TRONWEB_SECRET } : {}),
     }
-    const baseURLs = getTronCandidateBaseURLs()
-    let response: Response | null = null
-    let lastError: unknown = null
-    let respondingBaseURL: string | null = null
+    const baseURL = getTronAPIBaseURL()
+    const response = await fetch(`${baseURL}/wallet/getnowblock`, {
+      method: 'POST',
+      headers,
+      body: '{}',
+    })
 
-    for (const baseURL of baseURLs) {
-      try {
-        response = await fetch(`${baseURL}/wallet/getnowblock`, {
-          method: 'POST',
-          headers,
-          body: '{}',
-        })
-
-        if (response.ok) {
-          respondingBaseURL = baseURL
-          break
-        }
-
-        lastError = new Error(`HTTP ${response.status} at ${baseURL}/wallet/getnowblock`)
-      } catch (error) {
-        lastError = error
-      }
-    }
-
-    if (!response?.ok) {
-      throw (lastError instanceof Error ? lastError : new Error(String(lastError)))
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} at ${baseURL}/wallet/getnowblock`)
     }
 
     const payload = (await response.json()) as { blockID?: string; block_header?: unknown }
     expect(Boolean(payload.blockID || payload.block_header)).toBe(true)
     console.log(
-      `[LIVE-RATES] TRX pool-rate unavailable in this runtime (${poolRateFallbackReason || 'unknown'}); live touch ok via ${respondingBaseURL || 'unknown endpoint'}`,
+      `[LIVE-RATES] TRX pool-rate unavailable in this runtime (${poolRateFallbackReason || 'unknown'}); live touch ok via ${baseURL}`,
     )
   }, 45_000)
 })

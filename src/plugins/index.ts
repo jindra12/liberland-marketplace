@@ -35,6 +35,7 @@ import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
+import { cryptoRateRefreshJob } from './cryptoRateRefreshJob'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -58,6 +59,27 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   const url = getServerSideURL()
 
   return doc?.slug ? `${url}/${doc.slug}` : url
+}
+
+const canUpdateOnlyPayerAddress = ({
+  data,
+  req,
+}: {
+  data?: unknown
+  req: { user?: { role?: string | string[] | null } | null }
+}): boolean => {
+  const role = req.user?.role
+  const isAdmin = Array.isArray(role) ? role.includes('admin') : role?.includes('admin') || false
+  if (isAdmin) {
+    return true
+  }
+
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    return false
+  }
+
+  const keys = Object.keys(data as Record<string, unknown>)
+  return keys.length > 0 && keys.every((key) => key === 'payerAddress')
 }
 
 export const plugins: Plugin[] = [
@@ -145,6 +167,7 @@ export const plugins: Plugin[] = [
   fixOAuthClientId,
   addOIDCTokenStrategy,
   seedOIDCClient,
+  cryptoRateRefreshJob,
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
@@ -238,6 +261,8 @@ export const plugins: Plugin[] = [
           ...defaultCollection.access,
           // Allow checkout flows to create orders through GraphQL/API.
           create: () => true,
+          // Allow non-admin updates only when the payload updates payerAddress.
+          update: ({ data, req }) => canUpdateOnlyPayerAddress({ data, req }),
         },
         fields: mergeFields(defaultCollection.fields, orderFields),
         hooks: {

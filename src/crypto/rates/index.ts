@@ -1,10 +1,11 @@
 import BigNumber from 'bignumber.js'
 import type { ChainPoolRate, NativeStablePoolRates, OrderCryptoPrice, SupportedChain } from '../types'
+import { withTimeout } from '../timeout'
 import { getEthereumPoolRate } from './ethereum'
 import { getSolanaPoolRate } from './solana'
 import { getTronPoolRate } from './tron'
 
-const DEFAULT_RATE_FETCH_TIMEOUT_MS = 8_000
+const DEFAULT_RATE_FETCH_TIMEOUT_MS = 60_000
 
 const unique = <T>(values: T[]): T[] => [...new Set(values)]
 const toDecimalString = (value: BigNumber.Value): string => new BigNumber(value).toFixed()
@@ -22,32 +23,6 @@ const parseTimeoutMs = (): number => {
 
   return parsed
 }
-
-const withTimeout = async <T>({
-  chain,
-  promise,
-  timeoutMs,
-}: {
-  chain: SupportedChain
-  promise: Promise<T>
-  timeoutMs: number
-}): Promise<T> =>
-  new Promise<T>((resolve, reject) => {
-    const timer = setTimeout(() => {
-      reject(new Error(`Timed out fetching ${chain} rate after ${timeoutMs}ms.`))
-    }, timeoutMs)
-
-    promise.then(
-      (value) => {
-        clearTimeout(timer)
-        resolve(value)
-      },
-      (error) => {
-        clearTimeout(timer)
-        reject(error)
-      },
-    )
-  })
 
 const toRateSnapshot = (orderAmount: number | null, rate: ChainPoolRate): OrderCryptoPrice => {
   const expectedNativeAmount =
@@ -86,9 +61,9 @@ export const buildOrderCryptoPrices = async ({
   const rates = await Promise.all(
     effectiveChains.map((chain) =>
       withTimeout({
-        chain,
         promise: getRateByChain(chain),
         timeoutMs,
+        timeoutMessage: `Timed out fetching ${chain} rate after ${timeoutMs}ms.`,
       }),
     ),
   )

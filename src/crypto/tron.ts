@@ -1,10 +1,8 @@
 import { TronWeb } from 'tronweb'
 
 type TronConfig = {
-  eventServerUrl?: string
-  fullNodeUrl: string
+  apiUrl: string
   proApiKey?: string
-  solidityNodeUrl?: string
 }
 
 const TRON_HEX_ADDRESS_RE = /^41[0-9a-fA-F]{40}$/
@@ -75,10 +73,10 @@ export const createTronClient = (config: TronConfig): TronWeb => {
   const headers = config.proApiKey ? { 'TRON-PRO-API-KEY': config.proApiKey } : undefined
 
   return new TronWeb({
-    fullHost: config.fullNodeUrl,
-    fullNode: config.fullNodeUrl,
-    solidityNode: config.solidityNodeUrl || config.fullNodeUrl,
-    eventServer: config.eventServerUrl,
+    fullHost: config.apiUrl,
+    fullNode: config.apiUrl,
+    solidityNode: config.apiUrl,
+    eventServer: config.apiUrl,
     headers,
   })
 }

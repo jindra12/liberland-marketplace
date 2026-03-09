@@ -13,7 +13,7 @@ const getFirstNonEmptyEnv = (names: string[]): string | null => {
   return null
 }
 
-const getThirdwebClient = (): ThirdwebClient | null => {
+export const getThirdwebClient = (): ThirdwebClient | null => {
   const secretKey = getFirstNonEmptyEnv(['THIRDWEB_SECRET_KEY', 'THIRDWEB_SECRET'])
   const clientId = getFirstNonEmptyEnv(['THIRDWEB_CLIENT_ID', 'NEXT_PUBLIC_THIRDWEB_CLIENT_ID'])
 
@@ -26,6 +26,17 @@ const getThirdwebClient = (): ThirdwebClient | null => {
   }
 
   return null
+}
+
+export const getRequiredThirdwebClient = (): ThirdwebClient => {
+  const client = getThirdwebClient()
+  if (!client) {
+    throw new Error(
+      'Missing Thirdweb credentials. Configure THIRDWEB_SECRET_KEY / THIRDWEB_SECRET or THIRDWEB_CLIENT_ID.',
+    )
+  }
+
+  return client
 }
 
 export const getThirdwebRpcUrlForEvmChain = (chainId: number): string | null => {

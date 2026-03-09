@@ -1,23 +1,22 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/crypto/rates', () => ({
-  buildOrderCryptoPrices: vi.fn(),
+vi.mock('@/crypto/rates/cache', () => ({
+  buildOrderCryptoPricesFromCache: vi.fn(),
 }))
 
 vi.mock('@/crypto/recipient', () => ({
   resolveProductPaymentTargetsFromItems: vi.fn(),
 }))
 
-import { buildOrderCryptoPrices } from '@/crypto/rates'
+import { buildOrderCryptoPricesFromCache } from '@/crypto/rates/cache'
 import { resolveProductPaymentTargetsFromItems } from '@/crypto/recipient'
 import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
 
-const createReq = () =>
-  ({
-    payload: {
-      logger: {},
-    },
-  }) as never
+const createReq = () => ({
+  payload: {
+    logger: {},
+  },
+})
 
 describe('lockOrderCryptoPricesOnCreate', () => {
   beforeEach(() => {
@@ -37,7 +36,7 @@ describe('lockOrderCryptoPricesOnCreate', () => {
       },
     ])
 
-    vi.mocked(buildOrderCryptoPrices).mockResolvedValue([
+    vi.mocked(buildOrderCryptoPricesFromCache).mockResolvedValue([
       {
         chain: 'solana',
         stablePerNative: 100,
@@ -58,9 +57,10 @@ describe('lockOrderCryptoPricesOnCreate', () => {
     } as never)
 
     expect(resolveProductPaymentTargetsFromItems).toHaveBeenCalledTimes(1)
-    expect(buildOrderCryptoPrices).toHaveBeenCalledWith({
+    expect(buildOrderCryptoPricesFromCache).toHaveBeenCalledWith({
       chains: ['solana'],
       orderAmount: 25,
+      payload: req.payload,
     })
     expect(result.cryptoPrices).toEqual([
       {
@@ -85,7 +85,9 @@ describe('lockOrderCryptoPricesOnCreate', () => {
         unitAmount: 100,
       },
     ])
-    vi.mocked(buildOrderCryptoPrices).mockRejectedValue(new Error('Timed out fetching ethereum rate after 8000ms.'))
+    vi.mocked(buildOrderCryptoPricesFromCache).mockRejectedValue(
+      new Error('Missing cached crypto rates for ethereum. Please retry in a few seconds.'),
+    )
 
     const req = createReq()
 
@@ -98,6 +100,6 @@ describe('lockOrderCryptoPricesOnCreate', () => {
         operation: 'create',
         req,
       } as never),
-    ).rejects.toThrow('Timed out fetching ethereum rate after 8000ms.')
+    ).rejects.toThrow('Missing cached crypto rates for ethereum. Please retry in a few seconds.')
   })
 })

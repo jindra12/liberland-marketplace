@@ -8,7 +8,10 @@ let productID: string | null = null
 let createdOrderIDs: string[] = []
 
 type GraphQLResponseBody = {
-  data?: { createOrder?: { amount?: number | null; id?: string } }
+  data?: {
+    createOrder?: { amount?: number | null; id?: string }
+    updateOrder?: { id?: string; payerAddress?: string | null }
+  }
   errors?: Array<{ message?: string }>
 }
 
@@ -139,6 +142,24 @@ const CREATE_ORDER_MUTATION = `
   }
 `
 
+const UPDATE_ORDER_PAYER_ADDRESS_MUTATION = `
+  mutation UpdateOrder($id: String!, $data: mutationOrderInput!, $draft: Boolean!) {
+    updateOrder(id: $id, data: $data, draft: $draft) {
+      id
+      payerAddress
+    }
+  }
+`
+
+const UPDATE_ORDER_STATUS_MUTATION = `
+  mutation UpdateOrder($id: String!, $data: mutationOrderInput!, $draft: Boolean!) {
+    updateOrder(id: $id, data: $data, draft: $draft) {
+      id
+      status
+    }
+  }
+`
+
 describe('GraphQL createOrder mutation regression', () => {
   beforeAll(async () => {
     try {
@@ -235,6 +256,60 @@ describe('GraphQL createOrder mutation regression', () => {
       if (result.data?.createOrder?.id) {
         createdOrderIDs.push(result.data.createOrder.id)
       }
+
+      if (!hasRealGraphQL || !graphqlPost || !result.data?.createOrder?.id) {
+        return
+      }
+
+      const updatePayerAddressRequest = new Request('http://localhost:3000/api/graphql', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: UPDATE_ORDER_PAYER_ADDRESS_MUTATION,
+          variables: {
+            draft: false,
+            id: result.data.createOrder.id,
+            data: {
+              payerAddress: '0x1111111111111111111111111111111111111111',
+            },
+          },
+        }),
+      })
+
+      const updatePayerAddressResponse = await graphqlPost(updatePayerAddressRequest)
+      const updatePayerAddressResult = (await updatePayerAddressResponse.json()) as GraphQLResponseBody
+
+      expect(updatePayerAddressResponse.status).toBe(200)
+      expect(updatePayerAddressResult.errors).toBeUndefined()
+      expect(updatePayerAddressResult.data?.updateOrder?.payerAddress).toBe(
+        '0x1111111111111111111111111111111111111111',
+      )
+
+      const updateStatusRequest = new Request('http://localhost:3000/api/graphql', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: UPDATE_ORDER_STATUS_MUTATION,
+          variables: {
+            draft: false,
+            id: result.data.createOrder.id,
+            data: {
+              status: 'completed',
+            },
+          },
+        }),
+      })
+
+      const updateStatusResponse = await graphqlPost(updateStatusRequest)
+      const updateStatusResult = (await updateStatusResponse.json()) as GraphQLResponseBody
+
+      expect(updateStatusResponse.status).toBe(200)
+      expect(updateStatusResult.errors?.length).toBeGreaterThan(0)
+      expect(updateStatusResult.errors?.[0]?.message).toContain('not allowed')
     },
     120_000,
   )

@@ -3,6 +3,7 @@
 // Load .env files
 import 'dotenv/config'
 import { beforeAll } from 'vitest'
+import { getThirdwebRpcUrlForEvmChain } from '@/crypto/thirdweb'
 
 const skipLiveChainChecks = process.env.NO_LIVE_CRYPTO_TESTS === 'true'
 const requireLiveChainChecks = process.env.REQUIRE_LIVE_CRYPTO_TESTS === 'true'
@@ -49,7 +50,11 @@ const fetchJSON = async (url: string, init: RequestInit): Promise<unknown> => {
 }
 
 const touchEthereum = async () => {
-  const rpcURL = getEnv('CRYPTO_ETH_RPC_URL', 'ETH_RPC_URL')
+  const rpcURL = getThirdwebRpcUrlForEvmChain(1)
+  if (!rpcURL) {
+    throw new Error('Missing Thirdweb credentials for Ethereum live-touch check.')
+  }
+
   const response = (await fetchJSON(rpcURL, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -67,7 +72,7 @@ const touchEthereum = async () => {
 }
 
 const touchSolana = async () => {
-  const rpcURL = getEnv('CRYPTO_SOL_RPC_URL', 'SOLANA_NET')
+  const rpcURL = getEnv('CRYPTO_SOL_RPC_URL')
   const response = (await fetchJSON(rpcURL, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -85,41 +90,22 @@ const touchSolana = async () => {
 }
 
 const touchTron = async () => {
-  const fullNodeURL = getEnv('TRONWEB_FULLNODE', 'TRONWEB_API').replace(/\/+$/, '')
-  const apiURL = process.env.TRONWEB_API?.trim().replace(/\/+$/, '')
+  const apiURL = getEnv('TRONWEB_API').replace(/\/+$/, '')
   const proApiKey = process.env.TRONWEB_SECRET?.trim()
   const headers = {
     'content-type': 'application/json',
     ...(proApiKey ? { 'TRON-PRO-API-KEY': proApiKey } : {}),
   }
 
-  const candidateURLs = Array.from(new Set([fullNodeURL, apiURL].filter(Boolean) as string[]))
-  const errors: string[] = []
+  const response = (await fetchJSON(`${apiURL}/wallet/getnowblock`, {
+    method: 'POST',
+    headers,
+    body: '{}',
+  })) as { blockID?: string; block_header?: unknown }
 
-  for (const baseURL of candidateURLs) {
-    try {
-      const response = (await fetchJSON(`${baseURL}/wallet/getnowblock`, {
-        method: 'POST',
-        headers,
-        body: '{}',
-      })) as { blockID?: string; block_header?: unknown }
-
-      if (typeof response.blockID !== 'string' && !response.block_header) {
-        throw new Error('Tron live-touch check returned an unexpected payload.')
-      }
-
-      return
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error)
-      errors.push(`${baseURL}: ${message}`)
-    }
+  if (typeof response.blockID !== 'string' && !response.block_header) {
+    throw new Error('Tron live-touch check returned an unexpected payload.')
   }
-
-  if (errors.length === 0) {
-    throw new Error('Tron live-touch check failed: no configured endpoints.')
-  }
-
-  throw new Error(`Tron live-touch check failed across endpoints: ${errors.join(' | ')}`)
 }
 
 /**
