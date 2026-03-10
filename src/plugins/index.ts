@@ -25,13 +25,17 @@ import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { mergeFields } from '@/utilities/mergeFields'
 import { productFields } from '@/fields/productFields'
+import { orderFields } from '@/fields/orderFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
+import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
+import { computeOrderAmountOnCreate } from '@/hooks/computeOrderAmountOnCreate'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
+import { cryptoRateRefreshJob } from './cryptoRateRefreshJob'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -55,6 +59,27 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   const url = getServerSideURL()
 
   return doc?.slug ? `${url}/${doc.slug}` : url
+}
+
+const canUpdateOnlyPayerAddress = ({
+  data,
+  req,
+}: {
+  data?: unknown
+  req: { user?: { role?: string | string[] | null } | null }
+}): boolean => {
+  const role = req.user?.role
+  const isAdmin = Array.isArray(role) ? role.includes('admin') : role?.includes('admin') || false
+  if (isAdmin) {
+    return true
+  }
+
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    return false
+  }
+
+  const keys = Object.keys(data as Record<string, unknown>)
+  return keys.length > 0 && keys.every((key) => key === 'payerAddress')
 }
 
 export const plugins: Plugin[] = [
@@ -142,6 +167,7 @@ export const plugins: Plugin[] = [
   fixOAuthClientId,
   addOIDCTokenStrategy,
   seedOIDCClient,
+  cryptoRateRefreshJob,
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
@@ -158,6 +184,38 @@ export const plugins: Plugin[] = [
           : { customer: { equals: req.user?.id } },
     },
     customers: { slug: 'users' },
+    carts: {
+      cartsCollectionOverride: ({ defaultCollection }) => ({
+        ...defaultCollection,
+        fields: defaultCollection.fields.map((field) => {
+          if ('name' in field && field.name === 'secret') {
+            const secretField = field as any
+
+            return {
+              ...secretField,
+              access: {
+                // Allow filtering carts by secret in GraphQL/Local API.
+                read: () => true,
+              },
+            } as any
+          }
+          return field
+        }),
+        hooks: {
+          ...defaultCollection.hooks,
+          afterRead: [
+            ...(defaultCollection.hooks?.afterRead ?? []),
+            ({ doc, req }) => {
+              // Keep secret only in the initial cart creation response.
+              if (!req.context?.newCartSecret) {
+                delete (doc as { secret?: string }).secret
+              }
+              return doc
+            },
+          ],
+        },
+      }),
+    },
     products: {
       productsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
@@ -192,6 +250,46 @@ export const plugins: Plugin[] = [
             syncCompanyIdentityId,
             ...(defaultCollection.hooks?.beforeChange ?? []),
             requireVerifiedEmailToPublish,
+          ],
+        },
+      }),
+    },
+    orders: {
+      ordersCollectionOverride: ({ defaultCollection }) => ({
+        ...defaultCollection,
+        access: {
+          ...defaultCollection.access,
+          // Allow checkout flows to create orders through GraphQL/API.
+          create: () => true,
+          // Allow non-admin updates only when the payload updates payerAddress.
+          update: ({ data, req }) => canUpdateOnlyPayerAddress({ data, req }),
+        },
+        fields: mergeFields(defaultCollection.fields, orderFields),
+        hooks: {
+          ...defaultCollection.hooks,
+          beforeChange: [
+            ({ data, operation, req }) => {
+              if (operation !== 'create' || !data) {
+                return data
+              }
+
+              const isAdmin = req.user?.role?.includes('admin') || false
+              if (isAdmin) {
+                return data
+              }
+
+              const next = { ...data }
+
+              // Non-admin checkout creates must not set lifecycle/admin fields.
+              next.status = 'processing'
+              next.transactions = []
+              next.customer = req.user?.id ?? null
+
+              return next
+            },
+            ...(defaultCollection.hooks?.beforeChange ?? []),
+            computeOrderAmountOnCreate,
+            lockOrderCryptoPricesOnCreate,
           ],
         },
       }),
@@ -264,7 +362,7 @@ export const plugins: Plugin[] = [
         return [...defaultFields, ...searchFields]
       },
       admin: {
-        group: false,
+        group: 'Directory',
       },
     },
   }),

@@ -1,6 +1,6 @@
 import { markdownField } from "@/fields/markdownField";
 import { serverURLField } from '@/fields/serverURLField'
-import { getCurrencies } from "@/utilities/getCurrencies";
+import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { Field } from "payload";
 
 export const productFields: Field[] = [
@@ -34,24 +34,11 @@ export const productFields: Field[] = [
   },
 
   {
-    name: 'price',
-    type: 'group',
-    fields: [
-      {
-        name: 'amount',
-        type: 'number',
-        required: true,
-        min: 0,
-      },
-      {
-        name: 'currency',
-        type: 'select',
-        required: true,
-        defaultValue: 'USD',
-        options: getCurrencies(),
-      },
-    ],
+    name: 'orderable',
+    type: 'checkbox',
+    defaultValue: true,
   },
+  cryptoAddressesField(),
   {
     name: "image",
     type: "upload",
