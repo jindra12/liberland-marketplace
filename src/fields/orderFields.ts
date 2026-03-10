@@ -6,7 +6,24 @@ const chainOptions = [
   { label: 'Tron', value: 'tron' },
 ]
 
-const adminOnlyUpdateAccess: FieldAccess = ({ req }) => req.user?.role?.includes('admin') || false
+const isAdminUpdate: FieldAccess = ({ req }) => req.user?.role?.includes('admin') || false
+
+type TransactionHashRow = {
+  product?: unknown
+  chain?: unknown
+  transactionHash?: unknown
+}
+
+const getTransactionHashRowKey = (row: TransactionHashRow): string => {
+  const product =
+    typeof row.product === 'string'
+      ? row.product
+      : row.product && typeof row.product === 'object' && 'id' in row.product
+        ? String((row.product as { id?: unknown }).id ?? '')
+        : ''
+
+  return `${product}|${String(row.chain ?? '')}|${String(row.transactionHash ?? '')}`
+}
 
 const buildPriceValueFields = ({ required = false }: { required?: boolean } = {}): Field[] => [
   {
@@ -97,7 +114,37 @@ export const orderFields: Field[] = [
     },
     access: {
       create: () => false,
-      update: adminOnlyUpdateAccess,
+      update: () => true,
+    },
+    hooks: {
+      beforeChange: [
+        ({ operation, req, originalDoc, value }) => {
+          if (operation !== 'update' || isAdminUpdate({ req })) {
+            return value
+          }
+
+          const existingRows = Array.isArray(originalDoc?.transactionHashes)
+            ? (originalDoc.transactionHashes as TransactionHashRow[])
+            : []
+          const incomingRows = Array.isArray(value) ? (value as TransactionHashRow[]) : []
+
+          if (incomingRows.length === 0) {
+            return existingRows
+          }
+
+          const existingKeys = new Set(existingRows.map(getTransactionHashRowKey))
+          const appendedRows = incomingRows.filter((row) => {
+            const key = getTransactionHashRowKey(row)
+            if (existingKeys.has(key)) {
+              return false
+            }
+            existingKeys.add(key)
+            return true
+          })
+
+          return [...existingRows, ...appendedRows]
+        },
+      ],
     },
     fields: [
       {
