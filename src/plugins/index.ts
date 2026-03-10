@@ -61,7 +61,9 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   return doc?.slug ? `${url}/${doc.slug}` : url
 }
 
-const canUpdateOnlyPayerAddress = ({
+const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'transactionHashes'])
+
+const canUpdateOrderCheckoutFields = ({
   data,
   req,
 }: {
@@ -79,7 +81,7 @@ const canUpdateOnlyPayerAddress = ({
   }
 
   const keys = Object.keys(data as Record<string, unknown>)
-  return keys.length > 0 && keys.every((key) => key === 'payerAddress')
+  return keys.length > 0 && keys.every((key) => nonAdminOrderUpdateKeys.has(key))
 }
 
 export const plugins: Plugin[] = [
@@ -261,8 +263,8 @@ export const plugins: Plugin[] = [
           ...defaultCollection.access,
           // Allow checkout flows to create orders through GraphQL/API.
           create: () => true,
-          // Allow non-admin updates only when the payload updates payerAddress.
-          update: ({ data, req }) => canUpdateOnlyPayerAddress({ data, req }),
+          // Allow non-admin checkout updates only for payerAddress + transactionHashes.
+          update: ({ data, req }) => canUpdateOrderCheckoutFields({ data, req }),
         },
         fields: mergeFields(defaultCollection.fields, orderFields),
         hooks: {

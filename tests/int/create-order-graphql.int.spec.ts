@@ -10,7 +10,15 @@ let createdOrderIDs: string[] = []
 type GraphQLResponseBody = {
   data?: {
     createOrder?: { amount?: number | null; id?: string }
-    updateOrder?: { id?: string; payerAddress?: string | null }
+    updateOrder?: {
+      id?: string
+      payerAddress?: string | null
+      transactionHashes?: Array<{
+        chain?: 'ethereum' | 'solana' | 'tron'
+        transactionHash?: string
+        product?: { id?: string }
+      }>
+    }
   }
   errors?: Array<{ message?: string }>
 }
@@ -160,6 +168,21 @@ const UPDATE_ORDER_STATUS_MUTATION = `
   }
 `
 
+const UPDATE_ORDER_TRANSACTION_HASHES_MUTATION = `
+  mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
+    updateOrder(id: $orderId, data: $data, draft: $draft) {
+      id
+      transactionHashes {
+        chain
+        transactionHash
+        product {
+          id
+        }
+      }
+    }
+  }
+`
+
 describe('GraphQL createOrder mutation regression', () => {
   beforeAll(async () => {
     try {
@@ -286,6 +309,85 @@ describe('GraphQL createOrder mutation regression', () => {
       expect(updatePayerAddressResult.data?.updateOrder?.payerAddress).toBe(
         '0x1111111111111111111111111111111111111111',
       )
+
+      const firstTxHash = '0xe0e5bcbc1ed1fbf19ce55bfd0cd292f19d53783c4bea327c696201a36e17aed9'
+      const updateTxHashesRequest = new Request('http://localhost:3000/api/graphql', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: UPDATE_ORDER_TRANSACTION_HASHES_MUTATION,
+          variables: {
+            orderId: result.data.createOrder.id,
+            draft: false,
+            data: {
+              transactionHashes: [
+                {
+                  product: resolvedProductID,
+                  chain: 'ethereum',
+                  transactionHash: firstTxHash,
+                },
+              ],
+            },
+          },
+        }),
+      })
+
+      const updateTxHashesResponse = await graphqlPost(updateTxHashesRequest)
+      const updateTxHashesResult = (await updateTxHashesResponse.json()) as GraphQLResponseBody
+
+      expect(updateTxHashesResponse.status).toBe(200)
+      expect(updateTxHashesResult.errors).toBeUndefined()
+      expect(updateTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
+        {
+          chain: 'ethereum',
+          transactionHash: firstTxHash,
+          product: { id: resolvedProductID },
+        },
+      ])
+
+      const secondTxHash = '0x7f6f6b27a97f70a2a56af190cb4dbd5267db813411f1236d31f86d476fb28a18'
+      const appendTxHashesRequest = new Request('http://localhost:3000/api/graphql', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: UPDATE_ORDER_TRANSACTION_HASHES_MUTATION,
+          variables: {
+            orderId: result.data.createOrder.id,
+            draft: false,
+            data: {
+              transactionHashes: [
+                {
+                  product: resolvedProductID,
+                  chain: 'ethereum',
+                  transactionHash: secondTxHash,
+                },
+              ],
+            },
+          },
+        }),
+      })
+
+      const appendTxHashesResponse = await graphqlPost(appendTxHashesRequest)
+      const appendTxHashesResult = (await appendTxHashesResponse.json()) as GraphQLResponseBody
+
+      expect(appendTxHashesResponse.status).toBe(200)
+      expect(appendTxHashesResult.errors).toBeUndefined()
+      expect(appendTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
+        {
+          chain: 'ethereum',
+          transactionHash: firstTxHash,
+          product: { id: resolvedProductID },
+        },
+        {
+          chain: 'ethereum',
+          transactionHash: secondTxHash,
+          product: { id: resolvedProductID },
+        },
+      ])
 
       const updateStatusRequest = new Request('http://localhost:3000/api/graphql', {
         method: 'POST',
