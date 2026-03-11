@@ -1,6 +1,6 @@
 import { TronWeb } from 'tronweb'
 import { getTronBaseConfig } from '../env'
-import { hasHashBeenUsed, normalizeTransactionHash } from '../hash'
+import { hasHashBeenUsed } from '../hash'
 import { decimalToUnits } from '../math'
 import { createTronClient, normalizeTronAddress } from '../tron'
 import type { VerifyNativeTransferTransactionInput, VerifyTransactionResult } from '../types'
@@ -27,18 +27,17 @@ export const verifyTronNativeTransfer = async (
   input: VerifyNativeTransferTransactionInput,
 ): Promise<VerifyTransactionResult> => {
   try {
-    const transactionHash = normalizeTransactionHash(input.transactionHash, 'tron')
     if (
       await hasHashBeenUsed({
         chain: 'tron',
-        transactionHash,
+        transactionHash: input.transactionHash,
         orderIdToExclude: input.orderIdToExclude,
       })
     ) {
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Transaction hash has already been used by another order.',
       }
     }
@@ -47,7 +46,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Recipient address is not a valid TRON address.',
       }
     }
@@ -55,8 +54,8 @@ export const verifyTronNativeTransfer = async (
     const config = getTronBaseConfig()
     const tronWeb = createTronClient(config)
     const [tx, txInfo] = await Promise.all([
-      tronWeb.trx.getTransaction(transactionHash),
-      tronWeb.trx.getTransactionInfo(transactionHash).catch(() => undefined),
+      tronWeb.trx.getTransaction(input.transactionHash),
+      tronWeb.trx.getTransactionInfo(input.transactionHash).catch(() => undefined),
     ])
 
     const contractType = tx?.raw_data?.contract?.[0]?.type
@@ -64,7 +63,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Transaction is not a direct TRX transfer.',
       }
     }
@@ -73,7 +72,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Transaction failed on-chain.',
       }
     }
@@ -83,7 +82,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Transfer details are missing from transaction payload.',
       }
     }
@@ -94,7 +93,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Transaction recipient does not match.',
       }
     }
@@ -105,7 +104,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Transaction amount does not match.',
       }
     }
@@ -115,7 +114,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Could not determine transaction timestamp.',
       }
     }
@@ -124,7 +123,7 @@ export const verifyTronNativeTransfer = async (
       return {
         chain: 'tron',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         observedTimestampMs,
         error: 'Transaction is older than the required minimum timestamp.',
       }
@@ -133,16 +132,14 @@ export const verifyTronNativeTransfer = async (
     return {
       chain: 'tron',
       ok: true,
-      transactionHash,
+      transactionHash: input.transactionHash,
       observedTimestampMs,
     }
   } catch (error) {
-    const transactionHash = normalizeTransactionHash(input.transactionHash, 'tron')
-
     return {
       chain: 'tron',
       ok: false,
-      transactionHash,
+      transactionHash: input.transactionHash,
       error: error instanceof Error ? error.message : 'Unknown TRON verification error',
     }
   }

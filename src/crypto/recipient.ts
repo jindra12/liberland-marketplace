@@ -40,49 +40,16 @@ export type ProductPaymentTarget = {
   unitAmount: number
 }
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+const toDocID = (value: unknown): string =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+    ? String((value as { id: unknown }).id)
+    : String(value)
 
-const asNonEmptyString = (value: unknown): string | null => {
-  if (typeof value !== 'string') {
-    return null
-  }
-
-  const trimmed = value.trim()
-  return trimmed.length > 0 ? trimmed : null
-}
-
-const toDocID = (value: unknown): string | null => {
-  if (typeof value === 'string' || typeof value === 'number') {
-    const id = String(value).trim()
-    return id.length > 0 ? id : null
-  }
-
-  if (isRecord(value)) {
-    return toDocID(value.id)
-  }
-
-  return null
-}
-
-const isSupportedChain = (chain: unknown): chain is SupportedChain =>
-  chain === 'ethereum' || chain === 'solana' || chain === 'tron'
-
-const parseWallet = (value: unknown): ResolvedWallet | null => {
-  if (!isRecord(value)) {
-    return null
-  }
-
-  const chain = value.chain
-  const address = asNonEmptyString(value.address)
-
-  if (!isSupportedChain(chain) || !address) {
-    return null
-  }
-
+const parseWallet = (value: unknown): ResolvedWallet => {
+  const wallet = value as { address: unknown; chain: SupportedChain }
   return {
-    address,
-    chain,
+    address: String(wallet.address),
+    chain: wallet.chain,
   }
 }
 
@@ -214,20 +181,14 @@ const resolveProductIDFromItem = async ({
   payload: PayloadLike
   req?: PayloadRequest
   variantCache: Map<string, VariantWalletDoc>
-}): Promise<string | null> => {
-  if (!isRecord(item)) {
-    return null
-  }
-
-  const directProductID = toDocID(item.product)
-  if (directProductID) {
+}): Promise<string> => {
+  const rawItem = item as { product?: unknown; variant?: unknown }
+  if (rawItem.product !== undefined && rawItem.product !== null) {
+    const directProductID = toDocID(rawItem.product)
     return directProductID
   }
 
-  const variantID = toDocID(item.variant)
-  if (!variantID) {
-    return null
-  }
+  const variantID = toDocID(rawItem.variant)
 
   const variant = await loadVariant({
     cache: variantCache,
@@ -249,16 +210,13 @@ const resolveWalletForProduct = async ({
   payload: PayloadLike
   product: ProductWalletDoc
   req?: PayloadRequest
-}): Promise<ResolvedWallet | null> => {
-  const productWallet = parseWallet(product.cryptoAddresses)
+}): Promise<ResolvedWallet> => {
+  const productWallet = product.cryptoAddresses
   if (productWallet) {
-    return productWallet
+    return parseWallet(productWallet)
   }
 
   const companyID = toDocID(product.company)
-  if (!companyID) {
-    return null
-  }
 
   const company = await loadCompany({
     cache: companyCache,
@@ -270,17 +228,8 @@ const resolveWalletForProduct = async ({
   return parseWallet(company.cryptoAddresses)
 }
 
-const getProductUnitAmount = (product: ProductWalletDoc): number | null => {
-  if (product.priceInUSDEnabled !== true) {
-    return null
-  }
-
+const getProductUnitAmount = (product: ProductWalletDoc): number => {
   const amount = Number(product.priceInUSD)
-
-  if (!Number.isFinite(amount) || amount <= 0) {
-    return null
-  }
-
   return new BigNumber(amount).div(USD_BASE_DIVISOR).toNumber()
 }
 
@@ -308,10 +257,6 @@ export const resolveProductIDsForItems = async ({
       req,
       variantCache,
     })
-
-    if (!productID) {
-      throw new Error(`Item at index ${index} has neither product nor variant reference.`)
-    }
 
     if (!seenProductIDs.has(productID)) {
       seenProductIDs.add(productID)
@@ -342,11 +287,9 @@ export const resolveProductPaymentTargetsFromItems = async ({
 
   for (let index = 0; index < items.length; index += 1) {
     const item = items[index]
-    if (!isRecord(item)) {
-      throw new Error(`Item at index ${index} is invalid.`)
-    }
+    const rawItem = item as { quantity?: unknown }
 
-    const quantity = Number(item.quantity)
+    const quantity = Number(rawItem.quantity)
     if (!Number.isFinite(quantity) || quantity <= 0) {
       throw new Error(`Item at index ${index} has invalid quantity.`)
     }
@@ -358,10 +301,6 @@ export const resolveProductPaymentTargetsFromItems = async ({
       variantCache,
     })
 
-    if (!productID) {
-      throw new Error(`Item at index ${index} has neither product nor variant reference.`)
-    }
-
     const product = await loadProduct({
       cache: productCache,
       payload,
@@ -370,9 +309,6 @@ export const resolveProductPaymentTargetsFromItems = async ({
     })
 
     const unitAmount = getProductUnitAmount(product)
-    if (unitAmount === null) {
-      throw new Error(`Product ${productID} must have Enable USD price turned on with a valid numeric priceInUSD.`)
-    }
 
     const wallet = await resolveWalletForProduct({
       companyCache,
@@ -380,10 +316,6 @@ export const resolveProductPaymentTargetsFromItems = async ({
       product,
       req,
     })
-
-    if (!wallet) {
-      throw new Error(`Missing payout wallet for product ${productID}. Set product wallet or fallback company wallet.`)
-    }
 
     const normalizedRecipientAddress = normalizeAddressForComparison({
       address: wallet.address,

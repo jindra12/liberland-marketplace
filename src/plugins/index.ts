@@ -29,6 +29,7 @@ import { orderFields } from '@/fields/orderFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
 import { computeOrderAmountOnCreate } from '@/hooks/computeOrderAmountOnCreate'
+import { autoConfirmOrderOnTransactionHashAdd } from '@/hooks/autoConfirmOrderOnTransactionHashAdd'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
@@ -281,6 +282,19 @@ export const plugins: Plugin[] = [
           // Allow non-admin checkout updates only for payerAddress + transactionHashes.
           update: ({ data, req }) => canUpdateOrderCheckoutFields({ data, req }),
         },
+        admin: {
+          ...defaultCollection.admin,
+          components: {
+            ...defaultCollection.admin?.components,
+            edit: {
+              ...defaultCollection.admin?.components?.edit,
+              beforeDocumentControls: [
+                ...(defaultCollection.admin?.components?.edit?.beforeDocumentControls ?? []),
+                '@/components/OrderConfirmButton',
+              ],
+            },
+          },
+        },
         fields: mergeFields(defaultCollection.fields, orderFields),
         hooks: {
           ...defaultCollection.hooks,
@@ -307,6 +321,10 @@ export const plugins: Plugin[] = [
             ...(defaultCollection.hooks?.beforeChange ?? []),
             computeOrderAmountOnCreate,
             lockOrderCryptoPricesOnCreate,
+          ],
+          afterChange: [
+            ...(defaultCollection.hooks?.afterChange ?? []),
+            autoConfirmOrderOnTransactionHashAdd,
           ],
         },
       }),

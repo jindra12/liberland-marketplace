@@ -33,7 +33,15 @@ export const withEthereumProvider = async <T>(
   const rpcUrl = getEthereumRpcUrl()
   const timeoutMs = parseAttemptTimeoutMs()
   // Use static network config to avoid runtime detectNetwork() failures on healthy RPCs.
-  const provider = new StaticJsonRpcProvider(rpcUrl, ETHEREUM_MAINNET)
+  // `skipFetchSetup` avoids ethers v5 setting `referrer: "client"` on fetch requests,
+  // which Node's undici rejects as an invalid URL in server runtimes.
+  const provider = new StaticJsonRpcProvider(
+    {
+      skipFetchSetup: true,
+      url: rpcUrl,
+    },
+    ETHEREUM_MAINNET,
+  )
 
   return withTimeout({
     timeoutMs,

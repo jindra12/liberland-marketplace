@@ -10,21 +10,10 @@ export type OrderTransactionHashEntry = {
 
 export type OrderCryptoPriceEntry = OrderCryptoPrice
 
-const isSupportedChain = (chain: unknown): chain is SupportedChain =>
-  chain === 'ethereum' || chain === 'solana' || chain === 'tron'
-
-const toDocID = (value: unknown): string | null => {
-  if (typeof value === 'string' || typeof value === 'number') {
-    const id = String(value).trim()
-    return id.length > 0 ? id : null
-  }
-
-  if (value && typeof value === 'object' && !Array.isArray(value)) {
-    return toDocID((value as { id?: unknown }).id)
-  }
-
-  return null
-}
+const toDocID = (value: unknown): string =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+    ? String((value as { id: unknown }).id)
+    : String(value)
 
 export const getOrderById = async (orderId: string): Promise<Order> => {
   const payload = await getPayloadInstance()
@@ -41,24 +30,11 @@ export const getOrderTransactionHashEntries = (order: Order): OrderTransactionHa
     return []
   }
 
-  return order.transactionHashes
-    .map((entry) => {
-      if (!entry) {
-        return null
-      }
-
-      const productID = toDocID((entry as { product?: unknown }).product)
-      if (!productID || !isSupportedChain(entry.chain) || typeof entry.transactionHash !== 'string') {
-        return null
-      }
-
-      return {
-        chain: entry.chain,
-        productID,
-        transactionHash: entry.transactionHash.trim(),
-      }
-    })
-    .filter((entry): entry is OrderTransactionHashEntry => Boolean(entry && entry.transactionHash.length > 0))
+  return order.transactionHashes.map((entry) => ({
+    chain: (entry as { chain: SupportedChain }).chain,
+    productID: toDocID((entry as { product: unknown }).product),
+    transactionHash: String((entry as { transactionHash: unknown }).transactionHash),
+  }))
 }
 
 export const getOrderCryptoPriceEntries = (order: Order): OrderCryptoPriceEntry[] => {
@@ -66,23 +42,9 @@ export const getOrderCryptoPriceEntries = (order: Order): OrderCryptoPriceEntry[
     return []
   }
 
-  return order.cryptoPrices.filter(
-    (entry): entry is OrderCryptoPriceEntry =>
-      Boolean(
-        entry &&
-        isSupportedChain(entry.chain) &&
-        typeof entry.fetchedAt === 'string' &&
-        typeof entry.nativePerStable === 'string' &&
-        entry.nativePerStable.trim().length > 0 &&
-        typeof entry.stablePerNative === 'number',
-      ),
-  )
+  return order.cryptoPrices as OrderCryptoPriceEntry[]
 }
 
 export const getOrderCreatedAtMs = (order: Order): number => {
-  const createdAtMs = new Date(order.createdAt).getTime()
-  if (!Number.isFinite(createdAtMs)) {
-    throw new Error(`Order ${order.id} has invalid createdAt timestamp.`)
-  }
-  return createdAtMs
+  return new Date(order.createdAt).getTime()
 }

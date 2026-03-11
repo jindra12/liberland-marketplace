@@ -25,19 +25,8 @@ const toPriceMap = (prices: OrderCryptoPrice[]): Record<SupportedChain, OrderCry
   }
 }
 
-const getNativePerStable = (price?: OrderCryptoPrice): string | null => {
-  const raw = price?.nativePerStable
-  if (typeof raw !== 'string' || raw.trim().length === 0) {
-    return null
-  }
-
-  const parsed = new BigNumber(raw)
-  if (!parsed.isFinite() || parsed.lte(0)) {
-    return null
-  }
-
-  return parsed.toFixed()
-}
+const getNativePerStable = (price?: OrderCryptoPrice): string =>
+  new BigNumber(String(price?.nativePerStable)).toFixed()
 
 const buildGroupKey = ({
   chain,
@@ -234,17 +223,6 @@ export const verifyTransactionOccurred = async (orderId: string): Promise<Verify
 
   for (const group of groupsByKey.values()) {
     const nativePerStable = getNativePerStable(priceMap[group.chain])
-    if (nativePerStable === null) {
-      results.push({
-        chain: group.chain,
-        error: `Missing locked nativePerStable rate for ${group.chain} on this order.`,
-        ok: false,
-        productIDs: group.productIDs,
-        recipientAddress: group.recipientAddress,
-        transactionHash: group.transactionHash,
-      })
-      continue
-    }
 
     const groupResult = await verifyGroup({
       group,

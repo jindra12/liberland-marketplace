@@ -20,6 +20,7 @@ import { Jobs } from './collections/Jobs'
 import { Startups } from './collections/Startups'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
+import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -81,7 +82,7 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs, Startups, Syndications],
   cors: '*',
-  endpoints: [backfillEndpoint],
+  endpoints: [backfillEndpoint, confirmCryptoOrderEndpoint],
   globals: [Header, Footer],
   plugins,
   debug: payloadDebug,

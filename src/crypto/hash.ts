@@ -9,25 +9,12 @@ type HasHashBeenUsedInput = {
 }
 
 const getHashCandidates = (transactionHash: string, chain: SupportedChain): string[] => {
-  const trimmed = transactionHash.trim()
-  if (!trimmed) {
-    return []
-  }
-
   if (chain === 'solana') {
-    return [trimmed]
+    return [transactionHash]
   }
 
-  const lowered = trimmed.toLowerCase()
-  return lowered === trimmed ? [trimmed] : [trimmed, lowered]
-}
-
-export const normalizeTransactionHash = (hash: string, chain: SupportedChain): string => {
-  if (chain === 'solana') {
-    return hash.trim()
-  }
-
-  return hash.trim().toLowerCase()
+  const lowered = transactionHash.toLowerCase()
+  return lowered === transactionHash ? [transactionHash] : [transactionHash, lowered]
 }
 
 export const hasHashBeenUsed = async ({
@@ -36,9 +23,6 @@ export const hasHashBeenUsed = async ({
   transactionHash,
 }: HasHashBeenUsedInput): Promise<boolean> => {
   const candidates = getHashCandidates(transactionHash, chain)
-  if (candidates.length === 0) {
-    return false
-  }
 
   const payload = await getPayloadInstance()
   const hashWhere: Where =

@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { validateTransfer, ValidateTransferError } from '@solana/pay'
 import { Connection, PublicKey } from '@solana/web3.js'
 import { getSolanaBaseConfig } from '../env'
-import { hasHashBeenUsed, normalizeTransactionHash } from '../hash'
+import { hasHashBeenUsed } from '../hash'
 import type { VerifySolanaPayTransactionInput, VerifyTransactionResult } from '../types'
 import { getSolanaOrderReference } from './solanaReference'
 
@@ -23,29 +23,28 @@ export const verifySolanaPayTransaction = async (
     const connection = new Connection(config.rpcUrl, { commitment: 'confirmed' })
     const recipient = new PublicKey(input.recipientAddress)
     const reference = getSolanaOrderReference(input.orderId)
-    const transactionHash = normalizeTransactionHash(input.transactionHash, 'solana')
     if (
       await hasHashBeenUsed({
         chain: 'solana',
-        transactionHash,
+        transactionHash: input.transactionHash,
         orderIdToExclude: input.orderId,
       })
     ) {
       return {
         chain: 'solana',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Transaction hash has already been used by another order.',
       }
     }
 
-    await validateTransfer(connection, transactionHash, {
+    await validateTransfer(connection, input.transactionHash, {
       recipient,
       amount: new BigNumber(String(input.expectedAmount)),
       reference,
     })
 
-    const tx = await connection.getTransaction(transactionHash, {
+    const tx = await connection.getTransaction(input.transactionHash, {
       commitment: 'confirmed',
       maxSupportedTransactionVersion: 0,
     })
@@ -55,7 +54,7 @@ export const verifySolanaPayTransaction = async (
       return {
         chain: 'solana',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         error: 'Could not determine transaction timestamp.',
       }
     }
@@ -64,7 +63,7 @@ export const verifySolanaPayTransaction = async (
       return {
         chain: 'solana',
         ok: false,
-        transactionHash,
+        transactionHash: input.transactionHash,
         observedTimestampMs,
         error: 'Transaction is older than the required minimum timestamp.',
       }
@@ -73,7 +72,7 @@ export const verifySolanaPayTransaction = async (
     return {
       chain: 'solana',
       ok: true,
-      transactionHash,
+      transactionHash: input.transactionHash,
       observedTimestampMs,
     }
   } catch (error) {
