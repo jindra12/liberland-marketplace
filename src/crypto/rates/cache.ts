@@ -83,6 +83,14 @@ const readCacheValue = async ({
   return value
 }
 
+export const getCryptoRateCacheSnapshot = async ({
+  payload,
+}: {
+  payload: Pick<Payload, 'kv'>
+}): Promise<CryptoRatesCacheValue | null> => {
+  return readCacheValue({ payload })
+}
+
 const toRateSnapshot = (orderAmount: number | null, rate: ChainPoolRate): OrderCryptoPrice => {
   const expectedNativeAmount =
     typeof orderAmount === 'number' && Number.isFinite(orderAmount) && orderAmount > 0

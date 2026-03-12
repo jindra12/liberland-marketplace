@@ -4,6 +4,26 @@ import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { Field } from "payload";
 
+const readonlyCryptoPriceField = ({
+  label,
+  name,
+}: {
+  label: string
+  name: string
+}): Field => ({
+  name,
+  type: 'text',
+  virtual: true,
+  access: {
+    create: () => false,
+    update: () => false,
+  },
+  admin: {
+    readOnly: true,
+  },
+  label,
+})
+
 export const productFields: Field[] = [
   serverURLField(),
   {
@@ -39,6 +59,18 @@ export const productFields: Field[] = [
     type: 'checkbox',
     defaultValue: true,
   },
+  readonlyCryptoPriceField({
+    name: 'priceInETH',
+    label: 'Price in ETH',
+  }),
+  readonlyCryptoPriceField({
+    name: 'priceInSOL',
+    label: 'Price in SOL',
+  }),
+  readonlyCryptoPriceField({
+    name: 'priceInTRX',
+    label: 'Price in TRX',
+  }),
   cryptoAddressesField(),
   {
     name: "image",

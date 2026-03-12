@@ -1,7 +1,7 @@
 import { verifyTransactionOccurred } from '@/crypto'
 import { resolveProductPaymentTargetsFromItems } from '@/crypto/recipient'
 import { Order } from '@/payload-types'
-import { uniq } from "lodash";
+import uniq from 'lodash/uniq.js'
 import type { GroupField, PayloadRequest } from 'payload'
 
 type InitiatePaymentArgs = {

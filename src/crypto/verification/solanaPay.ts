@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { validateTransfer, ValidateTransferError } from '@solana/pay'
-import { Connection, PublicKey } from '@solana/web3.js'
+import { Connection, PublicKey, type LoadedAddresses } from '@solana/web3.js'
 import { getSolanaBaseConfig } from '../env'
 import { hasHashBeenUsed } from '../hash'
 import type { VerifySolanaPayTransactionInput, VerifyTransactionResult } from '../types'
@@ -13,6 +13,51 @@ const resolveTimestampMs = (txBlockTimeSeconds?: number | null, referenceBlockTi
   }
 
   return seconds * 1000
+}
+
+type SolanaTransaction = NonNullable<Awaited<ReturnType<Connection['getTransaction']>>>
+
+const EMPTY_LOADED_ADDRESSES: LoadedAddresses = {
+  writable: [],
+  readonly: [],
+}
+
+const hasMatchingPublicKey = ({
+  keys,
+  reference,
+}: {
+  keys: PublicKey[]
+  reference: PublicKey
+}): boolean => {
+  const referenceBase58 = reference.toBase58()
+  return keys.some((key) => key.toBase58() === referenceBase58)
+}
+
+const hasReferenceAccountKey = ({
+  reference,
+  transaction,
+}: {
+  reference: PublicKey
+  transaction: SolanaTransaction
+}): boolean => {
+  const message = transaction.transaction.message
+  if (message.version === 'legacy') {
+    return hasMatchingPublicKey({
+      keys: message.accountKeys,
+      reference,
+    })
+  }
+
+  const accountKeys = message.getAccountKeys({
+    accountKeysFromLookups: transaction.meta?.loadedAddresses ?? EMPTY_LOADED_ADDRESSES,
+  })
+
+  return accountKeys.keySegments().some((segment) =>
+    hasMatchingPublicKey({
+      keys: segment,
+      reference,
+    }),
+  )
 }
 
 export const verifySolanaPayTransaction = async (
@@ -41,15 +86,31 @@ export const verifySolanaPayTransaction = async (
     await validateTransfer(connection, input.transactionHash, {
       recipient,
       amount: new BigNumber(String(input.expectedAmount)),
-      reference,
     })
 
     const tx = await connection.getTransaction(input.transactionHash, {
       commitment: 'confirmed',
       maxSupportedTransactionVersion: 0,
     })
+    if (!tx) {
+      return {
+        chain: 'solana',
+        ok: false,
+        transactionHash: input.transactionHash,
+        error: 'Transaction was not found.',
+      }
+    }
 
-    const observedTimestampMs = resolveTimestampMs(tx?.blockTime)
+    if (!hasReferenceAccountKey({ reference, transaction: tx })) {
+      return {
+        chain: 'solana',
+        ok: false,
+        transactionHash: input.transactionHash,
+        error: 'Transaction is missing the required order reference key.',
+      }
+    }
+
+    const observedTimestampMs = resolveTimestampMs(tx.blockTime)
     if (!observedTimestampMs) {
       return {
         chain: 'solana',

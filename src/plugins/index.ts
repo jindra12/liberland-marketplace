@@ -30,6 +30,7 @@ import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
 import { computeOrderAmountOnCreate } from '@/hooks/computeOrderAmountOnCreate'
 import { autoConfirmOrderOnTransactionHashAdd } from '@/hooks/autoConfirmOrderOnTransactionHashAdd'
+import { populateProductCryptoPrices } from '@/hooks/populateProductCryptoPrices'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
@@ -255,6 +256,10 @@ export const plugins: Plugin[] = [
         fields: mergeFields(defaultCollection.fields, productFields),
         hooks: {
           ...defaultCollection.hooks,
+          afterRead: [
+            ...(defaultCollection.hooks?.afterRead ?? []),
+            populateProductCryptoPrices,
+          ],
           beforeChange: [
             syncCompanyIdentityId,
             computeCompletenessScore(['url', 'image', 'description', 'properties']),

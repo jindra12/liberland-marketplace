@@ -1314,6 +1314,9 @@ export interface Product {
   companyIdentityId?: string | null;
   url?: string | null;
   orderable?: boolean | null;
+  priceInETH?: string | null;
+  priceInSOL?: string | null;
+  priceInTRX?: string | null;
   /**
    * Optional single payout wallet. If product wallet is empty, company wallet is used.
    */
@@ -2558,6 +2561,9 @@ export interface ProductsSelect<T extends boolean = true> {
   companyIdentityId?: T;
   url?: T;
   orderable?: T;
+  priceInETH?: T;
+  priceInSOL?: T;
+  priceInTRX?: T;
   cryptoAddresses?:
     | T
     | {
