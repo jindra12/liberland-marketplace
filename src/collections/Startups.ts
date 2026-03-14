@@ -1,6 +1,7 @@
 import { authenticated } from '@/access/authenticated'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { serverURLField } from '@/fields/serverURLField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
@@ -68,6 +69,7 @@ export const Startups: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    serverURLField(),
     { name: 'title', type: 'text', required: true },
     {
       name: 'company',

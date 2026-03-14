@@ -1,6 +1,8 @@
 import { authenticated } from '@/access/authenticated'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { serverURLField } from '@/fields/serverURLField'
+import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
@@ -46,10 +48,12 @@ export const Companies: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    serverURLField(),
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },
     { name: 'phone', type: 'text' },
     { name: 'email', type: 'email' },
+    cryptoAddressesField(),
     {
       name: "image",
       type: "upload",

@@ -3,6 +3,7 @@ import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDo
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { serverURLField } from '@/fields/serverURLField'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
@@ -56,6 +57,7 @@ export const Jobs: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    serverURLField(),
     { name: 'title', type: 'text', required: true },
 
     // Each job connected to a company

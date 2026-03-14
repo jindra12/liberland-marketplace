@@ -1,9 +1,31 @@
 import { completenessScoreField } from "@/fields/completenessScoreField";
 import { markdownField } from "@/fields/markdownField";
-import { getCurrencies } from "@/utilities/getCurrencies";
+import { serverURLField } from '@/fields/serverURLField'
+import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { Field } from "payload";
 
+const readonlyCryptoPriceField = ({
+  label,
+  name,
+}: {
+  label: string
+  name: string
+}): Field => ({
+  name,
+  type: 'text',
+  virtual: true,
+  access: {
+    create: () => false,
+    update: () => false,
+  },
+  admin: {
+    readOnly: true,
+  },
+  label,
+})
+
 export const productFields: Field[] = [
+  serverURLField(),
   {
     name: 'name',
     type: 'text',
@@ -33,24 +55,23 @@ export const productFields: Field[] = [
   },
 
   {
-    name: 'price',
-    type: 'group',
-    fields: [
-      {
-        name: 'amount',
-        type: 'number',
-        required: true,
-        min: 0,
-      },
-      {
-        name: 'currency',
-        type: 'select',
-        required: true,
-        defaultValue: 'USD',
-        options: getCurrencies(),
-      },
-    ],
+    name: 'orderable',
+    type: 'checkbox',
+    defaultValue: true,
   },
+  readonlyCryptoPriceField({
+    name: 'priceInETH',
+    label: 'Price in ETH',
+  }),
+  readonlyCryptoPriceField({
+    name: 'priceInSOL',
+    label: 'Price in SOL',
+  }),
+  readonlyCryptoPriceField({
+    name: 'priceInTRX',
+    label: 'Price in TRX',
+  }),
+  cryptoAddressesField(),
   {
     name: "image",
     type: "upload",
