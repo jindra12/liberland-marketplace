@@ -1336,6 +1336,12 @@ export interface Product {
     id?: string | null;
   }[]
   | null;
+    | {
+        key: string;
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -2579,6 +2585,12 @@ export interface ProductsSelect<T extends boolean = true> {
     value?: T;
     id?: T;
   };
+    | T
+    | {
+        key?: T;
+        value?: T;
+        id?: T;
+      };
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
