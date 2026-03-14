@@ -64,7 +64,9 @@
     "dotenv": "16.4.7",
     "geist": "^1.3.0",
     "graphql": "^16.8.2",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.378.0",
+    "mongodb": "6.16.0",
     "multicoin-address-validator": "^0.5.26",
     "next": "15.4.11",
     "next-sitemap": "^4.2.3",
@@ -82,7 +84,8 @@
     "tailwind-merge": "^3.4.0",
     "thirdweb": "^5.90.0",
     "tronweb": "^6.0.1",
-    "vercel": "^50.15.1"
+    "vercel": "^50.15.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -91,6 +94,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@testing-library/react": "16.3.0",
     "@types/escape-html": "^1.0.2",
+    "@types/lodash": "^4.17.23",
     "@types/node": "22.5.4",
     "@types/nodemailer": "^7.0.9",
     "@types/react": "19.2.9",
@@ -117,6 +121,13 @@
     "pnpm": "^9 || ^10"
   },
   "pnpm": {
+    "packageExtensions": {
+      "payload-auth@*": {
+        "dependencies": {
+          "zod": "^4.3.6"
+        }
+      }
+    },
     "onlyBuiltDependencies": [
       "sharp",
       "esbuild",
