@@ -10,6 +10,7 @@ export const serverURLField = (): Field => ({
   type: 'text',
   virtual: true,
   admin: {
+    hidden: true,
     readOnly: true,
     description: 'Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).',
   },
@@ -17,4 +18,3 @@ export const serverURLField = (): Field => ({
     afterRead: [() => getServerURL()],
   },
 })
-
