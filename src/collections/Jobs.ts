@@ -5,6 +5,7 @@ import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { serverURLField } from '@/fields/serverURLField'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
+import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import {
@@ -19,6 +20,7 @@ export const Jobs: CollectionConfig = {
   defaultSort: '-completenessScore',
   hooks: {
     beforeChange: [
+      requireOwnCompany,
       syncCompanyIdentityId,
       computeCompletenessScore([
         'location',

@@ -1,3 +1,4 @@
+import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from "@/fields/completenessScoreField";
 import { markdownField } from "@/fields/markdownField";
 import { serverURLField } from '@/fields/serverURLField'
@@ -37,6 +38,7 @@ export const productFields: Field[] = [
     type: 'relationship',
     relationTo: 'companies',
     required: true,
+    filterOptions: onlyOwnDocsOrAdminFilter,
   },
   {
     name: 'companyIdentityId',
