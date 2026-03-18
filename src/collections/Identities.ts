@@ -1,7 +1,9 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
+import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
@@ -21,6 +23,9 @@ export const Identities: CollectionConfig = {
     delete: onlyOwnDocsOrAdmin,
     read: anyone,
     update: onlyOwnDocsOrAdmin,
+  },
+  hooks: {
+    afterChange: [sendItemUpdateNotifications('identities')],
   },
   fields: [
     serverURLField(),
@@ -49,5 +54,6 @@ export const Identities: CollectionConfig = {
         update: () => false,
       },
     },
+    notificationSubscriptionStatusField('identities'),
   ],
 }

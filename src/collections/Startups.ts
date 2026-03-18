@@ -1,10 +1,13 @@
 import { authenticated } from '@/access/authenticated'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
+import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
 import {
   updateIdentityItemCountAfterChange,
   updateIdentityItemCountAfterDelete,
@@ -42,7 +45,16 @@ export const Startups: CollectionConfig = {
       requireVerifiedEmailToPublish,
       validateInvolvedUsers,
     ],
-    afterChange: [updateIdentityItemCountAfterChange('identity')],
+    afterChange: [
+      sendItemUpdateNotifications('startups'),
+      sendRelatedItemPublishedNotifications({
+        childCollection: 'startups',
+        getParentID: (doc) =>
+          typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
+        parentCollection: 'companies',
+      }),
+      updateIdentityItemCountAfterChange('identity'),
+    ],
     afterDelete: [updateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
@@ -155,6 +167,7 @@ export const Startups: CollectionConfig = {
       relationTo: 'users',
       hasMany: true,
     },
+    notificationSubscriptionStatusField('startups'),
     completenessScoreField,
   ],
 }

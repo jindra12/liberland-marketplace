@@ -1,5 +1,6 @@
 import { completenessScoreField } from "@/fields/completenessScoreField";
 import { markdownField } from "@/fields/markdownField";
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { Field } from "payload";
@@ -96,5 +97,6 @@ export const productFields: Field[] = [
       },
     ],
   },
+  notificationSubscriptionStatusField('products'),
   completenessScoreField,
 ];

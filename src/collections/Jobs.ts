@@ -3,9 +3,12 @@ import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDo
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
+import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import {
   updateIdentityItemCountAfterChange,
@@ -30,7 +33,16 @@ export const Jobs: CollectionConfig = {
       ]),
       requireVerifiedEmailToPublish,
     ],
-    afterChange: [updateIdentityItemCountAfterChange('companyIdentityId')],
+    afterChange: [
+      sendItemUpdateNotifications('jobs'),
+      sendRelatedItemPublishedNotifications({
+        childCollection: 'jobs',
+        getParentID: (doc) =>
+          typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
+        parentCollection: 'companies',
+      }),
+      updateIdentityItemCountAfterChange('companyIdentityId'),
+    ],
     afterDelete: [updateIdentityItemCountAfterDelete('companyIdentityId')],
   },
   admin: {
@@ -175,6 +187,7 @@ export const Jobs: CollectionConfig = {
       label: 'Description',
     }),
     { name: 'applyUrl', type: 'text' },
+    notificationSubscriptionStatusField('jobs'),
     completenessScoreField,
   ],
 }

@@ -21,6 +21,8 @@ import { Startups } from './collections/Startups'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
 import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
+import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
+import { createPayloadNewsletterEmailService } from './newsletter/payloadNewsletterEmailService'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -80,10 +82,25 @@ export default buildConfig({
       },
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs, Startups, Syndications],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Identities,
+    Companies,
+    Jobs,
+    Startups,
+    Syndications,
+    NotificationSubscriptions,
+  ],
   cors: '*',
   endpoints: [backfillEndpoint, confirmCryptoOrderEndpoint],
   globals: [Header, Footer],
+  onInit: async (payload) => {
+    payload.newsletterEmailService = createPayloadNewsletterEmailService(payload)
+  },
   plugins,
   debug: payloadDebug,
   logger: {

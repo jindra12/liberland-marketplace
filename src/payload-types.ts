@@ -89,7 +89,9 @@ export interface Config {
     jobs: Job;
     startups: Startup;
     syndications: Syndication;
+    'notification-subscriptions': NotificationSubscription;
     comments: Comment;
+    subscribers: Subscriber;
     addresses: Address;
     variants: Variant;
     variantTypes: VariantType;
@@ -142,7 +144,9 @@ export interface Config {
     jobs: JobsSelect<false> | JobsSelect<true>;
     startups: StartupsSelect<false> | StartupsSelect<true>;
     syndications: SyndicationsSelect<false> | SyndicationsSelect<true>;
+    'notification-subscriptions': NotificationSubscriptionsSelect<false> | NotificationSubscriptionsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     variants: VariantsSelect<false> | VariantsSelect<true>;
     variantTypes: VariantTypesSelect<false> | VariantTypesSelect<true>;
@@ -169,10 +173,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'newsletter-settings': NewsletterSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'newsletter-settings': NewsletterSettingsSelect<false> | NewsletterSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1118,6 +1124,7 @@ export interface Identity {
    */
   description?: string | null;
   itemCount?: number | null;
+  isSubscribed?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1151,6 +1158,7 @@ export interface Company {
   identity: string | Identity;
   allowedIdentities?: (string | Identity)[] | null;
   disallowedIdentities?: (string | Identity)[] | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1192,6 +1200,7 @@ export interface Job {
    */
   description?: string | null;
   applyUrl?: string | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1228,6 +1237,7 @@ export interface Startup {
     | null;
   stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
   involvedUsers?: (string | User)[] | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1249,6 +1259,93 @@ export interface Syndication {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-subscriptions".
+ */
+export interface NotificationSubscription {
+  id: string;
+  createdBy?: (string | null) | User;
+  email: string;
+  subscriber?: (string | null) | Subscriber;
+  targetCollection: 'companies' | 'jobs' | 'products' | 'startups' | 'identities';
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: string;
+  /**
+   * Subscriber email address
+   */
+  email: string;
+  /**
+   * Subscriber full name
+   */
+  name?: string | null;
+  /**
+   * Preferred language for communications
+   */
+  locale?: 'en' | null;
+  magicLinkToken?: string | null;
+  magicLinkTokenExpiry?: string | null;
+  /**
+   * ID from email service provider
+   */
+  externalId?: string | null;
+  /**
+   * Current subscription status
+   */
+  subscriptionStatus: 'active' | 'unsubscribed' | 'pending';
+  /**
+   * When the user subscribed
+   */
+  subscribedAt?: string | null;
+  /**
+   * When the user unsubscribed
+   */
+  unsubscribedAt?: string | null;
+  /**
+   * Reason for unsubscribing
+   */
+  unsubscribeReason?: string | null;
+  /**
+   * Email communication preferences
+   */
+  emailPreferences?: {
+    /**
+     * Receive regular newsletter updates
+     */
+    newsletter?: boolean | null;
+    /**
+     * Receive important announcements
+     */
+    announcements?: boolean | null;
+  };
+  /**
+   * Where the subscriber signed up from
+   */
+  source?: string | null;
+  /**
+   * Indicates this subscriber was imported from an external provider via webhook
+   */
+  importedFromProvider?: boolean | null;
+  /**
+   * Technical information about signup
+   */
+  signupMetadata?: {
+    ipAddress?: string | null;
+    userAgent?: string | null;
+    referrer?: string | null;
+    signupPage?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1336,6 +1433,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1853,8 +1951,16 @@ export interface PayloadLockedDocument {
         value: string | Syndication;
       } | null)
     | ({
+        relationTo: 'notification-subscriptions';
+        value: string | NotificationSubscription;
+      } | null)
+    | ({
         relationTo: 'comments';
         value: string | Comment;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: string | Subscriber;
       } | null)
     | ({
         relationTo: 'addresses';
@@ -2360,6 +2466,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
   image?: T;
   description?: T;
   itemCount?: T;
+  isSubscribed?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2385,6 +2492,7 @@ export interface CompaniesSelect<T extends boolean = true> {
   identity?: T;
   allowedIdentities?: T;
   disallowedIdentities?: T;
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2423,6 +2531,7 @@ export interface JobsSelect<T extends boolean = true> {
   disallowedIdentities?: T;
   description?: T;
   applyUrl?: T;
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2450,6 +2559,7 @@ export interface StartupsSelect<T extends boolean = true> {
   alreadyHave?: T;
   stage?: T;
   involvedUsers?: T;
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2470,6 +2580,20 @@ export interface SyndicationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-subscriptions_select".
+ */
+export interface NotificationSubscriptionsSelect<T extends boolean = true> {
+  id?: T;
+  createdBy?: T;
+  email?: T;
+  subscriber?: T;
+  targetCollection?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "comments_select".
  */
 export interface CommentsSelect<T extends boolean = true> {
@@ -2480,6 +2604,40 @@ export interface CommentsSelect<T extends boolean = true> {
   anonymousHash?: T;
   replyPostRelationTo?: T;
   replyPostValue?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  name?: T;
+  locale?: T;
+  magicLinkToken?: T;
+  magicLinkTokenExpiry?: T;
+  externalId?: T;
+  subscriptionStatus?: T;
+  subscribedAt?: T;
+  unsubscribedAt?: T;
+  unsubscribeReason?: T;
+  emailPreferences?:
+    | T
+    | {
+        newsletter?: T;
+        announcements?: T;
+      };
+  source?: T;
+  importedFromProvider?: T;
+  signupMetadata?:
+    | T
+    | {
+        ipAddress?: T;
+        userAgent?: T;
+        referrer?: T;
+        signupPage?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2579,6 +2737,7 @@ export interface ProductsSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3042,6 +3201,112 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Configure email provider settings and templates
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-settings".
+ */
+export interface NewsletterSetting {
+  id: string;
+  /**
+   * Choose which email service to use
+   */
+  provider: 'resend' | 'broadcast';
+  resendSettings?: {
+    /**
+     * Your Resend API key
+     */
+    apiKey: string;
+    audienceIds?:
+      | {
+          locale: 'en';
+          production?: string | null;
+          development?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  broadcastSettings?: {
+    /**
+     * Your Broadcast instance URL
+     */
+    apiUrl: string;
+    /**
+     * Your Broadcast API token
+     */
+    token: string;
+    /**
+     * Copy this URL to your Broadcast webhook settings
+     */
+    webhookUrl?: string | null;
+    /**
+     * Paste the webhook secret from Broadcast here
+     */
+    webhookSecret?: string | null;
+    webhookStatus?: ('not_configured' | 'configured' | 'verified' | 'error') | null;
+    lastWebhookReceived?: string | null;
+  };
+  /**
+   * Default sender email address
+   */
+  fromAddress: string;
+  /**
+   * Default sender name
+   */
+  fromName: string;
+  /**
+   * Optional reply-to email address
+   */
+  replyTo?: string | null;
+  brandSettings: {
+    /**
+     * Your website or newsletter name
+     */
+    siteName: string;
+    /**
+     * Your website URL (optional)
+     */
+    siteUrl?: string | null;
+    /**
+     * URL to your logo image (optional)
+     */
+    logoUrl?: string | null;
+  };
+  emailTemplates?: {
+    welcome?: {
+      enabled?: boolean | null;
+      subject?: string | null;
+      preheader?: string | null;
+    };
+    magicLink?: {
+      subject?: string | null;
+      preheader?: string | null;
+      expirationTime?: ('1h' | '24h' | '7d' | '30d') | null;
+    };
+  };
+  subscriptionSettings?: {
+    /**
+     * Require email confirmation before activating subscriptions
+     */
+    requireDoubleOptIn?: boolean | null;
+    /**
+     * Leave empty to allow all domains
+     */
+    allowedDomains?:
+      | {
+          domain: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Maximum number of subscriptions allowed from a single IP address
+     */
+    maxSubscribersPerIP?: number | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -3082,6 +3347,79 @@ export interface FooterSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-settings_select".
+ */
+export interface NewsletterSettingsSelect<T extends boolean = true> {
+  provider?: T;
+  resendSettings?:
+    | T
+    | {
+        apiKey?: T;
+        audienceIds?:
+          | T
+          | {
+              locale?: T;
+              production?: T;
+              development?: T;
+              id?: T;
+            };
+      };
+  broadcastSettings?:
+    | T
+    | {
+        apiUrl?: T;
+        token?: T;
+        webhookUrl?: T;
+        webhookSecret?: T;
+        webhookStatus?: T;
+        lastWebhookReceived?: T;
+      };
+  fromAddress?: T;
+  fromName?: T;
+  replyTo?: T;
+  brandSettings?:
+    | T
+    | {
+        siteName?: T;
+        siteUrl?: T;
+        logoUrl?: T;
+      };
+  emailTemplates?:
+    | T
+    | {
+        welcome?:
+          | T
+          | {
+              enabled?: T;
+              subject?: T;
+              preheader?: T;
+            };
+        magicLink?:
+          | T
+          | {
+              subject?: T;
+              preheader?: T;
+              expirationTime?: T;
+            };
+      };
+  subscriptionSettings?:
+    | T
+    | {
+        requireDoubleOptIn?: T;
+        allowedDomains?:
+          | T
+          | {
+              domain?: T;
+              id?: T;
+            };
+        maxSubscribersPerIP?: T;
       };
   updatedAt?: T;
   createdAt?: T;
