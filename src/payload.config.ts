@@ -22,7 +22,7 @@ import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
 import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
 import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
-import { createPayloadNewsletterEmailService } from './newsletter/payloadNewsletterEmailService'
+import { Subscribers } from './collections/Subscribers'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -93,14 +93,12 @@ export default buildConfig({
     Jobs,
     Startups,
     Syndications,
+    Subscribers,
     NotificationSubscriptions,
   ],
   cors: '*',
   endpoints: [backfillEndpoint, confirmCryptoOrderEndpoint],
   globals: [Header, Footer],
-  onInit: async (payload) => {
-    payload.newsletterEmailService = createPayloadNewsletterEmailService(payload)
-  },
   plugins,
   debug: payloadDebug,
   logger: {

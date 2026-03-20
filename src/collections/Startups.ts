@@ -31,6 +31,10 @@ const resourceOptions = [
 
 export const Startups: CollectionConfig = {
   slug: 'startups',
+  labels: {
+    singular: 'Venture',
+    plural: 'Ventures',
+  },
   defaultSort: '-completenessScore',
   endpoints: [joinStartup, leaveStartup],
   hooks: {

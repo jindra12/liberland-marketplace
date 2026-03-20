@@ -500,7 +500,7 @@ describe('Notification subscriptions collection GraphQL', () => {
       docID: 'tribe-123',
       title: 'Frontend Tribe',
       unsubscribeURL:
-        'https://frontend.example.com/unsubscribe?type=Identities&id=tribe-123&email=tribe@example.com',
+        'https://frontend.example.com/unsubscribe?type=Tribes&id=tribe-123&email=tribe@example.com',
     })
 
     expect(email.html).toContain('https://frontend.example.com/tribes/tribe-123')
@@ -569,7 +569,7 @@ describe('Notification subscriptions collection GraphQL', () => {
     expect(sentEmail?.html).toContain(`https://frontend.example.com/companies/${company.id}`)
     expect(sentEmail?.text).toContain(`https://frontend.example.com/companies/${company.id}`)
     expect(sentEmail?.html).toContain(
-      `type=Identities&id=${identity.id}&email=${encodeURIComponent(subscriptionEmail)}`,
+      `type=Tribes&id=${identity.id}&email=${encodeURIComponent(subscriptionEmail)}`,
     )
   })
 

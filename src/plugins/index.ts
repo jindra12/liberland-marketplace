@@ -37,7 +37,6 @@ import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
-import { newsletter } from '@/newsletter/config'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import { cryptoRateRefreshJob } from './cryptoRateRefreshJob'
 import {
@@ -97,7 +96,6 @@ const canUpdateOrderCheckoutFields = ({
 export const plugins: Plugin[] = [
   comments,
   addCreatedBy,
-  newsletter,
   betterAuthPlugin({
     disableDefaultPayloadAuth: true,
     hidePluginCollections: true,

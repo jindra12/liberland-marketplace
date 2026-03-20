@@ -16,8 +16,6 @@ type NotificationSubscriptionRecipient = {
   email: string
 }
 
-const ACTIVE_SUBSCRIPTION_STATUS = 'active'
-const ITEM_NOTIFICATION_SOURCE = 'item-notifications'
 const USERS_COLLECTION_SLUG = 'users'
 
 export const normalizeNotificationEmail = (email: string): string => email.toLowerCase()
@@ -146,27 +144,20 @@ export const ensureNotificationSubscriber = async ({
       collection: NEWSLETTER_SUBSCRIBERS_SLUG,
       data: {
         email: normalizedEmail,
-        emailPreferences: {
-          announcements: true,
-          newsletter: true,
-        },
-        importedFromProvider: true,
-        source: ITEM_NOTIFICATION_SOURCE,
-        subscriptionStatus: ACTIVE_SUBSCRIPTION_STATUS,
+        isActive: true,
       },
+      draft: false,
       overrideAccess: true,
       req,
     })
   }
 
-  if (existingSubscriber.subscriptionStatus !== ACTIVE_SUBSCRIPTION_STATUS) {
+  if (!existingSubscriber.isActive) {
     return req.payload.update({
       collection: NEWSLETTER_SUBSCRIBERS_SLUG,
       id: existingSubscriber.id,
       data: {
-        importedFromProvider: true,
-        source: ITEM_NOTIFICATION_SOURCE,
-        subscriptionStatus: ACTIVE_SUBSCRIPTION_STATUS,
+        isActive: true,
       },
       overrideAccess: true,
       req,
@@ -274,8 +265,8 @@ export const getNotificationRecipientsForTarget = async ({
           },
         },
         {
-          subscriptionStatus: {
-            equals: ACTIVE_SUBSCRIPTION_STATUS,
+          isActive: {
+            equals: true,
           },
         },
       ],

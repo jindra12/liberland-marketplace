@@ -35,7 +35,7 @@ export const joinStartup: Omit<Endpoint, 'root'> = {
       .filter(Boolean) as string[]
 
     if (currentIds.includes(userId)) {
-      return Response.json({ message: 'You are already involved in this startup.' })
+      return Response.json({ message: 'You are already involved in this venture.' })
     }
 
     await req.payload.update({
@@ -45,7 +45,7 @@ export const joinStartup: Omit<Endpoint, 'root'> = {
       overrideAccess: true,
     })
 
-    return Response.json({ message: 'Successfully joined startup.' })
+    return Response.json({ message: 'Successfully joined venture.' })
   },
 }
 
@@ -72,7 +72,7 @@ export const leaveStartup: Omit<Endpoint, 'root'> = {
       .filter(Boolean) as string[]
 
     if (!currentIds.includes(userId)) {
-      return Response.json({ message: 'You are not involved in this startup.' })
+      return Response.json({ message: 'You are not involved in this venture.' })
     }
 
     await req.payload.update({
@@ -82,6 +82,6 @@ export const leaveStartup: Omit<Endpoint, 'root'> = {
       overrideAccess: true,
     })
 
-    return Response.json({ message: 'Successfully left startup.' })
+    return Response.json({ message: 'Successfully left venture.' })
   },
 }

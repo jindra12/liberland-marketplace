@@ -1,12 +1,11 @@
 export const NEWSLETTER_SUBSCRIBERS_SLUG = 'subscribers'
-export const NEWSLETTER_SETTINGS_SLUG = 'newsletter-settings'
 export const NOTIFICATION_SUBSCRIPTIONS_SLUG = 'notification-subscriptions'
 
 export const NOTIFICATION_TARGET_OPTIONS = [
   { label: 'Company', value: 'companies' },
   { label: 'Job', value: 'jobs' },
   { label: 'Product', value: 'products' },
-  { label: 'Startup', value: 'startups' },
+  { label: 'Venture', value: 'startups' },
   { label: 'Tribe', value: 'identities' },
 ] as const
 
@@ -30,7 +29,7 @@ export const NOTIFICATION_TARGET_FRONTEND_PATHS: Record<NotificationTargetCollec
 
 export const NOTIFICATION_TARGET_QUERY_TYPES: Record<NotificationTargetCollection, string> = {
   companies: 'Companies',
-  identities: 'Identities',
+  identities: 'Tribes',
   jobs: 'Jobs',
   products: 'Products',
   startups: 'Ventures',
