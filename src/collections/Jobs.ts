@@ -3,6 +3,7 @@ import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDo
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
@@ -187,6 +188,7 @@ export const Jobs: CollectionConfig = {
       label: 'Description',
     }),
     { name: 'applyUrl', type: 'text' },
+    notificationSubscriberCountField(),
     notificationSubscriptionStatusField('jobs'),
     completenessScoreField,
   ],

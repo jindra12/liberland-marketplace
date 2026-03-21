@@ -281,3 +281,35 @@ export const getNotificationRecipientsForTarget = async ({
       email: subscription.email,
     }))
 }
+
+export const getNotificationSubscriberCountForTarget = async ({
+  req,
+  targetCollection,
+  targetID,
+}: {
+  req: PayloadRequest
+  targetCollection: NotificationTargetCollection
+  targetID: string
+}): Promise<number> => {
+  const result = await req.payload.count({
+    collection: NOTIFICATION_SUBSCRIPTIONS_SLUG,
+    overrideAccess: true,
+    req,
+    where: {
+      and: [
+        {
+          targetCollection: {
+            equals: targetCollection,
+          },
+        },
+        {
+          targetID: {
+            equals: targetID,
+          },
+        },
+      ],
+    },
+  })
+
+  return result.totalDocs
+}

@@ -1,9 +1,10 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import type { Payload } from 'payload'
+import type { Field } from 'payload'
 
 import { buildNotificationSubscriptionDocumentID } from '@/newsletter/notificationSubscriptions'
-import { renderItemUpdateEmail } from '@/utilities/notificationDiff'
-import type { User } from '@/payload-types'
+import { collectDocumentChanges, renderItemUpdateEmail } from '@/utilities/notificationDiff'
+import type { Product, User } from '@/payload-types'
 
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
@@ -507,6 +508,64 @@ describe('Notification subscriptions collection GraphQL', () => {
     expect(email.text).toContain('https://frontend.example.com/tribes/tribe-123')
     expect(email.html).not.toContain('/admin/collections/identities/tribe-123')
     expect(email.text).not.toContain('/admin/collections/identities/tribe-123')
+  })
+
+  it('omits hidden and readonly fields from notification diffs', () => {
+    const fields: Field[] = [
+      {
+        name: 'name',
+        type: 'text',
+      },
+      {
+        name: 'url',
+        type: 'text',
+        admin: {
+          hidden: true,
+        },
+      },
+      {
+        name: 'priceInETH',
+        type: 'text',
+        virtual: true,
+        admin: {
+          hidden: true,
+          readOnly: true,
+        },
+      },
+    ]
+
+    const previousDoc: Product = {
+      company: 'company-1',
+      createdAt: '2026-01-01T00:00:00.000Z',
+      id: 'product-1',
+      name: 'Old Product Name',
+      priceInETH: '1.00',
+      updatedAt: '2026-01-01T00:00:00.000Z',
+      url: 'https://example.com/old-product',
+    }
+
+    const nextDoc: Product = {
+      ...previousDoc,
+      name: 'New Product Name',
+      priceInETH: '2.00',
+      updatedAt: '2026-01-02T00:00:00.000Z',
+      url: 'https://example.com/new-product',
+    }
+
+    expect(
+      collectDocumentChanges({
+        fields,
+        nextDoc,
+        previousDoc,
+      }),
+    ).toEqual([
+      {
+        after: 'New Product Name',
+        before: 'Old Product Name',
+        label: 'Name',
+        path: 'name',
+      },
+    ])
   })
 
   it('notifies tribe subscribers when a new published company is created under that tribe', async () => {

@@ -59,6 +59,63 @@ const getTopLevelFieldName = (path: string): string | null => {
   return topLevelFieldName && topLevelFieldName.length > 0 ? topLevelFieldName : null
 }
 
+const getTopLevelField = ({
+  fields,
+  path,
+}: {
+  fields: Field[]
+  path: string
+}): Field | null => {
+  const topLevelFieldName = getTopLevelFieldName(path)
+
+  if (!topLevelFieldName) {
+    return null
+  }
+
+  return (
+    fields.find((candidate) => fieldAffectsData(candidate) && candidate.name === topLevelFieldName) ??
+    null
+  )
+}
+
+const shouldExcludeNotificationPath = ({
+  fields,
+  path,
+}: {
+  fields: Field[]
+  path: string
+}): boolean => {
+  const topLevelFieldName = getTopLevelFieldName(path)
+
+  if (!topLevelFieldName) {
+    return false
+  }
+
+  if (EXCLUDED_TOP_LEVEL_FIELDS.has(topLevelFieldName)) {
+    return true
+  }
+
+  const field = getTopLevelField({ fields, path })
+
+  if (!field) {
+    return false
+  }
+
+  const isFieldHidden = 'hidden' in field && field.hidden === true
+  const isAdminHidden =
+    typeof field.admin === 'object' &&
+    field.admin !== null &&
+    'hidden' in field.admin &&
+    field.admin.hidden === true
+  const isAdminReadOnly =
+    typeof field.admin === 'object' &&
+    field.admin !== null &&
+    'readOnly' in field.admin &&
+    field.admin.readOnly === true
+
+  return isFieldHidden || isAdminHidden || isAdminReadOnly
+}
+
 const getNotificationChangeLabel = ({
   fields,
   path,
@@ -66,15 +123,12 @@ const getNotificationChangeLabel = ({
   fields: Field[]
   path: string
 }): string => {
+  const field = getTopLevelField({ fields, path })
   const topLevelFieldName = getTopLevelFieldName(path)
 
   if (!topLevelFieldName) {
     return path
   }
-
-  const field = fields.find(
-    (candidate) => fieldAffectsData(candidate) && candidate.name === topLevelFieldName,
-  )
 
   if (field && 'label' in field && typeof field.label === 'string' && field.label.length > 0) {
     return field.label
@@ -143,6 +197,7 @@ export const collectDocumentChanges = ({
 
   return Array.from(new Set([...nextValues.keys(), ...previousValues.keys()]))
     .sort((left, right) => left.localeCompare(right))
+    .filter((path) => !shouldExcludeNotificationPath({ fields, path }))
     .map((path) => ({
       after: nextValues.get(path) || '(empty)',
       before: previousValues.get(path) || '(empty)',

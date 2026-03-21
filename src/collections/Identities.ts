@@ -1,6 +1,7 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
@@ -54,6 +55,7 @@ export const Identities: CollectionConfig = {
         update: () => false,
       },
     },
+    notificationSubscriberCountField(),
     notificationSubscriptionStatusField('identities'),
   ],
 }

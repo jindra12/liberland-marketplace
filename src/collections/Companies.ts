@@ -1,6 +1,7 @@
 import { authenticated } from '@/access/authenticated'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
@@ -110,6 +111,7 @@ export const Companies: CollectionConfig = {
         allowEdit: true,
       },
     },
+    notificationSubscriberCountField(),
     notificationSubscriptionStatusField('companies'),
     completenessScoreField,
   ],

@@ -1,0 +1,20 @@
+.notification-subscriber-count-field {
+  margin-bottom: var(--base);
+}
+
+.notification-subscriber-count-field__label {
+  color: var(--theme-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: calc(var(--base) * 0.25);
+}
+
+.notification-subscriber-count-field__value {
+  background: var(--theme-elevation-50);
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: var(--style-radius-s);
+  color: var(--theme-text);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: calc(var(--base) * 0.5) var(--base);
+}
