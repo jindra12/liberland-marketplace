@@ -25,6 +25,7 @@ interface DiffObject {
 }
 
 const EXCLUDED_TOP_LEVEL_FIELDS = new Set([
+  '_status',
   'companyIdentityId',
   'completenessScore',
   'createdAt',

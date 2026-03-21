@@ -535,6 +535,7 @@ describe('Notification subscriptions collection GraphQL', () => {
     ]
 
     const previousDoc: Product = {
+      _status: 'draft',
       company: 'company-1',
       createdAt: '2026-01-01T00:00:00.000Z',
       id: 'product-1',
@@ -546,6 +547,7 @@ describe('Notification subscriptions collection GraphQL', () => {
 
     const nextDoc: Product = {
       ...previousDoc,
+      _status: 'published',
       name: 'New Product Name',
       priceInETH: '2.00',
       updatedAt: '2026-01-02T00:00:00.000Z',
