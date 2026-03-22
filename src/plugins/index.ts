@@ -44,6 +44,8 @@ import {
   updateIdentityItemCountAfterChange,
   updateIdentityItemCountAfterDelete,
 } from '@/hooks/updateIdentityItemCount'
+import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
+import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
 
 const smtpTransport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -270,6 +272,13 @@ export const plugins: Plugin[] = [
           ],
           afterChange: [
             ...(defaultCollection.hooks?.afterChange ?? []),
+            sendItemUpdateNotifications('products'),
+            sendRelatedItemPublishedNotifications({
+              childCollection: 'products',
+              getParentID: (doc) =>
+                typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
+              parentCollection: 'companies',
+            }),
             updateIdentityItemCountAfterChange('companyIdentityId'),
           ],
           afterDelete: [

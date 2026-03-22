@@ -1,11 +1,15 @@
 import { authenticated } from '@/access/authenticated'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
+import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
 import {
   updateIdentityItemCountAfterChange,
   updateIdentityItemCountAfterDelete,
@@ -21,7 +25,16 @@ export const Companies: CollectionConfig = {
       computeCompletenessScore(['website', 'phone', 'email', 'image', 'description']),
       requireVerifiedEmailToPublish,
     ],
-    afterChange: [updateIdentityItemCountAfterChange('identity')],
+    afterChange: [
+      sendItemUpdateNotifications('companies'),
+      sendRelatedItemPublishedNotifications({
+        childCollection: 'companies',
+        getParentID: (doc) =>
+          typeof doc.identity === 'string' ? doc.identity : doc.identity?.id ?? null,
+        parentCollection: 'identities',
+      }),
+      updateIdentityItemCountAfterChange('identity'),
+    ],
     afterDelete: [updateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
@@ -98,6 +111,8 @@ export const Companies: CollectionConfig = {
         allowEdit: true,
       },
     },
+    notificationSubscriberCountField(),
+    notificationSubscriptionStatusField('companies'),
     completenessScoreField,
   ],
 }

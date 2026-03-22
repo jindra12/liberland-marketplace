@@ -21,6 +21,8 @@ import { Startups } from './collections/Startups'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
 import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
+import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
+import { Subscribers } from './collections/Subscribers'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -80,7 +82,20 @@ export default buildConfig({
       },
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Identities, Companies, Jobs, Startups, Syndications],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Identities,
+    Companies,
+    Jobs,
+    Startups,
+    Syndications,
+    Subscribers,
+    NotificationSubscriptions,
+  ],
   cors: '*',
   endpoints: [backfillEndpoint, confirmCryptoOrderEndpoint],
   globals: [Header, Footer],

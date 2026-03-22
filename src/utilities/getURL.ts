@@ -9,6 +9,10 @@ export const getServerSideURL = () => {
   )
 }
 
+export const getFrontendURL = () => {
+  return process.env.FRONTEND_URL || 'http://localhost:3001';
+}
+
 export const getClientSideURL = () => {
   if (canUseDOM) {
     const protocol = window.location.protocol

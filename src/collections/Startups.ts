@@ -1,11 +1,15 @@
 import { authenticated } from '@/access/authenticated'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
+import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
 import {
   updateIdentityItemCountAfterChange,
   updateIdentityItemCountAfterDelete,
@@ -29,6 +33,10 @@ const resourceOptions = [
 
 export const Startups: CollectionConfig = {
   slug: 'startups',
+  labels: {
+    singular: 'Venture',
+    plural: 'Ventures',
+  },
   defaultSort: '-completenessScore',
   endpoints: [joinStartup, leaveStartup],
   hooks: {
@@ -44,7 +52,16 @@ export const Startups: CollectionConfig = {
       requireVerifiedEmailToPublish,
       validateInvolvedUsers,
     ],
-    afterChange: [updateIdentityItemCountAfterChange('identity')],
+    afterChange: [
+      sendItemUpdateNotifications('startups'),
+      sendRelatedItemPublishedNotifications({
+        childCollection: 'startups',
+        getParentID: (doc) =>
+          typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
+        parentCollection: 'companies',
+      }),
+      updateIdentityItemCountAfterChange('identity'),
+    ],
     afterDelete: [updateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
@@ -157,6 +174,8 @@ export const Startups: CollectionConfig = {
       relationTo: 'users',
       hasMany: true,
     },
+    notificationSubscriberCountField(),
+    notificationSubscriptionStatusField('startups'),
     completenessScoreField,
   ],
 }

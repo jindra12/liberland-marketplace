@@ -112,7 +112,7 @@ export default function SignupPage() {
 
           {identities.length > 0 && (
             <div className="flex flex-col gap-2">
-              <Label>Select your identity (optional)</Label>
+              <Label>Select your tribe (optional)</Label>
               <div className="grid grid-cols-3 gap-3">
                 {identities.map((identity) => {
                   const imageUrl = getIdentityImageUrl(identity)

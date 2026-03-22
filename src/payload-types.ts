@@ -89,6 +89,8 @@ export interface Config {
     jobs: Job;
     startups: Startup;
     syndications: Syndication;
+    subscribers: Subscriber;
+    'notification-subscriptions': NotificationSubscription;
     comments: Comment;
     addresses: Address;
     variants: Variant;
@@ -142,6 +144,8 @@ export interface Config {
     jobs: JobsSelect<false> | JobsSelect<true>;
     startups: StartupsSelect<false> | StartupsSelect<true>;
     syndications: SyndicationsSelect<false> | SyndicationsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
+    'notification-subscriptions': NotificationSubscriptionsSelect<false> | NotificationSubscriptionsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     variants: VariantsSelect<false> | VariantsSelect<true>;
@@ -1118,6 +1122,7 @@ export interface Identity {
    */
   description?: string | null;
   itemCount?: number | null;
+  isSubscribed?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1151,6 +1156,7 @@ export interface Company {
   identity: string | Identity;
   allowedIdentities?: (string | Identity)[] | null;
   disallowedIdentities?: (string | Identity)[] | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1192,6 +1198,7 @@ export interface Job {
    */
   description?: string | null;
   applyUrl?: string | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1228,6 +1235,7 @@ export interface Startup {
     | null;
   stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
   involvedUsers?: (string | User)[] | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1249,6 +1257,32 @@ export interface Syndication {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: string;
+  createdBy?: (string | null) | User;
+  email: string;
+  isActive: boolean;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-subscriptions".
+ */
+export interface NotificationSubscription {
+  id: string;
+  createdBy?: (string | null) | User;
+  email: string;
+  subscriber?: (string | null) | Subscriber;
+  targetCollection: 'companies' | 'jobs' | 'products' | 'startups' | 'identities';
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1336,6 +1370,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  isSubscribed?: boolean | null;
   completenessScore?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -1853,6 +1888,14 @@ export interface PayloadLockedDocument {
         value: string | Syndication;
       } | null)
     | ({
+        relationTo: 'subscribers';
+        value: string | Subscriber;
+      } | null)
+    | ({
+        relationTo: 'notification-subscriptions';
+        value: string | NotificationSubscription;
+      } | null)
+    | ({
         relationTo: 'comments';
         value: string | Comment;
       } | null)
@@ -2360,6 +2403,7 @@ export interface IdentitiesSelect<T extends boolean = true> {
   image?: T;
   description?: T;
   itemCount?: T;
+  isSubscribed?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2385,6 +2429,7 @@ export interface CompaniesSelect<T extends boolean = true> {
   identity?: T;
   allowedIdentities?: T;
   disallowedIdentities?: T;
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2423,6 +2468,7 @@ export interface JobsSelect<T extends boolean = true> {
   disallowedIdentities?: T;
   description?: T;
   applyUrl?: T;
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2450,6 +2496,7 @@ export interface StartupsSelect<T extends boolean = true> {
   alreadyHave?: T;
   stage?: T;
   involvedUsers?: T;
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2467,6 +2514,31 @@ export interface SyndicationsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  createdBy?: T;
+  email?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-subscriptions_select".
+ */
+export interface NotificationSubscriptionsSelect<T extends boolean = true> {
+  id?: T;
+  createdBy?: T;
+  email?: T;
+  subscriber?: T;
+  targetCollection?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2579,6 +2651,7 @@ export interface ProductsSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  isSubscribed?: T;
   completenessScore?: T;
   updatedAt?: T;
   createdAt?: T;

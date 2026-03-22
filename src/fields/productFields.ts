@@ -1,6 +1,8 @@
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from "@/fields/completenessScoreField";
 import { markdownField } from "@/fields/markdownField";
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { Field } from "payload";
@@ -20,6 +22,7 @@ const readonlyCryptoPriceField = ({
     update: () => false,
   },
   admin: {
+    hidden: true,
     readOnly: true,
   },
   label,
@@ -98,5 +101,7 @@ export const productFields: Field[] = [
       },
     ],
   },
+  notificationSubscriberCountField(),
+  notificationSubscriptionStatusField('products'),
   completenessScoreField,
 ];
