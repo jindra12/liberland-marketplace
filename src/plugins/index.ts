@@ -37,6 +37,7 @@ import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
+import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import { cryptoRateRefreshJob } from './cryptoRateRefreshJob'
 import {
@@ -261,6 +262,7 @@ export const plugins: Plugin[] = [
             populateProductCryptoPrices,
           ],
           beforeChange: [
+            requireOwnCompany,
             syncCompanyIdentityId,
             computeCompletenessScore(['url', 'image', 'description', 'properties']),
             ...(defaultCollection.hooks?.beforeChange ?? []),

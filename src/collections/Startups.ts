@@ -4,6 +4,7 @@ import { markdownField } from '@/fields/markdownField'
 import { serverURLField } from '@/fields/serverURLField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
+import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import {
   updateIdentityItemCountAfterChange,
@@ -32,6 +33,7 @@ export const Startups: CollectionConfig = {
   endpoints: [joinStartup, leaveStartup],
   hooks: {
     beforeChange: [
+      requireOwnCompany,
       computeCompletenessScore([
         'description',
         'image',
