@@ -1,0 +1,31 @@
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.card {
+  background: linear-gradient(180deg, var(--theme-elevation-0), var(--theme-elevation-50));
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+.cardHeader {
+  margin-bottom: 0.75rem;
+}
+
+.cardHeader h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.cardHeader p {
+  color: var(--theme-elevation-700);
+  margin: 0.35rem 0 0;
+}
+
+.chart {
+  height: 280px;
+  width: 100%;
+}

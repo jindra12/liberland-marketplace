@@ -28,6 +28,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Avoid `style={{}}` in React. Prefer class names with stylesheet-backed styling; for server-rendered emails, embed a `<style>` block sourced from a stylesheet file instead of inline React style props.
 - If asked to generate ad hoc queries, images, or similar throwaway artifacts, write them to `/tmp` instead of adding them to the repo unless the user explicitly asks to keep them in the workspace.
 - Do not remove `experimental.esmExternals: 'loose'` from `next.config.js` unless there is direct evidence that setting is the root cause or the user explicitly asks for that change.
+- Do not disable, gate, or remove local development features as a performance optimization unless the user explicitly asks for that behavior. Prefer lazy-loading, deferring work, or measuring first.
 
 ## Project Structure
 

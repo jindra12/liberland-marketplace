@@ -1,4 +1,4 @@
-import { TronWeb } from 'tronweb'
+import type { TronWeb } from 'tronweb'
 
 type TronConfig = {
   apiUrl: string
@@ -69,7 +69,8 @@ const normalizeTronBase58Address = (address: string): string => {
   return Array.from(payload, hexByte).join('').toLowerCase()
 }
 
-export const createTronClient = (config: TronConfig): TronWeb => {
+export const createTronClient = async (config: TronConfig): Promise<TronWeb> => {
+  const { TronWeb } = await import('tronweb')
   const headers = config.proApiKey ? { 'TRON-PRO-API-KEY': config.proApiKey } : undefined
 
   return new TronWeb({

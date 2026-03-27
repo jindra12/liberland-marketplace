@@ -1,5 +1,4 @@
 import type { Config } from 'payload'
-import { startCryptoRateRefreshScheduler } from '@/crypto/rates/cache'
 
 export const cryptoRateRefreshJob = (config: Config): Config => {
   const existingOnInit = config.onInit
@@ -11,8 +10,8 @@ export const cryptoRateRefreshJob = (config: Config): Config => {
         await existingOnInit(payload)
       }
 
+      const { startCryptoRateRefreshScheduler } = await import('@/crypto/rates/cache')
       await startCryptoRateRefreshScheduler({ payload })
     },
   }
 }
-

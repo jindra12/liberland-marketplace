@@ -2,11 +2,7 @@ import BigNumber from 'bignumber.js'
 import { quantizeNativeAmount } from '../nativeAmount'
 import { getOrderById, getOrderCreatedAtMs, getOrderCryptoPriceEntries, getOrderTransactionHashEntries } from '../order'
 import { getPayloadInstance } from '../payload'
-import { resolveProductPaymentTargetsFromItems } from '../recipient'
 import type { OrderCryptoPrice, SupportedChain, VerifyOrderPaymentResult, VerifyTransactionResult } from '../types'
-import { verifyEthereumNativeTransfer } from './ethereum'
-import { verifySolanaPayTransaction } from './solanaPay'
-import { verifyTronNativeTransfer } from './tron'
 
 type VerificationGroup = {
   chain: SupportedChain
@@ -79,6 +75,7 @@ const verifyGroup = async ({
   )
 
   if (group.chain === 'ethereum') {
+    const { verifyEthereumNativeTransfer } = await import('./ethereum')
     return verifyEthereumNativeTransfer({
       chain: 'ethereum',
       expectedAmount: expectedNativeAmount,
@@ -90,6 +87,7 @@ const verifyGroup = async ({
   }
 
   if (group.chain === 'solana') {
+    const { verifySolanaPayTransaction } = await import('./solanaPay')
     return verifySolanaPayTransaction({
       chain: 'solana',
       expectedAmount: expectedNativeAmount,
@@ -100,6 +98,7 @@ const verifyGroup = async ({
     })
   }
 
+  const { verifyTronNativeTransfer } = await import('./tron')
   return verifyTronNativeTransfer({
     chain: 'tron',
     expectedAmount: expectedNativeAmount,
@@ -124,6 +123,7 @@ export const verifyTransactionOccurred = async (orderId: string): Promise<Verify
   }
 
   const payload = await getPayloadInstance()
+  const { resolveProductPaymentTargetsFromItems } = await import('../recipient')
   const results: VerifyTransactionResult[] = []
 
   let productTargets: Awaited<ReturnType<typeof resolveProductPaymentTargetsFromItems>>

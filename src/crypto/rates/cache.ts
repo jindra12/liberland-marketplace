@@ -3,9 +3,6 @@ import type { Payload } from 'payload'
 import type { ChainPoolRate, OrderCryptoPrice, SupportedChain } from '../types'
 import { quantizeNativeAmount } from '../nativeAmount'
 import { withTimeout } from '../timeout'
-import { getEthereumPoolRate } from './ethereum'
-import { getSolanaPoolRate } from './solana'
-import { getTronPoolRate } from './tron'
 
 const DEFAULT_REFRESH_INTERVAL_MS = 5 * 60 * 1000
 const DEFAULT_RATE_FETCH_TIMEOUT_MS = 60_000
@@ -66,6 +63,21 @@ const parseCacheMaxAgeMs = (): number => {
   return parsed
 }
 
+const getRateByChain = async (chain: SupportedChain): Promise<ChainPoolRate> => {
+  if (chain === 'ethereum') {
+    const { getEthereumPoolRate } = await import('./ethereum')
+    return getEthereumPoolRate()
+  }
+
+  if (chain === 'solana') {
+    const { getSolanaPoolRate } = await import('./solana')
+    return getSolanaPoolRate()
+  }
+
+  const { getTronPoolRate } = await import('./tron')
+  return getTronPoolRate()
+}
+
 const readCacheValue = async ({
   payload,
 }: {
@@ -122,17 +134,17 @@ export const refreshCryptoRateCache = async ({
 
     const [ethereum, solana, tron] = await Promise.allSettled([
       withTimeout({
-        promise: getEthereumPoolRate(),
+        promise: getRateByChain('ethereum'),
         timeoutMs,
         timeoutMessage: `Timed out fetching ethereum rate after ${timeoutMs}ms.`,
       }),
       withTimeout({
-        promise: getSolanaPoolRate(),
+        promise: getRateByChain('solana'),
         timeoutMs,
         timeoutMessage: `Timed out fetching solana rate after ${timeoutMs}ms.`,
       }),
       withTimeout({
-        promise: getTronPoolRate(),
+        promise: getRateByChain('tron'),
         timeoutMs,
         timeoutMessage: `Timed out fetching tron rate after ${timeoutMs}ms.`,
       }),

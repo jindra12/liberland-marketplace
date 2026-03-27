@@ -1,8 +1,5 @@
-import { PublicKey } from '@solana/web3.js'
 import BigNumber from 'bignumber.js'
 import type { Payload, PayloadRequest } from 'payload'
-import { normalizeEthereumAddress } from './ethereum'
-import { normalizeTronAddress } from './tron'
 import type { SupportedChain } from './types'
 
 type PayloadLike = Pick<Payload, 'findByID'>
@@ -53,21 +50,24 @@ const parseWallet = (value: unknown): ResolvedWallet => {
   }
 }
 
-const normalizeAddressForComparison = ({
+const normalizeAddressForComparison = async ({
   address,
   chain,
 }: {
   address: string
   chain: SupportedChain
-}): string => {
+}): Promise<string> => {
   if (chain === 'ethereum') {
+    const { normalizeEthereumAddress } = await import('./ethereum')
     return normalizeEthereumAddress(address)
   }
 
   if (chain === 'solana') {
+    const { PublicKey } = await import('@solana/web3.js')
     return new PublicKey(address).toBase58()
   }
 
+  const { normalizeTronAddress } = await import('./tron')
   return normalizeTronAddress(address)
 }
 
@@ -317,7 +317,7 @@ export const resolveProductPaymentTargetsFromItems = async ({
       req,
     })
 
-    const normalizedRecipientAddress = normalizeAddressForComparison({
+    const normalizedRecipientAddress = await normalizeAddressForComparison({
       address: wallet.address,
       chain: wallet.chain,
     })

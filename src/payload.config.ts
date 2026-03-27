@@ -21,15 +21,50 @@ import { Startups } from './collections/Startups'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
 import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
+import { analyticsConfigEndpoint } from './endpoints/analytics/config'
+import { analyticsTrackEndpoint } from './endpoints/analytics/track'
 import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
 import { Subscribers } from './collections/Subscribers'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const enablePayloadLivePreview =
+  process.env.NODE_ENV === 'production' || process.env.PAYLOAD_ENABLE_LIVE_PREVIEW === 'true'
 const payloadDebug = process.env.PAYLOAD_DEBUG === 'true'
+const payloadSecret = process.env.PAYLOAD_SECRET
+
+if (!payloadSecret) {
+  throw new Error('Missing PAYLOAD_SECRET environment variable')
+}
 
 export default buildConfig({
   admin: {
+    ...(enablePayloadLivePreview
+      ? {
+          livePreview: {
+            breakpoints: [
+              {
+                label: 'Mobile',
+                name: 'mobile',
+                width: 375,
+                height: 667,
+              },
+              {
+                label: 'Tablet',
+                name: 'tablet',
+                width: 768,
+                height: 1024,
+              },
+              {
+                label: 'Desktop',
+                name: 'desktop',
+                width: 1440,
+                height: 900,
+              },
+            ],
+          },
+        }
+      : {}),
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
@@ -42,28 +77,6 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
-    livePreview: {
-      breakpoints: [
-        {
-          label: 'Mobile',
-          name: 'mobile',
-          width: 375,
-          height: 667,
-        },
-        {
-          label: 'Tablet',
-          name: 'tablet',
-          width: 768,
-          height: 1024,
-        },
-        {
-          label: 'Desktop',
-          name: 'desktop',
-          width: 1440,
-          height: 900,
-        },
-      ],
-    },
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
@@ -97,7 +110,7 @@ export default buildConfig({
     NotificationSubscriptions,
   ],
   cors: '*',
-  endpoints: [backfillEndpoint, confirmCryptoOrderEndpoint],
+  endpoints: [analyticsConfigEndpoint, analyticsTrackEndpoint, backfillEndpoint, confirmCryptoOrderEndpoint],
   globals: [Header, Footer],
   plugins,
   debug: payloadDebug,
@@ -106,7 +119,7 @@ export default buildConfig({
       level: process.env.PAYLOAD_LOG_LEVEL || 'info',
     },
   },
-  secret: process.env.PAYLOAD_SECRET,
+  secret: payloadSecret,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
