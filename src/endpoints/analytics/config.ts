@@ -12,9 +12,11 @@ export const analyticsConfigEndpoint: Endpoint = {
         anonymousIngest: true,
         apiBaseURL: `${baseURL}/api/analytics`,
         configURL: `${baseURL}/api/analytics/config`,
+        graphQLURL: `${baseURL}/api/graphql`,
         mode: 'local',
         storage: 'locallytics',
-        trackURL: `${baseURL}/api/analytics/track`,
+        trackMutationName: 'trackAnalyticsEvent',
+        transport: 'graphql',
       },
     })
   },

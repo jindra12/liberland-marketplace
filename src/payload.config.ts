@@ -22,9 +22,9 @@ import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
 import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
 import { analyticsConfigEndpoint } from './endpoints/analytics/config'
-import { analyticsTrackEndpoint } from './endpoints/analytics/track'
 import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
 import { Subscribers } from './collections/Subscribers'
+import { analyticsGraphQLMutations } from './graphql/analytics'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -110,7 +110,7 @@ export default buildConfig({
     NotificationSubscriptions,
   ],
   cors: '*',
-  endpoints: [analyticsConfigEndpoint, analyticsTrackEndpoint, backfillEndpoint, confirmCryptoOrderEndpoint],
+  endpoints: [analyticsConfigEndpoint, backfillEndpoint, confirmCryptoOrderEndpoint],
   globals: [Header, Footer],
   plugins,
   debug: payloadDebug,
@@ -146,5 +146,6 @@ export default buildConfig({
     disable: false,
     disableIntrospectionInProduction: false,
     disablePlaygroundInProduction: false,
-  }
+    mutations: analyticsGraphQLMutations,
+  },
 })
