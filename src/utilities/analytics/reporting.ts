@@ -32,6 +32,11 @@ type TypeRow = {
   type: string
 }
 
+type TopLabelRow = {
+  count: number
+  label: string
+}
+
 type OverviewRow = {
   eventsLast24Hours: number
   pageViews: number
@@ -76,6 +81,8 @@ export type AnalyticsDashboardData = {
   recentTotalDocs: number
   recentTotalPages: number
   topEvents: AnalyticsTopItem[]
+  topMutations: AnalyticsTopItem[]
+  topQueries: AnalyticsTopItem[]
   topRoutes: AnalyticsTopItem[]
   trend: AnalyticsDailyPoint[]
 }
@@ -93,11 +100,6 @@ const buildDayRange = (days: number) => {
   return items
 }
 
-const coerceLabel = (value: null | string | undefined, fallback: string) => {
-  const trimmed = value?.trim()
-  return trimmed ? trimmed : fallback
-}
-
 const getRequiredDocumentId = (value: AnalyticsRecentEvent['id'] | undefined) => {
   if (!value) {
     throw new Error('Analytics event document is missing _id.')
@@ -105,6 +107,44 @@ const getRequiredDocumentId = (value: AnalyticsRecentEvent['id'] | undefined) =>
 
   return value
 }
+
+const buildTopGraphQLOperationPipeline = ({
+  operationType,
+  topLimit,
+}: {
+  operationType: 'mutation' | 'query'
+  topLimit: number
+}) => [
+  {
+    $match: {
+      'metadata.operationType': operationType,
+    },
+  },
+  {
+    $group: {
+      _id: {
+        $ifNull: ['$metadata.operationName', `anonymous ${operationType}`],
+      },
+      count: { $sum: 1 },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      count: 1,
+      label: '$_id',
+    },
+  },
+  {
+    $sort: {
+      count: -1,
+      label: 1,
+    },
+  },
+  {
+    $limit: topLimit,
+  },
+]
 
 export const getAnalyticsDashboardData = async ({
   days = 14,
@@ -124,166 +164,180 @@ export const getAnalyticsDashboardData = async ({
   const sanitizedRecentLimit = Math.max(1, Math.floor(recentLimit))
   const sanitizedRequestedRecentPage = Math.max(1, Math.floor(recentPage))
 
-  const [overviewRow] = await collection
-    .aggregate<OverviewRow>([
-      {
-        $group: {
-          _id: null,
-          totalEvents: { $sum: 1 },
-          visitorIds: { $addToSet: '$visitor_id' },
-          pageViews: {
-            $sum: {
-              $cond: [{ $in: ['$type', PAGE_VIEW_EVENT_TYPES] }, 1, 0],
+  const [
+    [overviewRow],
+    trendRows,
+    topEventRows,
+    topRouteRows,
+    topQueryRows,
+    topMutationRows,
+    recentTotalDocs,
+  ] = await Promise.all([
+    collection
+      .aggregate<OverviewRow>([
+        {
+          $group: {
+            _id: null,
+            totalEvents: { $sum: 1 },
+            visitorIds: { $addToSet: '$visitor_id' },
+            pageViews: {
+              $sum: {
+                $cond: [{ $in: ['$type', PAGE_VIEW_EVENT_TYPES] }, 1, 0],
+              },
             },
-          },
-          eventsLast24Hours: {
-            $sum: {
-              $cond: [{ $gte: ['$timestamp', sinceTimestamp] }, 1, 0],
+            eventsLast24Hours: {
+              $sum: {
+                $cond: [{ $gte: ['$timestamp', sinceTimestamp] }, 1, 0],
+              },
             },
           },
         },
-      },
-      {
-        $project: {
-          _id: 0,
-          eventsLast24Hours: 1,
-          pageViews: 1,
-          totalEvents: 1,
-          uniqueVisitors: {
-            $size: {
-              $filter: {
-                input: '$visitorIds',
-                as: 'visitorId',
-                cond: {
-                  $and: [{ $ne: ['$$visitorId', null] }, { $ne: ['$$visitorId', ''] }],
+        {
+          $project: {
+            _id: 0,
+            eventsLast24Hours: 1,
+            pageViews: 1,
+            totalEvents: 1,
+            uniqueVisitors: {
+              $size: {
+                $filter: {
+                  input: '$visitorIds',
+                  as: 'visitorId',
+                  cond: {
+                    $and: [{ $ne: ['$$visitorId', null] }, { $ne: ['$$visitorId', ''] }],
+                  },
                 },
               },
             },
           },
         },
-      },
-    ])
-    .toArray()
-
-  const trendRows = await collection
-    .aggregate<DailyRow>([
-      {
-        $match: {
-          event_day: { $ne: null },
-          timestamp: { $gte: trendSinceTimestamp },
+      ])
+      .toArray(),
+    collection
+      .aggregate<DailyRow>([
+        {
+          $match: {
+            event_day: { $ne: null },
+            timestamp: { $gte: trendSinceTimestamp },
+          },
         },
-      },
-      {
-        $group: {
-          _id: '$event_day',
-          total: { $sum: 1 },
-          visitorIds: { $addToSet: '$visitor_id' },
-          pageViews: {
-            $sum: {
-              $cond: [{ $in: ['$type', PAGE_VIEW_EVENT_TYPES] }, 1, 0],
+        {
+          $group: {
+            _id: '$event_day',
+            total: { $sum: 1 },
+            visitorIds: { $addToSet: '$visitor_id' },
+            pageViews: {
+              $sum: {
+                $cond: [{ $in: ['$type', PAGE_VIEW_EVENT_TYPES] }, 1, 0],
+              },
             },
           },
         },
-      },
-      {
-        $project: {
-          _id: 0,
-          event_day: '$_id',
-          pageViews: 1,
-          total: 1,
-          uniqueVisitors: {
-            $size: {
-              $filter: {
-                input: '$visitorIds',
-                as: 'visitorId',
-                cond: {
-                  $and: [{ $ne: ['$$visitorId', null] }, { $ne: ['$$visitorId', ''] }],
+        {
+          $project: {
+            _id: 0,
+            event_day: '$_id',
+            pageViews: 1,
+            total: 1,
+            uniqueVisitors: {
+              $size: {
+                $filter: {
+                  input: '$visitorIds',
+                  as: 'visitorId',
+                  cond: {
+                    $and: [{ $ne: ['$$visitorId', null] }, { $ne: ['$$visitorId', ''] }],
+                  },
                 },
               },
             },
           },
         },
-      },
-      {
-        $sort: {
-          event_day: 1,
-        },
-      },
-    ])
-    .toArray()
-
-  const topEventRows = await collection
-    .aggregate<TypeRow>([
-      {
-        $group: {
-          _id: '$type',
-          count: { $sum: 1 },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          count: 1,
-          type: '$_id',
-        },
-      },
-      {
-        $sort: {
-          count: -1,
-          type: 1,
-        },
-      },
-      {
-        $limit: topLimit,
-      },
-    ])
-    .toArray()
-
-  const topRouteRows = await collection
-    .aggregate<RouteRow>([
-      {
-        $match: {
-          type: { $in: PAGE_VIEW_EVENT_TYPES },
-        },
-      },
-      {
-        $project: {
-          route: {
-            $ifNull: ['$route', '$metadata.route'],
+        {
+          $sort: {
+            event_day: 1,
           },
         },
-      },
-      {
-        $match: {
-          route: { $nin: [null, ''] },
+      ])
+      .toArray(),
+    collection
+      .aggregate<TypeRow>([
+        {
+          $group: {
+            _id: '$type',
+            count: { $sum: 1 },
+          },
         },
-      },
-      {
-        $group: {
-          _id: '$route',
-          count: { $sum: 1 },
+        {
+          $project: {
+            _id: 0,
+            count: 1,
+            type: '$_id',
+          },
         },
-      },
-      {
-        $project: {
-          _id: 0,
-          count: 1,
-          route: '$_id',
+        {
+          $sort: {
+            count: -1,
+            type: 1,
+          },
         },
-      },
-      {
-        $sort: {
-          count: -1,
-          route: 1,
+        {
+          $limit: topLimit,
         },
-      },
-      {
-        $limit: topLimit,
-      },
-    ])
-    .toArray()
-
-  const recentTotalDocs = await collection.countDocuments({})
+      ])
+      .toArray(),
+    collection
+      .aggregate<RouteRow>([
+        {
+          $match: {
+            type: { $in: PAGE_VIEW_EVENT_TYPES },
+          },
+        },
+        {
+          $project: {
+            route: {
+              $ifNull: ['$route', '$metadata.route'],
+            },
+          },
+        },
+        {
+          $match: {
+            route: { $nin: [null, ''] },
+          },
+        },
+        {
+          $group: {
+            _id: '$route',
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            count: 1,
+            route: '$_id',
+          },
+        },
+        {
+          $sort: {
+            count: -1,
+            route: 1,
+          },
+        },
+        {
+          $limit: topLimit,
+        },
+      ])
+      .toArray(),
+    collection
+      .aggregate<TopLabelRow>(buildTopGraphQLOperationPipeline({ operationType: 'query', topLimit }))
+      .toArray(),
+    collection
+      .aggregate<TopLabelRow>(
+        buildTopGraphQLOperationPipeline({ operationType: 'mutation', topLimit }),
+      )
+      .toArray(),
+    collection.countDocuments({}),
+  ])
   const recentTotalPages =
     recentTotalDocs === 0 ? 0 : Math.ceil(recentTotalDocs / sanitizedRecentLimit)
   const currentRecentPage =
@@ -325,7 +379,7 @@ export const getAnalyticsDashboardData = async ({
 
   const trendLookup = new Map(
     trendRows.map((row) => [
-      coerceLabel(row.event_day, formatDay(new Date())),
+      row.event_day,
       {
         total: Number(row.total ?? 0),
         uniqueVisitors: Number(row.uniqueVisitors ?? 0),
@@ -359,7 +413,7 @@ export const getAnalyticsDashboardData = async ({
       route: row.route ?? row.metadata?.route ?? null,
       sessionId: row.sessionId ?? null,
       timestamp: Number(row.timestamp),
-      type: coerceLabel(row.type, 'unknown'),
+      type: row.type || 'unknown',
       userId: row.userId ?? null,
     })),
     recentLimit: sanitizedRecentLimit,
@@ -367,11 +421,19 @@ export const getAnalyticsDashboardData = async ({
     recentTotalPages,
     topEvents: topEventRows.map((row) => ({
       count: Number(row.count),
-      label: coerceLabel(row.type, 'unknown'),
+      label: row.type || 'unknown',
+    })),
+    topMutations: topMutationRows.map((row) => ({
+      count: Number(row.count),
+      label: row.label || 'anonymous mutation',
+    })),
+    topQueries: topQueryRows.map((row) => ({
+      count: Number(row.count),
+      label: row.label || 'anonymous query',
     })),
     topRoutes: topRouteRows.map((row) => ({
       count: Number(row.count),
-      label: coerceLabel(row.route, '/'),
+      label: row.route || '/',
     })),
     trend,
   }

@@ -69,6 +69,17 @@ export default buildConfig({
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],
+      Nav: '@/components/AdminAnalyticsNavLink',
+      views: {
+        analytics: {
+          Component: '@/components/AdminAnalyticsView',
+          exact: true,
+          meta: {
+            title: 'Analytics',
+          },
+          path: '/analytics',
+        },
+      },
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],

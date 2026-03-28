@@ -14,6 +14,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 ### Code Validation
 
 - To validate typescript correctness after modifying code run `tsc --noEmit`
+- Delete `tsconfig.tsbuildinfo` after you finish your work.
 - Generate import maps after creating or modifying components.
 
 ### Coding Style Constraints
@@ -23,7 +24,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Do not cast to `any`.
 - Never use the `void` operator to silence promises or function calls.
 - Avoid unnecessary type assertions and `never` casts.
-- Do not add defensive normalization patterns like blanket `trim()` calls unless explicitly required by the feature.
+- Never use `trim()` unless it is materially required, such as sanitizing actual user input.
 - Keep implementations simple and typed from the domain model first, not from generic runtime guards.
 - Prefer `const` function expressions over `function` declarations.
 - Prefer `async` / `await` syntax over `.then()` chains unless there is a clear reason not to.

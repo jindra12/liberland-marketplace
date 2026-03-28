@@ -9,6 +9,12 @@ html[data-theme='dark'] .grid {
   --analytics-route-link-color: color-mix(in srgb, var(--theme-success-500) 52%, white);
 }
 
+.secondaryGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+}
+
 .card {
   background: linear-gradient(180deg, var(--theme-elevation-0), var(--theme-elevation-50));
   border: 1px solid var(--theme-elevation-150);
