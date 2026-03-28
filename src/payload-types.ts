@@ -238,10 +238,6 @@ export interface User {
    */
   name: string;
   /**
-   * The email of the user
-   */
-  email: string;
-  /**
    * Whether the email of the user has been verified
    */
   emailVerified: boolean;
@@ -266,6 +262,24 @@ export interface User {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  /**
+   * The email of the user
+   */
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
 }
 /**
  * Accounts are used to store user accounts for authentication providers
@@ -1330,6 +1344,7 @@ export interface Comment {
 export interface Product {
   id: string;
   inventory?: number | null;
+  unlimitedInventory?: boolean | null;
   enableVariants?: boolean | null;
   variantTypes?: (string | VariantType)[] | null;
   variants?: {
@@ -1999,7 +2014,6 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
-  email?: T;
   emailVerified?: T;
   image?: T;
   createdAt?: T;
@@ -2008,6 +2022,20 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   account?: T;
   session?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2622,6 +2650,7 @@ export interface VariantOptionsSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   inventory?: T;
+  unlimitedInventory?: T;
   enableVariants?: T;
   variantTypes?: T;
   variants?: T;

@@ -9,10 +9,10 @@ import { getNotificationDocumentTitle, renderItemUpdateEmail } from '@/utilities
 
 type ParentNotificationDoc = Company | Identity
 type ParentNotificationTargetCollection = 'companies' | 'identities'
-type ChildNotificationDoc = Company | Job | Product | Startup
+export type ChildNotificationDoc = Company | Job | Product | Startup
 type ChildNotificationTargetCollection = 'companies' | 'jobs' | 'products' | 'startups'
 
-type RelatedItemNotificationConfig<TDoc extends ChildNotificationDoc> = {
+export type RelatedItemNotificationConfig<TDoc extends ChildNotificationDoc> = {
   childCollection: ChildNotificationTargetCollection
   getParentID: (doc: TDoc) => string | null
   parentCollection: ParentNotificationTargetCollection

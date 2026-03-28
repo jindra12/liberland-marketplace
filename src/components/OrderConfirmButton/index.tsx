@@ -1,69 +1,41 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
-import { useDocumentInfo, toast } from '@payloadcms/ui'
-import { useRouter } from 'next/navigation'
+import React from 'react'
 
-const toDocID = (value: unknown): string | null => {
-  if (typeof value === 'string' || typeof value === 'number') {
-    const id = String(value).trim()
-    return id.length > 0 ? id : null
-  }
-
-  return null
-}
+type OrderConfirmButtonModule = typeof import('./OrderConfirmButtonContent')
 
 export default function OrderConfirmButton() {
-  const router = useRouter()
-  const { id } = useDocumentInfo()
-  const [loading, setLoading] = useState(false)
+  const [Component, setComponent] =
+    React.useState<OrderConfirmButtonModule['default'] | null>(null)
 
-  const orderID = toDocID(id)
+  React.useEffect(() => {
+    let isMounted = true
 
-  const handleConfirm = useCallback(async () => {
-    if (!orderID || loading) {
-      return
-    }
-
-    setLoading(true)
-
-    try {
-      const response = await fetch(`/api/orders/${orderID}/confirm-crypto`, {
-        method: 'POST',
-        credentials: 'include',
-      })
-
-      const body = (await response.json().catch(() => null)) as { error?: string } | null
-
-      if (!response.ok) {
-        throw new Error(body?.error || 'Failed to confirm crypto order.')
-      }
-
-      toast.success('Order confirmed successfully.')
+    const loadOrderConfirmButton = async () => {
       try {
-        router.refresh()
-      } catch {
-        window.location.reload()
-      }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to confirm crypto order.')
-    } finally {
-      setLoading(false)
-    }
-  }, [loading, orderID, router])
+        const { default: d } = await import('./OrderConfirmButtonContent')
+        if (!isMounted) {
+          return
+        }
 
-  if (!orderID) {
+        React.startTransition(() => {
+          setComponent(() => d)
+        })
+      } catch (error) {
+        console.error('Failed to load order confirm button.', error)
+      }
+    }
+
+    loadOrderConfirmButton()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  if (!Component) {
     return null
   }
 
-  return (
-    <button
-      type="button"
-      className="btn btn--style-primary btn--size-medium"
-      disabled={loading}
-      onClick={handleConfirm}
-    >
-      {loading ? 'Confirming...' : 'Confirm Crypto Order'}
-    </button>
-  )
+  return <Component />
 }

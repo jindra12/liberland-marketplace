@@ -4,7 +4,6 @@ import type { ChainPoolRate, OrderCryptoPrice, SupportedChain } from '../types'
 import { quantizeNativeAmount } from '../nativeAmount'
 import { withTimeout } from '../timeout'
 
-const DEFAULT_REFRESH_INTERVAL_MS = 5 * 60 * 1000
 const DEFAULT_RATE_FETCH_TIMEOUT_MS = 60_000
 const DEFAULT_CACHE_MAX_AGE_MS = 15 * 60 * 1000
 const CRYPTO_RATE_CACHE_KEY = 'crypto:pool-rates:v1'
@@ -14,26 +13,10 @@ type CryptoRatesCacheValue = {
   rates: Partial<Record<SupportedChain, ChainPoolRate>>
 }
 
-let schedulerStarted = false
-let refreshIntervalHandle: ReturnType<typeof setInterval> | null = null
 let inFlightRefresh: Promise<void> | null = null
 
 const unique = <T>(values: T[]): T[] => [...new Set(values)]
 const toDecimalString = (value: BigNumber.Value): string => new BigNumber(value).toFixed()
-
-const parseRefreshIntervalMs = (): number => {
-  const raw = process.env.CRYPTO_RATE_REFRESH_INTERVAL_MS
-  if (!raw) {
-    return DEFAULT_REFRESH_INTERVAL_MS
-  }
-
-  const parsed = Number.parseInt(raw, 10)
-  if (!Number.isFinite(parsed) || parsed <= 0) {
-    return DEFAULT_REFRESH_INTERVAL_MS
-  }
-
-  return parsed
-}
 
 const parseRateFetchTimeoutMs = (): number => {
   const raw = process.env.CRYPTO_RATE_FETCH_TIMEOUT_MS
@@ -188,21 +171,25 @@ export const buildOrderCryptoPricesFromCache = async ({
 }: {
   chains: SupportedChain[]
   orderAmount: number | null
-  payload: Pick<Payload, 'kv'>
+  payload: Pick<Payload, 'kv' | 'logger'>
 }): Promise<OrderCryptoPrice[]> => {
   const effectiveChains = unique(chains)
-  const cacheValue = await readCacheValue({ payload })
+  const maxAgeMs = parseCacheMaxAgeMs()
+  let cacheValue = await readCacheValue({ payload })
+  let missingChains = effectiveChains.filter((chain) => !cacheValue?.rates[chain])
+  const cachedAt = cacheValue ? new Date(cacheValue.cachedAtISO).getTime() : Number.NaN
+  const cacheIsStale = !Number.isFinite(cachedAt) || Date.now() - cachedAt > maxAgeMs
+
+  if (!cacheValue || cacheIsStale || missingChains.length > 0) {
+    await refreshCryptoRateCache({ payload })
+    cacheValue = await readCacheValue({ payload })
+    missingChains = effectiveChains.filter((chain) => !cacheValue?.rates[chain])
+  }
+
   if (!cacheValue) {
     throw new Error('Crypto rate cache is empty. Please retry in a few seconds.')
   }
 
-  const maxAgeMs = parseCacheMaxAgeMs()
-  const cachedAt = new Date(cacheValue.cachedAtISO).getTime()
-  if (!Number.isFinite(cachedAt) || Date.now() - cachedAt > maxAgeMs) {
-    throw new Error('Crypto rate cache is stale. Please retry in a few seconds.')
-  }
-
-  const missingChains = effectiveChains.filter((chain) => !cacheValue.rates[chain])
   if (missingChains.length > 0) {
     throw new Error(
       `Missing cached crypto rates for ${missingChains.join(', ')}. Please retry in a few seconds.`,
@@ -212,46 +199,11 @@ export const buildOrderCryptoPricesFromCache = async ({
   return effectiveChains.map((chain) => toRateSnapshot(orderAmount, cacheValue.rates[chain]!))
 }
 
-export const startCryptoRateRefreshScheduler = async ({
-  payload,
-}: {
-  payload: Pick<Payload, 'kv' | 'logger'>
-}): Promise<void> => {
-  if (schedulerStarted) {
-    return
-  }
-
-  schedulerStarted = true
-  const intervalMs = parseRefreshIntervalMs()
-  await refreshCryptoRateCache({ payload })
-
-  refreshIntervalHandle = setInterval(() => {
-    void refreshCryptoRateCache({ payload })
-  }, intervalMs)
-
-  if (
-    typeof refreshIntervalHandle === 'object' &&
-    refreshIntervalHandle !== null &&
-    'unref' in refreshIntervalHandle &&
-    typeof refreshIntervalHandle.unref === 'function'
-  ) {
-    refreshIntervalHandle.unref()
-  }
-
-  payload.logger.info(`[crypto-rate-cache] Started rate refresh scheduler (interval=${intervalMs}ms).`)
-}
-
 export const __resetCryptoRateCacheForTests = async ({
   payload,
 }: {
   payload?: Pick<Payload, 'kv'>
 } = {}): Promise<void> => {
-  if (refreshIntervalHandle) {
-    clearInterval(refreshIntervalHandle)
-  }
-
-  schedulerStarted = false
-  refreshIntervalHandle = null
   inFlightRefresh = null
 
   if (payload) {

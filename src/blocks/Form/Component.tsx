@@ -47,68 +47,63 @@ export const FormBlock: React.FC<
   const router = useRouter()
 
   const onSubmit = useCallback(
-    (data: FormFieldBlock[]) => {
-      let loadingTimerID: ReturnType<typeof setTimeout>
-      const submitForm = async () => {
-        setError(undefined)
+    async (data: FormFieldBlock[]) => {
+      setError(undefined)
 
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
-          field: name,
-          value,
-        }))
+      const dataToSend = Object.entries(data).map(([name, value]) => ({
+        field: name,
+        value,
+      }))
 
-        // delay loading indicator by 1s
-        loadingTimerID = setTimeout(() => {
-          setIsLoading(true)
-        }, 1000)
+      const loadingTimerID = setTimeout(() => {
+        setIsLoading(true)
+      }, 1000)
 
-        try {
-          const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
-            body: JSON.stringify({
-              form: formID,
-              submissionData: dataToSend,
-            }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
-          })
+      try {
+        const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
+          body: JSON.stringify({
+            form: formID,
+            submissionData: dataToSend,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+        })
 
-          const res = await req.json()
+        const res = await req.json()
 
-          clearTimeout(loadingTimerID)
+        clearTimeout(loadingTimerID)
 
-          if (req.status >= 400) {
-            setIsLoading(false)
-
-            setError({
-              message: res.errors?.[0]?.message || 'Internal Server Error',
-              status: res.status,
-            })
-
-            return
-          }
-
+        if (req.status >= 400) {
           setIsLoading(false)
-          setHasSubmitted(true)
 
-          if (confirmationType === 'redirect' && redirect) {
-            const { url } = redirect
-
-            const redirectUrl = url
-
-            if (redirectUrl) router.push(redirectUrl)
-          }
-        } catch (err) {
-          console.warn(err)
-          setIsLoading(false)
           setError({
-            message: 'Something went wrong.',
+            message: res.errors?.[0]?.message || 'Internal Server Error',
+            status: res.status,
           })
-        }
-      }
 
-      void submitForm()
+          return
+        }
+
+        setIsLoading(false)
+        setHasSubmitted(true)
+
+        if (confirmationType === 'redirect' && redirect) {
+          const { url } = redirect
+
+          const redirectUrl = url
+
+          if (redirectUrl) router.push(redirectUrl)
+        }
+      } catch (err) {
+        console.warn(err)
+        clearTimeout(loadingTimerID)
+        setIsLoading(false)
+        setError({
+          message: 'Something went wrong.',
+        })
+      }
     },
     [router, formID, redirect, confirmationType],
   )

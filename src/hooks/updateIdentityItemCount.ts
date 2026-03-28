@@ -5,7 +5,7 @@ import type {
   PayloadRequest,
 } from 'payload'
 
-type IdentityResolver = 'companyIdentityId' | 'identity'
+export type IdentityResolver = 'companyIdentityId' | 'identity'
 
 const toStringID = (value: unknown): string | null => {
   if (typeof value === 'string') return value

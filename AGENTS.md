@@ -21,10 +21,12 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Prefer direct, concrete TypeScript types over defensive fallback typing.
 - Do not introduce `unknown` unless there is no practical typed alternative.
 - Do not cast to `any`.
+- Never use the `void` operator to silence promises or function calls.
 - Avoid unnecessary type assertions and `never` casts.
 - Do not add defensive normalization patterns like blanket `trim()` calls unless explicitly required by the feature.
 - Keep implementations simple and typed from the domain model first, not from generic runtime guards.
 - Prefer `const` function expressions over `function` declarations.
+- Prefer `async` / `await` syntax over `.then()` chains unless there is a clear reason not to.
 - Avoid `style={{}}` in React. Prefer class names with stylesheet-backed styling; for server-rendered emails, embed a `<style>` block sourced from a stylesheet file instead of inline React style props.
 - If asked to generate ad hoc queries, images, or similar throwaway artifacts, write them to `/tmp` instead of adding them to the repo unless the user explicitly asks to keep them in the workspace.
 - Do not remove `experimental.esmExternals: 'loose'` from `next.config.js` unless there is direct evidence that setting is the root cause or the user explicitly asks for that change.

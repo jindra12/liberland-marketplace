@@ -4,11 +4,10 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
-import type { Plugin } from 'payload'
+import type { CollectionConfig, Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { oidcProvider } from 'better-auth/plugins'
-import nodemailer from 'nodemailer'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -24,13 +23,12 @@ import { anyone } from '@/access/anyone'
 import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { mergeFields } from '@/utilities/mergeFields'
-import { productFields } from '@/fields/productFields'
+import {
+  mergeProductCollectionFields,
+  normalizeProductInventoryData,
+} from '@/fields/productFields'
 import { orderFields } from '@/fields/orderFields'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
-import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
-import { computeOrderAmountOnCreate } from '@/hooks/computeOrderAmountOnCreate'
-import { autoConfirmOrderOnTransactionHashAdd } from '@/hooks/autoConfirmOrderOnTransactionHashAdd'
-import { populateProductCryptoPrices } from '@/hooks/populateProductCryptoPrices'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
@@ -39,26 +37,42 @@ import { fixOAuthClientId } from './fixOAuthClientId'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
-import { cryptoRateRefreshJob } from './cryptoRateRefreshJob'
 import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
-import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
-import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
-
-const smtpTransport = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-})
+  lazyAutoConfirmOrderOnTransactionHashAdd,
+  lazyComputeOrderAmountOnCreate,
+  lazyLockOrderCryptoPricesOnCreate,
+  lazyPopulateProductCryptoPrices,
+  lazySendItemUpdateNotifications,
+  lazySendRelatedItemPublishedNotifications,
+  lazyUpdateIdentityItemCountAfterChange,
+  lazyUpdateIdentityItemCountAfterDelete,
+} from '@/hooks/lazyCollectionHooks'
+import { replaceEcommerceAdminComponentPaths } from './replaceEcommerceAdminComponentPaths'
 
 const betterAuthSecret = process.env.BETTER_AUTH_SECRET
+const useBetterAuthAdmin =
+  process.env.NODE_ENV === 'production' || process.env.PAYLOAD_USE_BETTER_AUTH_ADMIN === 'true'
+
 if (!betterAuthSecret) {
   throw new Error('Missing BETTER_AUTH_SECRET environment variable')
+}
+
+const stripBetterAuthAdminUserDescription = (collection: CollectionConfig): CollectionConfig => {
+  const components = collection.admin?.components
+
+  if (!components?.Description) {
+    return collection
+  }
+
+  const { Description: _description, ...restComponents } = components
+
+  return {
+    ...collection,
+    admin: {
+      ...collection.admin,
+      components: restComponents,
+    },
+  }
 }
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
@@ -98,7 +112,7 @@ export const plugins: Plugin[] = [
   comments,
   addCreatedBy,
   betterAuthPlugin({
-    disableDefaultPayloadAuth: true,
+    disableDefaultPayloadAuth: useBetterAuthAdmin,
     hidePluginCollections: true,
     betterAuthOptions: {
       secret: betterAuthSecret,
@@ -114,6 +128,15 @@ export const plugins: Plugin[] = [
         sendOnSignUp: true,
         autoSignInAfterVerification: true,
         sendVerificationEmail: async ({ user, url }) => {
+          const { default: nodemailer } = await import('nodemailer')
+          const smtpTransport = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: Number(process.env.SMTP_PORT) || 587,
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS,
+            },
+          })
           const fromAddress = process.env.SMTP_FROM_ADDRESS || 'noreply@liberland.org'
           const fromName = process.env.SMTP_FROM_NAME || 'Liberland Marketplace'
           await smtpTransport.sendMail({
@@ -173,13 +196,19 @@ export const plugins: Plugin[] = [
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
       allowedFields: ['name', 'identity'],
+      collectionOverrides: ({ collection }) => {
+        if (useBetterAuthAdmin) {
+          return collection
+        }
+
+        return stripBetterAuthAdminUserDescription(collection)
+      },
     },
   }),
   protectUserFields,
   fixOAuthClientId,
   addOIDCTokenStrategy,
   seedOIDCClient,
-  cryptoRateRefreshJob,
   ecommercePlugin({
     access: {
       adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
@@ -199,20 +228,22 @@ export const plugins: Plugin[] = [
     carts: {
       cartsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
-        fields: defaultCollection.fields.map((field) => {
-          if ('name' in field && field.name === 'secret') {
-            const secretField = field as any
+        fields: replaceEcommerceAdminComponentPaths(
+          defaultCollection.fields.map((field) => {
+            if ('name' in field && field.name === 'secret') {
+              const secretField = field as any
 
-            return {
-              ...secretField,
-              access: {
-                // Allow filtering carts by secret in GraphQL/Local API.
-                read: () => true,
-              },
-            } as any
-          }
-          return field
-        }),
+              return {
+                ...secretField,
+                access: {
+                  // Allow filtering carts by secret in GraphQL/Local API.
+                  read: () => true,
+                },
+              } as any
+            }
+            return field
+          }),
+        ),
         hooks: {
           ...defaultCollection.hooks,
           afterRead: [
@@ -229,6 +260,12 @@ export const plugins: Plugin[] = [
       }),
     },
     products: {
+      variants: {
+        variantsCollectionOverride: ({ defaultCollection }) => ({
+          ...defaultCollection,
+          fields: replaceEcommerceAdminComponentPaths(defaultCollection.fields),
+        }),
+      },
       productsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
         defaultSort: '-completenessScore',
@@ -256,34 +293,37 @@ export const plugins: Plugin[] = [
             },
           },
         },
-        fields: mergeFields(defaultCollection.fields, productFields),
+        fields: replaceEcommerceAdminComponentPaths(
+          mergeProductCollectionFields(defaultCollection.fields),
+        ),
         hooks: {
           ...defaultCollection.hooks,
           afterRead: [
             ...(defaultCollection.hooks?.afterRead ?? []),
-            populateProductCryptoPrices,
+            lazyPopulateProductCryptoPrices,
           ],
           beforeChange: [
             requireOwnCompany,
             syncCompanyIdentityId,
+            ({ data }) => normalizeProductInventoryData(data),
             computeCompletenessScore(['url', 'image', 'description', 'properties']),
             ...(defaultCollection.hooks?.beforeChange ?? []),
             requireVerifiedEmailToPublish,
           ],
           afterChange: [
             ...(defaultCollection.hooks?.afterChange ?? []),
-            sendItemUpdateNotifications('products'),
-            sendRelatedItemPublishedNotifications({
+            lazySendItemUpdateNotifications('products'),
+            lazySendRelatedItemPublishedNotifications({
               childCollection: 'products',
               getParentID: (doc) =>
                 typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
               parentCollection: 'companies',
             }),
-            updateIdentityItemCountAfterChange('companyIdentityId'),
+            lazyUpdateIdentityItemCountAfterChange('companyIdentityId'),
           ],
           afterDelete: [
             ...(defaultCollection.hooks?.afterDelete ?? []),
-            updateIdentityItemCountAfterDelete('companyIdentityId'),
+            lazyUpdateIdentityItemCountAfterDelete('companyIdentityId'),
           ],
         },
       }),
@@ -311,7 +351,9 @@ export const plugins: Plugin[] = [
             },
           },
         },
-        fields: mergeFields(defaultCollection.fields, orderFields),
+        fields: replaceEcommerceAdminComponentPaths(
+          mergeFields(defaultCollection.fields, orderFields),
+        ),
         hooks: {
           ...defaultCollection.hooks,
           beforeChange: [
@@ -335,14 +377,20 @@ export const plugins: Plugin[] = [
               return next
             },
             ...(defaultCollection.hooks?.beforeChange ?? []),
-            computeOrderAmountOnCreate,
-            lockOrderCryptoPricesOnCreate,
+            lazyComputeOrderAmountOnCreate,
+            lazyLockOrderCryptoPricesOnCreate,
           ],
           afterChange: [
             ...(defaultCollection.hooks?.afterChange ?? []),
-            autoConfirmOrderOnTransactionHashAdd,
+            lazyAutoConfirmOrderOnTransactionHashAdd,
           ],
         },
+      }),
+    },
+    transactions: {
+      transactionsCollectionOverride: ({ defaultCollection }) => ({
+        ...defaultCollection,
+        fields: replaceEcommerceAdminComponentPaths(defaultCollection.fields),
       }),
     },
     payments: {

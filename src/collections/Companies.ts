@@ -8,12 +8,12 @@ import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
-import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
-import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
 import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
+  lazySendItemUpdateNotifications,
+  lazySendRelatedItemPublishedNotifications,
+  lazyUpdateIdentityItemCountAfterChange,
+  lazyUpdateIdentityItemCountAfterDelete,
+} from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
@@ -26,16 +26,16 @@ export const Companies: CollectionConfig = {
       requireVerifiedEmailToPublish,
     ],
     afterChange: [
-      sendItemUpdateNotifications('companies'),
-      sendRelatedItemPublishedNotifications({
+      lazySendItemUpdateNotifications('companies'),
+      lazySendRelatedItemPublishedNotifications({
         childCollection: 'companies',
         getParentID: (doc) =>
           typeof doc.identity === 'string' ? doc.identity : doc.identity?.id ?? null,
         parentCollection: 'identities',
       }),
-      updateIdentityItemCountAfterChange('identity'),
+      lazyUpdateIdentityItemCountAfterChange('identity'),
     ],
-    afterDelete: [updateIdentityItemCountAfterDelete('identity')],
+    afterDelete: [lazyUpdateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
     drafts: true,
