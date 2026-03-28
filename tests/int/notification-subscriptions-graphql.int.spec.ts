@@ -73,7 +73,7 @@ const runGraphQLOperation = async (query: string): Promise<GraphQLResponseBody> 
     throw new Error('GraphQL route is not available.')
   }
 
-  const request = new Request('http://localhost:3000/api/graphql', {
+  const request = new Request('http://localhost:3001/api/graphql', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

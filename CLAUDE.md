@@ -10,7 +10,7 @@ Liberland Marketplace — a Next.js 15 (App Router) + Payload CMS 3.74 applicati
 
 ```bash
 pnpm install                # Install dependencies (pnpm 9/10 required)
-pnpm dev                    # Start dev server at localhost:3000
+pnpm dev                    # Start dev server at localhost:3001
 pnpm build                  # Production build
 pnpm lint                   # ESLint check
 pnpm lint:fix               # ESLint auto-fix
@@ -75,7 +75,7 @@ See `.env.example` for full list. Copy to `.env` before running.
 
 After making changes that affect frontend behavior (UI changes, new features, bug fixes to interactions), **proactively** use the `playwright-cli` skill to visually verify the changes in the browser. This means:
 - Start the dev server if not already running
-- Navigate to the affected page(s) on backend running on localhost:3000 or the related frontend project running on localhost:3001
+- Navigate to the affected page(s) on backend running on localhost:3001 or the related frontend project running on localhost:3001
 - If you need login use user claudetest2@gmail.com password claudetest2@gmail.com
 - Verify the change works as expected (elements render, interactions behave correctly)
 - If issues are found, fix them and re-test

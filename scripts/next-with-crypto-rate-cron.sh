@@ -3,13 +3,6 @@
 set -euo pipefail
 
 MODE="${1:-start}"
-PORT="${PORT:-3000}"
-SERVER_HOST="${HOST:-127.0.0.1}"
-CRON_HOST="${CRON_HOST:-127.0.0.1}"
-CRON_INTERVAL_SECONDS="${CRYPTO_RATE_REFRESH_INTERVAL_SECONDS:-300}"
-CRON_LOG_FILE="${CRYPTO_RATE_CRON_LOG_FILE:-/tmp/liberland-crypto-rate-cron.log}"
-CRON_ENDPOINT="http://${CRON_HOST}:${PORT}/api/cron/crypto-rates"
-
 NEXT_PID=""
 CRON_PID=""
 
@@ -28,6 +21,14 @@ load_env_file() {
 
 load_env_file ".env"
 load_env_file ".env.local"
+
+PORT="${PORT:-3001}"
+SERVER_HOST="${HOST:-127.0.0.1}"
+CRON_HOST="${CRON_HOST:-127.0.0.1}"
+CRON_INTERVAL_SECONDS="${CRYPTO_RATE_REFRESH_INTERVAL_SECONDS:-300}"
+CRON_LOG_FILE="${CRYPTO_RATE_CRON_LOG_FILE:-/tmp/liberland-crypto-rate-cron.log}"
+
+CRON_ENDPOINT="http://${CRON_HOST}:${PORT}/api/cron/crypto-rates"
 
 log_cron_message() {
   local message="$1"

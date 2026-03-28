@@ -255,7 +255,7 @@ describe('GraphQL createOrder mutation regression', () => {
         },
       }
 
-      const request = new Request('http://localhost:3000/api/graphql', {
+      const request = new Request('http://localhost:3001/api/graphql', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -284,7 +284,7 @@ describe('GraphQL createOrder mutation regression', () => {
         return
       }
 
-      const updatePayerAddressRequest = new Request('http://localhost:3000/api/graphql', {
+      const updatePayerAddressRequest = new Request('http://localhost:3001/api/graphql', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -311,7 +311,7 @@ describe('GraphQL createOrder mutation regression', () => {
       )
 
       const firstTxHash = '0xe0e5bcbc1ed1fbf19ce55bfd0cd292f19d53783c4bea327c696201a36e17aed9'
-      const updateTxHashesRequest = new Request('http://localhost:3000/api/graphql', {
+      const updateTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -348,7 +348,7 @@ describe('GraphQL createOrder mutation regression', () => {
       ])
 
       const secondTxHash = '0x7f6f6b27a97f70a2a56af190cb4dbd5267db813411f1236d31f86d476fb28a18'
-      const appendTxHashesRequest = new Request('http://localhost:3000/api/graphql', {
+      const appendTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -389,7 +389,7 @@ describe('GraphQL createOrder mutation regression', () => {
         },
       ])
 
-      const updateStatusRequest = new Request('http://localhost:3000/api/graphql', {
+      const updateStatusRequest = new Request('http://localhost:3001/api/graphql', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
