@@ -41,6 +41,19 @@ const parseEventsPage = (value: string | string[] | undefined) => {
 
 const getEventsPageHref = (page: number) => `/admin/analytics?eventsPage=${page}`
 
+const getFrontendRouteHref = (route: null | string) => {
+  const baseURL = process.env.FRONTEND_URL
+
+  if (!baseURL || !route) {
+    return null
+  }
+
+  const normalizedBaseURL = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL
+  const normalizedRoute = route.startsWith('/') ? route : `/${route}`
+
+  return `${normalizedBaseURL}${normalizedRoute}`
+}
+
 type Args = {
   searchParams: Promise<{
     eventsPage?: string | string[]
@@ -65,6 +78,7 @@ export default async function AnalyticsAdminPage({ searchParams: searchParamsPro
   const analytics = await getAnalyticsDashboardData({
     recentPage: requestedEventsPage,
   })
+  const frontendBaseURL = process.env.FRONTEND_URL ?? null
   const recentRangeStart =
     analytics.recentTotalDocs === 0
       ? 0
@@ -112,6 +126,7 @@ export default async function AnalyticsAdminPage({ searchParams: searchParamsPro
       </section>
 
       <AnalyticsCharts
+        frontendBaseURL={frontendBaseURL}
         topEvents={analytics.topEvents}
         topRoutes={analytics.topRoutes}
         trend={analytics.trend}
@@ -149,15 +164,36 @@ export default async function AnalyticsAdminPage({ searchParams: searchParamsPro
                 </tr>
               </thead>
               <tbody>
-                {analytics.recentEvents.map((event) => (
-                  <tr key={event.id}>
-                    <td>{event.type}</td>
-                    <td>{event.userId ?? 'anonymous'}</td>
-                    <td>{event.sessionId ?? 'n/a'}</td>
-                    <td>{event.route ?? '-'}</td>
-                    <td>{formatTimestamp(event.timestamp)}</td>
-                  </tr>
-                ))}
+                {analytics.recentEvents.map((event) => {
+                  const routeHref = getFrontendRouteHref(event.route)
+
+                  return (
+                    <tr key={event.id}>
+                      <td>{event.type}</td>
+                      <td>{event.userId ?? 'anonymous'}</td>
+                      <td>{event.sessionId ?? 'n/a'}</td>
+                      <td>
+                        {event.route ? (
+                          routeHref ? (
+                            <a
+                              className={styles.routeLink}
+                              href={routeHref}
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              {event.route}
+                            </a>
+                          ) : (
+                            event.route
+                          )
+                        ) : (
+                          '-'
+                        )}
+                      </td>
+                      <td>{formatTimestamp(event.timestamp)}</td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

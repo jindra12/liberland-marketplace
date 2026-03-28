@@ -1,8 +1,15 @@
 .page {
+  --analytics-route-link-color: var(--theme-success-600);
+  --analytics-route-link-hover-color: var(--theme-success-500);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   padding: 1.5rem;
+}
+
+html[data-theme='dark'] .page {
+  --analytics-route-link-color: color-mix(in srgb, var(--theme-success-500) 52%, white);
+  --analytics-route-link-hover-color: color-mix(in srgb, var(--theme-success-500) 72%, white);
 }
 
 .header {
@@ -124,6 +131,19 @@
   color: var(--theme-elevation-700);
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+.routeLink {
+  color: var(--analytics-route-link-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.15em;
+}
+
+.routeLink:hover,
+.routeLink:focus-visible {
+  color: var(--analytics-route-link-hover-color);
 }
 
 .emptyState {

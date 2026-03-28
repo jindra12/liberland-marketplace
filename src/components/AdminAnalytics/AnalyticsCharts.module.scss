@@ -1,7 +1,12 @@
 .grid {
+  --analytics-route-link-color: var(--theme-success-600);
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+html[data-theme='dark'] .grid {
+  --analytics-route-link-color: color-mix(in srgb, var(--theme-success-500) 52%, white);
 }
 
 .card {
