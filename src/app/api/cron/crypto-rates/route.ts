@@ -3,8 +3,12 @@ import { getPayload } from 'payload'
 
 import { refreshCryptoRateCache } from '@/crypto/rates/cache'
 
+const getCronSecret = (): null | string => {
+  return process.env.CRON_SECRET || process.env.PAYLOAD_SECRET || null
+}
+
 const getIsAuthorizedRequest = (request: Request): boolean => {
-  const secret = process.env.CRON_SECRET
+  const secret = getCronSecret()
   if (!secret) {
     return false
   }
@@ -13,9 +17,9 @@ const getIsAuthorizedRequest = (request: Request): boolean => {
 }
 
 export async function GET(request: Request) {
-  if (!process.env.CRON_SECRET) {
+  if (!getCronSecret()) {
     return Response.json(
-      { error: 'Missing CRON_SECRET environment variable.' },
+      { error: 'Missing CRON_SECRET or PAYLOAD_SECRET environment variable.' },
       { status: 500 },
     )
   }
