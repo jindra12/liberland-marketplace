@@ -1,6 +1,7 @@
 import { ensureAnalyticsSchema, getAnalyticsCollection } from './database'
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000
+const PAGE_VIEW_EVENT_TYPES = ['page_view', 'pageview']
 
 type DailyRow = {
   event_day: string
@@ -11,6 +12,9 @@ type DailyRow = {
 
 type RecentRow = {
   id: string
+  metadata?: {
+    route?: null | string
+  } | null
   route: null | string
   sessionId: null | string
   timestamp: number
@@ -66,7 +70,11 @@ export type AnalyticsRecentEvent = {
 export type AnalyticsDashboardData = {
   generatedAt: string
   overview: AnalyticsOverview
+  recentCurrentPage: number
   recentEvents: AnalyticsRecentEvent[]
+  recentLimit: number
+  recentTotalDocs: number
+  recentTotalPages: number
   topEvents: AnalyticsTopItem[]
   topRoutes: AnalyticsTopItem[]
   trend: AnalyticsDailyPoint[]
@@ -101,16 +109,20 @@ const getRequiredDocumentId = (value: AnalyticsRecentEvent['id'] | undefined) =>
 export const getAnalyticsDashboardData = async ({
   days = 14,
   recentLimit = 12,
+  recentPage = 1,
   topLimit = 8,
 }: {
   days?: number
   recentLimit?: number
+  recentPage?: number
   topLimit?: number
 } = {}): Promise<AnalyticsDashboardData> => {
   await ensureAnalyticsSchema()
   const collection = await getAnalyticsCollection()
   const sinceTimestamp = Date.now() - DAY_IN_MS
   const trendSinceTimestamp = Date.now() - (days - 1) * DAY_IN_MS
+  const sanitizedRecentLimit = Math.max(1, Math.floor(recentLimit))
+  const sanitizedRequestedRecentPage = Math.max(1, Math.floor(recentPage))
 
   const [overviewRow] = await collection
     .aggregate<OverviewRow>([
@@ -121,7 +133,7 @@ export const getAnalyticsDashboardData = async ({
           visitorIds: { $addToSet: '$visitor_id' },
           pageViews: {
             $sum: {
-              $cond: [{ $eq: ['$type', 'page_view'] }, 1, 0],
+              $cond: [{ $in: ['$type', PAGE_VIEW_EVENT_TYPES] }, 1, 0],
             },
           },
           eventsLast24Hours: {
@@ -168,7 +180,7 @@ export const getAnalyticsDashboardData = async ({
           visitorIds: { $addToSet: '$visitor_id' },
           pageViews: {
             $sum: {
-              $cond: [{ $eq: ['$type', 'page_view'] }, 1, 0],
+              $cond: [{ $in: ['$type', PAGE_VIEW_EVENT_TYPES] }, 1, 0],
             },
           },
         },
@@ -231,8 +243,19 @@ export const getAnalyticsDashboardData = async ({
     .aggregate<RouteRow>([
       {
         $match: {
+          type: { $in: PAGE_VIEW_EVENT_TYPES },
+        },
+      },
+      {
+        $project: {
+          route: {
+            $ifNull: ['$route', '$metadata.route'],
+          },
+        },
+      },
+      {
+        $match: {
           route: { $nin: [null, ''] },
-          type: 'page_view',
         },
       },
       {
@@ -260,11 +283,22 @@ export const getAnalyticsDashboardData = async ({
     ])
     .toArray()
 
+  const recentTotalDocs = await collection.countDocuments({})
+  const recentTotalPages =
+    recentTotalDocs === 0 ? 0 : Math.ceil(recentTotalDocs / sanitizedRecentLimit)
+  const currentRecentPage =
+    recentTotalPages === 0
+      ? 1
+      : Math.min(sanitizedRequestedRecentPage, recentTotalPages)
+  const recentSkip =
+    recentTotalDocs === 0 ? 0 : (currentRecentPage - 1) * sanitizedRecentLimit
+
   const recentRows: RecentRow[] = (await collection
     .find(
       {},
       {
         projection: {
+          metadata: 1,
           route: 1,
           session_id: 1,
           timestamp: 1,
@@ -274,9 +308,14 @@ export const getAnalyticsDashboardData = async ({
       },
     )
     .sort({ timestamp: -1, _id: -1 })
-    .limit(recentLimit)
+    .skip(recentSkip)
+    .limit(sanitizedRecentLimit)
     .toArray()).map((row) => ({
     id: getRequiredDocumentId(row._id?.toHexString()),
+    metadata:
+      row.metadata && typeof row.metadata === 'object' && !Array.isArray(row.metadata)
+        ? { route: typeof row.metadata.route === 'string' ? row.metadata.route : null }
+        : null,
     route: row.route ?? null,
     sessionId: row.session_id ?? null,
     timestamp: Number(row.timestamp),
@@ -314,14 +353,18 @@ export const getAnalyticsDashboardData = async ({
       totalEvents: Number(overviewRow?.totalEvents ?? 0),
       uniqueVisitors: Number(overviewRow?.uniqueVisitors ?? 0),
     },
+    recentCurrentPage: currentRecentPage,
     recentEvents: recentRows.map((row) => ({
       id: row.id,
-      route: row.route ?? null,
+      route: row.route ?? row.metadata?.route ?? null,
       sessionId: row.sessionId ?? null,
       timestamp: Number(row.timestamp),
       type: coerceLabel(row.type, 'unknown'),
       userId: row.userId ?? null,
     })),
+    recentLimit: sanitizedRecentLimit,
+    recentTotalDocs,
+    recentTotalPages,
     topEvents: topEventRows.map((row) => ({
       count: Number(row.count),
       label: coerceLabel(row.type, 'unknown'),

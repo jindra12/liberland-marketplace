@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
@@ -6,6 +7,10 @@ import config from '@payload-config'
 import AnalyticsCharts from '@/components/AdminAnalytics/AnalyticsCharts'
 import { getAnalyticsDashboardData } from '@/utilities/analytics/reporting'
 import styles from './page.module.scss'
+
+export const metadata: Metadata = {
+  title: 'Analytics',
+}
 
 const isAdmin = (role: null | string | string[] | undefined) => {
   if (Array.isArray(role)) {
@@ -23,10 +28,30 @@ const formatTimestamp = (value: number) =>
     month: 'short',
   }).format(new Date(value))
 
-export default async function AnalyticsAdminPage() {
+const parseEventsPage = (value: string | string[] | undefined) => {
+  const candidate = Array.isArray(value) ? value[0] : value
+  const parsed = Number(candidate)
+
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    return 1
+  }
+
+  return parsed
+}
+
+const getEventsPageHref = (page: number) => `/admin/analytics?eventsPage=${page}`
+
+type Args = {
+  searchParams: Promise<{
+    eventsPage?: string | string[]
+  }>
+}
+
+export default async function AnalyticsAdminPage({ searchParams: searchParamsPromise }: Args) {
   const payload = await getPayload({ config })
   const requestHeaders = await headers()
   const { user } = await payload.auth({ headers: requestHeaders })
+  const searchParams = await searchParamsPromise
 
   if (!user) {
     redirect('/admin/login')
@@ -36,7 +61,18 @@ export default async function AnalyticsAdminPage() {
     redirect('/admin')
   }
 
-  const analytics = await getAnalyticsDashboardData()
+  const requestedEventsPage = parseEventsPage(searchParams.eventsPage)
+  const analytics = await getAnalyticsDashboardData({
+    recentPage: requestedEventsPage,
+  })
+  const recentRangeStart =
+    analytics.recentTotalDocs === 0
+      ? 0
+      : (analytics.recentCurrentPage - 1) * analytics.recentLimit + 1
+  const recentRangeEnd =
+    analytics.recentTotalDocs === 0
+      ? 0
+      : recentRangeStart + analytics.recentEvents.length - 1
 
   return (
     <div className={styles.page}>
@@ -87,9 +123,15 @@ export default async function AnalyticsAdminPage() {
             <h2>Recent Events</h2>
             <p>Fresh event samples from the local analytics store.</p>
           </div>
-          <span className={styles.generatedAt}>
-            Generated {new Date(analytics.generatedAt).toLocaleString()}
-          </span>
+          <div className={styles.panelMeta}>
+            <span className={styles.generatedAt}>
+              Generated {new Date(analytics.generatedAt).toLocaleString()}
+            </span>
+            <span className={styles.generatedAt}>
+              Showing {recentRangeStart}-{recentRangeEnd} of{' '}
+              {analytics.recentTotalDocs.toLocaleString()}
+            </span>
+          </div>
         </div>
 
         {analytics.recentEvents.length === 0 ? (
@@ -119,6 +161,30 @@ export default async function AnalyticsAdminPage() {
               </tbody>
             </table>
           </div>
+        )}
+
+        {analytics.recentTotalPages > 1 && (
+          <nav aria-label="Recent events pagination" className={styles.pagination}>
+            {analytics.recentCurrentPage > 1 ? (
+              <Link className={styles.paginationLink} href={getEventsPageHref(analytics.recentCurrentPage - 1)}>
+                Previous
+              </Link>
+            ) : (
+              <span className={styles.paginationLinkDisabled}>Previous</span>
+            )}
+
+            <span className={styles.paginationSummary}>
+              Page {analytics.recentCurrentPage} of {analytics.recentTotalPages}
+            </span>
+
+            {analytics.recentCurrentPage < analytics.recentTotalPages ? (
+              <Link className={styles.paginationLink} href={getEventsPageHref(analytics.recentCurrentPage + 1)}>
+                Next
+              </Link>
+            ) : (
+              <span className={styles.paginationLinkDisabled}>Next</span>
+            )}
+          </nav>
         )}
       </section>
     </div>

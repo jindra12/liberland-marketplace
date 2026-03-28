@@ -100,22 +100,26 @@ export const AnalyticsCharts = ({ topEvents, topRoutes, trend }: Props) => {
           <h2>Top Routes</h2>
           <p>Most viewed routes from incoming `page_view` events.</p>
         </div>
-        <div className={styles.chart}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={topRoutes} layout="vertical" margin={{ left: 8, right: 12 }}>
-              <CartesianGrid stroke="var(--theme-elevation-100)" strokeDasharray="3 3" />
-              <XAxis allowDecimals={false} type="number" />
-              <YAxis
-                dataKey="label"
-                tickFormatter={(value) => truncate(value, 28)}
-                type="category"
-                width={180}
-              />
-              <Tooltip contentStyle={tooltipStyle} />
-              <Bar dataKey="count" fill="#1d4ed8" name="Page views" radius={[0, 10, 10, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        {topRoutes.length === 0 ? (
+          <div className={styles.emptyChart}>No page-view routes have been tracked yet.</div>
+        ) : (
+          <div className={styles.chart}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={topRoutes} layout="vertical" margin={{ left: 8, right: 12 }}>
+                <CartesianGrid stroke="var(--theme-elevation-100)" strokeDasharray="3 3" />
+                <XAxis allowDecimals={false} type="number" />
+                <YAxis
+                  dataKey="label"
+                  tickFormatter={(value) => truncate(value, 28)}
+                  type="category"
+                  width={180}
+                />
+                <Tooltip contentStyle={tooltipStyle} />
+                <Bar dataKey="count" fill="#1d4ed8" name="Page views" radius={[0, 10, 10, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </section>
     </div>
   )

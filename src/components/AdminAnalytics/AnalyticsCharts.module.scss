@@ -29,3 +29,15 @@
   height: 280px;
   width: 100%;
 }
+
+.emptyChart {
+  align-items: center;
+  border: 1px dashed var(--theme-elevation-150);
+  border-radius: 14px;
+  color: var(--theme-elevation-700);
+  display: flex;
+  height: 280px;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
