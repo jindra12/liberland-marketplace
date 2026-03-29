@@ -13,7 +13,7 @@ import {
   withCondition,
 } from '@payloadcms/ui'
 import type { TextareaFieldClientComponent } from 'payload'
-import React from 'react'
+import { useLazyLoad } from '@/components/hooks'
 
 import './index.scss'
 
@@ -29,8 +29,10 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   path: pathFromProps,
   readOnly,
 }) => {
-  const [markdownEditorModule, setMarkdownEditorModule] =
-    React.useState<MarkdownEditorModule | null>(null)
+  const markdownEditorModule = useLazyLoad(
+    () => import('@uiw/react-md-editor/nohighlight'),
+    'Failed to load markdown editor module.',
+  )
   const {
     customComponents: { AfterInput, BeforeInput, Description, Error, Label } = {},
     disabled,
@@ -51,31 +53,6 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   const classes = [fieldBaseClass, 'markdown-editor-field', className, showError && 'error', isReadOnly && 'read-only']
     .filter(Boolean)
     .join(' ')
-
-  React.useEffect(() => {
-    let isMounted = true
-
-    const loadMarkdownEditorModule = async () => {
-      try {
-        const markdown = await import('@uiw/react-md-editor/nohighlight')
-        if (!isMounted) {
-          return
-        }
-
-        React.startTransition(() => {
-          setMarkdownEditorModule(markdown)
-        })
-      } catch (error) {
-        console.error('Failed to load markdown editor module.', error)
-      }
-    }
-
-    loadMarkdownEditorModule()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
 
   const MDEditor = markdownEditorModule?.default
 

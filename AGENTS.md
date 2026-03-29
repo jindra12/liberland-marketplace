@@ -26,6 +26,11 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Avoid unnecessary type assertions and `never` casts.
 - Never use `trim()` unless it is materially required, such as sanitizing actual user input.
 - Keep implementations simple and typed from the domain model first, not from generic runtime guards.
+- Prefer smaller components with a singular purpose.
+- Keep each file to one component maximum. Split supporting UI into separate component files instead of defining multiple components in one file.
+- Stateless helper functions belong in `utils.tsx`.
+- Constants belong in `constants.tsx`.
+- Types belong in `types.ts`.
 - Prefer `const` function expressions over `function` declarations.
 - Prefer `async` / `await` syntax over `.then()` chains unless there is a clear reason not to.
 - Avoid `style={{}}` in React. Prefer class names with stylesheet-backed styling; for server-rendered emails, embed a `<style>` block sourced from a stylesheet file instead of inline React style props.

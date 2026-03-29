@@ -27,20 +27,6 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from 'payload'
 
-const enablePayloadLivePreview =
-  process.env.NODE_ENV === 'production' || process.env.PAYLOAD_ENABLE_LIVE_PREVIEW === 'true'
-
-const postDrafts = enablePayloadLivePreview
-  ? {
-      autosave: {
-        interval: 100,
-      },
-      schedulePublish: true,
-    }
-  : {
-      schedulePublish: true,
-    }
-
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
   access: {
@@ -65,18 +51,14 @@ export const Posts: CollectionConfig<'posts'> = {
     hidden: true,
     group: false,
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    ...(enablePayloadLivePreview
-      ? {
-          livePreview: {
-            url: ({ data, req }) =>
-              generatePreviewPath({
-                slug: data?.slug,
-                collection: 'posts',
-                req,
-              }),
-          },
-        }
-      : {}),
+    livePreview: {
+      url: ({ data, req }) =>
+        generatePreviewPath({
+          slug: data?.slug,
+          collection: 'posts',
+          req,
+        }),
+    },
     preview: (data, { req }) =>
       generatePreviewPath({
         slug: data?.slug as string,
@@ -242,7 +224,12 @@ export const Posts: CollectionConfig<'posts'> = {
     afterDelete: [revalidateDelete],
   },
   versions: {
-    drafts: postDrafts,
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
     maxPerDoc: 50,
   },
 }

@@ -1,14 +1,13 @@
 'use client'
 
 import { getTranslation } from '@payloadcms/translations'
-import { BrowseByFolderButton, Link, NavGroup, useConfig, useTranslation } from '@payloadcms/ui'
+import { BrowseByFolderButton, NavGroup, useConfig, useTranslation } from '@payloadcms/ui'
 import type { NavGroupType } from '@payloadcms/ui/shared'
 import { EntityType } from '@payloadcms/ui/shared'
 import type { NavPreferences } from 'payload'
 import { formatAdminURL } from 'payload/shared'
 import { usePathname } from 'next/navigation'
-
-const baseClass = 'nav'
+import AdminAnalyticsNavItemLink from './AdminAnalyticsNavItemLink.client'
 
 type Props = {
   groups: NavGroupType[]
@@ -20,45 +19,6 @@ const analyticsItemLabel = 'Analytics'
 
 const isActivePath = (pathname: string, href: string) =>
   pathname.startsWith(href) && ['/', undefined].includes(pathname[href.length])
-
-const renderLabel = (label: string, isActive: boolean) => (
-  <>
-    {isActive ? <div className={`${baseClass}__link-indicator`} /> : null}
-    <span className={`${baseClass}__link-label`}>{label}</span>
-  </>
-)
-
-const renderNavLink = ({
-  href,
-  id,
-  isActive,
-  itemKey,
-  label,
-  pathname,
-}: {
-  href: string
-  id: string
-  isActive: boolean
-  itemKey?: string
-  label: string
-  pathname: string
-}) => {
-  const content = renderLabel(label, isActive)
-
-  if (pathname === href) {
-    return (
-      <div className={`${baseClass}__link`} id={id} key={itemKey}>
-        {content}
-      </div>
-    )
-  }
-
-  return (
-    <Link className={`${baseClass}__link`} href={href} id={id} key={itemKey} prefetch={false}>
-      {content}
-    </Link>
-  )
-}
 
 const AdminAnalyticsNavClient = ({ groups, navPreferences }: Props) => {
   const pathname = usePathname()
@@ -90,14 +50,13 @@ const AdminAnalyticsNavClient = ({ groups, navPreferences }: Props) => {
         isOpen={navPreferences?.groups?.[analyticsGroupLabel]?.open}
         label={analyticsGroupLabel}
       >
-        {renderNavLink({
-          href: analyticsHref,
-          id: 'nav-analytics',
-          isActive: isAnalyticsActive,
-          itemKey: 'analytics',
-          label: analyticsItemLabel,
-          pathname,
-        })}
+        <AdminAnalyticsNavItemLink
+          href={analyticsHref}
+          id="nav-analytics"
+          isActive={isAnalyticsActive}
+          label={analyticsItemLabel}
+          pathname={pathname}
+        />
       </NavGroup>
       {groups.map(({ entities, label }) => (
         <NavGroup isOpen={navPreferences?.groups?.[label]?.open} key={label} label={label}>
@@ -115,14 +74,16 @@ const AdminAnalyticsNavClient = ({ groups, navPreferences }: Props) => {
             const id = type === EntityType.collection ? `nav-${slug}` : `nav-global-${slug}`
             const isActive = isActivePath(pathname, href)
 
-            return renderNavLink({
-              href,
-              id,
-              isActive,
-              itemKey: slug,
-              label: getTranslation(entityLabel, i18n),
-              pathname,
-            })
+            return (
+              <AdminAnalyticsNavItemLink
+                href={href}
+                id={id}
+                isActive={isActive}
+                key={slug}
+                label={getTranslation(entityLabel, i18n)}
+                pathname={pathname}
+              />
+            )
           })}
         </NavGroup>
       ))}

@@ -22,20 +22,6 @@ import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 
-const enablePayloadLivePreview =
-  process.env.NODE_ENV === 'production' || process.env.PAYLOAD_ENABLE_LIVE_PREVIEW === 'true'
-
-const pageDrafts = enablePayloadLivePreview
-  ? {
-      autosave: {
-        interval: 100,
-      },
-      schedulePublish: true,
-    }
-  : {
-      schedulePublish: true,
-    }
-
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
   access: {
@@ -55,18 +41,14 @@ export const Pages: CollectionConfig<'pages'> = {
     hidden: true,
     group: false,
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    ...(enablePayloadLivePreview
-      ? {
-          livePreview: {
-            url: ({ data, req }) =>
-              generatePreviewPath({
-                slug: data?.slug,
-                collection: 'pages',
-                req,
-              }),
-          },
-        }
-      : {}),
+    livePreview: {
+      url: ({ data, req }) =>
+        generatePreviewPath({
+          slug: data?.slug,
+          collection: 'pages',
+          req,
+        }),
+    },
     preview: (data, { req }) =>
       generatePreviewPath({
         slug: data?.slug as string,
@@ -146,7 +128,12 @@ export const Pages: CollectionConfig<'pages'> = {
     afterDelete: [revalidateDelete],
   },
   versions: {
-    drafts: pageDrafts,
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
     maxPerDoc: 50,
   },
 }
