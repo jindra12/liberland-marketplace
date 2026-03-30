@@ -21,19 +21,65 @@ import { Startups } from './collections/Startups'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
 import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
+import { analyticsConfigEndpoint } from './endpoints/analytics/config'
 import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
 import { Subscribers } from './collections/Subscribers'
+import { analyticsGraphQLMutations } from './graphql/analytics'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const enablePayloadLivePreview =
+  process.env.NODE_ENV === 'production' || process.env.PAYLOAD_ENABLE_LIVE_PREVIEW === 'true'
 const payloadDebug = process.env.PAYLOAD_DEBUG === 'true'
+const payloadSecret = process.env.PAYLOAD_SECRET
+
+if (!payloadSecret) {
+  throw new Error('Missing PAYLOAD_SECRET environment variable')
+}
 
 export default buildConfig({
   admin: {
+    ...(enablePayloadLivePreview
+      ? {
+          livePreview: {
+            breakpoints: [
+              {
+                label: 'Mobile',
+                name: 'mobile',
+                width: 375,
+                height: 667,
+              },
+              {
+                label: 'Tablet',
+                name: 'tablet',
+                width: 768,
+                height: 1024,
+              },
+              {
+                label: 'Desktop',
+                name: 'desktop',
+                width: 1440,
+                height: 900,
+              },
+            ],
+          },
+        }
+      : {}),
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],
+      Nav: '@/components/AdminAnalyticsNavLink',
+      views: {
+        analytics: {
+          Component: '@/components/AdminAnalyticsView',
+          exact: true,
+          meta: {
+            title: 'Analytics',
+          },
+          path: '/analytics',
+        },
+      },
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
@@ -42,28 +88,6 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
-    livePreview: {
-      breakpoints: [
-        {
-          label: 'Mobile',
-          name: 'mobile',
-          width: 375,
-          height: 667,
-        },
-        {
-          label: 'Tablet',
-          name: 'tablet',
-          width: 768,
-          height: 1024,
-        },
-        {
-          label: 'Desktop',
-          name: 'desktop',
-          width: 1440,
-          height: 900,
-        },
-      ],
-    },
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
@@ -97,7 +121,7 @@ export default buildConfig({
     NotificationSubscriptions,
   ],
   cors: '*',
-  endpoints: [backfillEndpoint, confirmCryptoOrderEndpoint],
+  endpoints: [analyticsConfigEndpoint, backfillEndpoint, confirmCryptoOrderEndpoint],
   globals: [Header, Footer],
   plugins,
   debug: payloadDebug,
@@ -106,7 +130,7 @@ export default buildConfig({
       level: process.env.PAYLOAD_LOG_LEVEL || 'info',
     },
   },
-  secret: process.env.PAYLOAD_SECRET,
+  secret: payloadSecret,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -133,5 +157,6 @@ export default buildConfig({
     disable: false,
     disableIntrospectionInProduction: false,
     disablePlaygroundInProduction: false,
-  }
+    mutations: analyticsGraphQLMutations,
+  },
 })

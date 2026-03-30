@@ -1,12 +1,13 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 
-import redirects from './redirects.js'
+import redirects from './redirects.mjs'
 
 const NEXT_PUBLIC_SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000')
+    : process.env.__NEXT_PRIVATE_ORIGIN || `http://localhost:${process.env.PORT || '3001'}`)
+const enableStrictMode = process.env.NODE_ENV === 'production'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -34,7 +35,7 @@ const nextConfig = {
 
     return webpackConfig
   },
-  reactStrictMode: true,
+  reactStrictMode: enableStrictMode,
   redirects,
 }
 

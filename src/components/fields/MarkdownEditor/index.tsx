@@ -1,7 +1,6 @@
 'use client'
 
 import { getTranslation } from '@payloadcms/translations'
-import MDEditor, { commands } from '@uiw/react-md-editor/nohighlight'
 import {
   FieldDescription,
   FieldError,
@@ -14,27 +13,11 @@ import {
   withCondition,
 } from '@payloadcms/ui'
 import type { TextareaFieldClientComponent } from 'payload'
-import React from 'react'
+import { useLazyLoad } from '@/components/hooks'
 
 import './index.scss'
 
-const editorCommands = [
-  commands.title,
-  commands.bold,
-  commands.italic,
-  commands.strikethrough,
-  commands.divider,
-  commands.link,
-  commands.quote,
-  commands.code,
-  commands.codeBlock,
-  commands.divider,
-  commands.unorderedListCommand,
-  commands.orderedListCommand,
-  commands.checkedListCommand,
-]
-
-const extraEditorCommands = [commands.codeEdit, commands.codeLive, commands.codePreview, commands.fullscreen]
+type MarkdownEditorModule = typeof import('@uiw/react-md-editor/nohighlight')
 
 const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   field: {
@@ -46,6 +29,10 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   path: pathFromProps,
   readOnly,
 }) => {
+  const markdownEditorModule = useLazyLoad(
+    () => import('@uiw/react-md-editor/nohighlight'),
+    'Failed to load markdown editor module.',
+  )
   const {
     customComponents: { AfterInput, BeforeInput, Description, Error, Label } = {},
     disabled,
@@ -67,6 +54,8 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
     .filter(Boolean)
     .join(' ')
 
+  const MDEditor = markdownEditorModule?.default
+
   return (
     <div className={classes}>
       <RenderCustomComponent
@@ -79,24 +68,57 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
         {BeforeInput}
 
         <div className="markdown-editor-field__editor">
-          <MDEditor
-            commands={editorCommands}
-            data-color-mode={theme}
-            extraCommands={extraEditorCommands}
-            height={360}
-            hideToolbar={isReadOnly}
-            onChange={(nextValue) => setValue(nextValue ?? '')}
-            preview="live"
-            previewOptions={{ skipHtml: true }}
-            textareaProps={{
-              disabled: isReadOnly,
-              id: inputId,
-              name: path,
-              placeholder: typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined,
-            }}
-            value={markdownValue}
-            visibleDragbar={!isReadOnly}
-          />
+          {markdownEditorModule && MDEditor ? (
+            <MDEditor
+              commands={[
+                markdownEditorModule.commands.title,
+                markdownEditorModule.commands.bold,
+                markdownEditorModule.commands.italic,
+                markdownEditorModule.commands.strikethrough,
+                markdownEditorModule.commands.divider,
+                markdownEditorModule.commands.link,
+                markdownEditorModule.commands.quote,
+                markdownEditorModule.commands.code,
+                markdownEditorModule.commands.codeBlock,
+                markdownEditorModule.commands.divider,
+                markdownEditorModule.commands.unorderedListCommand,
+                markdownEditorModule.commands.orderedListCommand,
+                markdownEditorModule.commands.checkedListCommand,
+              ]}
+              data-color-mode={theme}
+              extraCommands={[
+                markdownEditorModule.commands.codeEdit,
+                markdownEditorModule.commands.codeLive,
+                markdownEditorModule.commands.codePreview,
+                markdownEditorModule.commands.fullscreen,
+              ]}
+              height={360}
+              hideToolbar={isReadOnly}
+              onChange={(nextValue) => setValue(nextValue ?? '')}
+              preview="live"
+              previewOptions={{ skipHtml: true }}
+              textareaProps={{
+                disabled: isReadOnly,
+                id: inputId,
+                name: path,
+                placeholder: typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined,
+              }}
+              value={markdownValue}
+              visibleDragbar={!isReadOnly}
+            />
+          ) : (
+            <textarea
+              className="markdown-editor-field__fallback"
+              disabled={isReadOnly}
+              id={inputId}
+              name={path}
+              onChange={(event) => setValue(event.target.value)}
+              placeholder={
+                typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined
+              }
+              value={markdownValue}
+            />
+          )}
         </div>
 
         {AfterInput}

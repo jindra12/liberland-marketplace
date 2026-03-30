@@ -52,7 +52,7 @@ export const verifyTronNativeTransfer = async (
     }
 
     const config = getTronBaseConfig()
-    const tronWeb = createTronClient(config)
+    const tronWeb = await createTronClient(config)
     const [tx, txInfo] = await Promise.all([
       tronWeb.trx.getTransaction(input.transactionHash),
       tronWeb.trx.getTransactionInfo(input.transactionHash).catch(() => undefined),

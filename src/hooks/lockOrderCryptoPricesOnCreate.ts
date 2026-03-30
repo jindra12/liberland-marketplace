@@ -1,12 +1,11 @@
 import type { CollectionBeforeChangeHook } from 'payload'
 import BigNumber from 'bignumber.js'
-import { buildOrderCryptoPricesFromCache } from '@/crypto/rates/cache'
-import { resolveProductPaymentTargetsFromItems } from '@/crypto/recipient'
+import type { OrderCryptoPrice } from '@/crypto'
 
 const unique = <T>(values: T[]): T[] => [...new Set(values)]
 const USD_BASE_DIVISOR = 100
 
-type PriceSnapshot = Awaited<ReturnType<typeof buildOrderCryptoPricesFromCache>>[number]
+type PriceSnapshot = OrderCryptoPrice
 
 export const lockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = async ({
   data,
@@ -16,6 +15,9 @@ export const lockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = async (
   if (operation !== 'create') {
     return data
   }
+
+  const [{ buildOrderCryptoPricesFromCache }, { resolveProductPaymentTargetsFromItems }] =
+    await Promise.all([import('@/crypto/rates/cache'), import('@/crypto/recipient')])
 
   const next = { ...(data ?? {}) }
   const orderAmount =

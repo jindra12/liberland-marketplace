@@ -3,12 +3,10 @@ import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
-import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
 import type { Plugin } from 'payload'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { oidcProvider } from 'better-auth/plugins'
-import nodemailer from 'nodemailer'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -18,45 +16,16 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
+import { marketplaceEcommercePlugin } from './ecommerce'
 import { hideAdminCollections } from './hideAdminCollections'
-import { authenticated } from '@/access/authenticated'
-import { anyone } from '@/access/anyone'
-import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
-import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
-import { mergeFields } from '@/utilities/mergeFields'
-import { productFields } from '@/fields/productFields'
-import { orderFields } from '@/fields/orderFields'
-import { cryptoAdapter } from '@/payments/cryptoAdapter'
-import { lockOrderCryptoPricesOnCreate } from '@/hooks/lockOrderCryptoPricesOnCreate'
-import { computeOrderAmountOnCreate } from '@/hooks/computeOrderAmountOnCreate'
-import { autoConfirmOrderOnTransactionHashAdd } from '@/hooks/autoConfirmOrderOnTransactionHashAdd'
-import { populateProductCryptoPrices } from '@/hooks/populateProductCryptoPrices'
 import { protectUserFields } from './protectUserFields'
 import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
-import { requireOwnCompany } from '@/hooks/requireOwnCompany'
-import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
-import { cryptoRateRefreshJob } from './cryptoRateRefreshJob'
-import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
-import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
-import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
-
-const smtpTransport = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-})
 
 const betterAuthSecret = process.env.BETTER_AUTH_SECRET
+
 if (!betterAuthSecret) {
   throw new Error('Missing BETTER_AUTH_SECRET environment variable')
 }
@@ -69,29 +38,6 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   const url = getServerSideURL()
 
   return doc?.slug ? `${url}/${doc.slug}` : url
-}
-
-const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'transactionHashes'])
-
-const canUpdateOrderCheckoutFields = ({
-  data,
-  req,
-}: {
-  data?: unknown
-  req: { user?: { role?: string | string[] | null } | null }
-}): boolean => {
-  const role = req.user?.role
-  const isAdmin = Array.isArray(role) ? role.includes('admin') : role?.includes('admin') || false
-  if (isAdmin) {
-    return true
-  }
-
-  if (!data || typeof data !== 'object' || Array.isArray(data)) {
-    return false
-  }
-
-  const keys = Object.keys(data as Record<string, unknown>)
-  return keys.length > 0 && keys.every((key) => nonAdminOrderUpdateKeys.has(key))
 }
 
 export const plugins: Plugin[] = [
@@ -114,6 +60,15 @@ export const plugins: Plugin[] = [
         sendOnSignUp: true,
         autoSignInAfterVerification: true,
         sendVerificationEmail: async ({ user, url }) => {
+          const { default: nodemailer } = await import('nodemailer')
+          const smtpTransport = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: Number(process.env.SMTP_PORT) || 587,
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS,
+            },
+          })
           const fromAddress = process.env.SMTP_FROM_ADDRESS || 'noreply@liberland.org'
           const fromName = process.env.SMTP_FROM_NAME || 'Liberland Marketplace'
           await smtpTransport.sendMail({
@@ -179,176 +134,7 @@ export const plugins: Plugin[] = [
   fixOAuthClientId,
   addOIDCTokenStrategy,
   seedOIDCClient,
-  cryptoRateRefreshJob,
-  ecommercePlugin({
-    access: {
-      adminOnlyFieldAccess: ({ req }) => req.user?.role?.includes('admin') || false,
-      adminOrPublishedStatus: ({ req }) =>
-        req.user?.role?.includes('admin')
-          ? true
-          : { _status: { equals: 'published' } },
-      isAdmin: ({ req }) => req.user?.role?.includes('admin') || false,
-      isAuthenticated: authenticated,
-      isCustomer: ({ req }) => !req.user?.role?.includes('admin'),
-      isDocumentOwner: ({ req }) =>
-        req.user?.role?.includes('admin')
-          ? true
-          : { customer: { equals: req.user?.id } },
-    },
-    customers: { slug: 'users' },
-    carts: {
-      cartsCollectionOverride: ({ defaultCollection }) => ({
-        ...defaultCollection,
-        fields: defaultCollection.fields.map((field) => {
-          if ('name' in field && field.name === 'secret') {
-            const secretField = field as any
-
-            return {
-              ...secretField,
-              access: {
-                // Allow filtering carts by secret in GraphQL/Local API.
-                read: () => true,
-              },
-            } as any
-          }
-          return field
-        }),
-        hooks: {
-          ...defaultCollection.hooks,
-          afterRead: [
-            ...(defaultCollection.hooks?.afterRead ?? []),
-            ({ doc, req }) => {
-              // Keep secret only in the initial cart creation response.
-              if (!req.context?.newCartSecret) {
-                delete (doc as { secret?: string }).secret
-              }
-              return doc
-            },
-          ],
-        },
-      }),
-    },
-    products: {
-      productsCollectionOverride: ({ defaultCollection }) => ({
-        ...defaultCollection,
-        defaultSort: '-completenessScore',
-        access: {
-          ...defaultCollection.access,
-          create: authenticated,
-          read: anyone,
-          update: onlyOwnProductsOrAdmin,
-          delete: onlyOwnProductsOrAdmin,
-        },
-        admin: {
-          ...defaultCollection.admin,
-          useAsTitle: 'name',
-          defaultColumns: [
-            'name',
-            ...((defaultCollection.admin?.defaultColumns || []).filter(
-              (column) => column !== 'name',
-            ) as string[]),
-          ],
-          components: {
-            ...defaultCollection.admin?.components,
-            edit: {
-              ...defaultCollection.admin?.components?.edit,
-              PublishButton: '@/components/VerifiedPublishButton',
-            },
-          },
-        },
-        fields: mergeFields(defaultCollection.fields, productFields),
-        hooks: {
-          ...defaultCollection.hooks,
-          afterRead: [
-            ...(defaultCollection.hooks?.afterRead ?? []),
-            populateProductCryptoPrices,
-          ],
-          beforeChange: [
-            requireOwnCompany,
-            syncCompanyIdentityId,
-            computeCompletenessScore(['url', 'image', 'description', 'properties']),
-            ...(defaultCollection.hooks?.beforeChange ?? []),
-            requireVerifiedEmailToPublish,
-          ],
-          afterChange: [
-            ...(defaultCollection.hooks?.afterChange ?? []),
-            sendItemUpdateNotifications('products'),
-            sendRelatedItemPublishedNotifications({
-              childCollection: 'products',
-              getParentID: (doc) =>
-                typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
-              parentCollection: 'companies',
-            }),
-            updateIdentityItemCountAfterChange('companyIdentityId'),
-          ],
-          afterDelete: [
-            ...(defaultCollection.hooks?.afterDelete ?? []),
-            updateIdentityItemCountAfterDelete('companyIdentityId'),
-          ],
-        },
-      }),
-    },
-    orders: {
-      ordersCollectionOverride: ({ defaultCollection }) => ({
-        ...defaultCollection,
-        access: {
-          ...defaultCollection.access,
-          // Allow checkout flows to create orders through GraphQL/API.
-          create: () => true,
-          // Allow non-admin checkout updates only for payerAddress + transactionHashes.
-          update: ({ data, req }) => canUpdateOrderCheckoutFields({ data, req }),
-        },
-        admin: {
-          ...defaultCollection.admin,
-          components: {
-            ...defaultCollection.admin?.components,
-            edit: {
-              ...defaultCollection.admin?.components?.edit,
-              beforeDocumentControls: [
-                ...(defaultCollection.admin?.components?.edit?.beforeDocumentControls ?? []),
-                '@/components/OrderConfirmButton',
-              ],
-            },
-          },
-        },
-        fields: mergeFields(defaultCollection.fields, orderFields),
-        hooks: {
-          ...defaultCollection.hooks,
-          beforeChange: [
-            ({ data, operation, req }) => {
-              if (operation !== 'create' || !data) {
-                return data
-              }
-
-              const isAdmin = req.user?.role?.includes('admin') || false
-              if (isAdmin) {
-                return data
-              }
-
-              const next = { ...data }
-
-              // Non-admin checkout creates must not set lifecycle/admin fields.
-              next.status = 'processing'
-              next.transactions = []
-              next.customer = req.user?.id ?? null
-
-              return next
-            },
-            ...(defaultCollection.hooks?.beforeChange ?? []),
-            computeOrderAmountOnCreate,
-            lockOrderCryptoPricesOnCreate,
-          ],
-          afterChange: [
-            ...(defaultCollection.hooks?.afterChange ?? []),
-            autoConfirmOrderOnTransactionHashAdd,
-          ],
-        },
-      }),
-    },
-    payments: {
-      paymentMethods: [cryptoAdapter()],
-    },
-  }),
+  marketplaceEcommercePlugin,
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {

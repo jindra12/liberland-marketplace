@@ -9,13 +9,13 @@ import { serverURLField } from '@/fields/serverURLField'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
-import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
-import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
+  lazySendItemUpdateNotifications,
+  lazySendRelatedItemPublishedNotifications,
+  lazyUpdateIdentityItemCountAfterChange,
+  lazyUpdateIdentityItemCountAfterDelete,
+} from '@/hooks/lazyCollectionHooks'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
@@ -37,16 +37,16 @@ export const Jobs: CollectionConfig = {
       requireVerifiedEmailToPublish,
     ],
     afterChange: [
-      sendItemUpdateNotifications('jobs'),
-      sendRelatedItemPublishedNotifications({
+      lazySendItemUpdateNotifications('jobs'),
+      lazySendRelatedItemPublishedNotifications({
         childCollection: 'jobs',
         getParentID: (doc) =>
           typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
         parentCollection: 'companies',
       }),
-      updateIdentityItemCountAfterChange('companyIdentityId'),
+      lazyUpdateIdentityItemCountAfterChange('companyIdentityId'),
     ],
-    afterDelete: [updateIdentityItemCountAfterDelete('companyIdentityId')],
+    afterDelete: [lazyUpdateIdentityItemCountAfterDelete('companyIdentityId')],
   },
   admin: {
     useAsTitle: 'title',

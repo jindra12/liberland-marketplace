@@ -5,12 +5,12 @@ export const getServerSideURL = () => {
     process.env.NEXT_PUBLIC_SERVER_URL ||
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : 'http://localhost:3000')
+      : `http://localhost:${process.env.PORT || '3001'}`)
   )
 }
 
 export const getFrontendURL = () => {
-  return process.env.FRONTEND_URL || 'http://localhost:3001';
+  return process.env.FRONTEND_URL || 'http://localhost:3001'
 }
 
 export const getClientSideURL = () => {

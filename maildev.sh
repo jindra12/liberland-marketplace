@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 mkdir -p .local/email-snapshots
 
@@ -13,6 +13,10 @@ pnpm exec maildev \
   --silent >/tmp/liberland-maildev.log 2>&1 &
 MAILDEV_PID=$!
 
-trap 'kill "$MAILDEV_PID" >/dev/null 2>&1 || true' EXIT
+cleanup() {
+  kill "$MAILDEV_PID" >/dev/null 2>&1 || true
+}
 
-NODE_OPTIONS=--no-deprecation ./node_modules/.bin/next dev -H 127.0.0.1
+trap cleanup EXIT INT TERM
+
+NODE_OPTIONS=--no-deprecation ./scripts/next-with-crypto-rate-cron.sh dev

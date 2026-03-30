@@ -4,7 +4,7 @@ import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
-import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
+import { lazySendItemUpdateNotifications } from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
@@ -26,7 +26,7 @@ export const Identities: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   hooks: {
-    afterChange: [sendItemUpdateNotifications('identities')],
+    afterChange: [lazySendItemUpdateNotifications('identities')],
   },
   fields: [
     serverURLField(),

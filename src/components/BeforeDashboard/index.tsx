@@ -12,6 +12,9 @@ const BeforeDashboard: React.FC = () => {
       <Banner className={`${baseClass}__banner`} type="success">
         <h4>Welcome to your dashboard!</h4>
       </Banner>
+      <p className={`${baseClass}__analytics`}>
+        Local analytics are now available at <a href="/admin/analytics">/admin/analytics</a>.
+      </p>
       Here&apos;s what to do next:
       <ul className={`${baseClass}__instructions`}>
         <li>

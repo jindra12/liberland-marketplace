@@ -3,7 +3,6 @@ import type { UIFieldServerComponent } from 'payload'
 import './index.scss'
 
 import type { NotificationTargetCollection } from '@/newsletter/constants'
-import { getNotificationSubscriberCountForTarget } from '@/newsletter/notificationSubscriptions'
 
 const isNotificationTargetCollection = (
   value: string,
@@ -21,11 +20,17 @@ const NotificationSubscriberCountField: UIFieldServerComponent = async ({
 }) => {
   const count =
     id && isNotificationTargetCollection(collectionSlug)
-      ? await getNotificationSubscriberCountForTarget({
-          req,
-          targetCollection: collectionSlug,
-          targetID: String(id),
-        })
+      ? await (async () => {
+          const { getNotificationSubscriberCountForTarget } = await import(
+            '@/newsletter/notificationSubscriptions'
+          )
+
+          return getNotificationSubscriberCountForTarget({
+            req,
+            targetCollection: collectionSlug,
+            targetID: String(id),
+          })
+        })()
       : 0
 
   return (

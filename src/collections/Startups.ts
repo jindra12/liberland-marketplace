@@ -8,12 +8,12 @@ import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
-import { sendRelatedItemPublishedNotifications } from '@/hooks/sendRelatedItemPublishedNotifications'
-import { sendItemUpdateNotifications } from '@/hooks/sendItemUpdateNotifications'
 import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
+  lazySendItemUpdateNotifications,
+  lazySendRelatedItemPublishedNotifications,
+  lazyUpdateIdentityItemCountAfterChange,
+  lazyUpdateIdentityItemCountAfterDelete,
+} from '@/hooks/lazyCollectionHooks'
 import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
 import { joinStartup, leaveStartup } from '@/endpoints/involvedUsers'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
@@ -53,16 +53,16 @@ export const Startups: CollectionConfig = {
       validateInvolvedUsers,
     ],
     afterChange: [
-      sendItemUpdateNotifications('startups'),
-      sendRelatedItemPublishedNotifications({
+      lazySendItemUpdateNotifications('startups'),
+      lazySendRelatedItemPublishedNotifications({
         childCollection: 'startups',
         getParentID: (doc) =>
           typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
         parentCollection: 'companies',
       }),
-      updateIdentityItemCountAfterChange('identity'),
+      lazyUpdateIdentityItemCountAfterChange('identity'),
     ],
-    afterDelete: [updateIdentityItemCountAfterDelete('identity')],
+    afterDelete: [lazyUpdateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
     drafts: true,

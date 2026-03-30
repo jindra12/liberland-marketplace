@@ -1,6 +1,6 @@
-import { verifyTransactionOccurred } from '@/crypto'
-import { resolveProductPaymentTargetsFromItems } from '@/crypto/recipient'
-import { Order } from '@/payload-types'
+import type { VerifyOrderPaymentResult } from '@/crypto'
+import type { ProductPaymentTarget } from '@/crypto/recipient'
+import type { Order } from '@/payload-types'
 import uniq from 'lodash/uniq.js'
 import type { GroupField, PayloadRequest } from 'payload'
 
@@ -43,7 +43,7 @@ const buildPaymentRef = ({
   paymentTargets,
   transactionHashEntries,
 }: {
-  paymentTargets: Awaited<ReturnType<typeof resolveProductPaymentTargetsFromItems>>
+  paymentTargets: ProductPaymentTarget[]
   transactionHashEntries: Order["transactionHashes"]
 }): string => {
   const paymentTargetByProductID = new Map(paymentTargets.map((target) => [target.productID, target]))
@@ -57,7 +57,7 @@ const buildPaymentRef = ({
 }
 
 const buildVerificationErrorMessage = (
-  result: Awaited<ReturnType<typeof verifyTransactionOccurred>>,
+  result: VerifyOrderPaymentResult,
 ): string => {
   if (result.error) {
     return result.error
@@ -173,6 +173,8 @@ export const cryptoAdapter = () => ({
     data,
     req,
   }: ConfirmOrderArgs) => {
+    const [{ verifyTransactionOccurred }, { resolveProductPaymentTargetsFromItems }] =
+      await Promise.all([import('@/crypto'), import('@/crypto/recipient')])
     const payloadData = data as { orderID: string };
 
     const order = await req.payload.findByID({

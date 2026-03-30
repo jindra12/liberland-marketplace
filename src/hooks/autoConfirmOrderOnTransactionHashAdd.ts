@@ -1,4 +1,3 @@
-import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import type { CollectionAfterChangeHook } from 'payload'
 
 type TransactionHashRow = {
@@ -81,6 +80,7 @@ export const autoConfirmOrderOnTransactionHashAdd: CollectionAfterChangeHook = a
   }
 
   try {
+    const { cryptoAdapter } = await import('@/payments/cryptoAdapter')
     await cryptoAdapter().confirmOrder({
       cartsSlug: 'carts',
       data: { orderID },

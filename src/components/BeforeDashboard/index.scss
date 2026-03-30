@@ -18,6 +18,10 @@
     }
   }
 
+  &__analytics {
+    margin: base(0.5) 0;
+  }
+
   & a:hover {
     opacity: 0.85;
   }

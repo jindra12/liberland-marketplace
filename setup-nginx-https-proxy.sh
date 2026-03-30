@@ -7,7 +7,7 @@ Usage: scripts/setup-nginx-https-proxy.sh
 
 Interactive script to:
 1) Ask for a domain (example: liberland-marketplace.ddnsfree.com)
-2) Ask for app port (manual, default: 3000)
+2) Ask for app port (manual, default: 3001)
 3) Create/update an isolated Nginx site config for that domain
 4) Request and install Let's Encrypt HTTPS cert via Certbot
 
@@ -56,10 +56,10 @@ while true; do
   echo "Invalid domain format. Try again."
 done
 
-APP_PORT="3000"
+APP_PORT="3001"
 while true; do
-  read -r -p "Enter app port [3000]: " INPUT_PORT
-  INPUT_PORT="${INPUT_PORT:-3000}"
+  read -r -p "Enter app port [3001]: " INPUT_PORT
+  INPUT_PORT="${INPUT_PORT:-3001}"
   if is_valid_port "$INPUT_PORT"; then
     APP_PORT="$INPUT_PORT"
     break

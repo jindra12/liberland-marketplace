@@ -2,9 +2,6 @@ import BigNumber from 'bignumber.js'
 import type { ChainPoolRate, NativeStablePoolRates, OrderCryptoPrice, SupportedChain } from '../types'
 import { quantizeNativeAmount } from '../nativeAmount'
 import { withTimeout } from '../timeout'
-import { getEthereumPoolRate } from './ethereum'
-import { getSolanaPoolRate } from './solana'
-import { getTronPoolRate } from './tron'
 
 const DEFAULT_RATE_FETCH_TIMEOUT_MS = 60_000
 
@@ -25,6 +22,21 @@ const parseTimeoutMs = (): number => {
   return parsed
 }
 
+const getRateByChain = async (chain: SupportedChain): Promise<ChainPoolRate> => {
+  if (chain === 'ethereum') {
+    const { getEthereumPoolRate } = await import('./ethereum')
+    return getEthereumPoolRate()
+  }
+
+  if (chain === 'solana') {
+    const { getSolanaPoolRate } = await import('./solana')
+    return getSolanaPoolRate()
+  }
+
+  const { getTronPoolRate } = await import('./tron')
+  return getTronPoolRate()
+}
+
 const toRateSnapshot = (orderAmount: number | null, rate: ChainPoolRate): OrderCryptoPrice => {
   const expectedNativeAmount =
     typeof orderAmount === 'number' && Number.isFinite(orderAmount) && orderAmount > 0
@@ -40,16 +52,6 @@ const toRateSnapshot = (orderAmount: number | null, rate: ChainPoolRate): OrderC
   }
 }
 
-const getRateByChain = async (chain: SupportedChain): Promise<ChainPoolRate> => {
-  if (chain === 'ethereum') {
-    return getEthereumPoolRate()
-  }
-  if (chain === 'solana') {
-    return getSolanaPoolRate()
-  }
-  return getTronPoolRate()
-}
-
 export const buildOrderCryptoPrices = async ({
   chains,
   orderAmount,
@@ -59,24 +61,26 @@ export const buildOrderCryptoPrices = async ({
 }): Promise<OrderCryptoPrice[]> => {
   const effectiveChains = unique(chains)
   const timeoutMs = parseTimeoutMs()
-  const rates = await Promise.all(
-    effectiveChains.map((chain) =>
-      withTimeout({
-        promise: getRateByChain(chain),
-        timeoutMs,
-        timeoutMessage: `Timed out fetching ${chain} rate after ${timeoutMs}ms.`,
-      }),
-    ),
-  )
+  const rates: ChainPoolRate[] = []
+
+  for (const chain of effectiveChains) {
+    const rate = await withTimeout({
+      promise: getRateByChain(chain),
+      timeoutMs,
+      timeoutMessage: `Timed out fetching ${chain} rate after ${timeoutMs}ms.`,
+    })
+
+    rates.push(rate)
+  }
 
   return rates.map((rate) => toRateSnapshot(orderAmount, rate))
 }
 
 export const getNativeStablePoolRates = async (): Promise<NativeStablePoolRates> => {
   const [ethereum, solana, tron] = await Promise.all([
-    getEthereumPoolRate(),
-    getSolanaPoolRate(),
-    getTronPoolRate(),
+    getRateByChain('ethereum'),
+    getRateByChain('solana'),
+    getRateByChain('tron'),
   ])
 
   return {
