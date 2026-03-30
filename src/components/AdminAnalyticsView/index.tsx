@@ -30,6 +30,7 @@ const AdminAnalyticsView = async ({
 
   const requestedEventsPage = parseEventsPage(searchParams?.eventsPage)
   const analytics = await getAnalyticsDashboardData({
+    payload: initPageResult.req.payload,
     recentPage: requestedEventsPage,
   })
   const frontendBaseURL = process.env.FRONTEND_URL ?? null
@@ -60,6 +61,7 @@ const AdminAnalyticsView = async ({
           frontendBaseURL={frontendBaseURL}
           topEvents={analytics.topEvents}
           topMutations={analytics.topMutations}
+          topProducts={analytics.topProducts}
           topQueries={analytics.topQueries}
           topRoutes={analytics.topRoutes}
           trend={analytics.trend}

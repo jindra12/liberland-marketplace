@@ -4,6 +4,7 @@ export type AnalyticsChartsProps = {
   frontendBaseURL: null | string
   topEvents: AnalyticsTopItem[]
   topMutations: AnalyticsTopItem[]
+  topProducts: AnalyticsTopItem[]
   topQueries: AnalyticsTopItem[]
   topRoutes: AnalyticsTopItem[]
   trend: AnalyticsDailyPoint[]

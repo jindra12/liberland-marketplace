@@ -1,59 +1,12 @@
-import type { NavPreferences, PayloadRequest } from 'payload'
 import { NavHamburger, NavWrapper } from '@payloadcms/next/client'
-import { DefaultNav } from '@payloadcms/next/rsc'
 import { Logout } from '@payloadcms/ui'
 import { RenderServerComponent } from '@payloadcms/ui/elements/RenderServerComponent'
 import { EntityType, groupNavItems } from '@payloadcms/ui/shared'
 import type { EntityToGroup } from '@payloadcms/ui/shared'
-import { cache } from 'react'
+import { baseClass } from './constants'
 import AdminAnalyticsNavClient from './index.client'
-
-const baseClass = 'nav'
-
-type AdminNavProps = Parameters<typeof DefaultNav>[0]
-
-const isNavPreferences = (value: unknown): value is NavPreferences =>
-  typeof value === 'object' &&
-  value !== null &&
-  'groups' in value &&
-  'open' in value
-
-const getNavPrefs = cache(async (req?: PayloadRequest): Promise<NavPreferences | null> => {
-  if (!req?.user?.collection) {
-    return null
-  }
-
-  const result = await req.payload.find({
-    collection: 'payload-preferences',
-    depth: 0,
-    limit: 1,
-    pagination: false,
-    req,
-    where: {
-      and: [
-        {
-          key: {
-            equals: 'nav',
-          },
-        },
-        {
-          'user.relationTo': {
-            equals: req.user.collection,
-          },
-        },
-        {
-          'user.value': {
-            equals: req.user.id,
-          },
-        },
-      ],
-    },
-  })
-
-  const preferenceValue = result.docs[0]?.value
-
-  return isNavPreferences(preferenceValue) ? preferenceValue : null
-})
+import type { AdminNavProps } from './types'
+import { getNavPrefs } from './utils'
 
 const AdminAnalyticsNavLink = async (props: AdminNavProps) => {
   const {

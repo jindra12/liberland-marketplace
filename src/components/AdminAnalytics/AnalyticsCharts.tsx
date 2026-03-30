@@ -3,6 +3,7 @@
 import type { AnalyticsChartsProps } from './AnalyticsCharts.types'
 import AnalyticsOperationChart from './AnalyticsOperationChart'
 import AnalyticsTopEventsChart from './AnalyticsTopEventsChart'
+import AnalyticsTopProductsChart from './AnalyticsTopProductsChart'
 import AnalyticsTopRoutesChart from './AnalyticsTopRoutesChart'
 import AnalyticsTrendChart from './AnalyticsTrendChart'
 import styles from './AnalyticsCharts.module.scss'
@@ -11,6 +12,7 @@ const AnalyticsCharts = ({
   frontendBaseURL,
   topEvents,
   topMutations,
+  topProducts,
   topQueries,
   topRoutes,
   trend,
@@ -40,6 +42,7 @@ const AnalyticsCharts = ({
           name="Mutations"
           title="Top Mutations"
         />
+        <AnalyticsTopProductsChart topProducts={topProducts} />
       </div>
     </>
   )
