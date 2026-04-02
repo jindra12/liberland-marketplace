@@ -44,7 +44,6 @@ export const analyticsGraphQLMutations: GraphQLExtension = (graphQL) => {
         type: graphQL.GraphQLString,
       },
       metadata: {
-        defaultValue: {},
         type: metadataScalar,
       },
       route: {

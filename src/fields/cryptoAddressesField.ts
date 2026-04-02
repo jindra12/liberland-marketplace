@@ -49,30 +49,59 @@ const validateWalletAddress: TextFieldSingleValidation = (value, { siblingData }
     : `Please enter a valid ${LABEL_BY_CHAIN[rawChain]} address.`
 }
 
-export const cryptoAddressesField = (): Field => ({
-  name: 'cryptoAddresses',
-  label: 'Payout Wallet',
-  type: 'group',
-  admin: {
-    description: 'Optional single payout wallet. If product wallet is empty, company wallet is used.',
+type CryptoAddressesFieldOptions = {
+  description?: string
+  hasMany?: boolean
+  label?: string
+}
+
+const getWalletFields = (): Field[] => [
+  {
+    name: 'chain',
+    label: 'Chain',
+    type: 'select',
+    options: CHAIN_OPTIONS,
   },
-  fields: [
-    {
-      name: 'chain',
-      label: 'Chain',
-      type: 'select',
-      options: CHAIN_OPTIONS,
+  {
+    name: 'address',
+    label: 'Wallet Address',
+    type: 'text',
+    validate: validateWalletAddress,
+    hooks: {
+      beforeChange: [({ value }) => (typeof value === 'string' ? value.trim() : value)],
     },
-    {
-      name: 'address',
-      label: 'Wallet Address',
-      type: 'text',
-      validate: validateWalletAddress,
-      hooks: {
-        beforeChange: [
-          ({ value }) => (typeof value === 'string' ? value.trim() : value),
-        ],
+  },
+]
+
+export const cryptoAddressesField = ({
+  description = 'Optional single payout wallet. If product wallet is empty, company wallet is used.',
+  hasMany = false,
+  label = 'Payout Wallet',
+}: CryptoAddressesFieldOptions = {}): Field => {
+  if (hasMany) {
+    return {
+      name: 'cryptoAddresses',
+      label,
+      type: 'array',
+      admin: {
+        description,
+        initCollapsed: true,
       },
+      labels: {
+        plural: 'Wallets',
+        singular: 'Wallet',
+      },
+      fields: getWalletFields(),
+    }
+  }
+
+  return {
+    name: 'cryptoAddresses',
+    label,
+    type: 'group',
+    admin: {
+      description,
     },
-  ],
-})
+    fields: getWalletFields(),
+  }
+}

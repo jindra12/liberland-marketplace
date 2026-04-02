@@ -33,6 +33,10 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Types belong in `types.ts`.
 - Prefer `const` function expressions over `function` declarations.
 - Prefer `async` / `await` syntax over `.then()` chains unless there is a clear reason not to.
+- Do not use `React.useCallback` or `useCallback` unless it is absolutely necessary for correctness or a demonstrated performance need. Stable handlers are not a default requirement.
+- Prefer existing utility hooks already in the repo, such as `usehooks-ts`, over hand-rolled timer/effect plumbing for things like `setTimeout`.
+- Do not duplicate defensive invariant checks in child components when the parent component already guarantees the input is valid. Trust the validated contract instead of re-checking values like `quantity <= 0` in leaf UI components.
+- Do not add impossible-state guards when the surrounding UI flow already prevents that state. If a screen, button state, or parent guard guarantees the condition, trust it instead of adding extra branches like empty-cart submit checks.
 - Avoid `style={{}}` in React. Prefer class names with stylesheet-backed styling; for server-rendered emails, embed a `<style>` block sourced from a stylesheet file instead of inline React style props.
 - If asked to generate ad hoc queries, images, or similar throwaway artifacts, write them to `/tmp` instead of adding them to the repo unless the user explicitly asks to keep them in the workspace.
 - Do not remove `experimental.esmExternals: 'loose'` from `next.config.js` unless there is direct evidence that setting is the root cause or the user explicitly asks for that change.

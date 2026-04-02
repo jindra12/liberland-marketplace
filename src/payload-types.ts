@@ -233,10 +233,39 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  phone?: string | null;
+  shippingAddress?: {
+    title?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    company?: string | null;
+    addressLine1?: string | null;
+    addressLine2?: string | null;
+    city?: string | null;
+    state?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+    phone?: string | null;
+  };
+  /**
+   * Wallets available for this user across supported chains.
+   */
+  wallets?:
+    | {
+        chain: 'ethereum' | 'solana' | 'tron';
+        provider: string;
+        address: string;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * Users chosen display name
    */
   name: string;
+  /**
+   * The email of the user
+   */
+  email: string;
   /**
    * Whether the email of the user has been verified
    */
@@ -262,24 +291,6 @@ export interface User {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  /**
-   * The email of the user
-   */
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
 }
 /**
  * Accounts are used to store user accounts for authentication providers
@@ -2013,7 +2024,32 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  phone?: T;
+  shippingAddress?:
+    | T
+    | {
+        title?: T;
+        firstName?: T;
+        lastName?: T;
+        company?: T;
+        addressLine1?: T;
+        addressLine2?: T;
+        city?: T;
+        state?: T;
+        postalCode?: T;
+        country?: T;
+        phone?: T;
+      };
+  wallets?:
+    | T
+    | {
+        chain?: T;
+        provider?: T;
+        address?: T;
+        id?: T;
+      };
   name?: T;
+  email?: T;
   emailVerified?: T;
   image?: T;
   createdAt?: T;
@@ -2022,20 +2058,6 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   account?: T;
   session?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
