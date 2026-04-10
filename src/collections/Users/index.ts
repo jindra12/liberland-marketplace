@@ -2,6 +2,8 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '@/access/anyone'
 import { adminOrSelf } from '@/access/adminOrSelf'
+import { shippingAddressField } from '@/fields/addressFields'
+import { userWalletsField } from '@/fields/userWalletsField'
 import { createDefaultCompany } from '@/hooks/createDefaultCompany'
 
 export const Users: CollectionConfig = {
@@ -48,6 +50,13 @@ export const Users: CollectionConfig = {
     ],
   },
   auth: true,
-  fields: [],
+  fields: [
+    {
+      name: 'phone',
+      type: 'text',
+    },
+    shippingAddressField(),
+    userWalletsField(),
+  ],
   timestamps: true,
 }

@@ -1,5 +1,6 @@
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
 import { authenticated } from '@/access/authenticated'
+import { addressFields } from '@/fields/addressFields'
 import { anyone } from '@/access/anyone'
 import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { mergeProductCollectionFields, normalizeProductInventoryData } from '@/fields/productFields'
@@ -57,6 +58,9 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
     isCustomer: ({ req }) => !req.user?.role?.includes('admin'),
     isDocumentOwner: ({ req }) =>
       req.user?.role?.includes('admin') ? true : { customer: { equals: req.user?.id } },
+  },
+  addresses: {
+    addressFields: () => addressFields(),
   },
   customers: { slug: 'users' },
   carts: {

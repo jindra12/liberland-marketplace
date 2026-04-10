@@ -15,7 +15,6 @@ import {
   lazyUpdateIdentityItemCountAfterDelete,
 } from '@/hooks/lazyCollectionHooks'
 import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
-import { joinStartup, leaveStartup } from '@/endpoints/involvedUsers'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
@@ -38,7 +37,6 @@ export const Startups: CollectionConfig = {
     plural: 'Ventures',
   },
   defaultSort: '-completenessScore',
-  endpoints: [joinStartup, leaveStartup],
   hooks: {
     beforeChange: [
       requireOwnCompany,

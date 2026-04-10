@@ -25,6 +25,8 @@ import { analyticsConfigEndpoint } from './endpoints/analytics/config'
 import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
 import { Subscribers } from './collections/Subscribers'
 import { analyticsGraphQLMutations } from './graphql/analytics'
+import { startupGraphQLMutations } from './graphql/startups'
+import { userGraphQLMutations, userGraphQLQueries } from './graphql/users'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -157,6 +159,11 @@ export default buildConfig({
     disable: false,
     disableIntrospectionInProduction: false,
     disablePlaygroundInProduction: false,
-    mutations: analyticsGraphQLMutations,
+    mutations: (graphQL, context) => ({
+      ...analyticsGraphQLMutations(graphQL, context),
+      ...startupGraphQLMutations(graphQL, context),
+      ...userGraphQLMutations(graphQL, context),
+    }),
+    queries: userGraphQLQueries,
   },
 })
