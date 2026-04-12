@@ -11,6 +11,7 @@ import {
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
+import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
@@ -31,9 +32,9 @@ export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
   access: {
     create: authenticated,
-    delete: authenticated,
+    delete: onlyOwnDocsOrAdmin,
     read: authenticatedOrPublished,
-    update: authenticated,
+    update: onlyOwnDocsOrAdmin,
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -66,6 +67,10 @@ export const Posts: CollectionConfig<'posts'> = {
         req,
       }),
     useAsTitle: 'title',
+    baseFilter: ({ req }) => {
+      const filter = onlyOwnDocsOrAdminFilter({ user: req.user })
+      return typeof filter === 'object' ? filter : null
+    },
   },
   fields: [
     {

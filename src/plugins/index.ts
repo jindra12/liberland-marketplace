@@ -23,6 +23,7 @@ import { comments } from './comments'
 import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
+import { likesPlugin } from './likes'
 
 const betterAuthSecret = process.env.BETTER_AUTH_SECRET
 
@@ -134,6 +135,7 @@ export const plugins: Plugin[] = [
   fixOAuthClientId,
   addOIDCTokenStrategy,
   seedOIDCClient,
+  likesPlugin,
   marketplaceEcommercePlugin,
   redirectsPlugin({
     collections: ['pages', 'posts'],

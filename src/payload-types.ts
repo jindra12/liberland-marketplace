@@ -92,6 +92,12 @@ export interface Config {
     subscribers: Subscriber;
     'notification-subscriptions': NotificationSubscription;
     comments: Comment;
+    'company-likes': CompanyLike;
+    'identity-likes': IdentityLike;
+    'venture-likes': VentureLike;
+    'job-likes': JobLike;
+    'product-likes': ProductLike;
+    'post-likes': PostLike;
     addresses: Address;
     variants: Variant;
     variantTypes: VariantType;
@@ -147,6 +153,12 @@ export interface Config {
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'notification-subscriptions': NotificationSubscriptionsSelect<false> | NotificationSubscriptionsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
+    'company-likes': CompanyLikesSelect<false> | CompanyLikesSelect<true>;
+    'identity-likes': IdentityLikesSelect<false> | IdentityLikesSelect<true>;
+    'venture-likes': VentureLikesSelect<false> | VentureLikesSelect<true>;
+    'job-likes': JobLikesSelect<false> | JobLikesSelect<true>;
+    'product-likes': ProductLikesSelect<false> | ProductLikesSelect<true>;
+    'post-likes': PostLikesSelect<false> | PostLikesSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     variants: VariantsSelect<false> | VariantsSelect<true>;
     variantTypes: VariantTypesSelect<false> | VariantTypesSelect<true>;
@@ -636,6 +648,8 @@ export interface Post {
    */
   generateSlug?: boolean | null;
   slug: string;
+  likeCount?: number | null;
+  hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1148,6 +1162,8 @@ export interface Identity {
   description?: string | null;
   itemCount?: number | null;
   isSubscribed?: boolean | null;
+  likeCount?: number | null;
+  hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1183,6 +1199,8 @@ export interface Company {
   disallowedIdentities?: (string | Identity)[] | null;
   isSubscribed?: boolean | null;
   completenessScore?: number | null;
+  likeCount?: number | null;
+  hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1225,6 +1243,8 @@ export interface Job {
   applyUrl?: string | null;
   isSubscribed?: boolean | null;
   completenessScore?: number | null;
+  likeCount?: number | null;
+  hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1262,6 +1282,8 @@ export interface Startup {
   involvedUsers?: (string | User)[] | null;
   isSubscribed?: boolean | null;
   completenessScore?: number | null;
+  likeCount?: number | null;
+  hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1328,6 +1350,10 @@ export interface Comment {
     | {
         relationTo: 'companies';
         value: string | Company;
+      }
+    | {
+        relationTo: 'posts';
+        value: string | Post;
       }
     | {
         relationTo: 'products';
@@ -1456,6 +1482,72 @@ export interface Variant {
   createdAt: string;
   deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company-likes".
+ */
+export interface CompanyLike {
+  id: string;
+  userId: string;
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "identity-likes".
+ */
+export interface IdentityLike {
+  id: string;
+  userId: string;
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venture-likes".
+ */
+export interface VentureLike {
+  id: string;
+  userId: string;
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-likes".
+ */
+export interface JobLike {
+  id: string;
+  userId: string;
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-likes".
+ */
+export interface ProductLike {
+  id: string;
+  userId: string;
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-likes".
+ */
+export interface PostLike {
+  id: string;
+  userId: string;
+  targetID: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1926,6 +2018,30 @@ export interface PayloadLockedDocument {
         value: string | Comment;
       } | null)
     | ({
+        relationTo: 'company-likes';
+        value: string | CompanyLike;
+      } | null)
+    | ({
+        relationTo: 'identity-likes';
+        value: string | IdentityLike;
+      } | null)
+    | ({
+        relationTo: 'venture-likes';
+        value: string | VentureLike;
+      } | null)
+    | ({
+        relationTo: 'job-likes';
+        value: string | JobLike;
+      } | null)
+    | ({
+        relationTo: 'product-likes';
+        value: string | ProductLike;
+      } | null)
+    | ({
+        relationTo: 'post-likes';
+        value: string | PostLike;
+      } | null)
+    | ({
         relationTo: 'addresses';
         value: string | Address;
       } | null)
@@ -2320,6 +2436,8 @@ export interface PostsSelect<T extends boolean = true> {
       };
   generateSlug?: T;
   slug?: T;
+  likeCount?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2454,6 +2572,8 @@ export interface IdentitiesSelect<T extends boolean = true> {
   description?: T;
   itemCount?: T;
   isSubscribed?: T;
+  likeCount?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2481,6 +2601,8 @@ export interface CompaniesSelect<T extends boolean = true> {
   disallowedIdentities?: T;
   isSubscribed?: T;
   completenessScore?: T;
+  likeCount?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2520,6 +2642,8 @@ export interface JobsSelect<T extends boolean = true> {
   applyUrl?: T;
   isSubscribed?: T;
   completenessScore?: T;
+  likeCount?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2548,6 +2672,8 @@ export interface StartupsSelect<T extends boolean = true> {
   involvedUsers?: T;
   isSubscribed?: T;
   completenessScore?: T;
+  likeCount?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2602,6 +2728,66 @@ export interface CommentsSelect<T extends boolean = true> {
   anonymousHash?: T;
   replyPostRelationTo?: T;
   replyPostValue?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company-likes_select".
+ */
+export interface CompanyLikesSelect<T extends boolean = true> {
+  userId?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "identity-likes_select".
+ */
+export interface IdentityLikesSelect<T extends boolean = true> {
+  userId?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venture-likes_select".
+ */
+export interface VentureLikesSelect<T extends boolean = true> {
+  userId?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-likes_select".
+ */
+export interface JobLikesSelect<T extends boolean = true> {
+  userId?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-likes_select".
+ */
+export interface ProductLikesSelect<T extends boolean = true> {
+  userId?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-likes_select".
+ */
+export interface PostLikesSelect<T extends boolean = true> {
+  userId?: T;
+  targetID?: T;
   updatedAt?: T;
   createdAt?: T;
 }
