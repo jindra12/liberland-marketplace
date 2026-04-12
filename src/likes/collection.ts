@@ -119,7 +119,6 @@ const likeFields: Field[] = [
   {
     name: 'userId',
     type: 'text',
-    index: true,
     required: true,
     admin: {
       hidden: true,
@@ -129,7 +128,6 @@ const likeFields: Field[] = [
   {
     name: 'targetID',
     type: 'text',
-    index: true,
     required: true,
     admin: {
       hidden: true,
