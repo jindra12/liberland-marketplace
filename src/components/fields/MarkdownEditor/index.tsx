@@ -17,8 +17,6 @@ import { useLazyLoad } from '@/components/hooks'
 
 import './index.scss'
 
-type MarkdownEditorModule = typeof import('@uiw/react-md-editor/nohighlight')
-
 const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   field: {
     admin: { className, description, placeholder } = {},

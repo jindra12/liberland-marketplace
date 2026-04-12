@@ -1424,6 +1424,8 @@ export interface Product {
     | null;
   isSubscribed?: boolean | null;
   completenessScore?: number | null;
+  likeCount?: number | null;
+  hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
@@ -2890,6 +2892,8 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   isSubscribed?: T;
   completenessScore?: T;
+  likeCount?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;

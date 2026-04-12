@@ -4,6 +4,7 @@ import { addressFields } from '@/fields/addressFields'
 import { anyone } from '@/access/anyone'
 import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { mergeProductCollectionFields, normalizeProductInventoryData } from '@/fields/productFields'
+import { createLikeableFields } from '@/likes/fields'
 import { orderFields } from '@/fields/orderFields'
 import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import {
@@ -22,6 +23,7 @@ import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { mergeFields } from '@/utilities/mergeFields'
 import { replaceEcommerceAdminComponentPaths } from './replaceEcommerceAdminComponentPaths'
+import type { Field } from 'payload'
 
 const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'transactionHashes'])
 
@@ -69,7 +71,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
       fields: replaceEcommerceAdminComponentPaths(
         defaultCollection.fields.map((field) => {
           if ('name' in field && field.name === 'secret') {
-            const secretField = field as any
+            const secretField = field as Field
 
             return {
               ...secretField,
@@ -77,7 +79,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
                 // Allow filtering carts by secret in GraphQL/Local API.
                 read: () => true,
               },
-            } as any
+            } as Field
           }
 
           return field
@@ -134,7 +136,10 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
         },
       },
       fields: replaceEcommerceAdminComponentPaths(
-        mergeProductCollectionFields(defaultCollection.fields),
+        mergeFields(
+          mergeProductCollectionFields(defaultCollection.fields),
+          createLikeableFields('products'),
+        ),
       ),
       hooks: {
         ...defaultCollection.hooks,

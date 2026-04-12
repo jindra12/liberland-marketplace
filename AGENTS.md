@@ -16,6 +16,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - To validate typescript correctness after modifying code run `tsc --noEmit`
 - Delete `tsconfig.tsbuildinfo` after you finish your work.
 - Generate import maps after creating or modifying components.
+- If `generate:types` fails, do not manually edit `src/payload-types.ts` or any generated type file as a fallback; report the failure and stop until the underlying issue is fixed.
 
 ### Coding Style Constraints
 

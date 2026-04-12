@@ -1,4 +1,5 @@
 import { Banner } from '@payloadcms/ui/elements/Banner'
+import Link from 'next/link'
 import React from 'react'
 
 import { SeedButton } from './SeedButton'
@@ -13,7 +14,7 @@ const BeforeDashboard: React.FC = () => {
         <h4>Welcome to your dashboard!</h4>
       </Banner>
       <p className={`${baseClass}__analytics`}>
-        Local analytics are now available at <a href="/admin/analytics">/admin/analytics</a>.
+        Local analytics are now available at <Link href="/admin/analytics">/admin/analytics</Link>.
       </p>
       Here&apos;s what to do next:
       <ul className={`${baseClass}__instructions`}>
