@@ -194,7 +194,7 @@ export const plugins: Plugin[] = [
     },
   }),
   searchPlugin({
-    collections: ['jobs', 'companies', 'identities', 'products', 'startups'],
+    collections: ['jobs', 'companies', 'identities', 'products', 'startups', 'posts'],
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {
       fields: ({ defaultFields }) => {
