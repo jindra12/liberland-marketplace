@@ -9,6 +9,10 @@ import type {
 
 import type { LikeableCollectionSlug } from './constants'
 import { getLikeActorKey, getLikeCollectionConfig, getLikeCollectionSlug, getLikeTargetID } from './utils'
+import {
+  syncLastLikeAtAfterLikeChange,
+  syncLastLikeAtAfterLikeDelete,
+} from '@/hooks/updateContentRankingSignals'
 
 type LikeCountCollection = {
   updateOne: (filter: { _id: ObjectId | string }, update: { $inc: { likeCount: number } }) => Promise<unknown>
@@ -151,8 +155,8 @@ export const createLikeCollection = (collectionSlug: LikeableCollectionSlug): Co
       update: () => false,
     },
     hooks: {
-      afterChange: [buildLikeCountHook(collectionSlug)],
-      afterDelete: [buildLikeCountDeleteHook(collectionSlug)],
+      afterChange: [buildLikeCountHook(collectionSlug), syncLastLikeAtAfterLikeChange(collectionSlug)],
+      afterDelete: [buildLikeCountDeleteHook(collectionSlug), syncLastLikeAtAfterLikeDelete(collectionSlug)],
       beforeValidate: [setLikeActorKey],
     },
     indexes: [

@@ -1,9 +1,11 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
+import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { lazySendItemUpdateNotifications } from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
@@ -19,6 +21,7 @@ export const Identities: CollectionConfig = {
     group: 'Directory',
     defaultColumns: ['name', 'website', 'company'],
   },
+  defaultSort: '-contentRankScore',
   access: {
     create: authenticated,
     delete: onlyOwnDocsOrAdmin,
@@ -26,6 +29,11 @@ export const Identities: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   hooks: {
+    beforeChange: [
+      computeContentRanking({
+        fieldPaths: ['website', 'image', 'description'],
+      }),
+    ],
     afterChange: [lazySendItemUpdateNotifications('identities')],
   },
   fields: [
@@ -57,5 +65,6 @@ export const Identities: CollectionConfig = {
     },
     notificationSubscriberCountField(),
     notificationSubscriptionStatusField('identities'),
+    completenessScoreField,
   ],
 }

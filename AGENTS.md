@@ -37,7 +37,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Stateless helper functions belong in `utils.tsx`.
 - Constants belong in `constants.tsx`.
 - Types belong in `types.ts`.
-- Prefer `const` function expressions over `function` declarations.
+- Never use `function` declarations or `function()` expressions unless there is an absolute technical need; use arrow functions everywhere else.
 - Prefer `async` / `await` syntax over `.then()` chains unless there is a clear reason not to.
 - Do not use `React.useCallback` or `useCallback` unless it is absolutely necessary for correctness or a demonstrated performance need. Stable handlers are not a default requirement.
 - Never use `useEffect` defensively. Do not mirror props, query data, or other derived values into local state with an effect just to "keep them in sync". Derive the value directly or update state at the actual event source instead.

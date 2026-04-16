@@ -1,7 +1,6 @@
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
-  Payload,
   PayloadRequest,
 } from 'payload'
 
@@ -18,34 +17,39 @@ const toStringID = (value: unknown): string | null => {
   return null
 }
 
-async function recalculateItemCount(
-  payload: Payload,
-  identityId: string,
+type RawCollection = {
+  updateOne: (filter: { _id: string }, update: { $set: Record<string, unknown> }) => Promise<unknown>
+}
+
+type RawCollectionMap = Record<string, { collection?: RawCollection }>
+
+const recalculateItemCount = async (
   req: PayloadRequest,
-): Promise<void> {
+  identityId: string,
+): Promise<void> => {
   const [jobCount, productCount, companyCount, startupCount] = await Promise.all([
-    payload
+    req.payload
       .count({
         collection: 'jobs',
         where: { companyIdentityId: { equals: identityId }, _status: { equals: 'published' } },
         req,
       })
       .then((res) => res.totalDocs),
-    payload
+    req.payload
       .count({
         collection: 'products',
         where: { companyIdentityId: { equals: identityId } },
         req,
       })
       .then((res) => res.totalDocs),
-    payload
+    req.payload
       .count({
         collection: 'companies',
         where: { identity: { equals: identityId } },
         req,
       })
       .then((res) => res.totalDocs),
-    payload
+    req.payload
       .count({
         collection: 'startups',
         where: { identity: { equals: identityId } },
@@ -54,18 +58,28 @@ async function recalculateItemCount(
       .then((res) => res.totalDocs),
   ])
 
-  await payload.update({
-    collection: 'identities',
-    id: identityId,
-    data: { itemCount: jobCount + productCount + companyCount + startupCount },
-    overrideAccess: true,
-    req,
-  })
+  const collectionMap = req.payload.db.collections as unknown as RawCollectionMap
+  const collection = collectionMap.identities?.collection
+
+  if (!collection) {
+    throw new Error('Missing raw collection for "identities".')
+  }
+
+  await collection.updateOne(
+    {
+      _id: identityId,
+    },
+    {
+      $set: {
+        itemCount: jobCount + productCount + companyCount + startupCount,
+      },
+    },
+  )
 }
 
-export function updateIdentityItemCountAfterChange(
+export const updateIdentityItemCountAfterChange = (
   field: IdentityResolver,
-): CollectionAfterChangeHook {
+): CollectionAfterChangeHook => {
   return async ({ doc, previousDoc, req }) => {
     const currentId = toStringID(doc?.[field])
     const previousId = toStringID(previousDoc?.[field])
@@ -74,21 +88,19 @@ export function updateIdentityItemCountAfterChange(
     if (currentId) idsToUpdate.add(currentId)
     if (previousId && previousId !== currentId) idsToUpdate.add(previousId)
 
-    await Promise.all(
-      [...idsToUpdate].map((id) => recalculateItemCount(req.payload, id, req)),
-    )
+    await Promise.all([...idsToUpdate].map((id) => recalculateItemCount(req, id)))
 
     return doc
   }
 }
 
-export function updateIdentityItemCountAfterDelete(
+export const updateIdentityItemCountAfterDelete = (
   field: IdentityResolver,
-): CollectionAfterDeleteHook {
+): CollectionAfterDeleteHook => {
   return async ({ doc, req }) => {
     const identityId = toStringID(doc?.[field])
     if (identityId) {
-      await recalculateItemCount(req.payload, identityId, req)
+      await recalculateItemCount(req, identityId)
     }
     return doc
   }

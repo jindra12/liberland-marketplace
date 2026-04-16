@@ -22,6 +22,10 @@ import {
   ensureNotificationTargetExists,
   normalizeNotificationEmail,
 } from '@/newsletter/notificationSubscriptions'
+import {
+  syncSubscriberCountAfterChange,
+  syncSubscriberCountAfterDelete,
+} from '@/hooks/updateContentRankingSignals'
 
 const getNotificationTargetCollection = (
   value: NotificationSubscription['targetCollection'] | undefined | null,
@@ -105,6 +109,8 @@ export const NotificationSubscriptions: CollectionConfig = {
   hooks: {
     beforeValidate: [prepareNotificationSubscription],
     beforeChange: [attachNotificationSubscriber],
+    afterChange: [syncSubscriberCountAfterChange],
+    afterDelete: [syncSubscriberCountAfterDelete],
   },
   fields: [
     {

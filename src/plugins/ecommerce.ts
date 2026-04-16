@@ -6,7 +6,7 @@ import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { mergeProductCollectionFields, normalizeProductInventoryData } from '@/fields/productFields'
 import { createLikeableFields } from '@/likes/fields'
 import { orderFields } from '@/fields/orderFields'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import {
   lazyAutoConfirmOrderOnTransactionHashAdd,
   lazyComputeOrderAmountOnCreate,
@@ -110,7 +110,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
     },
     productsCollectionOverride: ({ defaultCollection }) => ({
       ...defaultCollection,
-      defaultSort: '-completenessScore',
+      defaultSort: '-contentRankScore',
       access: {
         ...defaultCollection.access,
         create: authenticated,
@@ -148,7 +148,9 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
           requireOwnCompany,
           syncCompanyIdentityId,
           ({ data }) => normalizeProductInventoryData(data),
-          computeCompletenessScore(['url', 'image', 'description', 'properties']),
+          computeContentRanking({
+            fieldPaths: ['url', 'image', 'description', 'properties'],
+          }),
           ...(defaultCollection.hooks?.beforeChange ?? []),
           requireVerifiedEmailToPublish,
         ],

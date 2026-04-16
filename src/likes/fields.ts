@@ -1,6 +1,7 @@
 import type { CheckboxField, Field, NumberField } from 'payload'
 
 import type { LikeableCollectionSlug } from './constants'
+import { createContentRankingFields } from '@/fields/contentRankingFields'
 import { getCachedLikedTargetIDs, getLikeActorKey, getLikeTargetID } from './utils'
 
 const likeCountField: NumberField = {
@@ -55,5 +56,5 @@ const buildHasLikedField = (collectionSlug: LikeableCollectionSlug): CheckboxFie
 })
 
 export const createLikeableFields = (collectionSlug: LikeableCollectionSlug): Field[] => {
-  return [likeCountField, buildHasLikedField(collectionSlug)]
+  return [likeCountField, ...createContentRankingFields(), buildHasLikedField(collectionSlug)]
 }

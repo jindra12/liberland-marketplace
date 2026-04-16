@@ -3,6 +3,8 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { completenessScoreField } from '@/fields/completenessScoreField'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { markdownField } from '@/fields/markdownField'
 import { populateAuthors } from './hooks/populateAuthors'
@@ -20,6 +22,7 @@ import { slugField } from 'payload'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
+  defaultSort: '-contentRankScore',
   access: {
     create: authenticated,
     delete: onlyOwnDocsOrAdmin,
@@ -177,6 +180,7 @@ export const Posts: CollectionConfig<'posts'> = {
       hasMany: true,
       relationTo: 'users',
     },
+    completenessScoreField,
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
@@ -204,7 +208,12 @@ export const Posts: CollectionConfig<'posts'> = {
     slugField(),
   ],
   hooks: {
-    beforeChange: [setPostAuthors],
+    beforeChange: [
+      setPostAuthors,
+      computeContentRanking({
+        fieldPaths: ['title', 'heroImage', 'content', 'relatedPosts', 'categories', 'meta.title', 'meta.description', 'meta.image'],
+      }),
+    ],
     afterChange: [revalidatePost],
     afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],
