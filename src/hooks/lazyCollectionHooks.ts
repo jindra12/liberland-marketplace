@@ -70,3 +70,12 @@ export const lazyAutoConfirmOrderOnTransactionHashAdd: CollectionAfterChangeHook
   const { autoConfirmOrderOnTransactionHashAdd } = await import('./autoConfirmOrderOnTransactionHashAdd')
   return autoConfirmOrderOnTransactionHashAdd(args)
 }
+
+export const lazyUpdateProductPurchaseCountAfterOrderValidation: CollectionAfterChangeHook = async (
+  args,
+) => {
+  const { updateProductPurchaseCountAfterOrderValidation } = await import(
+    './updateProductPurchaseCount'
+  )
+  return updateProductPurchaseCountAfterOrderValidation(args)
+}

@@ -55,6 +55,19 @@ const buildHasLikedField = (collectionSlug: LikeableCollectionSlug): CheckboxFie
   },
 })
 
-export const createLikeableFields = (collectionSlug: LikeableCollectionSlug): Field[] => {
-  return [likeCountField, ...createContentRankingFields(), buildHasLikedField(collectionSlug)]
+type LikeableFieldOptions = {
+  includeSubscriberCount?: boolean
+}
+
+export const createLikeableFields = (
+  collectionSlug: LikeableCollectionSlug,
+  options: LikeableFieldOptions = {},
+): Field[] => {
+  return [
+    likeCountField,
+    ...createContentRankingFields({
+      includeSubscriberCount: options.includeSubscriberCount,
+    }),
+    buildHasLikedField(collectionSlug),
+  ]
 }

@@ -4,6 +4,7 @@ import type { CollectionConfig, Config, Field, Plugin } from 'payload'
 import { anyone } from '@/access/anyone'
 import { markdownField } from '@/fields/markdownField'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { setCommentAuthor } from '@/hooks/setCommentAuthor'
 import { syncCommentReplyPostLookup } from '@/hooks/syncCommentReplyPostLookup'
 
@@ -42,8 +43,8 @@ const baseComments = commentsPlugin({
   hasPublishedCommentFields: ['anonymousHash'],
 })
 
-export const comments: Plugin = async (config: Config): Promise<Config> => {
-  const withComments = await baseComments(config)
+export const comments: Plugin = (config: Config): Config => {
+  const withComments = baseComments(config) as Config
 
   return {
     ...withComments,
@@ -52,6 +53,7 @@ export const comments: Plugin = async (config: Config): Promise<Config> => {
 
       return {
         ...collection,
+        defaultSort: '-contentRankScore',
         access: {
           ...collection.access,
           create: anyone,
@@ -73,6 +75,10 @@ export const comments: Plugin = async (config: Config): Promise<Config> => {
           beforeChange: [
             setCommentAuthor,
             syncCommentReplyPostLookup,
+            computeContentRanking({
+              fieldPaths: ['content', 'replyPost', 'replyComment'],
+              includeSubscriberCount: false,
+            }),
             ...(collection.hooks?.beforeChange ?? []),
           ],
         },

@@ -12,10 +12,25 @@ const createdOauthAccessTokenIDs: string[] = []
 const createdTargetDocs: LikeTargetDoc[] = []
 const createdUserIDs: string[] = []
 
-type LikeableTargetCollection = 'companies' | 'identities' | 'jobs' | 'posts' | 'products' | 'startups'
-type LikeGraphQLCollection = 'companies' | 'identities' | 'jobs' | 'posts' | 'products' | 'ventures'
+type LikeableTargetCollection =
+  | 'companies'
+  | 'comments'
+  | 'identities'
+  | 'jobs'
+  | 'posts'
+  | 'products'
+  | 'startups'
+type LikeGraphQLCollection =
+  | 'companies'
+  | 'comments'
+  | 'identities'
+  | 'jobs'
+  | 'posts'
+  | 'products'
+  | 'ventures'
 type LikeCollectionSlug =
   | 'company-likes'
+  | 'comment-likes'
   | 'identity-likes'
   | 'job-likes'
   | 'post-likes'
@@ -48,6 +63,7 @@ type GraphQLListData = Partial<Record<LikeableTargetCollection, CollectionListEn
 type GraphQLResponseBody = {
   data?: {
     companies?: CollectionListEntry
+    comments?: CollectionListEntry
     identities?: CollectionListEntry
     jobs?: CollectionListEntry
     likeStatus?: {
@@ -79,6 +95,11 @@ const likeableTargetDefinitions: Array<Omit<LikeTargetDoc, 'id'>> = [
     collection: 'identities',
     graphqlCollection: 'identities',
     likeCollectionSlug: 'identity-likes',
+  },
+  {
+    collection: 'comments',
+    graphqlCollection: 'comments',
+    likeCollectionSlug: 'comment-likes',
   },
   {
     collection: 'startups',
@@ -147,36 +168,7 @@ const createBearerToken = async (user: User): Promise<string> => {
   return accessToken
 }
 
-const createSimplePostContent = (title: string) => ({
-  root: {
-    children: [
-      {
-        children: [
-          {
-            detail: 0,
-            format: 0,
-            mode: 'normal',
-            style: '',
-            text: title,
-            type: 'text',
-            version: 1,
-          },
-        ],
-        direction: 'ltr' as const,
-        format: '',
-        indent: 0,
-        textFormat: 0,
-        type: 'paragraph' as const,
-        version: 1,
-      },
-    ],
-    direction: 'ltr' as const,
-    format: '' as const,
-    indent: 0,
-    type: 'root' as const,
-    version: 1,
-  },
-})
+const createSimplePostContent = (title: string): string => `# ${title}`
 
 const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
   if (!payload) {
@@ -249,6 +241,7 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     collection: 'posts',
     data: {
       _status: 'published',
+      company: company.id,
       content: createSimplePostContent(`Likes post ${crypto.randomUUID()}`),
       createdBy: 'system',
       slug: `likes-post-${crypto.randomUUID()}`,
@@ -257,8 +250,22 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     draft: false,
   })
 
+  const comment = await payload.create({
+    collection: 'comments',
+    data: {
+      content: 'Comment for likes testing.',
+      replyPost: {
+        relationTo: 'posts',
+        value: post.id,
+      },
+    },
+    draft: false,
+    overrideAccess: true,
+  })
+
   const createdDocs: LikeTargetDoc[] = [
     { collection: 'identities', graphqlCollection: 'identities', id: String(identity.id), likeCollectionSlug: 'identity-likes' },
+    { collection: 'comments', graphqlCollection: 'comments', id: String(comment.id), likeCollectionSlug: 'comment-likes' },
     { collection: 'companies', graphqlCollection: 'companies', id: String(company.id), likeCollectionSlug: 'company-likes' },
     { collection: 'startups', graphqlCollection: 'ventures', id: String(startup.id), likeCollectionSlug: 'venture-likes' },
     { collection: 'jobs', graphqlCollection: 'jobs', id: String(job.id), likeCollectionSlug: 'job-likes' },

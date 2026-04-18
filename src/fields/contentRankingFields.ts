@@ -1,5 +1,9 @@
 import type { DateField, Field, NumberField } from 'payload'
 
+type ContentRankingFieldOptions = {
+  includeSubscriberCount?: boolean
+}
+
 const hiddenFieldAdmin = {
   hidden: true,
   readOnly: true,
@@ -39,8 +43,16 @@ const contentRankScoreField: NumberField = {
   },
 }
 
-export const createContentRankingFields = (): Field[] => [
-  lastLikeAtField,
-  subscriberCountField,
-  contentRankScoreField,
-]
+export const createContentRankingFields = (
+  options: ContentRankingFieldOptions = {},
+): Field[] => {
+  const fields: Field[] = [lastLikeAtField]
+
+  if (options.includeSubscriberCount !== false) {
+    fields.push(subscriberCountField)
+  }
+
+  fields.push(contentRankScoreField)
+
+  return fields
+}

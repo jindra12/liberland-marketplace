@@ -51,6 +51,30 @@ describe('computeContentRanking', () => {
     expect(strongScore).toBeGreaterThan(weakScore)
   })
 
+  it('gives higher scores to more purchased products', () => {
+    const now = new Date('2026-04-16T12:00:00.000Z')
+
+    const strongScore = calculateContentRankScore({
+      completenessScore: 5,
+      createdAt: '2026-04-15T12:00:00.000Z',
+      lastLikeAt: '2026-04-16T10:00:00.000Z',
+      likeCount: 2,
+      now,
+      purchaseCount: 25,
+    })
+
+    const weakScore = calculateContentRankScore({
+      completenessScore: 5,
+      createdAt: '2026-04-15T12:00:00.000Z',
+      lastLikeAt: '2026-04-16T10:00:00.000Z',
+      likeCount: 2,
+      now,
+      purchaseCount: 1,
+    })
+
+    expect(strongScore).toBeGreaterThan(weakScore)
+  })
+
   it('recomputes completeness from merged data without dropping cached ranking signals', () => {
     const hook = computeContentRanking({
       fieldPaths: ['title', 'body', 'tags'],

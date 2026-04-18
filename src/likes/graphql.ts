@@ -1,4 +1,4 @@
-import type { GraphQLExtension, PayloadRequest } from 'payload'
+import type { CollectionSlug, GraphQLExtension, PayloadRequest } from 'payload'
 
 import { LIKEABLE_COLLECTIONS } from './constants'
 import {

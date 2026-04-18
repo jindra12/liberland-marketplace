@@ -17,6 +17,7 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
+import CommentLikes from './collections/CommentLikes'
 import { Startups } from './collections/Startups'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
@@ -117,6 +118,7 @@ export default buildConfig({
     Identities,
     Companies,
     Jobs,
+    CommentLikes,
     Startups,
     Syndications,
     Subscribers,

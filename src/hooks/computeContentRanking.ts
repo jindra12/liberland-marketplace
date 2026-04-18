@@ -7,12 +7,14 @@ type RankingSource = {
   lastLikeAt?: string | Date | null
   likeCount?: number | null
   publishedAt?: string | Date | null
+  purchaseCount?: number | null
   subscriberCount?: number | null
   updatedAt?: string | Date | null
 }
 
 type ContentRankingHookConfig = {
   fieldPaths: string[]
+  includeSubscriberCount?: boolean
 }
 
 const MS_PER_HOUR = 60 * 60 * 1000
@@ -72,6 +74,7 @@ export const calculateContentRankScore = ({
   lastLikeAt,
   likeCount,
   publishedAt,
+  purchaseCount,
   subscriberCount,
   updatedAt,
   now = new Date(),
@@ -79,6 +82,7 @@ export const calculateContentRankScore = ({
   now?: Date
 }): number => {
   const likesSignal = Math.log1p(Math.max(0, likeCount ?? 0))
+  const purchaseSignal = Math.log1p(Math.max(0, purchaseCount ?? 0))
   const subscriberSignal = Math.log1p(Math.max(0, subscriberCount ?? 0))
   const completionSignal = Math.max(0, completenessScore ?? 0)
   const freshestSignalDate =
@@ -91,6 +95,7 @@ export const calculateContentRankScore = ({
 
   return (
     likesSignal * 3 +
+    purchaseSignal * 4 +
     subscriberSignal * 2 +
     completionSignal * 1.25 +
     recencySignal * 5
@@ -98,7 +103,10 @@ export const calculateContentRankScore = ({
 }
 
 export const computeContentRanking =
-  ({ fieldPaths }: ContentRankingHookConfig): CollectionBeforeChangeHook =>
+  ({
+    fieldPaths,
+    includeSubscriberCount = true,
+  }: ContentRankingHookConfig): CollectionBeforeChangeHook =>
   ({ data, originalDoc }) => {
     const source = {
       ...(originalDoc && typeof originalDoc === 'object' ? (originalDoc as Record<string, unknown>) : {}),
@@ -115,6 +123,7 @@ export const computeContentRanking =
       lastLikeAt: source.lastLikeAt as string | Date | null | undefined,
       likeCount: typeof source.likeCount === 'number' ? source.likeCount : null,
       publishedAt: source.publishedAt as string | Date | null | undefined,
+      purchaseCount: typeof source.purchaseCount === 'number' ? source.purchaseCount : null,
       subscriberCount: typeof source.subscriberCount === 'number' ? source.subscriberCount : null,
       updatedAt: source.updatedAt as string | Date | null | undefined,
     })
@@ -124,7 +133,10 @@ export const computeContentRanking =
       completenessScore,
       contentRankScore: nextRankScore,
       lastLikeAt: normalizeDateValue(toDate(source.lastLikeAt as string | Date | null | undefined)),
-      subscriberCount:
-        typeof source.subscriberCount === 'number' ? source.subscriberCount : 0,
+      ...(includeSubscriberCount
+        ? {
+            subscriberCount: typeof source.subscriberCount === 'number' ? source.subscriberCount : 0,
+          }
+        : {}),
     }
   }

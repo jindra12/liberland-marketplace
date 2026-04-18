@@ -1,4 +1,9 @@
-import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, PayloadRequest } from 'payload'
+import type {
+  CollectionAfterChangeHook,
+  CollectionAfterDeleteHook,
+  CollectionSlug,
+  PayloadRequest,
+} from 'payload'
 
 import type { LikeableCollectionSlug } from '@/likes/constants'
 import { getLikeCollectionSlug, getLikeTargetID } from '@/likes/utils'

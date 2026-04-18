@@ -20,7 +20,9 @@ const injectLikeFields = (collection: CollectionConfig): CollectionConfig => {
       .filter((name): name is string => typeof name === 'string'),
   )
 
-  const likeFields = createLikeableFields(likeableCollection.collectionSlug).filter(
+  const likeFields = createLikeableFields(likeableCollection.collectionSlug, {
+    includeSubscriberCount: likeableCollection.includeSubscriberCount,
+  }).filter(
     (field) => !('name' in field) || !existingFieldNames.has(field.name),
   )
 

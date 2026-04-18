@@ -16,6 +16,7 @@ import {
   lazySendRelatedItemPublishedNotifications,
   lazyUpdateIdentityItemCountAfterChange,
   lazyUpdateIdentityItemCountAfterDelete,
+  lazyUpdateProductPurchaseCountAfterOrderValidation,
 } from '@/hooks/lazyCollectionHooks'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
@@ -221,7 +222,11 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
           lazyComputeOrderAmountOnCreate,
           lazyLockOrderCryptoPricesOnCreate,
         ],
-        afterChange: [...(defaultCollection.hooks?.afterChange ?? []), lazyAutoConfirmOrderOnTransactionHashAdd],
+        afterChange: [
+          ...(defaultCollection.hooks?.afterChange ?? []),
+          lazyAutoConfirmOrderOnTransactionHashAdd,
+          lazyUpdateProductPurchaseCountAfterOrderValidation,
+        ],
       },
     }),
   },
