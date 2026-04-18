@@ -1,6 +1,7 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { Payload } from 'payload'
 import type { User } from '@/payload-types'
+import { getServerSideURL } from '@/utilities/getURL'
 
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
@@ -640,6 +641,7 @@ describe('Posts GraphQL queries', () => {
 
     createdCommentIDs.push(comment.id)
 
+    expect(comment.serverUrl).toBe(getServerSideURL())
     expect(comment.replyPostRelationTo).toBe('posts')
     expect(comment.replyPostValue).toBe(post.id)
   })

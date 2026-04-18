@@ -138,6 +138,31 @@ export default buildConfig({
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
+    schema: [
+      ({ jsonSchema }) => {
+        const commentsSchema = jsonSchema.definitions?.comments
+        if (commentsSchema && 'properties' in commentsSchema) {
+          commentsSchema.properties = {
+            ...commentsSchema.properties,
+            serverUrl: {
+              type: ['string', 'null'],
+            },
+          }
+        }
+
+        const commentsSelectSchema = jsonSchema.definitions?.comments_select
+        if (commentsSelectSchema && 'properties' in commentsSelectSchema) {
+          commentsSelectSchema.properties = {
+            ...commentsSelectSchema.properties,
+            serverUrl: {
+              type: 'boolean',
+            },
+          }
+        }
+
+        return jsonSchema
+      },
+    ],
   },
   jobs: {
     access: {

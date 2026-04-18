@@ -1529,9 +1529,10 @@ export interface Comment {
     | {
         relationTo: 'startups';
         value: string | Startup;
-      };
+  };
   replyComment?: (string | null) | Comment;
   anonymousHash?: string | null;
+  serverUrl?: string | null;
   replyPostRelationTo?: string | null;
   replyPostValue?: string | null;
   likeCount?: number | null;
@@ -2821,6 +2822,7 @@ export interface CommentsSelect<T extends boolean = true> {
   replyPost?: T;
   replyComment?: T;
   anonymousHash?: T;
+  serverUrl?: T;
   replyPostRelationTo?: T;
   replyPostValue?: T;
   likeCount?: T;

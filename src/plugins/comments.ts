@@ -6,6 +6,7 @@ import { markdownField } from '@/fields/markdownField'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { setCommentAuthor } from '@/hooks/setCommentAuthor'
+import { setCommentServerUrl } from '@/hooks/setCommentServerUrl'
 import { syncCommentReplyPostLookup } from '@/hooks/syncCommentReplyPostLookup'
 
 type CommentsPluginFactory = (options?: Record<string, unknown>) => Plugin
@@ -24,6 +25,7 @@ const baseComments = commentsPlugin({
     { ...markdownField({ name: 'content', label: 'Content' }), required: true },
     { name: 'replyPost', type: 'relationship', relationTo: [...commentTargets], required: true },
     { name: 'replyComment', type: 'relationship', relationTo: 'comments' },
+    { name: 'serverUrl', type: 'text', admin: { hidden: true, readOnly: true } },
     { name: 'anonymousHash', type: 'text', admin: { hidden: true, readOnly: true } },
     {
       name: 'replyPostRelationTo',
@@ -73,6 +75,7 @@ export const comments: Plugin = (config: Config): Config => {
         hooks: {
           ...collection.hooks,
           beforeChange: [
+            setCommentServerUrl,
             setCommentAuthor,
             syncCommentReplyPostLookup,
             computeContentRanking({
