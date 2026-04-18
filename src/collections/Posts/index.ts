@@ -10,6 +10,7 @@ import { markdownField } from '@/fields/markdownField'
 import { populateAuthors } from './hooks/populateAuthors'
 import { setPostAuthors } from './hooks/setPostAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 
 import {
   MetaDescriptionField,
@@ -70,6 +71,16 @@ export const Posts: CollectionConfig<'posts'> = {
       name: 'title',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'company',
+      type: 'relationship',
+      relationTo: 'companies',
+      required: true,
+      filterOptions: onlyOwnDocsOrAdminFilter,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       type: 'tabs',
@@ -210,6 +221,7 @@ export const Posts: CollectionConfig<'posts'> = {
   hooks: {
     beforeChange: [
       setPostAuthors,
+      requireOwnCompany,
       computeContentRanking({
         fieldPaths: ['title', 'heroImage', 'content', 'relatedPosts', 'categories', 'meta.title', 'meta.description', 'meta.image'],
       }),
