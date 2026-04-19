@@ -4,7 +4,9 @@ import type { CollectionConfig, Config, Field, Plugin } from 'payload'
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { setCommentServerUrl } from '@/hooks/setCommentServerUrl'
 
@@ -28,6 +30,7 @@ const baseComments = commentsPlugin({
       relationTo: 'companies',
       index: true,
       required: true,
+      filterOptions: onlyOwnDocsOrAdminFilter,
     },
     { name: 'replyPost', type: 'relationship', relationTo: [...commentTargets], required: true },
     { name: 'replyComment', type: 'relationship', relationTo: 'comments' },
@@ -81,6 +84,7 @@ export const comments: Plugin = (config: Config): Config => {
           ...collection.hooks,
           beforeChange: [
             setCommentServerUrl,
+            requireOwnCompany,
             computeContentRanking({
               fieldPaths: ['content', 'replyPost', 'replyComment'],
               includeSubscriberCount: false,

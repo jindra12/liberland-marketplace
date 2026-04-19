@@ -1,8 +1,11 @@
 import { APIError, type CollectionBeforeChangeHook } from 'payload'
 
-import type { User } from '@/payload-types'
-
 type MaybeID = null | number | string | { id?: unknown }
+
+type MaybeOwnerDoc = {
+  authors?: unknown
+  createdBy?: unknown
+}
 
 const toStringID = (value: MaybeID): null | string => {
   if (typeof value === 'string') return value
@@ -18,8 +21,15 @@ const toStringID = (value: MaybeID): null | string => {
   return null
 }
 
-const isAdmin = (user?: Partial<User> | null): boolean => {
-  return Array.isArray(user?.role) && user.role.includes('admin')
+const getOwnerID = (doc?: MaybeOwnerDoc | null): null | string => {
+  const authors = Array.isArray(doc?.authors) ? doc.authors : []
+  const authorID = authors.map((author) => toStringID(author as MaybeID)).find(Boolean)
+
+  if (authorID) {
+    return authorID
+  }
+
+  return toStringID(doc?.createdBy as MaybeID)
 }
 
 export const requireOwnCompany: CollectionBeforeChangeHook = async ({
@@ -39,8 +49,15 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
     return data
   }
 
-  if (!req.user || isAdmin(req.user)) {
-    return data
+  const ownerSource =
+    Object.prototype.hasOwnProperty.call(data ?? {}, 'authors') ||
+    Object.prototype.hasOwnProperty.call(data ?? {}, 'createdBy')
+      ? data
+      : originalDoc
+  const ownerID = getOwnerID(ownerSource)
+
+  if (!ownerID) {
+    throw new APIError('You can only attach records to companies you own.', 403)
   }
 
   const { totalDocs } = await req.payload.find({
@@ -52,7 +69,7 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
     where: {
       and: [
         { id: { equals: companyID } },
-        { createdBy: { equals: req.user.id } },
+        { createdBy: { equals: ownerID } },
       ],
     },
   })
