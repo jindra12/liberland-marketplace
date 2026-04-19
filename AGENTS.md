@@ -10,6 +10,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 4. **Transaction Safety**: Always pass `req` to nested operations in hooks
 5. **Access Control**: Understand Local API bypasses access control by default
 6. **Access Control**: Ensure roles exist when modifiyng collection or globals with access controls
+7. **Backports**: Do not spend time on backports unless the user explicitly asks for them.
 
 ### Code Validation
 

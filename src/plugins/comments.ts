@@ -2,12 +2,11 @@ import commentsPluginImport from 'payload-plugin-comments'
 import type { CollectionConfig, Config, Field, Plugin } from 'payload'
 
 import { anyone } from '@/access/anyone'
+import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
-import { setCommentAuthor } from '@/hooks/setCommentAuthor'
 import { setCommentServerUrl } from '@/hooks/setCommentServerUrl'
-import { syncCommentReplyPostLookup } from '@/hooks/syncCommentReplyPostLookup'
 
 type CommentsPluginFactory = (options?: Record<string, unknown>) => Plugin
 
@@ -23,10 +22,16 @@ const baseComments = commentsPlugin({
   slug: 'comments',
   fields: [
     { ...markdownField({ name: 'content', label: 'Content' }), required: true },
+    {
+      name: 'company',
+      type: 'relationship',
+      relationTo: 'companies',
+      index: true,
+      required: true,
+    },
     { name: 'replyPost', type: 'relationship', relationTo: [...commentTargets], required: true },
     { name: 'replyComment', type: 'relationship', relationTo: 'comments' },
     { name: 'serverUrl', type: 'text', admin: { hidden: true, readOnly: true } },
-    { name: 'anonymousHash', type: 'text', admin: { hidden: true, readOnly: true } },
     {
       name: 'replyPostRelationTo',
       type: 'text',
@@ -42,7 +47,7 @@ const baseComments = commentsPlugin({
   ],
   collectionsAllowingComments: [...commentTargets],
   autoPublish: true,
-  hasPublishedCommentFields: ['anonymousHash'],
+  hasPublishedCommentFields: [],
 })
 
 export const comments: Plugin = (config: Config): Config => {
@@ -58,7 +63,7 @@ export const comments: Plugin = (config: Config): Config => {
         defaultSort: '-contentRankScore',
         access: {
           ...collection.access,
-          create: anyone,
+          create: authenticated,
           read: anyone,
           update: onlyOwnDocsOrAdmin,
           delete: onlyOwnDocsOrAdmin,
@@ -76,8 +81,6 @@ export const comments: Plugin = (config: Config): Config => {
           ...collection.hooks,
           beforeChange: [
             setCommentServerUrl,
-            setCommentAuthor,
-            syncCommentReplyPostLookup,
             computeContentRanking({
               fieldPaths: ['content', 'replyPost', 'replyComment'],
               includeSubscriberCount: false,

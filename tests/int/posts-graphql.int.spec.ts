@@ -14,6 +14,13 @@ const createdUserIDs: string[] = []
 
 type GraphQLResponseBody = {
   data?: {
+    comment?: {
+      company?: {
+        id: string
+        name?: string | null
+      } | null
+      id: string
+    } | null
     createPost?: {
       company?: {
         createdBy?: {
@@ -343,6 +350,18 @@ const postByIDQuery = (id: string): string => `
   }
 `
 
+const commentByIDQuery = (id: string): string => `
+  query {
+    comment(id: ${JSON.stringify(id)}) {
+      id
+      company {
+        id
+        name
+      }
+    }
+  }
+`
+
 const postsByIDListQuery = (id: string): string => `
   query {
     posts(limit: 10, where: { id: { equals: ${JSON.stringify(id)} } }) {
@@ -626,15 +645,27 @@ describe('Posts GraphQL queries', () => {
       title: `Comment Target ${crypto.randomUUID()}`,
     })
 
+    const commentData = {
+      content: 'A post comment',
+      company: companyID,
+      replyPost: {
+        relationTo: 'posts' as const,
+        value: post.id,
+      },
+    }
+
+    await expect(
+      payload.create({
+        collection: 'comments',
+        data: commentData,
+        draft: false,
+        overrideAccess: false,
+      }),
+    ).rejects.toThrow()
+
     const comment = await payload.create({
       collection: 'comments',
-      data: {
-        content: 'A post comment',
-        replyPost: {
-          relationTo: 'posts',
-          value: post.id,
-        },
-      },
+      data: commentData,
       draft: false,
       overrideAccess: true,
     })
@@ -642,8 +673,22 @@ describe('Posts GraphQL queries', () => {
     createdCommentIDs.push(comment.id)
 
     expect(comment.serverUrl).toBe(getServerSideURL())
-    expect(comment.replyPostRelationTo).toBe('posts')
-    expect(comment.replyPostValue).toBe(post.id)
+    expect((comment as { company?: string | null }).company).toBe(companyID)
+
+    const commentResponse = await runAuthorizedGraphQLOperation({
+      bearerToken,
+      query: commentByIDQuery(comment.id),
+    })
+
+    expect(commentResponse.response.status).toBe(200)
+    expect(commentResponse.body.errors).toBeUndefined()
+    expect(commentResponse.body.data?.comment).toMatchObject({
+      company: {
+        id: companyID,
+        name: expect.any(String),
+      },
+      id: comment.id,
+    })
   })
 
   it('lists and searches posts through GraphQL with like metadata', async () => {

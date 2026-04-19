@@ -250,18 +250,23 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     draft: false,
   })
 
+  const commentData = {
+    content: 'Comment for likes testing.',
+    company: company.id,
+    replyPost: {
+      relationTo: 'posts' as const,
+      value: post.id,
+    },
+  }
+
   const comment = await payload.create({
     collection: 'comments',
-    data: {
-      content: 'Comment for likes testing.',
-      replyPost: {
-        relationTo: 'posts',
-        value: post.id,
-      },
-    },
+    data: commentData,
     draft: false,
     overrideAccess: true,
   })
+
+  expect((comment as { company?: string | null }).company).toBe(company.id)
 
   const createdDocs: LikeTargetDoc[] = [
     { collection: 'identities', graphqlCollection: 'identities', id: String(identity.id), likeCollectionSlug: 'identity-likes' },
