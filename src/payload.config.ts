@@ -144,6 +144,9 @@ export default buildConfig({
         if (commentsSchema && 'properties' in commentsSchema) {
           commentsSchema.properties = {
             ...commentsSchema.properties,
+            replyCount: {
+              type: ['number', 'null'],
+            },
             serverUrl: {
               type: ['string', 'null'],
             },
@@ -154,6 +157,9 @@ export default buildConfig({
         if (commentsSelectSchema && 'properties' in commentsSelectSchema) {
           commentsSelectSchema.properties = {
             ...commentsSelectSchema.properties,
+            replyCount: {
+              type: 'boolean',
+            },
             serverUrl: {
               type: 'boolean',
             },

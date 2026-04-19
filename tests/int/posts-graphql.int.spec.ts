@@ -20,6 +20,7 @@ type GraphQLResponseBody = {
         name?: string | null
       } | null
       id: string
+      replyCount?: number | null
     } | null
     createPost?: {
       company?: {
@@ -354,6 +355,7 @@ const commentByIDQuery = (id: string): string => `
   query {
     comment(id: ${JSON.stringify(id)}) {
       id
+      replyCount
       company {
         id
         name
@@ -675,6 +677,18 @@ describe('Posts GraphQL queries', () => {
     expect(comment.serverUrl).toBe(getServerSideURL())
     expect((comment as { company?: string | null }).company).toBe(companyID)
 
+    const replyComment = await payload.create({
+      collection: 'comments',
+      data: {
+        ...commentData,
+        replyComment: comment.id,
+      },
+      draft: false,
+      overrideAccess: true,
+    })
+
+    createdCommentIDs.push(replyComment.id)
+
     const commentResponse = await runAuthorizedGraphQLOperation({
       bearerToken,
       query: commentByIDQuery(comment.id),
@@ -688,6 +702,7 @@ describe('Posts GraphQL queries', () => {
         name: expect.any(String),
       },
       id: comment.id,
+      replyCount: 1,
     })
   })
 

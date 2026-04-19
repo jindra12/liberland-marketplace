@@ -9,6 +9,10 @@ import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { setCommentServerUrl } from '@/hooks/setCommentServerUrl'
+import {
+  updateCommentReplyCountAfterChange,
+  updateCommentReplyCountAfterDelete,
+} from '@/hooks/updateCommentReplyCount'
 
 type CommentsPluginFactory = (options?: Record<string, unknown>) => Plugin
 
@@ -34,6 +38,17 @@ const baseComments = commentsPlugin({
     },
     { name: 'replyPost', type: 'relationship', relationTo: [...commentTargets], required: true },
     { name: 'replyComment', type: 'relationship', relationTo: 'comments' },
+    {
+      name: 'replyCount',
+      type: 'number',
+      defaultValue: 0,
+      access: {
+        update: () => false,
+      },
+      admin: {
+        readOnly: true,
+      },
+    },
     { name: 'serverUrl', type: 'text', admin: { hidden: true, readOnly: true } },
     {
       name: 'replyPostRelationTo',
@@ -90,6 +105,14 @@ export const comments: Plugin = (config: Config): Config => {
               includeSubscriberCount: false,
             }),
             ...(collection.hooks?.beforeChange ?? []),
+          ],
+          afterChange: [
+            updateCommentReplyCountAfterChange,
+            ...(collection.hooks?.afterChange ?? []),
+          ],
+          afterDelete: [
+            updateCommentReplyCountAfterDelete,
+            ...(collection.hooks?.afterDelete ?? []),
           ],
         },
       }
