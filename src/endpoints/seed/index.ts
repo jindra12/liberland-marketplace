@@ -1,4 +1,5 @@
-import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -19,8 +20,6 @@ const collections: CollectionSlug[] = [
   'form-submissions',
   'search',
 ]
-
-const globals: GlobalSlug[] = ['header', 'footer']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -146,6 +145,33 @@ export const seed = async ({
     ),
   ])
 
+  const demoCompanyResult = await payload.find({
+    collection: 'companies',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: {
+      and: [
+        {
+          email: {
+            equals: demoAuthor.email,
+          },
+        },
+        {
+          name: {
+            equals: demoAuthor.name,
+          },
+        },
+      ],
+    },
+  })
+
+  const demoCompany = demoCompanyResult.docs[0]
+
+  if (!demoCompany) {
+    throw new Error('Failed to locate the demo company for seeded posts.')
+  }
+
   payload.logger.info(`— Seeding posts...`)
 
   // Do not create posts with `Promise.all` because we want the posts to be created in order
@@ -156,7 +182,12 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post1({ heroImage: image1Doc as any, blockImage: image2Doc as any, author: demoAuthor }),
+    data: post1({
+      heroImage: image1Doc as any,
+      blockImage: image2Doc as any,
+      author: demoAuthor,
+      company: demoCompany,
+    }),
   })
 
   const post2Doc = await payload.create({
@@ -165,7 +196,12 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post2({ heroImage: image2Doc as any, blockImage: image3Doc as any, author: demoAuthor }),
+    data: post2({
+      heroImage: image2Doc as any,
+      blockImage: image3Doc as any,
+      author: demoAuthor,
+      company: demoCompany,
+    }),
   })
 
   const post3Doc = await payload.create({
@@ -174,7 +210,12 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post3({ heroImage: image3Doc as any, blockImage: image1Doc as any, author: demoAuthor }),
+    data: post3({
+      heroImage: image3Doc as any,
+      blockImage: image1Doc as any,
+      author: demoAuthor,
+      company: demoCompany,
+    }),
   })
 
   // update each post with related posts
@@ -182,21 +223,30 @@ export const seed = async ({
     id: post1Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [post2Doc.id, post3Doc.id],
+      relatedPosts: [
+        { relationTo: 'posts', value: post2Doc.id },
+        { relationTo: 'posts', value: post3Doc.id },
+      ],
     },
   })
   await payload.update({
     id: post2Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [post1Doc.id, post3Doc.id],
+      relatedPosts: [
+        { relationTo: 'posts', value: post1Doc.id },
+        { relationTo: 'posts', value: post3Doc.id },
+      ],
     },
   })
   await payload.update({
     id: post3Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [post1Doc.id, post2Doc.id],
+      relatedPosts: [
+        { relationTo: 'posts', value: post1Doc.id },
+        { relationTo: 'posts', value: post2Doc.id },
+      ],
     },
   })
 

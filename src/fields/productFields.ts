@@ -147,6 +147,20 @@ export const productFields: Field[] = [
       },
     ],
   },
+  {
+    name: 'purchaseCount',
+    label: 'Purchases',
+    type: 'number',
+    defaultValue: 0,
+    admin: {
+      position: 'sidebar',
+      readOnly: true,
+    },
+    access: {
+      create: () => false,
+      update: () => false,
+    },
+  },
   notificationSubscriberCountField(),
   notificationSubscriptionStatusField('products'),
   completenessScoreField,

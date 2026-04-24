@@ -2,8 +2,6 @@ import type { CollectionConfig, Config, GlobalConfig } from 'payload'
 
 const USER_VISIBLE_SLUGS = ['companies', 'jobs', 'identities', 'products', 'startups', 'search']
 
-const hideForNonAdmin = ({ user }: { user: any }) => !user?.role?.includes('admin')
-
 export const hideAdminCollections = (config: Config): Config => ({
   ...config,
   collections: (config.collections ?? []).map((collection: CollectionConfig) => {
@@ -15,7 +13,7 @@ export const hideAdminCollections = (config: Config): Config => ({
       ...collection,
       admin: {
         ...collection.admin,
-        hidden: hideForNonAdmin,
+        hidden: ({ user }) => !user?.role?.includes('admin'),
       },
     }
   }),
@@ -26,7 +24,7 @@ export const hideAdminCollections = (config: Config): Config => ({
       ...global,
       admin: {
         ...global.admin,
-        hidden: hideForNonAdmin,
+        hidden: ({ user }) => !user?.role?.includes('admin'),
       },
     }
   }),

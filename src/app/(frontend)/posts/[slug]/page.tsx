@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { PostMarkdown } from '@/components/PostMarkdown'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import RichText from '@/components/RichText'
 
 import type { Post } from '@/payload-types'
 
@@ -46,11 +46,17 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+          <div className="mx-auto max-w-[48rem]">
+            <PostMarkdown className="bg-transparent p-0" source={post.content} />
+          </div>
           {post.relatedPosts && post.relatedPosts.length > 0 && (
             <RelatedPosts
               className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
+              docs={post.relatedPosts.flatMap((relatedPost) => {
+                if (relatedPost.relationTo !== 'posts') return []
+                if (typeof relatedPost.value !== 'object' || relatedPost.value === null) return []
+                return [relatedPost.value]
+              })}
             />
           )}
         </div>

@@ -1,11 +1,11 @@
 import { authenticated } from '@/access/authenticated'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import {
@@ -36,17 +36,13 @@ export const Startups: CollectionConfig = {
     singular: 'Venture',
     plural: 'Ventures',
   },
-  defaultSort: '-completenessScore',
+  defaultSort: '-contentRankScore',
   hooks: {
     beforeChange: [
       requireOwnCompany,
-      computeCompletenessScore([
-        'description',
-        'image',
-        'fundsNeeded.amount',
-        'lookingFor',
-        'alreadyHave',
-      ]),
+      computeContentRanking({
+        fieldPaths: ['description', 'image', 'fundsNeeded.amount', 'lookingFor', 'alreadyHave'],
+      }),
       requireVerifiedEmailToPublish,
       validateInvolvedUsers,
     ],

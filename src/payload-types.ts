@@ -87,6 +87,7 @@ export interface Config {
     identities: Identity;
     companies: Company;
     jobs: Job;
+    'comment-likes': CommentLike;
     startups: Startup;
     syndications: Syndication;
     subscribers: Subscriber;
@@ -148,6 +149,7 @@ export interface Config {
     identities: IdentitiesSelect<false> | IdentitiesSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
+    'comment-likes': CommentLikesSelect<false> | CommentLikesSelect<true>;
     startups: StartupsSelect<false> | StartupsSelect<true>;
     syndications: SyndicationsSelect<false> | SyndicationsSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
@@ -609,23 +611,40 @@ export interface Post {
   id: string;
   createdBy: string | User;
   title: string;
+  company: string | Company;
   heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedPosts?: (string | Post)[] | null;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  content: string;
+  relatedPosts?:
+    | (
+        | {
+            relationTo: 'companies';
+            value: string | Company;
+          }
+        | {
+            relationTo: 'jobs';
+            value: string | Job;
+          }
+        | {
+            relationTo: 'posts';
+            value: string | Post;
+          }
+        | {
+            relationTo: 'products';
+            value: string | Product;
+          }
+        | {
+            relationTo: 'identities';
+            value: string | Identity;
+          }
+        | {
+            relationTo: 'startups';
+            value: string | Startup;
+          }
+      )[]
+    | null;
   categories?: (string | Category)[] | null;
   meta?: {
     title?: string | null;
@@ -637,6 +656,7 @@ export interface Post {
   };
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
+  completenessScore?: number | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -649,6 +669,50 @@ export interface Post {
   generateSlug?: boolean | null;
   slug: string;
   likeCount?: number | null;
+  lastLikeAt?: string | null;
+  subscriberCount?: number | null;
+  contentRankScore?: number | null;
+  hasLiked?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "companies".
+ */
+export interface Company {
+  id: string;
+  createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
+  name: string;
+  website?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  /**
+   * Optional single payout wallet. If product wallet is empty, company wallet is used.
+   */
+  cryptoAddresses?: {
+    chain?: ('ethereum' | 'solana' | 'tron') | null;
+    address?: string | null;
+  };
+  image?: (string | null) | Media;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
+  identity: string | Identity;
+  allowedIdentities?: (string | Identity)[] | null;
+  disallowedIdentities?: (string | Identity)[] | null;
+  isSubscribed?: boolean | null;
+  completenessScore?: number | null;
+  likeCount?: number | null;
+  lastLikeAt?: string | null;
+  subscriberCount?: number | null;
+  contentRankScore?: number | null;
   hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -773,6 +837,239 @@ export interface FolderInterface {
   folderType?: 'media'[] | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "identities".
+ */
+export interface Identity {
+  id: string;
+  createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
+  name: string;
+  website?: string | null;
+  image?: (string | null) | Media;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
+  itemCount?: number | null;
+  isSubscribed?: boolean | null;
+  completenessScore?: number | null;
+  likeCount?: number | null;
+  lastLikeAt?: string | null;
+  subscriberCount?: number | null;
+  contentRankScore?: number | null;
+  hasLiked?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs".
+ */
+export interface Job {
+  id: string;
+  createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
+  title: string;
+  company: string | Company;
+  companyIdentityId?: string | null;
+  location?: string | null;
+  isActive?: boolean | null;
+  positions: number;
+  employmentType: 'full-time' | 'part-time' | 'contract' | 'internship' | 'gig';
+  salaryRange?: {
+    min?: number | null;
+    max?: number | null;
+    currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
+  };
+  bounty?: {
+    amount?: number | null;
+    currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
+  };
+  postedAt: string;
+  image?: (string | null) | Media;
+  allowedIdentities?: (string | Identity)[] | null;
+  disallowedIdentities?: (string | Identity)[] | null;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
+  applyUrl?: string | null;
+  isSubscribed?: boolean | null;
+  completenessScore?: number | null;
+  likeCount?: number | null;
+  lastLikeAt?: string | null;
+  subscriberCount?: number | null;
+  contentRankScore?: number | null;
+  hasLiked?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  inventory?: number | null;
+  unlimitedInventory?: boolean | null;
+  enableVariants?: boolean | null;
+  variantTypes?: (string | VariantType)[] | null;
+  variants?: {
+    docs?: (string | Variant)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  priceInUSDEnabled?: boolean | null;
+  priceInUSD?: number | null;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
+  name: string;
+  company: string | Company;
+  companyIdentityId?: string | null;
+  url?: string | null;
+  orderable?: boolean | null;
+  priceInETH?: string | null;
+  priceInSOL?: string | null;
+  priceInTRX?: string | null;
+  /**
+   * Optional single payout wallet. If product wallet is empty, company wallet is used.
+   */
+  cryptoAddresses?: {
+    chain?: ('ethereum' | 'solana' | 'tron') | null;
+    address?: string | null;
+  };
+  image?: (string | null) | Media;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
+  properties?:
+    | {
+        key: string;
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  purchaseCount?: number | null;
+  isSubscribed?: boolean | null;
+  completenessScore?: number | null;
+  likeCount?: number | null;
+  lastLikeAt?: string | null;
+  subscriberCount?: number | null;
+  contentRankScore?: number | null;
+  hasLiked?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variantTypes".
+ */
+export interface VariantType {
+  id: string;
+  label: string;
+  name: string;
+  options?: {
+    docs?: (string | VariantOption)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variantOptions".
+ */
+export interface VariantOption {
+  id: string;
+  _variantOptions_options_order?: string | null;
+  variantType: string | VariantType;
+  label: string;
+  /**
+   * should be defaulted or dynamic based on label
+   */
+  value: string;
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variants".
+ */
+export interface Variant {
+  id: string;
+  /**
+   * Used for administrative purposes, not shown to customers. This is populated by default.
+   */
+  title?: string | null;
+  product: string | Product;
+  options: (string | VariantOption)[];
+  inventory?: number | null;
+  priceInUSDEnabled?: boolean | null;
+  priceInUSD?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "startups".
+ */
+export interface Startup {
+  id: string;
+  createdBy: string | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
+  title: string;
+  company: string | Company;
+  /**
+   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   */
+  description?: string | null;
+  image?: (string | null) | Media;
+  identity: string | Identity;
+  fundsNeeded?: {
+    amount?: number | null;
+    currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
+  };
+  lookingFor?:
+    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
+    | null;
+  alreadyHave?:
+    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
+    | null;
+  stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
+  involvedUsers?: (string | User)[] | null;
+  isSubscribed?: boolean | null;
+  completenessScore?: number | null;
+  likeCount?: number | null;
+  lastLikeAt?: string | null;
+  subscriberCount?: number | null;
+  contentRankScore?: number | null;
+  hasLiked?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1144,149 +1441,15 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "identities".
+ * via the `definition` "comment-likes".
  */
-export interface Identity {
+export interface CommentLike {
   id: string;
   createdBy: string | User;
-  /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
-   */
-  serverURL?: string | null;
-  name: string;
-  website?: string | null;
-  image?: (string | null) | Media;
-  /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
-   */
-  description?: string | null;
-  itemCount?: number | null;
-  isSubscribed?: boolean | null;
-  likeCount?: number | null;
-  hasLiked?: boolean | null;
+  userId: string;
+  targetID: string;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "companies".
- */
-export interface Company {
-  id: string;
-  createdBy: string | User;
-  /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
-   */
-  serverURL?: string | null;
-  name: string;
-  website?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  /**
-   * Optional single payout wallet. If product wallet is empty, company wallet is used.
-   */
-  cryptoAddresses?: {
-    chain?: ('ethereum' | 'solana' | 'tron') | null;
-    address?: string | null;
-  };
-  image?: (string | null) | Media;
-  /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
-   */
-  description?: string | null;
-  identity: string | Identity;
-  allowedIdentities?: (string | Identity)[] | null;
-  disallowedIdentities?: (string | Identity)[] | null;
-  isSubscribed?: boolean | null;
-  completenessScore?: number | null;
-  likeCount?: number | null;
-  hasLiked?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "jobs".
- */
-export interface Job {
-  id: string;
-  createdBy: string | User;
-  /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
-   */
-  serverURL?: string | null;
-  title: string;
-  company: string | Company;
-  companyIdentityId?: string | null;
-  location?: string | null;
-  isActive?: boolean | null;
-  positions: number;
-  employmentType: 'full-time' | 'part-time' | 'contract' | 'internship' | 'gig';
-  salaryRange?: {
-    min?: number | null;
-    max?: number | null;
-    currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
-  };
-  bounty?: {
-    amount?: number | null;
-    currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
-  };
-  postedAt: string;
-  image?: (string | null) | Media;
-  allowedIdentities?: (string | Identity)[] | null;
-  disallowedIdentities?: (string | Identity)[] | null;
-  /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
-   */
-  description?: string | null;
-  applyUrl?: string | null;
-  isSubscribed?: boolean | null;
-  completenessScore?: number | null;
-  likeCount?: number | null;
-  hasLiked?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "startups".
- */
-export interface Startup {
-  id: string;
-  createdBy: string | User;
-  /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
-   */
-  serverURL?: string | null;
-  title: string;
-  company: string | Company;
-  /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
-   */
-  description?: string | null;
-  image?: (string | null) | Media;
-  identity: string | Identity;
-  fundsNeeded?: {
-    amount?: number | null;
-    currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
-  };
-  lookingFor?:
-    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
-    | null;
-  alreadyHave?:
-    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
-    | null;
-  stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
-  involvedUsers?: (string | User)[] | null;
-  isSubscribed?: boolean | null;
-  completenessScore?: number | null;
-  likeCount?: number | null;
-  hasLiked?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1366,122 +1529,18 @@ export interface Comment {
     | {
         relationTo: 'startups';
         value: string | Startup;
-      };
+  };
   replyComment?: (string | null) | Comment;
   anonymousHash?: string | null;
+  serverUrl?: string | null;
   replyPostRelationTo?: string | null;
   replyPostValue?: string | null;
+  likeCount?: number | null;
+  lastLikeAt?: string | null;
+  contentRankScore?: number | null;
+  hasLiked?: boolean | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: string;
-  inventory?: number | null;
-  unlimitedInventory?: boolean | null;
-  enableVariants?: boolean | null;
-  variantTypes?: (string | VariantType)[] | null;
-  variants?: {
-    docs?: (string | Variant)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  priceInUSDEnabled?: boolean | null;
-  priceInUSD?: number | null;
-  /**
-   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
-   */
-  serverURL?: string | null;
-  name: string;
-  company: string | Company;
-  companyIdentityId?: string | null;
-  url?: string | null;
-  orderable?: boolean | null;
-  priceInETH?: string | null;
-  priceInSOL?: string | null;
-  priceInTRX?: string | null;
-  /**
-   * Optional single payout wallet. If product wallet is empty, company wallet is used.
-   */
-  cryptoAddresses?: {
-    chain?: ('ethereum' | 'solana' | 'tron') | null;
-    address?: string | null;
-  };
-  image?: (string | null) | Media;
-  /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
-   */
-  description?: string | null;
-  properties?:
-    | {
-        key: string;
-        value?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  isSubscribed?: boolean | null;
-  completenessScore?: number | null;
-  updatedAt: string;
-  createdAt: string;
-  deletedAt?: string | null;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variantTypes".
- */
-export interface VariantType {
-  id: string;
-  label: string;
-  name: string;
-  options?: {
-    docs?: (string | VariantOption)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-  deletedAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variantOptions".
- */
-export interface VariantOption {
-  id: string;
-  _variantOptions_options_order?: string | null;
-  variantType: string | VariantType;
-  label: string;
-  /**
-   * should be defaulted or dynamic based on label
-   */
-  value: string;
-  updatedAt: string;
-  createdAt: string;
-  deletedAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variants".
- */
-export interface Variant {
-  id: string;
-  /**
-   * Used for administrative purposes, not shown to customers. This is populated by default.
-   */
-  title?: string | null;
-  product: string | Product;
-  options: (string | VariantOption)[];
-  inventory?: number | null;
-  priceInUSDEnabled?: boolean | null;
-  priceInUSD?: number | null;
-  updatedAt: string;
-  createdAt: string;
-  deletedAt?: string | null;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1803,6 +1862,10 @@ export interface Search {
     | {
         relationTo: 'startups';
         value: string | Startup;
+      }
+    | {
+        relationTo: 'posts';
+        value: string | Post;
       };
   slug?: string | null;
   meta?: {
@@ -1996,6 +2059,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'jobs';
         value: string | Job;
+      } | null)
+    | ({
+        relationTo: 'comment-likes';
+        value: string | CommentLike;
       } | null)
     | ({
         relationTo: 'startups';
@@ -2415,6 +2482,7 @@ export interface FormBlockSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   createdBy?: T;
   title?: T;
+  company?: T;
   heroImage?: T;
   content?: T;
   relatedPosts?: T;
@@ -2428,6 +2496,7 @@ export interface PostsSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   authors?: T;
+  completenessScore?: T;
   populatedAuthors?:
     | T
     | {
@@ -2437,6 +2506,9 @@ export interface PostsSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   likeCount?: T;
+  lastLikeAt?: T;
+  subscriberCount?: T;
+  contentRankScore?: T;
   hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2572,7 +2644,11 @@ export interface IdentitiesSelect<T extends boolean = true> {
   description?: T;
   itemCount?: T;
   isSubscribed?: T;
+  completenessScore?: T;
   likeCount?: T;
+  lastLikeAt?: T;
+  subscriberCount?: T;
+  contentRankScore?: T;
   hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2602,6 +2678,9 @@ export interface CompaniesSelect<T extends boolean = true> {
   isSubscribed?: T;
   completenessScore?: T;
   likeCount?: T;
+  lastLikeAt?: T;
+  subscriberCount?: T;
+  contentRankScore?: T;
   hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2643,10 +2722,24 @@ export interface JobsSelect<T extends boolean = true> {
   isSubscribed?: T;
   completenessScore?: T;
   likeCount?: T;
+  lastLikeAt?: T;
+  subscriberCount?: T;
+  contentRankScore?: T;
   hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comment-likes_select".
+ */
+export interface CommentLikesSelect<T extends boolean = true> {
+  createdBy?: T;
+  userId?: T;
+  targetID?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2673,6 +2766,9 @@ export interface StartupsSelect<T extends boolean = true> {
   isSubscribed?: T;
   completenessScore?: T;
   likeCount?: T;
+  lastLikeAt?: T;
+  subscriberCount?: T;
+  contentRankScore?: T;
   hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2726,8 +2822,13 @@ export interface CommentsSelect<T extends boolean = true> {
   replyPost?: T;
   replyComment?: T;
   anonymousHash?: T;
+  serverUrl?: T;
   replyPostRelationTo?: T;
   replyPostValue?: T;
+  likeCount?: T;
+  lastLikeAt?: T;
+  contentRankScore?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2888,8 +2989,14 @@ export interface ProductsSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  purchaseCount?: T;
   isSubscribed?: T;
   completenessScore?: T;
+  likeCount?: T;
+  lastLikeAt?: T;
+  subscriberCount?: T;
+  contentRankScore?: T;
+  hasLiked?: T;
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;
@@ -3418,42 +3525,6 @@ export interface TaskSchedulePublish {
     user?: (string | null) | User;
   };
   output?: unknown;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BannerBlock".
- */
-export interface BannerBlock {
-  style: 'info' | 'warning' | 'error' | 'success';
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

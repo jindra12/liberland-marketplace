@@ -72,7 +72,7 @@ const toUSDCents = (amount: number, currency: string): number | null => {
   return Math.round(usdAmount * 100)
 }
 
-export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+export const up = async ({ payload, session }: MigrateUpArgs) => {
   const productsCollection = payload.db.collections.products?.collection
   if (!productsCollection) {
     throw new Error('products collection is not available in Mongo adapter.')
@@ -155,9 +155,7 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
   )
 }
 
-export async function down({ payload, req, session }: MigrateDownArgs): Promise<void> {
-  req
-  session
+export const down = async ({ payload }: MigrateDownArgs) => {
   payload.logger.info(
     '[migration:backfill_product_prices_usd] down() is a no-op. No automatic rollback for converted USD prices.',
   )

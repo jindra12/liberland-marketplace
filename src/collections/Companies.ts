@@ -1,4 +1,5 @@
 import { authenticated } from '@/access/authenticated'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
@@ -6,7 +7,6 @@ import { notificationSubscriptionStatusField } from '@/fields/notificationSubscr
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import {
   lazySendItemUpdateNotifications,
@@ -19,10 +19,12 @@ import type { CollectionConfig } from 'payload'
 
 export const Companies: CollectionConfig = {
   slug: 'companies',
-  defaultSort: '-completenessScore',
+  defaultSort: '-contentRankScore',
   hooks: {
     beforeChange: [
-      computeCompletenessScore(['website', 'phone', 'email', 'image', 'description']),
+      computeContentRanking({
+        fieldPaths: ['website', 'phone', 'email', 'image', 'description'],
+      }),
       requireVerifiedEmailToPublish,
     ],
     afterChange: [

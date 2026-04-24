@@ -17,6 +17,7 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
+import CommentLikes from './collections/CommentLikes'
 import { Startups } from './collections/Startups'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
@@ -117,6 +118,7 @@ export default buildConfig({
     Identities,
     Companies,
     Jobs,
+    CommentLikes,
     Startups,
     Syndications,
     Subscribers,
@@ -136,6 +138,37 @@ export default buildConfig({
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
+    schema: [
+      ({ jsonSchema }) => {
+        const commentsSchema = jsonSchema.definitions?.comments
+        if (commentsSchema && 'properties' in commentsSchema) {
+          commentsSchema.properties = {
+            ...commentsSchema.properties,
+            replyCount: {
+              type: ['number', 'null'],
+            },
+            serverUrl: {
+              type: ['string', 'null'],
+            },
+          }
+        }
+
+        const commentsSelectSchema = jsonSchema.definitions?.comments_select
+        if (commentsSelectSchema && 'properties' in commentsSelectSchema) {
+          commentsSelectSchema.properties = {
+            ...commentsSelectSchema.properties,
+            replyCount: {
+              type: 'boolean',
+            },
+            serverUrl: {
+              type: 'boolean',
+            },
+          }
+        }
+
+        return jsonSchema
+      },
+    ],
   },
   jobs: {
     access: {

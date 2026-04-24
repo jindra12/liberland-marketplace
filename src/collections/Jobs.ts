@@ -1,12 +1,12 @@
 import { authenticated } from '@/access/authenticated'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
@@ -21,19 +21,21 @@ import type { CollectionConfig } from 'payload'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
-  defaultSort: '-completenessScore',
+  defaultSort: '-contentRankScore',
   hooks: {
     beforeChange: [
       requireOwnCompany,
       syncCompanyIdentityId,
-      computeCompletenessScore([
-        'location',
-        'image',
-        'description',
-        'applyUrl',
-        'salaryRange.min',
-        'bounty.amount',
-      ]),
+      computeContentRanking({
+        fieldPaths: [
+          'location',
+          'image',
+          'description',
+          'applyUrl',
+          'salaryRange.min',
+          'bounty.amount',
+        ],
+      }),
       requireVerifiedEmailToPublish,
     ],
     afterChange: [

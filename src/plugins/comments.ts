@@ -2,10 +2,17 @@ import commentsPluginImport from 'payload-plugin-comments'
 import type { CollectionConfig, Config, Field, Plugin } from 'payload'
 
 import { anyone } from '@/access/anyone'
+import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
+import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
-import { setCommentAuthor } from '@/hooks/setCommentAuthor'
-import { syncCommentReplyPostLookup } from '@/hooks/syncCommentReplyPostLookup'
+import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
+import { setCommentServerUrl } from '@/hooks/setCommentServerUrl'
+import {
+  updateCommentReplyCountAfterChange,
+  updateCommentReplyCountAfterDelete,
+} from '@/hooks/updateCommentReplyCount'
 
 type CommentsPluginFactory = (options?: Record<string, unknown>) => Plugin
 
@@ -21,9 +28,28 @@ const baseComments = commentsPlugin({
   slug: 'comments',
   fields: [
     { ...markdownField({ name: 'content', label: 'Content' }), required: true },
+    {
+      name: 'company',
+      type: 'relationship',
+      relationTo: 'companies',
+      index: true,
+      required: true,
+      filterOptions: onlyOwnDocsOrAdminFilter,
+    },
     { name: 'replyPost', type: 'relationship', relationTo: [...commentTargets], required: true },
     { name: 'replyComment', type: 'relationship', relationTo: 'comments' },
-    { name: 'anonymousHash', type: 'text', admin: { hidden: true, readOnly: true } },
+    {
+      name: 'replyCount',
+      type: 'number',
+      defaultValue: 0,
+      access: {
+        update: () => false,
+      },
+      admin: {
+        readOnly: true,
+      },
+    },
+    { name: 'serverUrl', type: 'text', admin: { hidden: true, readOnly: true } },
     {
       name: 'replyPostRelationTo',
       type: 'text',
@@ -39,11 +65,11 @@ const baseComments = commentsPlugin({
   ],
   collectionsAllowingComments: [...commentTargets],
   autoPublish: true,
-  hasPublishedCommentFields: ['anonymousHash'],
+  hasPublishedCommentFields: [],
 })
 
-export const comments: Plugin = async (config: Config): Promise<Config> => {
-  const withComments = await baseComments(config)
+export const comments: Plugin = (config: Config): Config => {
+  const withComments = baseComments(config) as Config
 
   return {
     ...withComments,
@@ -52,9 +78,10 @@ export const comments: Plugin = async (config: Config): Promise<Config> => {
 
       return {
         ...collection,
+        defaultSort: '-contentRankScore',
         access: {
           ...collection.access,
-          create: anyone,
+          create: authenticated,
           read: anyone,
           update: onlyOwnDocsOrAdmin,
           delete: onlyOwnDocsOrAdmin,
@@ -71,9 +98,21 @@ export const comments: Plugin = async (config: Config): Promise<Config> => {
         hooks: {
           ...collection.hooks,
           beforeChange: [
-            setCommentAuthor,
-            syncCommentReplyPostLookup,
+            setCommentServerUrl,
+            requireOwnCompany,
+            computeContentRanking({
+              fieldPaths: ['content', 'replyPost', 'replyComment'],
+              includeSubscriberCount: false,
+            }),
             ...(collection.hooks?.beforeChange ?? []),
+          ],
+          afterChange: [
+            updateCommentReplyCountAfterChange,
+            ...(collection.hooks?.afterChange ?? []),
+          ],
+          afterDelete: [
+            updateCommentReplyCountAfterDelete,
+            ...(collection.hooks?.afterDelete ?? []),
           ],
         },
       }
