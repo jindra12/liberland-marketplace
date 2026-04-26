@@ -6,6 +6,7 @@ import {
 } from '@/newsletter/notificationSubscriptions'
 import type { CollectionAfterChangeHook, PayloadRequest } from 'payload'
 import { getNotificationDocumentTitle, renderItemUpdateEmail } from '@/utilities/notificationDiff'
+import { getServerSideURL } from '@/utilities/getURL'
 
 type ParentNotificationDoc = Company | Identity
 type ParentNotificationTargetCollection = 'companies' | 'identities'
@@ -133,6 +134,7 @@ export const sendRelatedItemPublishedNotifications = <TDoc extends ChildNotifica
             email: recipient.email,
             targetCollection: parentCollection,
             targetID: parentID,
+            serverUrl: parentDoc.serverURL ?? getServerSideURL(),
           }),
         })
 

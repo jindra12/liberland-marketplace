@@ -20,6 +20,9 @@ const USERS_COLLECTION_SLUG = 'users'
 
 export const normalizeNotificationEmail = (email: string): string => email.toLowerCase()
 
+export const encodeServerUrlSegment = (value: string): string =>
+  Buffer.from(value, 'utf8').toString('hex')
+
 export const getCurrentUserNotificationEmail = (req: PayloadRequest): string | null => {
   const email = req.user?.email
 
@@ -47,16 +50,19 @@ export const buildNotificationSubscriptionUnsubscribeURL = ({
   email,
   targetCollection,
   targetID,
+  serverUrl,
 }: {
   email: string
   targetCollection: NotificationTargetCollection
   targetID: string
+  serverUrl: string
 }): string => {
   const unsubscribeURL = new URL('/unsubscribe', getFrontendURL())
 
   unsubscribeURL.searchParams.set('type', NOTIFICATION_TARGET_QUERY_TYPES[targetCollection])
   unsubscribeURL.searchParams.set('id', targetID)
   unsubscribeURL.searchParams.set('email', email)
+  unsubscribeURL.searchParams.set('serverUrl', encodeServerUrlSegment(serverUrl))
 
   return unsubscribeURL.toString()
 }

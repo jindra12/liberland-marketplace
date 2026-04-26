@@ -1171,6 +1171,30 @@ For deeper exploration of specific topics, refer to the context files located in
     - Performance best practices
     - Styling components
 
+## Repo Notes
+
+- Project overview: Liberland Marketplace is a Next.js 15 App Router app with Payload CMS 3.74, MongoDB, TypeScript strict mode, Tailwind CSS 4, and ESM (`"type": "module"`).
+- Commands:
+  - `pnpm install` to install dependencies.
+  - `pnpm dev` to start the dev server on `localhost:3001`.
+  - `pnpm build` for a production build.
+  - `pnpm lint` and `pnpm lint:fix` for linting.
+  - `pnpm test`, `pnpm test:int`, and `pnpm test:e2e` for the test suites.
+  - `pnpm generate:types` after schema changes.
+  - `pnpm generate:importmap` after creating or modifying admin components.
+- Architecture:
+  - `src/app/(frontend)/` contains public routes.
+  - `src/app/(payload)/` contains the Payload admin panel and API routes.
+  - `src/collections/`, `src/globals/`, `src/components/`, `src/hooks/`, and `src/access/` hold the core app structure.
+  - `src/payload.config.ts` is the main Payload configuration.
+- Environment variables:
+  - Required: `DATABASE_URL`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SERVER_URL`.
+  - Common optional vars: `CRON_SECRET`, `PREVIEW_SECRET`, `BETTER_AUTH_SECRET`, `SMTP_*`, `GOOGLE_*`, `OIDC_*`, and the crypto-related `CRYPTO_*`, `TRONWEB_*`, and `THIRDWEB_*` values.
+  - See `.env.example` for the full list and baseline defaults.
+- Testing:
+  - For UI-affecting changes, proactively verify with Playwright against the local app.
+  - If a change affects Payload schema, regenerate types before finalizing.
+
 ## Resources
 
 - Docs: https://payloadcms.com/docs

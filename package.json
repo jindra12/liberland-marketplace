@@ -45,7 +45,6 @@
     "@payloadcms/plugin-search": "3.74.0",
     "@payloadcms/plugin-seo": "3.74.0",
     "@payloadcms/richtext-lexical": "3.74.0",
-    "@payloadcms/storage-vercel-blob": "3.74.0",
     "@payloadcms/translations": "3.74.0",
     "@payloadcms/ui": "3.74.0",
     "@radix-ui/react-checkbox": "^1.0.4",
