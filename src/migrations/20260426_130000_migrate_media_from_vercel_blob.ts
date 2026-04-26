@@ -90,7 +90,7 @@ const writeRemoteFileIfMissing = async (remoteUrl: string, targetFilename: strin
   }
 
   const arrayBuffer = await response.arrayBuffer()
-  await fs.writeFile(targetPath, Buffer.from(arrayBuffer))
+  await fs.writeFile(targetPath, new Uint8Array(arrayBuffer))
 }
 
 const getLocalFilename = (doc: LegacyMediaDoc, remoteUrl: string, fallbackName: string): string => {
