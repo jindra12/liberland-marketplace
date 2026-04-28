@@ -4,6 +4,9 @@ set -euo pipefail
 REPO_URL="${REPO_URL:-https://github.com/jindra12/liberland-marketplace.git}"
 INSTALL_ROOT="${INSTALL_ROOT:-$HOME/liberland-marketplace}"
 BRANCH=""
+SERVER_URL="${SERVER_URL:-https://backend.nswap.io}"
+SILENT="${SILENT:-false}"
+REUSE_ENV_FILE="${REUSE_ENV_FILE:-${REUSE_EXISTING_ENV:-}}"
 APP_PORT="3001"
 MONGO_DB_NAME="liberland"
 MONGO_APP_USER="liberland_app"
@@ -12,16 +15,26 @@ MONGO_ROOT_USER="rootAdmin"
 usage() {
   cat <<'EOF'
 Usage: deploy-space.sh [--branch <name>] [-b <name>]
+                    [--server <url>]
+                    [--silent] [-s]
+                    [--reuse-env <file>]
 
 Standalone installer that:
 - clones the app from the configured repository URL
 - optionally checks out a specific branch
 - installs Docker, Git, and HTTPS tooling if needed
 - configures local MongoDB, the app, and HTTPS reverse proxying
+- asks for a subdomain and publishes the app on a nip.io hostname
+- optionally submits a draft syndication entry for the new deployment
 
 Environment overrides:
 - REPO_URL: git HTTPS URL to clone
 - INSTALL_ROOT: target directory for the managed checkout
+- SERVER_URL: source server URL for the installer route
+- SYNDICATION_NAME: optional name used when creating the syndication draft
+- SYNDICATION_DESCRIPTION: optional description used when creating the syndication draft
+- SILENT: set to true to skip the syndication draft submission
+- REUSE_ENV_FILE: env file to reuse values from before prompting
 EOF
 }
 
@@ -33,6 +46,26 @@ while [[ $# -gt 0 ]]; do
         exit 1
       fi
       BRANCH="$2"
+      shift 2
+      ;;
+    --server)
+      if [[ $# -lt 2 ]]; then
+        echo "Error: $1 requires a server URL." >&2
+        exit 1
+      fi
+      SERVER_URL="$2"
+      shift 2
+      ;;
+    -s|--silent)
+      SILENT="true"
+      shift
+      ;;
+    --reuse-env)
+      if [[ $# -lt 2 ]]; then
+        echo "Error: $1 requires a file path." >&2
+        exit 1
+      fi
+      REUSE_ENV_FILE="$2"
       shift 2
       ;;
     -h|--help)
@@ -107,72 +140,51 @@ prompt_value_or_env() {
   prompt_value "$__target" "$__label" "$__default"
 }
 
-prompt_secret_or_generate() {
-  local __target="$1"
-  local __label="$2"
-  local __default="${3:-}"
-  local __value=""
+load_existing_env_file() {
+  local env_file="$1"
 
-  if [[ -n "$__default" ]]; then
-    read -r -s -p "$__label [press Enter to keep generated default]: " __value
-    echo
-    if [[ -z "$__value" ]]; then
-      __value="$__default"
-    fi
-  else
-    read -r -s -p "$__label [press Enter to auto-generate]: " __value
-    echo
-    if [[ -z "$__value" ]]; then
-      __value="$(generate_secret)"
-    fi
+  if [[ ! -f "$env_file" ]]; then
+    return 1
   fi
 
-  printf -v "$__target" '%s' "$__value"
-}
+  while IFS='=' read -r key value; do
+    case "$key" in
+      ''|\#*)
+        continue
+        ;;
+    esac
 
-prompt_secret_or_generate_or_env() {
-  local __target="$1"
-  local __env_name="$2"
-  local __label="$3"
-  local __default="${4:-}"
-  local __value="${!__env_name:-}"
-
-  if [[ -n "$__value" ]]; then
-    printf -v "$__target" '%s' "$__value"
-    return
-  fi
-
-  prompt_secret_or_generate "$__target" "$__label" "$__default"
-}
-
-prompt_required_secret() {
-  local __target="$1"
-  local __label="$2"
-  local __value=""
-
-  while [[ -z "$__value" ]]; do
-    read -r -s -p "$__label: " __value
-    echo
-    if [[ -z "$__value" ]]; then
-      echo "This value cannot be empty." >&2
+    if [[ -z "${!key+x}" ]]; then
+      eval "export $key=$value"
     fi
-  done
-
-  printf -v "$__target" '%s' "$__value"
+  done < "$env_file"
 }
 
-prompt_required_secret_or_env() {
-  local __target="$1"
-  local __env_name="$2"
-  local __label="$3"
-  local __value="${!__env_name:-}"
+derive_subdomain_from_domain() {
+  local domain="$1"
+  local public_ip="$2"
+  local suffix=".${public_ip//./-}.nip.io"
 
-  if [[ -n "$__value" ]]; then
-    printf -v "$__target" '%s' "$__value"
-    return
+  if [[ "$domain" == *"$suffix" ]]; then
+    printf '%s' "${domain%"$suffix"}"
+    return 0
   fi
 
-  prompt_required_secret "$__target" "$__label"
+  return 1
+}
+
+ensure_reuse_env_loaded() {
+  if [[ -z "$REUSE_ENV_FILE" ]]; then
+    return 0
+  fi
+
+  if [[ -f "$REUSE_ENV_FILE" ]]; then
+    echo "Reusing existing environment from: $REUSE_ENV_FILE"
+    load_existing_env_file "$REUSE_ENV_FILE"
+    return 0
+  fi
+
+  echo "Reusing existing environment was requested, but '$REUSE_ENV_FILE' was not found." >&2
 }
 
 generate_secret() {
@@ -266,8 +278,9 @@ detect_public_ip() {
 
 make_nip_domain() {
   local public_ip="$1"
+  local subdomain="$2"
   local ip_suffix="${public_ip//./-}"
-  printf 'marketplace-%s.nip.io' "$ip_suffix"
+  printf '%s.%s.nip.io' "$subdomain" "$ip_suffix"
 }
 
 exported_vars=()
@@ -284,49 +297,69 @@ prepare_source_checkout
 mkdir -p "$DEPLOY_DIR"
 
 PUBLIC_IP="$(detect_public_ip)"
-DEFAULT_DOMAIN="$(make_nip_domain "$PUBLIC_IP")"
+ensure_reuse_env_loaded
+DEFAULT_SUBDOMAIN="marketplace"
+DEFAULT_DOMAIN="$(make_nip_domain "$PUBLIC_IP" "$DEFAULT_SUBDOMAIN")"
 
 echo
 echo "Using free wildcard DNS via nip.io:"
 echo "  Public IP: $PUBLIC_IP"
-echo "  Default domain: https://$DEFAULT_DOMAIN"
+echo "  Default nip.io domain: https://$DEFAULT_DOMAIN"
 echo
 
-prompt_value_or_env APP_DOMAIN APP_DOMAIN "Domain to deploy on" "$DEFAULT_DOMAIN"
+if [[ -z "${APP_SUBDOMAIN:-}" && -n "${APP_DOMAIN:-}" ]]; then
+  if derived_subdomain="$(derive_subdomain_from_domain "$APP_DOMAIN" "$PUBLIC_IP")"; then
+    APP_SUBDOMAIN="$derived_subdomain"
+  fi
+fi
 
-prompt_secret_or_generate_or_env PAYLOAD_SECRET PAYLOAD_SECRET "PAYLOAD_SECRET (Payload CMS signing secret)"
+if [[ -n "$REUSE_ENV_FILE" ]]; then
+  APP_SUBDOMAIN="${APP_SUBDOMAIN:-$DEFAULT_SUBDOMAIN}"
+  if [[ "$SILENT" != "true" ]]; then
+    SYNDICATION_NAME="${SYNDICATION_NAME:-Liberland Marketplace}"
+    SYNDICATION_DESCRIPTION="${SYNDICATION_DESCRIPTION:-}"
+  fi
+else
+  prompt_value_or_env APP_SUBDOMAIN APP_SUBDOMAIN "Subdomain name" "$DEFAULT_SUBDOMAIN"
+  if [[ "$SILENT" != "true" ]]; then
+    prompt_value_or_env SYNDICATION_NAME SYNDICATION_NAME "Syndication name" "Liberland Marketplace"
+    prompt_value_or_env SYNDICATION_DESCRIPTION SYNDICATION_DESCRIPTION "Syndication description" ""
+  fi
+fi
 
-prompt_secret_or_generate_or_env BETTER_AUTH_SECRET BETTER_AUTH_SECRET "BETTER_AUTH_SECRET (Better Auth signing secret)"
+SYNDICATION_NAME="${SYNDICATION_NAME:-}"
+SYNDICATION_DESCRIPTION="${SYNDICATION_DESCRIPTION:-}"
 
-prompt_secret_or_generate_or_env CRON_SECRET CRON_SECRET "CRON_SECRET (cron auth secret)" "$PAYLOAD_SECRET"
+APP_DOMAIN="$(make_nip_domain "$PUBLIC_IP" "$APP_SUBDOMAIN")"
 
-prompt_secret_or_generate_or_env PREVIEW_SECRET PREVIEW_SECRET "PREVIEW_SECRET (draft/preview protection secret)"
+PAYLOAD_SECRET="${PAYLOAD_SECRET:-$(generate_secret)}"
+BETTER_AUTH_SECRET="${BETTER_AUTH_SECRET:-$(generate_secret)}"
+CRON_SECRET="${CRON_SECRET:-$(generate_secret)}"
+PREVIEW_SECRET="${PREVIEW_SECRET:-$(generate_secret)}"
 
 PAYLOAD_DEBUG="false"
 PAYLOAD_ENABLE_LIVE_PREVIEW="false"
 PAYLOAD_LOG_LEVEL="info"
 
-prompt_value_or_env SMTP_HOST SMTP_HOST "SMTP_HOST (verification email server)" "smtp.example.com"
+SMTP_HOST="${SMTP_HOST:-}"
+SMTP_PORT="${SMTP_PORT:-587}"
+SMTP_USER="${SMTP_USER:-}"
+SMTP_PASS="${SMTP_PASS:-}"
+SMTP_FROM_ADDRESS="${SMTP_FROM_ADDRESS:-noreply@${APP_DOMAIN}}"
+SMTP_FROM_NAME="${SMTP_FROM_NAME:-Liberland Marketplace}"
 
-prompt_value_or_env SMTP_PORT SMTP_PORT "SMTP_PORT (usually 587 for STARTTLS)" "587"
+GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-}"
+GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
 
-prompt_value_or_env SMTP_USER SMTP_USER "SMTP_USER (SMTP login)" "your-smtp-user"
+OIDC_CLIENT_ID="${OIDC_CLIENT_ID:-}"
+OIDC_CLIENT_SECRET="${OIDC_CLIENT_SECRET:-}"
+OIDC_REDIRECT_URLS="${OIDC_REDIRECT_URLS:-${APP_DOMAIN}/auth/callback}"
 
-prompt_required_secret_or_env SMTP_PASS SMTP_PASS "SMTP_PASS (SMTP password or app password)"
+THIRDWEB_SECRET_KEY="${THIRDWEB_SECRET_KEY:-}"
+THIRDWEB_CLIENT_ID="${THIRDWEB_CLIENT_ID:-}"
 
-prompt_value_or_env SMTP_FROM_ADDRESS SMTP_FROM_ADDRESS "SMTP_FROM_ADDRESS (sender email)" "noreply@${APP_DOMAIN}"
-
-prompt_value_or_env SMTP_FROM_NAME SMTP_FROM_NAME "SMTP_FROM_NAME (sender display name)" "Liberland Marketplace"
-
-prompt_value_or_env THIRDWEB_SECRET_KEY THIRDWEB_SECRET_KEY "THIRDWEB_SECRET_KEY (recommended; leave blank to use a client id)" ""
-
-if [[ -z "$THIRDWEB_SECRET_KEY" ]]; then
-  prompt_value_or_env THIRDWEB_CLIENT_ID THIRDWEB_CLIENT_ID "THIRDWEB_CLIENT_ID (public fallback if you do not use a secret key)" ""
-fi
-
-prompt_value_or_env TRONWEB_API TRONWEB_API "TRONWEB_API (TronGrid or your Tron node API)" "https://api.trongrid.io"
-
-prompt_value_or_env TRONWEB_SECRET TRONWEB_SECRET "TRONWEB_SECRET (optional TronGrid API key)" ""
+TRONWEB_API="${TRONWEB_API:-https://api.trongrid.io}"
+TRONWEB_SECRET="${TRONWEB_SECRET:-}"
 
 CRYPTO_ETH_NATIVE_TOKEN_ADDRESS="0xC02aaA39b223FE8D0A0E5C4F27eAD9083C756Cc2"
 CRYPTO_ETH_STABLE_TOKEN_ADDRESS="0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
@@ -371,6 +404,9 @@ PORT="$APP_PORT"
 CRON_HOST="127.0.0.1"
 
 set_and_export APP_DOMAIN "$APP_DOMAIN"
+set_and_export APP_SUBDOMAIN "$APP_SUBDOMAIN"
+set_and_export SYNDICATION_NAME "$SYNDICATION_NAME"
+set_and_export SYNDICATION_DESCRIPTION "$SYNDICATION_DESCRIPTION"
 set_and_export PAYLOAD_SECRET "$PAYLOAD_SECRET"
 set_and_export BETTER_AUTH_SECRET "$BETTER_AUTH_SECRET"
 set_and_export CRON_SECRET "$CRON_SECRET"
@@ -384,6 +420,11 @@ set_and_export SMTP_USER "$SMTP_USER"
 set_and_export SMTP_PASS "$SMTP_PASS"
 set_and_export SMTP_FROM_ADDRESS "$SMTP_FROM_ADDRESS"
 set_and_export SMTP_FROM_NAME "$SMTP_FROM_NAME"
+set_and_export GOOGLE_CLIENT_ID "$GOOGLE_CLIENT_ID"
+set_and_export GOOGLE_CLIENT_SECRET "$GOOGLE_CLIENT_SECRET"
+set_and_export OIDC_CLIENT_ID "$OIDC_CLIENT_ID"
+set_and_export OIDC_CLIENT_SECRET "$OIDC_CLIENT_SECRET"
+set_and_export OIDC_REDIRECT_URLS "$OIDC_REDIRECT_URLS"
 set_and_export THIRDWEB_SECRET_KEY "$THIRDWEB_SECRET_KEY"
 set_and_export THIRDWEB_CLIENT_ID "$THIRDWEB_CLIENT_ID"
 set_and_export TRONWEB_API "$TRONWEB_API"
@@ -428,6 +469,9 @@ set_and_export CRON_HOST "$CRON_HOST"
 cat > "$RUNTIME_ENV_FILE" <<EOF
 # Generated by deploy-space.sh on $(date -Iseconds)
 APP_DOMAIN=$(quote_env_value "$APP_DOMAIN")
+APP_SUBDOMAIN=$(quote_env_value "$APP_SUBDOMAIN")
+SYNDICATION_NAME=$(quote_env_value "$SYNDICATION_NAME")
+SYNDICATION_DESCRIPTION=$(quote_env_value "$SYNDICATION_DESCRIPTION")
 PAYLOAD_SECRET=$(quote_env_value "$PAYLOAD_SECRET")
 BETTER_AUTH_SECRET=$(quote_env_value "$BETTER_AUTH_SECRET")
 CRON_SECRET=$(quote_env_value "$CRON_SECRET")
@@ -441,6 +485,11 @@ SMTP_USER=$(quote_env_value "$SMTP_USER")
 SMTP_PASS=$(quote_env_value "$SMTP_PASS")
 SMTP_FROM_ADDRESS=$(quote_env_value "$SMTP_FROM_ADDRESS")
 SMTP_FROM_NAME=$(quote_env_value "$SMTP_FROM_NAME")
+GOOGLE_CLIENT_ID=$(quote_env_value "$GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET=$(quote_env_value "$GOOGLE_CLIENT_SECRET")
+OIDC_CLIENT_ID=$(quote_env_value "$OIDC_CLIENT_ID")
+OIDC_CLIENT_SECRET=$(quote_env_value "$OIDC_CLIENT_SECRET")
+OIDC_REDIRECT_URLS=$(quote_env_value "$OIDC_REDIRECT_URLS")
 THIRDWEB_SECRET_KEY=$(quote_env_value "$THIRDWEB_SECRET_KEY")
 THIRDWEB_CLIENT_ID=$(quote_env_value "$THIRDWEB_CLIENT_ID")
 TRONWEB_API=$(quote_env_value "$TRONWEB_API")
@@ -621,6 +670,11 @@ ARG PAYLOAD_DEBUG
 ARG PAYLOAD_ENABLE_LIVE_PREVIEW
 ARG PORT
 ARG PREVIEW_SECRET
+ARG GOOGLE_CLIENT_ID
+ARG GOOGLE_CLIENT_SECRET
+ARG OIDC_CLIENT_ID
+ARG OIDC_CLIENT_SECRET
+ARG OIDC_REDIRECT_URLS
 ARG SMTP_FROM_ADDRESS
 ARG SMTP_FROM_NAME
 ARG SMTP_HOST
@@ -676,6 +730,11 @@ ENV PAYLOAD_LOG_LEVEL=$PAYLOAD_LOG_LEVEL
 ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
 ENV PORT=$PORT
 ENV PREVIEW_SECRET=$PREVIEW_SECRET
+ENV GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+ENV GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+ENV OIDC_CLIENT_ID=$OIDC_CLIENT_ID
+ENV OIDC_CLIENT_SECRET=$OIDC_CLIENT_SECRET
+ENV OIDC_REDIRECT_URLS=$OIDC_REDIRECT_URLS
 ENV SMTP_FROM_ADDRESS=$SMTP_FROM_ADDRESS
 ENV SMTP_FROM_NAME=$SMTP_FROM_NAME
 ENV SMTP_HOST=$SMTP_HOST
@@ -807,6 +866,11 @@ services:
         PAYLOAD_SECRET: \${PAYLOAD_SECRET}
         PORT: \${PORT}
         PREVIEW_SECRET: \${PREVIEW_SECRET}
+        GOOGLE_CLIENT_ID: \${GOOGLE_CLIENT_ID}
+        GOOGLE_CLIENT_SECRET: \${GOOGLE_CLIENT_SECRET}
+        OIDC_CLIENT_ID: \${OIDC_CLIENT_ID}
+        OIDC_CLIENT_SECRET: \${OIDC_CLIENT_SECRET}
+        OIDC_REDIRECT_URLS: \${OIDC_REDIRECT_URLS}
         SMTP_FROM_ADDRESS: \${SMTP_FROM_ADDRESS}
         SMTP_FROM_NAME: \${SMTP_FROM_NAME}
         SMTP_HOST: \${SMTP_HOST}
@@ -853,9 +917,69 @@ run_docker compose --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" down --remo
 run_docker compose --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" up -d --build --remove-orphans
 
 echo
+
+json_escape() {
+  local value="$1"
+  value="${value//\\/\\\\}"
+  value="${value//\"/\\\"}"
+  value="${value//$'\n'/\\n}"
+  value="${value//$'\r'/\\r}"
+  value="${value//$'\t'/\\t}"
+  printf '%s' "$value"
+}
+
+create_syndication_draft() {
+  local graphql_endpoint="${SERVER_URL%/}/api/graphql"
+  local escaped_name
+  local escaped_description
+  local escaped_url
+  local mutation_payload
+  local response=""
+
+  escaped_name="$(json_escape "$SYNDICATION_NAME")"
+  escaped_description="$(json_escape "$SYNDICATION_DESCRIPTION")"
+  escaped_url="$(json_escape "https://${APP_DOMAIN}")"
+
+  mutation_payload="$(printf '{"query":"%s","variables":{"data":{"name":"%s","url":"%s","description":"%s"},"draft":true}}' \
+    "$(json_escape 'mutation CreateSyndication($data: mutationSyndicationInput!, $draft: Boolean!) { createSyndication(data: $data, draft: $draft) { id } }')" \
+    "$escaped_name" \
+    "$escaped_url" \
+    "$escaped_description")"
+
+  for attempt in {1..30}; do
+    echo "Syndication draft payload: $mutation_payload"
+    if response="$(curl -fsS -X POST "$graphql_endpoint" -H 'content-type: application/json' --data-raw "$mutation_payload" 2>/dev/null)"; then
+      if [[ "$response" == *'"errors"'* ]]; then
+        echo "Error: failed to create syndication draft on ${SERVER_URL%/}." >&2
+        echo "$response" >&2
+        exit 1
+      fi
+
+      echo "Syndication draft submitted to: $graphql_endpoint"
+      echo "Syndication draft response: $response"
+      return
+    fi
+
+    sleep 2
+  done
+
+  echo "Error: unable to reach $graphql_endpoint to create the syndication draft." >&2
+  exit 1
+}
+
+if [[ "$SILENT" == "true" ]]; then
+  echo "Skipping syndication draft submission because --silent was supplied."
+else
+  create_syndication_draft
+fi
+
+echo
 echo "Deployment complete."
+echo "Subdomain: $APP_SUBDOMAIN"
 echo "Domain: https://$APP_DOMAIN"
 echo "Admin: https://$APP_DOMAIN/admin"
+echo "Installer: https://$APP_DOMAIN/deploy-space"
+echo "Installer source: ${SERVER_URL%/}/deploy-space"
 echo "MongoDB database: $MONGO_DB_NAME"
 echo "App user: $MONGO_APP_USER"
 echo "Runtime env file: $RUNTIME_ENV_FILE"

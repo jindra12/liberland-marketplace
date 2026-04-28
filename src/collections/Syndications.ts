@@ -1,8 +1,34 @@
 import { anyone } from '@/access/anyone'
 import { markdownField } from '@/fields/markdownField'
-import type { Access, CollectionConfig } from 'payload'
+import type { Access, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
+
+import type { Syndication, User } from '@/payload-types'
 
 const adminOnly: Access = ({ req: { user } }) => user?.role?.includes('admin') || false
+const isAdminUser = (user: User | null | undefined): boolean => user?.role?.includes('admin') || false
+
+const publishedOrAdmin: Access = ({ req: { user } }) => {
+  if (isAdminUser(user)) {
+    return true
+  }
+
+  return {
+    _status: {
+      equals: 'published',
+    },
+  }
+}
+
+const forceDraftOnCreate: CollectionBeforeValidateHook<Syndication> = ({ data, operation, req }) => {
+  if (operation !== 'create' || isAdminUser(req.user)) {
+    return data
+  }
+
+  return {
+    ...data,
+    _status: 'draft',
+  }
+}
 
 export const Syndications: CollectionConfig = {
   slug: 'syndications',
@@ -15,12 +41,26 @@ export const Syndications: CollectionConfig = {
     defaultColumns: ['name', 'url', '_status'],
   },
   access: {
-    create: adminOnly,
+    create: anyone,
     delete: adminOnly,
-    read: anyone,
+    read: publishedOrAdmin,
     update: adminOnly,
   },
+  hooks: {
+    beforeValidate: [forceDraftOnCreate],
+  },
   fields: [
+    {
+      name: 'createdBy',
+      type: 'relationship',
+      relationTo: 'users',
+      required: false,
+      maxDepth: 0,
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+    },
     {
       name: 'name',
       type: 'text',
