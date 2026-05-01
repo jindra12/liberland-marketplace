@@ -4,6 +4,7 @@ import { anyone } from '@/access/anyone'
 import { adminOrSelf } from '@/access/adminOrSelf'
 import { shippingAddressField } from '@/fields/addressFields'
 import { userWalletsField } from '@/fields/userWalletsField'
+import { createDefaultBotUser } from '@/hooks/createDefaultBotUser'
 import { createDefaultCompany } from '@/hooks/createDefaultCompany'
 
 export const Users: CollectionConfig = {
@@ -21,7 +22,7 @@ export const Users: CollectionConfig = {
     hidden: ({ user }) => !user?.role?.includes('admin'),
   },
   hooks: {
-    afterChange: [createDefaultCompany],
+    afterChange: [createDefaultCompany, createDefaultBotUser],
     beforeChange: [
       async ({ req, operation, data }) => {
         if (operation === 'create') {
@@ -30,7 +31,18 @@ export const Users: CollectionConfig = {
             limit: 1,
           })
           if (existing.totalDocs === 0) {
-            return { ...data, role: ['admin'] }
+            return {
+              ...data,
+              bot: false,
+              role: ['admin'],
+            }
+          }
+
+          if (!req.user?.role?.includes('admin')) {
+            return {
+              ...data,
+              bot: false,
+            }
           }
         }
         return data
@@ -45,6 +57,7 @@ export const Users: CollectionConfig = {
           role: originalDoc?.role,
           email: originalDoc?.email,
           emailVerified: originalDoc?.emailVerified,
+          bot: originalDoc?.bot,
         }
       },
     ],
@@ -54,6 +67,15 @@ export const Users: CollectionConfig = {
     {
       name: 'phone',
       type: 'text',
+    },
+    {
+      name: 'bot',
+      type: 'checkbox',
+      defaultValue: false,
+      access: {
+        create: ({ req }) => Boolean(req.user?.role?.includes('admin')),
+        update: ({ req }) => Boolean(req.user?.role?.includes('admin')),
+      },
     },
     shippingAddressField(),
     userWalletsField(),

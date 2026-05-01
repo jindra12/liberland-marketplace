@@ -64,6 +64,12 @@ export const Companies: CollectionConfig = {
   },
   fields: [
     serverURLField(),
+    {
+      name: 'noAutoPost',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Disable automated posting?',
+    },
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },
     { name: 'phone', type: 'text' },

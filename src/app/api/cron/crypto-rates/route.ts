@@ -16,7 +16,7 @@ const getIsAuthorizedRequest = (request: Request): boolean => {
   return request.headers.get('authorization') === `Bearer ${secret}`
 }
 
-export async function GET(request: Request) {
+export const GET = async (request: Request) => {
   if (!getCronSecret()) {
     return Response.json(
       { error: 'Missing CRON_SECRET or PAYLOAD_SECRET environment variable.' },

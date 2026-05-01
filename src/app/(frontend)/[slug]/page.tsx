@@ -58,7 +58,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+export const generateMetadata = async ({ params: paramsPromise }: Args): Promise<Metadata> => {
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)

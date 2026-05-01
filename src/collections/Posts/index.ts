@@ -73,6 +73,13 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
+      name: 'repost',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'company',
       type: 'relationship',
       relationTo: 'companies',

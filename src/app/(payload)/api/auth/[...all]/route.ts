@@ -18,7 +18,7 @@ const ALLOWED_ORIGINS = (process.env.OIDC_REDIRECT_URLS || '')
   .filter(Boolean)
   .map((url) => new URL(url).origin)
 
-function corsHeaders(origin: string): HeadersInit {
+const corsHeaders = (origin: string): HeadersInit => {
   return {
     'Access-Control-Allow-Origin': origin,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -27,12 +27,12 @@ function corsHeaders(origin: string): HeadersInit {
   }
 }
 
-function isAllowedOrigin(req: Request): string | null {
+const isAllowedOrigin = (req: Request): string | null => {
   const origin = req.headers.get('origin')
   return origin && ALLOWED_ORIGINS.includes(origin) ? origin : null
 }
 
-async function handler(req: Request) {
+const handler = async (req: Request) => {
   const payloadAuth = await getPayloadAuthInstance()
   const origin = isAllowedOrigin(req)
 
