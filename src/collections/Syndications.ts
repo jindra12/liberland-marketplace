@@ -87,6 +87,18 @@ export const Syndications: CollectionConfig = {
         }
       },
     },
+    {
+      name: 'autoEnable',
+      type: 'checkbox',
+      label: 'Auto enable?',
+      defaultValue: false,
+    },
+    {
+      name: 'nsfw',
+      type: 'checkbox',
+      label: 'NSFW',
+      defaultValue: false,
+    },
     markdownField({
       name: 'description',
       label: 'Description',
