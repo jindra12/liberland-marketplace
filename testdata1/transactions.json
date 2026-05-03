@@ -1,0 +1,64 @@
+[
+  {
+    "_id": {
+      "$oid": "94969bad97c385037056fac3"
+    },
+    "items": [
+      {
+        "product": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        },
+        "quantity": 1
+      },
+      {
+        "product": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        },
+        "quantity": 1
+      },
+      {
+        "product": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        },
+        "quantity": 1
+      }
+    ],
+    "paymentMethod": "crypto",
+    "crypto": {
+      "paymentRef": "testdata-crypto-payment",
+      "txHash": "0xabc0000000000000000000000000000000000000000000000000000000000001"
+    },
+    "billingAddress": {
+      "title": "Home (testdata1)",
+      "firstName": "Arman (testdata1)",
+      "lastName": "Tester (testdata1)",
+      "company": "Test Data LLC (testdata1)",
+      "addressLine1": "1 Test Street (testdata1)",
+      "addressLine2": "Suite 42 (testdata1)",
+      "city": "Prague (testdata1)",
+      "state": "Prague (testdata1)",
+      "postalCode": "11000 (testdata1)",
+      "country": "CZ",
+      "phone": "+420777000111 (testdata1)"
+    },
+    "status": "succeeded",
+    "customer": {
+      "$oid": "e025f62ecfc919c3cd7112ef"
+    },
+    "customerEmail": "tangianarman@yahoo.com",
+    "order": {
+      "$oid": "f2418a5033060525e7c803c6"
+    },
+    "cart": {
+      "$oid": "ce646b0075257560864cd9a0"
+    },
+    "amount": 10500,
+    "currency": "USD",
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]

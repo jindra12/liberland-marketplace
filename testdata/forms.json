@@ -1,0 +1,115 @@
+[{
+	"_id": {
+		"$oid": "69f900000000000000000001"
+	},
+	"title": "Contact Form",
+	"fields": [
+		{
+			"blockType": "text",
+			"blockName": "full-name",
+			"name": "full-name",
+			"label": "Full Name",
+			"required": true,
+			"width": 100
+		},
+		{
+			"blockType": "email",
+			"blockName": "email",
+			"name": "email",
+			"label": "Email",
+			"required": true,
+			"width": 100
+		},
+		{
+			"blockType": "number",
+			"blockName": "phone",
+			"name": "phone",
+			"label": "Phone",
+			"required": false,
+			"width": 100
+		},
+		{
+			"blockType": "textarea",
+			"blockName": "message",
+			"name": "message",
+			"label": "Message",
+			"required": true,
+			"width": 100
+		}
+	],
+	"submitButtonLabel": "Submit",
+	"confirmationType": "message",
+	"confirmationMessage": {
+		"root": {
+			"type": "root",
+			"children": [
+				{
+					"type": "heading",
+					"children": [
+						{
+							"type": "text",
+							"detail": 0,
+							"format": 0,
+							"mode": "normal",
+							"style": "",
+							"text": "The contact form has been submitted successfully.",
+							"version": 1
+						}
+					],
+					"direction": "ltr",
+					"format": "",
+					"indent": 0,
+					"tag": "h2",
+					"version": 1
+				}
+			],
+			"direction": "ltr",
+			"format": "",
+			"indent": 0,
+			"version": 1
+		}
+	},
+	"emails": [
+		{
+			"emailFrom": "\"Payload\" <demo@payloadcms.com>",
+			"emailTo": "{{email}}",
+			"subject": "You've received a new message.",
+			"message": {
+				"root": {
+					"type": "root",
+					"children": [
+						{
+							"type": "paragraph",
+							"children": [
+								{
+									"type": "text",
+									"detail": 0,
+									"format": 0,
+									"mode": "normal",
+									"style": "",
+									"text": "Your contact form submission was successfully received.",
+									"version": 1
+								}
+							],
+							"direction": "ltr",
+							"format": "",
+							"indent": 0,
+							"textFormat": 0,
+							"version": 1
+						}
+					],
+					"direction": "ltr",
+					"format": "",
+					"indent": 0,
+					"version": 1
+				}
+			}
+		}
+	],
+	"updatedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"createdAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	}
+}]

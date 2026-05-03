@@ -1,0 +1,44 @@
+[{
+	"_id": {
+		"$oid": "69c3cc217f027bfda1c1aff8"
+	},
+	"createdAt": {
+		"$date": "2026-03-25T11:50:57.66Z"
+	},
+	"updatedAt": {
+		"$date": "2026-03-25T11:50:57.661Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"title": "test",
+	"company": {
+		"$oid": "69a5dafa1fa4248965364de2"
+	},
+	"companyIdentityId": "69a5d8051fa4248965364bed",
+	"location": "test",
+	"isActive": true,
+	"positions": 1,
+	"employmentType": "part-time",
+	"salaryRange": {
+		"min": 1500,
+		"max": 50000,
+		"currency": "USD"
+	},
+	"bounty": {
+		"amount": 100,
+		"currency": "USD"
+	},
+	"postedAt": {
+		"$date": "2026-03-25T11:50:02.877Z"
+	},
+	"image": {
+		"$oid": "69c3cc207f027bfda1c1afed"
+	},
+	"description": "test",
+	"applyUrl": "test.com",
+	"completenessScore": 6,
+	"_status": "draft",
+	"__v": 0
+}]
+

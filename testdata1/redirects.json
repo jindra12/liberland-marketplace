@@ -1,0 +1,18 @@
+[
+  {
+    "_id": {
+      "$oid": "3a35b2ed15ea9194460c6bcb"
+    },
+    "from": "/old-test-data",
+    "to": {
+      "type": "custom",
+      "url": "/ (testdata1)"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]

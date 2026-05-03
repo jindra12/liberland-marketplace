@@ -1,0 +1,22 @@
+[
+  {
+    "_id": {
+      "$oid": "ae3763c7ab0c17723fb95ee6"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "email": "dorian.sternvukotic+testdata1@gmail.com",
+    "subscriber": {
+      "$oid": "ed88ec92822b8356c785b405"
+    },
+    "targetCollection": "products",
+    "targetID": "c8194e03168498b04b88b9b6",
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]
