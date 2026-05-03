@@ -191,6 +191,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
             beforeDocumentControls: [
               ...(defaultCollection.admin?.components?.edit?.beforeDocumentControls ?? []),
               '@/components/OrderConfirmButton',
+              '@/components/OrderInventoryButton',
             ],
           },
         },

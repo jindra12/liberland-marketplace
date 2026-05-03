@@ -23,6 +23,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Do not toggle git index state (`assume-unchanged`, `skip-worktree`) or assume git is malfunctioning when generated files look stale; verify the repo state and fix the underlying source or generator instead.
 - If a change would require a lot of custom parsing, scraping, serialization, or similar infrastructure code, check npm first for a proven library before writing the logic by hand.
 - Never statically import heavy client-side libraries in server or route modules; load them with `next/dynamic` or an equivalent lazy-loading boundary to avoid unnecessary RAM usage.
+- Do not respond to a localized bug or feature request by randomly rewriting unrelated parts of the app. Keep the change narrowly scoped to the affected codepath unless the user explicitly asks for a broader refactor or migration.
 
 ### Coding Style Constraints
 
@@ -33,6 +34,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Do not cast to `any`.
 - Never use the `void` operator to silence promises or function calls.
 - Avoid unnecessary type assertions and `never` casts.
+- Never use `as never`, `as unknown`, or `as any`. Do not coerce types unless there is literally no other choice and the coercion is unavoidable.
 - Never use `trim()` unless it is materially required, such as sanitizing actual user input.
 - Keep implementations simple and typed from the domain model first, not from generic runtime guards.
 - Prefer smaller components with a singular purpose.
