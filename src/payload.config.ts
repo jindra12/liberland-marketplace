@@ -28,6 +28,8 @@ import { Subscribers } from './collections/Subscribers'
 import { analyticsGraphQLMutations } from './graphql/analytics'
 import { startupGraphQLMutations } from './graphql/startups'
 import { userGraphQLMutations, userGraphQLQueries } from './graphql/users'
+import { Reports } from './collections/Reports'
+import { InformationRequests } from './collections/InformationRequests'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -121,6 +123,8 @@ export default buildConfig({
     CommentLikes,
     Startups,
     Syndications,
+    Reports,
+    InformationRequests,
     Subscribers,
     NotificationSubscriptions,
   ],

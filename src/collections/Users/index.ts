@@ -6,6 +6,7 @@ import { shippingAddressField } from '@/fields/addressFields'
 import { userWalletsField } from '@/fields/userWalletsField'
 import { createDefaultBotUser } from '@/hooks/createDefaultBotUser'
 import { createDefaultCompany } from '@/hooks/createDefaultCompany'
+import { populateReportedLinks } from './hooks/populateReportedLinks'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -23,6 +24,7 @@ export const Users: CollectionConfig = {
   },
   hooks: {
     afterChange: [createDefaultCompany, createDefaultBotUser],
+    afterRead: [populateReportedLinks],
     beforeChange: [
       async ({ req, operation, data }) => {
         if (operation === 'create') {
@@ -75,6 +77,16 @@ export const Users: CollectionConfig = {
       access: {
         create: ({ req }) => Boolean(req.user?.role?.includes('admin')),
         update: ({ req }) => Boolean(req.user?.role?.includes('admin')),
+      },
+    },
+    {
+      name: 'reportedLinks',
+      type: 'text',
+      hasMany: true,
+      virtual: true,
+      admin: {
+        hidden: true,
+        readOnly: true,
       },
     },
     shippingAddressField(),
