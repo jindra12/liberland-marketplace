@@ -12,7 +12,7 @@
     "dev": "pnpm run dev:maildev",
     "dev:maildev": "./maildev.sh",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation node --import tsx ./scripts/generate-importmap.ts",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation node --experimental-specifier-resolution=node --import tsx ./node_modules/payload/dist/bin/index.js generate:types",
     "ii": "cross-env NODE_OPTIONS=--no-deprecation pnpm --ignore-workspace install",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",

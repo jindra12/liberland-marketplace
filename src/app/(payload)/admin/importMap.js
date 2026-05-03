@@ -28,7 +28,7 @@ import { default as default_9df2b0dc0e775c6fc38336766e510112 } from '@/component
 import { default as default_98b1dab40a28e314283235f93db425cc } from '@/components/PayloadEcommerce/PriceCell'
 import { default as default_505a96f788a1dc750b556826d28a1f43 } from '@/components/PayloadEcommerce/PriceInput'
 import { default as default_c24628581073b0241679093dd1eba02a } from '@/components/OrderConfirmButton'
-import { default as default_2abf6c7611dce1a7a8b4d9f6e9d9a431 } from '@/components/OrderInventoryButton'
+import { default as default_9befb8d035ff1d7dc686a8d08c2ae4bb } from '@/components/OrderInventoryButton'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
@@ -77,7 +77,7 @@ export const importMap = {
   "@/components/PayloadEcommerce/PriceCell#default": default_98b1dab40a28e314283235f93db425cc,
   "@/components/PayloadEcommerce/PriceInput#default": default_505a96f788a1dc750b556826d28a1f43,
   "@/components/OrderConfirmButton#default": default_c24628581073b0241679093dd1eba02a,
-  "@/components/OrderInventoryButton#default": default_2abf6c7611dce1a7a8b4d9f6e9d9a431,
+  "@/components/OrderInventoryButton#default": default_9befb8d035ff1d7dc686a8d08c2ae4bb,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
