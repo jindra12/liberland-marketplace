@@ -1,18 +1,20 @@
-[{
-	"_id": {
-		"$oid": "6a0000000000000000000001"
-	},
-	"createdBy": {
-		"$oid": "699a4fb034fa2b9e6436599c"
-	},
-	"name": "Test Data Launch",
-	"url": "https://market.ll.land/posts/vertex-test-data-launch",
-	"description": "A draft syndication entry for the test dataset.",
-	"_status": "draft",
-	"updatedAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"createdAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	}
-}]
+[
+  {
+    "_id": {
+      "$oid": "6a0000000000000000000002"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "name": "Test Data Launch (testdata1)",
+    "url": "https://devserver1.203-0-113-10.nip.io/posts/vertex-test-data-launch?variant=testdata1",
+    "description": "A draft syndication entry for the test dataset. (testdata1)",
+    "_status": "draft",
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]
