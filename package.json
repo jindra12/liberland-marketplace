@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-    "deploy:test": "cross-env APP_SUBDOMAIN=devserver bash ./deploy-space.sh --reuse-env ./dev.env --silent",
+    "deploy:test": "cross-env APP_SUBDOMAIN=devserver bash ./deploy-space.sh --reuse-env ./dev.env --silent --test-data",
+    "deploy:test1": "cross-env APP_SUBDOMAIN=devserver1 TEST_DATA_DIR=testdata1 bash ./deploy-space.sh --reuse-env ./dev.env --silent --test-data",
     "deploy": "pm2 delete liberstake-market; pnpm build; pm2 start pnpm --name liberstake-market -- start; pm2 startup; pm2 save",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "predev": "rm -rf .next",

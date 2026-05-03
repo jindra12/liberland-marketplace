@@ -84,10 +84,14 @@ describe('deploy-space installer', () => {
   const installRoot = path.join(fixtureRoot, 'install-normal')
   const silentInstallRoot = path.join(fixtureRoot, 'install-silent')
   const reuseInstallRoot = path.join(fixtureRoot, 'install-reuse')
+  const testDataInstallRoot = path.join(fixtureRoot, 'install-test-data')
+  const testData1InstallRoot = path.join(fixtureRoot, 'install-test-data-1')
   const stubBinDir = path.join(fixtureRoot, 'bin')
   const composeStateFile = path.join(fixtureRoot, 'compose-state.pid')
   const silentComposeStateFile = path.join(fixtureRoot, 'compose-state-silent.pid')
   const reuseComposeStateFile = path.join(fixtureRoot, 'compose-state-reuse.pid')
+  const testDataComposeStateFile = path.join(fixtureRoot, 'compose-state-test-data.pid')
+  const testData1ComposeStateFile = path.join(fixtureRoot, 'compose-state-test-data-1.pid')
   const graphqlHitFile = path.join(fixtureRoot, 'graphql-hit.json')
   const silentGraphqlHitFile = path.join(fixtureRoot, 'graphql-hit-silent.json')
   let appPort = 0
@@ -397,6 +401,148 @@ exit 0
       await waitForFileRemoval(composeStateFile)
 
       expect(existsSync(composeStateFile)).toBe(false)
+    },
+    deployTimeoutMs,
+  )
+
+  it(
+    'copies test fixtures and wires the seed service when test data mode is enabled',
+    async () => {
+      const env = {
+        ...process.env,
+        APP_SUBDOMAIN: 'marketplace',
+        CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
+        COMPOSE_STATE_FILE: testDataComposeStateFile,
+        DEPLOY_SPACE_TEST_PORT: String(appPort),
+        DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        INSTALL_ROOT: testDataInstallRoot,
+        PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+        REPO_URL: bareRepoDir,
+      }
+
+      const { stdout } = await execFileAsync(
+        deployScriptPath,
+        [
+          '--branch',
+          'feature',
+          '--server',
+          `http://127.0.0.1:${appPort}`,
+          '--silent',
+          '--test-data',
+        ],
+        {
+          env,
+          maxBuffer: 20 * 1024 * 1024,
+        },
+      )
+
+      const deployDir = path.join(testDataInstallRoot, 'source', '.deploy')
+      const testDataFile = path.join(deployDir, 'testdata', 'users.json')
+      const composeFile = path.join(deployDir, 'docker-compose.yml')
+
+      expect(stdout).toContain(`Preparing test data fixtures from: ${path.join(process.cwd(), 'testdata')}`)
+      expect(stdout).toContain(`Test data fixtures copied to: ${path.join(deployDir, 'testdata')}`)
+      expect(existsSync(testDataFile)).toBe(true)
+      expect(readFileSync(composeFile, 'utf8')).toContain('mongo-seed:')
+      expect(readFileSync(composeFile, 'utf8')).toContain('condition: service_completed_successfully')
+      expect(readFileSync(composeFile, 'utf8')).toContain('volumes:')
+      expect(readFileSync(composeFile, 'utf8')).toContain('./testdata:/testdata:ro')
+
+      await waitForServer(`http://127.0.0.1:${appPort}/admin`)
+
+      await execFileAsync(
+        'docker',
+        [
+          'compose',
+          '--env-file',
+          path.join(testDataInstallRoot, 'source', '.deploy', 'runtime.env'),
+          '-f',
+          path.join(testDataInstallRoot, 'source', '.deploy', 'docker-compose.yml'),
+          'down',
+          '--remove-orphans',
+        ],
+        {
+          env: {
+            ...env,
+            PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+          },
+          maxBuffer: 10 * 1024 * 1024,
+        },
+      )
+
+      await waitForFileRemoval(testDataComposeStateFile)
+
+      expect(existsSync(testDataComposeStateFile)).toBe(false)
+    },
+    deployTimeoutMs,
+  )
+
+  it(
+    'copies the alternate test fixtures when testdata1 is requested',
+    async () => {
+      const env = {
+        ...process.env,
+        APP_SUBDOMAIN: 'devserver1',
+        CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
+        COMPOSE_STATE_FILE: testData1ComposeStateFile,
+        DEPLOY_SPACE_TEST_PORT: String(appPort),
+        DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        INSTALL_ROOT: testData1InstallRoot,
+        PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+        REPO_URL: bareRepoDir,
+        TEST_DATA_DIR: 'testdata1',
+      }
+
+      const { stdout } = await execFileAsync(
+        deployScriptPath,
+        [
+          '--branch',
+          'feature',
+          '--server',
+          `http://127.0.0.1:${appPort}`,
+          '--silent',
+          '--test-data',
+        ],
+        {
+          env,
+          maxBuffer: 20 * 1024 * 1024,
+        },
+      )
+
+      const deployDir = path.join(testData1InstallRoot, 'source', '.deploy')
+      const testDataFile = path.join(deployDir, 'testdata', 'users.json')
+      const composeFile = path.join(deployDir, 'docker-compose.yml')
+
+      expect(stdout).toContain(`Preparing test data fixtures from: ${path.join(process.cwd(), 'testdata1')}`)
+      expect(stdout).toContain(`Test data fixtures copied to: ${path.join(deployDir, 'testdata')}`)
+      expect(existsSync(testDataFile)).toBe(true)
+      expect(readFileSync(composeFile, 'utf8')).toContain('./testdata:/testdata:ro')
+
+      await waitForServer(`http://127.0.0.1:${appPort}/admin`)
+
+      await execFileAsync(
+        'docker',
+        [
+          'compose',
+          '--env-file',
+          path.join(testData1InstallRoot, 'source', '.deploy', 'runtime.env'),
+          '-f',
+          path.join(testData1InstallRoot, 'source', '.deploy', 'docker-compose.yml'),
+          'down',
+          '--remove-orphans',
+        ],
+        {
+          env: {
+            ...env,
+            PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+          },
+          maxBuffer: 10 * 1024 * 1024,
+        },
+      )
+
+      await waitForFileRemoval(testData1ComposeStateFile)
+
+      expect(existsSync(testData1ComposeStateFile)).toBe(false)
     },
     deployTimeoutMs,
   )

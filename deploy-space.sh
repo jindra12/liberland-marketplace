@@ -6,16 +6,21 @@ INSTALL_ROOT="${INSTALL_ROOT:-$HOME/liberland-marketplace}"
 BRANCH=""
 SERVER_URL="${SERVER_URL:-https://backend.nswap.io}"
 SILENT="${SILENT:-false}"
+TEST_DATA="${TEST_DATA:-false}"
+TEST_DATA_DIR="${TEST_DATA_DIR:-testdata}"
 REUSE_ENV_FILE="${REUSE_ENV_FILE:-${REUSE_EXISTING_ENV:-}}"
 APP_PORT="3001"
 MONGO_DB_NAME="liberland"
 MONGO_APP_USER="liberland_app"
 MONGO_ROOT_USER="rootAdmin"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TESTDATA_SOURCE_DIR="$SCRIPT_DIR/$TEST_DATA_DIR"
 
 usage() {
   cat <<'EOF'
 Usage: deploy-space.sh [--branch <name>] [-b <name>]
                     [--server <url>]
+                    [--test-data]
                     [--silent] [-s]
                     [--reuse-env <file>]
 
@@ -34,6 +39,8 @@ Environment overrides:
 - SYNDICATION_NAME: optional name used when creating the syndication draft
 - SYNDICATION_DESCRIPTION: optional description used when creating the syndication draft
 - SILENT: set to true to skip the syndication draft submission
+- TEST_DATA: set to true to seed the database from ./testdata
+- TEST_DATA_DIR: fixture directory relative to the installer script, defaults to testdata
 - REUSE_ENV_FILE: env file to reuse values from before prompting
 EOF
 }
@@ -58,6 +65,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -s|--silent)
       SILENT="true"
+      shift
+      ;;
+    --test-data)
+      TEST_DATA="true"
       shift
       ;;
     --reuse-env)
@@ -87,6 +98,7 @@ DOCKERFILE_FILE="$DEPLOY_DIR/Dockerfile"
 COMPOSE_FILE="$DEPLOY_DIR/docker-compose.yml"
 MONGO_INIT_FILE="$DEPLOY_DIR/mongo-init.js"
 CADDYFILE_FILE="$DEPLOY_DIR/Caddyfile"
+TESTDATA_DEPLOY_DIR="$DEPLOY_DIR/testdata"
 
 if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
   SUDO=()
@@ -185,6 +197,23 @@ ensure_reuse_env_loaded() {
   fi
 
   echo "Reusing existing environment was requested, but '$REUSE_ENV_FILE' was not found." >&2
+}
+
+prepare_test_data() {
+  if [[ "$TEST_DATA" != "true" ]]; then
+    return 0
+  fi
+
+  if [[ ! -d "$TESTDATA_SOURCE_DIR" ]]; then
+    echo "Error: test data directory '$TESTDATA_SOURCE_DIR' was not found." >&2
+    exit 1
+  fi
+
+  echo "Preparing test data fixtures from: $TESTDATA_SOURCE_DIR"
+  rm -rf "$TESTDATA_DEPLOY_DIR"
+  mkdir -p "$TESTDATA_DEPLOY_DIR"
+  cp -R "$TESTDATA_SOURCE_DIR"/. "$TESTDATA_DEPLOY_DIR"/
+  echo "Test data fixtures copied to: $TESTDATA_DEPLOY_DIR"
 }
 
 generate_secret() {
@@ -298,6 +327,7 @@ mkdir -p "$DEPLOY_DIR"
 
 PUBLIC_IP="$(detect_public_ip)"
 ensure_reuse_env_loaded
+prepare_test_data
 DEFAULT_SUBDOMAIN="marketplace"
 DEFAULT_DOMAIN="$(make_nip_domain "$PUBLIC_IP" "$DEFAULT_SUBDOMAIN")"
 
@@ -768,6 +798,48 @@ $APP_DOMAIN {
 }
 EOF
 
+APP_DEPENDS_ON_BLOCK=$'      mongo-init:\n        condition: service_completed_successfully'
+MONGO_SEED_SERVICE_BLOCK=""
+
+if [[ "$TEST_DATA" == "true" ]]; then
+  APP_DEPENDS_ON_BLOCK=$'      mongo-seed:\n        condition: service_completed_successfully'
+  MONGO_SEED_SERVICE_BLOCK=$(cat <<EOF
+  mongo-seed:
+    image: mongo:8.0
+    depends_on:
+      mongo-init:
+        condition: service_completed_successfully
+    environment:
+      MONGO_APP_DB_NAME: \${MONGO_APP_DB_NAME}
+      MONGO_APP_USER: \${MONGO_APP_USER}
+      MONGO_APP_PASSWORD: \${MONGO_APP_PASSWORD}
+    volumes:
+      - ./testdata:/testdata:ro
+    command:
+      - sh
+      - -lc
+      - |
+        for file in /testdata/*.json; do
+          if [ ! -f "\$file" ]; then
+            continue
+          fi
+
+          collection="\$(basename "\$file" .json)"
+
+          case "\$collection" in
+            searches)
+              collection="search"
+              ;;
+          esac
+
+          mongoimport --host mongo --port 27017 --username "\$MONGO_APP_USER" --password "\$MONGO_APP_PASSWORD" --authenticationDatabase "\$MONGO_APP_DB_NAME" --db "\$MONGO_APP_DB_NAME" --collection "\$collection" --drop --jsonArray --file "\$file"
+        done
+    restart: "no"
+
+EOF
+)
+fi
+
 cat > "$COMPOSE_FILE" <<EOF
 services:
   mongo:
@@ -816,6 +888,8 @@ services:
         done
         mongosh "mongodb://\${MONGO_INITDB_ROOT_USERNAME}:\${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/admin?directConnection=true" --quiet /mongo-init.js
     restart: "no"
+
+${MONGO_SEED_SERVICE_BLOCK}
 
   app:
     build:
@@ -884,8 +958,7 @@ services:
     env_file:
       - ./runtime.env
     depends_on:
-      mongo-init:
-        condition: service_completed_successfully
+${APP_DEPENDS_ON_BLOCK}
     expose:
       - "3001"
     restart: unless-stopped
