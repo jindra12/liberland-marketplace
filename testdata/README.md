@@ -5,6 +5,7 @@ This directory contains a direct Mongo export of the live test data from the rem
 Included collections:
 - `companies`
 - `users`
+- `accounts`
 - `media`
 - `identities`
 - `startups`
@@ -36,7 +37,11 @@ Included collections:
 
 Omitted on purpose:
 - `_versions` collections
-- auth/system collections like `sessions`, `accounts`, `verifications`, `oauth*`, and Payload internal collections
+- auth/system collections like `sessions`, `verifications`, `oauth*`, and Payload internal collections
 - empty collections were exported once and then pruned because they contained only `[]`
 
 These files are raw `mongoexport` output. They keep Mongo fields like `_id`, dates, and `__v` intact so the backup stays faithful to the source data.
+
+Test login:
+- Email: `dorian.sternvukotic@gmail.com`
+- Password: `test-password`

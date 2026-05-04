@@ -99,9 +99,38 @@ const fixtureUsersCollection = {
   ],
 } satisfies CollectionConfig
 
+const fixtureAccountsCollection = {
+  slug: 'accounts',
+  fields: [
+    {
+      name: 'accountId',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'providerId',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'user',
+      type: 'relationship',
+      relationTo: 'users',
+      required: true,
+    },
+    {
+      name: 'password',
+      type: 'text',
+      required: true,
+    },
+  ],
+  timestamps: true,
+} satisfies CollectionConfig
+
 const fixtureMappings: FixtureMapping[] = [
   { fileName: 'addresses.json', collectionSlug: 'addresses' },
   { fileName: 'carts.json', collectionSlug: 'carts' },
+  { fileName: 'accounts.json', collectionSlug: 'accounts' },
   { fileName: 'comment-likes.json', collectionSlug: 'comment-likes' },
   { fileName: 'comments.json', collectionSlug: 'comments' },
   { fileName: 'companies.json', collectionSlug: 'companies' },
@@ -189,6 +218,7 @@ const buildFixtureConfig = async (): Promise<SanitizedConfig> => {
       Media,
       Categories,
       fixtureUsersCollection,
+      fixtureAccountsCollection,
       Identities,
       Companies,
       Jobs,
