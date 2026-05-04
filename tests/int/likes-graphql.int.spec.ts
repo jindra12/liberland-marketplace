@@ -1,5 +1,3 @@
-import { createHash } from 'node:crypto'
-
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { CollectionSlug, Payload } from 'payload'
 import type { User } from '@/payload-types'
@@ -124,8 +122,6 @@ const likeableTargetDefinitions: Array<Omit<LikeTargetDoc, 'id'>> = [
 ]
 
 const quoteGraphQLString = (value: string): string => JSON.stringify(value)
-
-const hashIP = (ip: string): string => createHash('sha256').update(ip).digest('hex')
 
 const createUser = async (label: string): Promise<User> => {
   if (!payload) {
@@ -615,26 +611,30 @@ describe('Likes GraphQL access', () => {
     )
   })
 
-  it('supports anonymous likes using a stable IP hash for every likeable collection', async () => {
+  it('rejects anonymous likes for every likeable collection', async () => {
     if (bootstrapError || !payload) {
       return
     }
 
     const targets = await createLikeableDocuments()
-    const anonymousIP = '203.0.113.10'
-    const anonymousUserId = hashIP(anonymousIP)
 
-    await Promise.all(
+    const responses = await Promise.all(
       targets.map((target) =>
-        assertLikeToggle({
-          expectedUserId: anonymousUserId,
-          headers: {
-            'x-forwarded-for': anonymousIP,
-          },
-          target,
+        runGraphQLOperation({
+          query: buildSetLikeStateMutation({
+            collection: target.graphqlCollection,
+            id: target.id,
+            liked: true,
+          }),
         }),
       ),
     )
+
+    responses.forEach((response) => {
+      expect(response.response.status).toBe(200)
+      expect(response.body.errors).toBeDefined()
+      expect(response.body.data).toBeUndefined()
+    })
   })
 
   it('returns hasLiked and likeCount on collection list queries', async () => {
