@@ -4,7 +4,6 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import type { Plugin } from 'payload'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { oidcProvider } from 'better-auth/plugins'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
@@ -204,12 +203,6 @@ export const plugins: Plugin[] = [
         group: 'Directory',
       },
     },
-  }),
-  vercelBlobStorage({
-    collections: {
-      media: true,
-    },
-    token: process.env.BLOB_READ_WRITE_TOKEN,
   }),
   hideAdminCollections,
 ]

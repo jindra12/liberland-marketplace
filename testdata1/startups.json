@@ -1,0 +1,40 @@
+[
+  {
+    "_id": {
+      "$oid": "5d569a3a5687eef331dba0ec"
+    },
+    "createdAt": {
+      "$date": "2026-03-02T18:57:21.124Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-22T23:19:48.38Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Stack4Me (testdata1)",
+    "company": {
+      "$oid": "9db3253a7c7caaef82a188cd"
+    },
+    "description": "# **Stack4Me**\n\n\n### **Your supplements should be as unique as you are.**\n\n\n---\n\n\n## **💊 Stop guessing. Start optimizing.**\n\nYou take supplements every day but **you have no idea if any of it is actually working.**\n\nThe average person spends over $50 a month on supplements chosen through guesswork, marketing, and word of mouth. No one tests whether the stack is right for *them*. No one tracks the results. And no one ever adjusts.\n\n**We're building Stack4Me to change that.**\n\n\n---\n\n\n## **🧬 What is Stack4Me?**\n\nStack4Me is a **personalized supplement subscription that learns and adapts with you**  month after month.\n\nHere's how it works:\n\n**Step 1 — Tell us about you.** Complete a detailed questionnaire about your health, lifestyle, diet, sleep, fitness goals, and what you want to improve. Energy? Focus? Recovery? Better sleep? All of the above? We start there.\n\n**Step 2 — We build your stack.** Our algorithm analyzes your profile against thousands of ingredient-outcome combinations from nutritional science research. It generates a custom supplement mix — *your* formula — along with predictions for what you should expect to feel.\n\n**Step 3 — You approve (or tweak) it.** We show you exactly what's in your stack and why. Don't want melatonin? Swap it out. Want to add more focus support? Done. You're always in control.\n\n**Step 4 — It arrives at your door.** Our production systems allows for automated production of batches just for you. Your supplements come in bottles that last you a month. Just grab the pills over the day.\n\n**Step 5 — Track how you feel.** Our app gives you a quick daily check-in — 30 seconds to log energy, mood, sleep quality, and any side effects. It's dead simple, but it's where the magic happens.\n\n**Step 6 — Your stack evolves.** Every month, the algorithm looks at your tracking data and adjusts. Something not working? It gets swapped. A dosage needs tuning? It gets dialed in. An ingredient is crushing it? We lean into it.\n\n**The longer you use Stack4Me, the better it gets.**\n\n\n---\n\n\n## **🤔 Why does this matter?**\n\nThe supplement industry is a $150 billion market built on a broken premise: that one product works the same for everyone. It doesn't. Your body, your diet, your stress levels, your sleep — they're all different. Your supplements should be too.\n\nWe measure, learn, and improve. Think of it as having a nutritionist who actually pays attention and adjusts your plan every single month based on how you're responding.\n\n\n---\n\n\n## **💰 What your funding makes possible**\n\nWe're raising **$150,000** to take Stack4Me from beta to public launch.\n\n**Product &amp; Engineering (25% — $37,500)** Finalize the recommendation engine, ship the full mobile app.\n\n**Manufacturing &amp; First Production Run (40% — $60,000)** Fund the first large-scale production run with our manufacturing partner and build the per-user packaging pipeline.\n\n**User Acquisition &amp; Community (20% — $30,000)** Launch partnerships with health creators, run our ambassador program, and build the Stack4Me community.\n\n**Operations &amp; Compliance (15% — $22,500)** Regulatory compliance, quality testing, shipping logistics, and customer support infrastructure.\n\n\n---\n\n\n## **🧪 The science behind the stack**\n\nWe're not making this up as we go. Stack4Me recommendation engine is built on peer-reviewed nutritional science — not wellness trends or influencer hype.\n\nEvery ingredient in our database is mapped to published research on dosage, bioavailability, interactions, and measured outcomes. The algorithm builds combinations that account for how ingredients work *together*, avoids redundancies, flags potential interactions with medications, and prioritizes bioavailable forms your body can actually absorb. Each month of tracked data tightens the model's confidence about what works for you specifically.\n\n**We're building a system that gets smarter the more you use it.**\n\n\n---\n\n\n## **❓ FAQ**\n\n**What if I'm already taking supplements?** Great — tell us in the questionnaire. We'll account for what you're already taking and build around it, so you're not doubling up or wasting money.\n\n**What if I don't like my stack?** You can edit your stack before it ships. If something doesn't feel right after you start, flag it in the app and we'll adjust in the next cycle.\n\n**Are the supplements high quality?** Yes. We manufacture in an FDA-registered, GMP-certified facility. Every batch is third-party tested for purity and potency. We publish our test results.\n\n**Do you ship internationally?** At launch, we'll ship to the US, Canada, UK, and EU. We plan to expand to additional countries within the first year.\n\n\n---\n\n\n## **🚀 Join the future of supplements**\n\nYou wouldn't wear someone else's prescription glasses. You wouldn't follow someone else's workout plan forever without adjusting. **So why are you taking someone else's supplements?**\n\nStack4Me is building what the supplement industry should have been all along — personal, adaptive, and grounded in your real data.\n\nBack us today and be among the first to experience supplements that actually learn what works for you.\n\n**Your body is one of a kind. Your supplements should be too.**\n (testdata1)",
+    "image": {
+      "$oid": "d574398fe3bb06376a58a118"
+    },
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "fundsNeeded": {
+      "amount": 150000,
+      "currency": "USD"
+    },
+    "lookingFor": [
+      "funding",
+      "founders"
+    ],
+    "alreadyHave": [],
+    "stage": "idea",
+    "_status": "published",
+    "__v": 0,
+    "completenessScore": 4
+  }
+]

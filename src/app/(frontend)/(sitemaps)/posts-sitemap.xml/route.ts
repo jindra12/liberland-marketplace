@@ -50,7 +50,7 @@ const getPostsSitemap = unstable_cache(
   },
 )
 
-export async function GET() {
+export const GET = async () => {
   const sitemap = await getPostsSitemap()
 
   return getServerSideSitemap(sitemap)

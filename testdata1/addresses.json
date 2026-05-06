@@ -1,0 +1,27 @@
+[
+  {
+    "_id": {
+      "$oid": "9f6019bc39667f1fe4e71b9d"
+    },
+    "customer": {
+      "$oid": "e025f62ecfc919c3cd7112ef"
+    },
+    "title": "Home (testdata1)",
+    "firstName": "Arman (testdata1)",
+    "lastName": "Tester (testdata1)",
+    "company": "Test Data LLC (testdata1)",
+    "addressLine1": "1 Test Street (testdata1)",
+    "addressLine2": "Suite 42 (testdata1)",
+    "city": "Prague (testdata1)",
+    "state": "Prague (testdata1)",
+    "postalCode": "11000 (testdata1)",
+    "country": "CZ",
+    "phone": "+420777000111 (testdata1)",
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]

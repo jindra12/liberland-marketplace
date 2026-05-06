@@ -64,6 +64,32 @@ export const Companies: CollectionConfig = {
   },
   fields: [
     serverURLField(),
+    {
+      name: 'noAutoPost',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Disable automated posting?',
+    },
+    {
+      name: 'verification',
+      type: 'select',
+      defaultValue: 'unverified',
+      label: 'Verification',
+      options: [
+        {
+          label: 'Trader',
+          value: 'trader',
+        },
+        {
+          label: 'Private seller',
+          value: 'private-seller',
+        },
+        {
+          label: 'Unverified / not provided',
+          value: 'unverified',
+        },
+      ],
+    },
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },
     { name: 'phone', type: 'text' },

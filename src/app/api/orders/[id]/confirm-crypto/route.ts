@@ -9,7 +9,7 @@ const extractOrderID = (request: Request): string | null => {
   return match?.[1] ? decodeURIComponent(match[1]) : null
 }
 
-export async function POST(request: Request): Promise<Response> {
+export const POST = async (request: Request): Promise<Response> => {
   const orderID = extractOrderID(request)
   if (!orderID) {
     return Response.json({ error: 'Order ID is required' }, { status: 400 })

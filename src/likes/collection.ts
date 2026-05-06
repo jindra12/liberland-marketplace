@@ -122,7 +122,8 @@ const buildLikeCountDeleteHook =
 const likeFields: Field[] = [
   {
     name: 'userId',
-    type: 'text',
+    relationTo: 'users',
+    type: 'relationship',
     required: true,
     admin: {
       hidden: true,

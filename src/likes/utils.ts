@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto'
 import type { PayloadRequest } from 'payload'
 
 import { LIKEABLE_COLLECTIONS, type LikeableCollectionSlug } from './constants'
@@ -56,34 +55,12 @@ export const clearCachedLikedTargetIDs = ({
   delete context.likedTargetIDsByCollection[`${collectionSlug}:${actorKey}`]
 }
 
-export const getRequestIP = (req: PayloadRequest): string | null => {
-  const forwardedFor = req.headers.get('x-forwarded-for')
-  const forwardedForIP =
-    forwardedFor && forwardedFor.length > 0 ? forwardedFor.split(',')[0]?.trim() ?? null : null
-
-  const headerCandidates = [
-    req.headers.get('cf-connecting-ip'),
-    req.headers.get('x-real-ip'),
-    forwardedForIP,
-    (req as { ip?: string }).ip ?? null,
-  ]
-
-  const ip = headerCandidates.find((candidate) => typeof candidate === 'string' && candidate.length > 0)
-
-  return typeof ip === 'string' ? ip : null
-}
-
 export const getLikeActorKey = (req: PayloadRequest): string | null => {
   if (req.user?.id) {
     return String(req.user.id)
   }
 
-  const ip = getRequestIP(req)
-  if (!ip) {
-    return null
-  }
-
-  return createHash('sha256').update(ip).digest('hex')
+  return null
 }
 
 export const getLikeTargetID = (value: unknown): string | null => {

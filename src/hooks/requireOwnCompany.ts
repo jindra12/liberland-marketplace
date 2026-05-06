@@ -32,6 +32,32 @@ const getOwnerID = (doc?: MaybeOwnerDoc | null): null | string => {
   return toStringID(doc?.createdBy as MaybeID)
 }
 
+const isBotUser = (user: unknown): boolean => {
+  if (!user || typeof user !== 'object' || !('bot' in user)) {
+    return false
+  }
+
+  return (user as { bot?: unknown }).bot === true
+}
+
+const canBotBypassOwnership = async ({
+  companyID,
+  req,
+}: {
+  companyID: string
+  req: Parameters<CollectionBeforeChangeHook>[0]['req']
+}): Promise<boolean> => {
+  const company = await req.payload.findByID({
+    collection: 'companies',
+    depth: 0,
+    id: companyID,
+    overrideAccess: true,
+    req,
+  })
+
+  return Reflect.get(company, 'noAutoPost') !== true
+}
+
 export const requireOwnCompany: CollectionBeforeChangeHook = async ({
   data,
   operation,
@@ -41,19 +67,25 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
   const companyInput = (data?.company ?? originalDoc?.company) as MaybeID
   const companyID = toStringID(companyInput)
 
+  if (isBotUser(req.user) && companyID) {
+    if (await canBotBypassOwnership({ companyID, req })) {
+      return data
+    }
+  }
+
+  if (isBotUser(req.user) && !companyID) {
+    return data
+  }
+
   if (!companyID) {
     return data
   }
 
-  if (operation !== 'create' && !Object.prototype.hasOwnProperty.call(data ?? {}, 'company')) {
+  if (operation !== 'create' && !(data && 'company' in data)) {
     return data
   }
 
-  const ownerSource =
-    Object.prototype.hasOwnProperty.call(data ?? {}, 'authors') ||
-    Object.prototype.hasOwnProperty.call(data ?? {}, 'createdBy')
-      ? data
-      : originalDoc
+  const ownerSource = data && ('authors' in data || 'createdBy' in data) ? data : originalDoc
   const ownerID = getOwnerID(ownerSource)
 
   if (!ownerID) {

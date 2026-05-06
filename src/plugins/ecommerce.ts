@@ -12,6 +12,7 @@ import {
   lazyComputeOrderAmountOnCreate,
   lazyLockOrderCryptoPricesOnCreate,
   lazyPopulateProductCryptoPrices,
+  lazySendOrderCompletedNotifications,
   lazySendItemUpdateNotifications,
   lazySendRelatedItemPublishedNotifications,
   lazyUpdateIdentityItemCountAfterChange,
@@ -190,6 +191,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
             beforeDocumentControls: [
               ...(defaultCollection.admin?.components?.edit?.beforeDocumentControls ?? []),
               '@/components/OrderConfirmButton',
+              '@/components/OrderInventoryButton',
             ],
           },
         },
@@ -226,6 +228,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
           ...(defaultCollection.hooks?.afterChange ?? []),
           lazyAutoConfirmOrderOnTransactionHashAdd,
           lazyUpdateProductPurchaseCountAfterOrderValidation,
+          lazySendOrderCompletedNotifications,
         ],
       },
     }),

@@ -1,6 +1,7 @@
 import type { CollectionSlug, GraphQLExtension, PayloadRequest } from 'payload'
 
 import { LIKEABLE_COLLECTIONS } from './constants'
+import { requireVerifiedEmail } from '@/hooks/requireVerifiedEmail'
 import {
   clearCachedLikedTargetIDs,
   getCachedLikedTargetIDs,
@@ -126,6 +127,8 @@ const setLikeState = async ({
     graphQL,
     req,
   })
+
+  requireVerifiedEmail(req, 'You must verify your email before liking content.')
 
   const likeCollectionSlug = getLikeCollectionSlug(collection.collectionSlug)
 

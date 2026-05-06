@@ -79,3 +79,22 @@ export const lazyUpdateProductPurchaseCountAfterOrderValidation: CollectionAfter
   )
   return updateProductPurchaseCountAfterOrderValidation(args)
 }
+
+export const lazySendOrderCompletedNotifications: CollectionAfterChangeHook = async (args) => {
+  const { sendOrderCompletedNotifications } = await import('./sendOrderCompletedNotifications')
+  return sendOrderCompletedNotifications(args)
+}
+
+export const lazySendReportCreatedNotifications: CollectionAfterChangeHook = async (args) => {
+  const { sendReportCreatedNotifications } = await import('./sendReportCreatedNotifications')
+  return sendReportCreatedNotifications(args)
+}
+
+export const lazySendInformationRequestCreatedNotifications: CollectionAfterChangeHook = async (
+  args,
+) => {
+  const { sendInformationRequestCreatedNotifications } = await import(
+    './sendInformationRequestCreatedNotifications'
+  )
+  return sendInformationRequestCreatedNotifications(args)
+}
