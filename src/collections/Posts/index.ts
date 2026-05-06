@@ -11,6 +11,7 @@ import { populateAuthors } from './hooks/populateAuthors'
 import { setPostAuthors } from './hooks/setPostAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
+import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 
 import {
   MetaDescriptionField,
@@ -229,6 +230,7 @@ export const Posts: CollectionConfig<'posts'> = {
     beforeChange: [
       setPostAuthors,
       requireOwnCompany,
+      requireVerifiedEmailToPublish,
       computeContentRanking({
         fieldPaths: ['title', 'heroImage', 'content', 'relatedPosts', 'categories', 'meta.title', 'meta.description', 'meta.image'],
       }),
