@@ -1,6 +1,6 @@
-import type { GraphQLExtension } from 'payload'
+import type { GraphQLExtension, PayloadRequest } from 'payload'
 
-import { canNonAdminCreateContent } from '@/utilities/contentCreation'
+import { canCreateContent } from '@/utilities/contentCreation'
 
 const getServerUrl = (): string =>
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001'
@@ -20,9 +20,9 @@ export const permissionsGraphQLQueries: GraphQLExtension = (graphQL) => {
 
   return {
     permissions: {
-      resolve: () => [
+      resolve: (_source: unknown, _args: unknown, context: { req: PayloadRequest }) => [
         {
-          canCreateContentAsNonAdmin: canNonAdminCreateContent(),
+          canCreateContentAsNonAdmin: canCreateContent(context.req.user),
           serverUrl: getServerUrl(),
         },
       ],

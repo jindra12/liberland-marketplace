@@ -11,9 +11,13 @@ export const createDefaultCompany: CollectionAfterChangeHook = async ({
 
   const name = doc.name || doc.email
   const description = `${name}'s personal company`
+  const shouldCreatePrivateCompany =
+    !req.user?.role?.includes('admin') &&
+    process.env.BLOCK_NON_ADMIN_CONTENT_CREATION === 'true'
+
   const companyData = {
     createdBy: doc.id,
-    isPrivate: true,
+    isPrivate: shouldCreatePrivateCompany,
     name,
     description,
     email: doc.email,

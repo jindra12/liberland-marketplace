@@ -80,6 +80,7 @@ export const Companies: CollectionConfig = {
       name: 'isPrivate',
       type: 'checkbox',
       defaultValue: false,
+      index: true,
     },
     {
       name: 'noAutoPost',
