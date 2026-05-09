@@ -1,7 +1,6 @@
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
-  CollectionSlug,
   PayloadRequest,
 } from 'payload'
 
@@ -91,54 +90,54 @@ const getLatestLikeTimestamp = async ({
 
 export const syncLastLikeAtAfterLikeChange =
   (collectionSlug: LikeableCollectionSlug): CollectionAfterChangeHook =>
-  async ({ doc, operation, req }) => {
-    if (operation !== 'create') {
+    async ({ doc, operation, req }) => {
+      if (operation !== 'create') {
+        return doc
+      }
+
+      const targetID = getLikeTargetID((doc as { targetID?: unknown }).targetID)
+      const createdAt = (doc as { createdAt?: string | Date | null }).createdAt
+
+      if (!targetID || !createdAt) {
+        return doc
+      }
+
+      await updateTargetDocument({
+        collectionSlug,
+        data: {
+          lastLikeAt: new Date(createdAt).toISOString(),
+        },
+        id: targetID,
+        req,
+      })
+
       return doc
     }
-
-    const targetID = getLikeTargetID((doc as { targetID?: unknown }).targetID)
-    const createdAt = (doc as { createdAt?: string | Date | null }).createdAt
-
-    if (!targetID || !createdAt) {
-      return doc
-    }
-
-    await updateTargetDocument({
-      collectionSlug,
-      data: {
-        lastLikeAt: new Date(createdAt).toISOString(),
-      },
-      id: targetID,
-      req,
-    })
-
-    return doc
-  }
 
 export const syncLastLikeAtAfterLikeDelete =
   (collectionSlug: LikeableCollectionSlug): CollectionAfterDeleteHook =>
-  async ({ doc, req }) => {
-    const targetID = getLikeTargetID((doc as { targetID?: unknown }).targetID)
+    async ({ doc, req }) => {
+      const targetID = getLikeTargetID((doc as { targetID?: unknown }).targetID)
 
-    if (!targetID) {
+      if (!targetID) {
+        return doc
+      }
+
+      await updateTargetDocument({
+        collectionSlug,
+        data: {
+          lastLikeAt: await getLatestLikeTimestamp({
+            collectionSlug,
+            req,
+            targetID,
+          }),
+        },
+        id: targetID,
+        req,
+      })
+
       return doc
     }
-
-    await updateTargetDocument({
-      collectionSlug,
-      data: {
-        lastLikeAt: await getLatestLikeTimestamp({
-          collectionSlug,
-          req,
-          targetID,
-        }),
-      },
-      id: targetID,
-      req,
-    })
-
-    return doc
-  }
 
 export const syncSubscriberCountAfterChange: CollectionAfterChangeHook = async ({
   doc,

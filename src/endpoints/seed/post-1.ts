@@ -10,7 +10,6 @@ export type PostArgs = {
 
 export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> = ({
   heroImage,
-  blockImage,
   author,
   company,
 }) => {

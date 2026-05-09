@@ -1,5 +1,4 @@
 import { anyone } from '@/access/anyone'
-import { authenticated } from '@/access/authenticated'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
@@ -8,7 +7,23 @@ import { serverURLField } from '@/fields/serverURLField'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { lazySendItemUpdateNotifications } from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
-import type { CollectionConfig } from 'payload'
+import { ObjectId } from 'mongodb'
+import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload'
+
+const populateIdentityID: CollectionBeforeValidateHook = (args) => {
+  if (args.operation !== 'create') {
+    return args.data
+  }
+
+  if (args.data?.id) {
+    return args.data
+  }
+
+  return {
+    ...args.data,
+    id: new ObjectId().toHexString(),
+  }
+}
 
 export const Identities: CollectionConfig = {
   slug: 'identities',
@@ -23,12 +38,13 @@ export const Identities: CollectionConfig = {
   },
   defaultSort: '-contentRankScore',
   access: {
-    create: authenticated,
+    create: ({ req }) => Boolean(req.user?.role?.includes('admin')),
     delete: onlyOwnDocsOrAdmin,
     read: anyone,
     update: onlyOwnDocsOrAdmin,
   },
   hooks: {
+    beforeValidate: [populateIdentityID],
     beforeChange: [
       computeContentRanking({
         fieldPaths: ['website', 'image', 'description'],
@@ -38,6 +54,13 @@ export const Identities: CollectionConfig = {
   },
   fields: [
     serverURLField(),
+    {
+      name: 'id',
+      type: 'text',
+      required: true,
+      unique: true,
+      index: true,
+    },
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },
     {

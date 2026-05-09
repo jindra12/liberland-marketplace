@@ -7,7 +7,7 @@ import Link from 'next/link'
 import React from 'react'
 
 export const Footer = async () => {
-  const footerData: FooterType = await getCachedGlobal('footer', 1)()
+  const footerData = await getCachedGlobal('footer', 1)() as FooterType;
 
   const navItems = footerData?.navItems || []
 

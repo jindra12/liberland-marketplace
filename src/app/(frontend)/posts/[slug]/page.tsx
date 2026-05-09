@@ -8,7 +8,7 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
-import type { Post } from '@/payload-types'
+import type { Post as PostType } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -42,7 +42,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <PostHero post={post} />
+      <PostHero post={post as PostType} />
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">

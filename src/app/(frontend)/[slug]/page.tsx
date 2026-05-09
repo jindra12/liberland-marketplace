@@ -12,6 +12,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import type { Page as PageType } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -66,7 +67,7 @@ export const generateMetadata = async ({ params: paramsPromise }: Args): Promise
     slug: decodedSlug,
   })
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page as PageType })
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {

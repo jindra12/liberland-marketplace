@@ -1,5 +1,5 @@
-import { authenticated } from '@/access/authenticated'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
+import { authenticatedCanCreateCompany } from '@/access/authenticatedCanCreateCompany'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
@@ -21,6 +21,18 @@ export const Companies: CollectionConfig = {
   slug: 'companies',
   defaultSort: '-contentRankScore',
   hooks: {
+    beforeValidate: [
+      ({ data, operation }) => {
+        if (operation !== 'create') {
+          return data
+        }
+
+        return {
+          ...data,
+          isPrivate: data?.isPrivate === true,
+        }
+      },
+    ],
     beforeChange: [
       computeContentRanking({
         fieldPaths: ['website', 'phone', 'email', 'image', 'description'],
@@ -57,13 +69,18 @@ export const Companies: CollectionConfig = {
     },
   },
   access: {
-    create: authenticated,
+    create: authenticatedCanCreateCompany,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
     serverURLField(),
+    {
+      name: 'isPrivate',
+      type: 'checkbox',
+      defaultValue: false,
+    },
     {
       name: 'noAutoPost',
       type: 'checkbox',

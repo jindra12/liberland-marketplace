@@ -3,7 +3,6 @@ import type { PostArgs } from './post-1'
 
 export const post2: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> = ({
   heroImage,
-  blockImage,
   author,
   company,
 }) => {

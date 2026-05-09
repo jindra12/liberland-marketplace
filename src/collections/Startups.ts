@@ -1,5 +1,5 @@
-import { authenticated } from '@/access/authenticated'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
+import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateContent'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
@@ -76,7 +76,7 @@ export const Startups: CollectionConfig = {
     },
   },
   access: {
-    create: authenticated,
+    create: authenticatedCanCreateContent,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,

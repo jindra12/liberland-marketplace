@@ -1,4 +1,4 @@
-import { authenticated } from '@/access/authenticated'
+import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateContent'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
@@ -68,7 +68,7 @@ export const Jobs: CollectionConfig = {
     drafts: true,
   },
   access: {
-    create: authenticated,
+    create: authenticatedCanCreateContent,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,

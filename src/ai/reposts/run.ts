@@ -98,7 +98,7 @@ const getBotSession = async (payload: Payload): Promise<AiBotSession | null> => 
       token: login.token,
       user: {
         bot: true,
-        id: botUser.id,
+        id: botUser.id.toString(),
         role: botUser.role,
       },
     }
@@ -154,7 +154,7 @@ const uploadImage = async ({
       user: req.user,
     })
 
-    return media.id
+    return media.id.toString()
   } catch {
     return null
   }

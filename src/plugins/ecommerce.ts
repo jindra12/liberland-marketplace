@@ -1,5 +1,6 @@
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
 import { authenticated } from '@/access/authenticated'
+import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateContent'
 import { addressFields } from '@/fields/addressFields'
 import { anyone } from '@/access/anyone'
 import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
@@ -26,6 +27,7 @@ import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { mergeFields } from '@/utilities/mergeFields'
 import { replaceEcommerceAdminComponentPaths } from './replaceEcommerceAdminComponentPaths'
 import type { Field } from 'payload'
+import type { AccessUser } from '@/access/types'
 
 const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'transactionHashes'])
 
@@ -34,10 +36,10 @@ const canUpdateOrderCheckoutFields = ({
   req,
 }: {
   data?: unknown
-  req: { user?: { role?: null | string | string[] } | null }
+  req: { user?: AccessUser }
 }): boolean => {
   const role = req.user?.role
-  const isAdmin = Array.isArray(role) ? role.includes('admin') : role?.includes('admin') || false
+  const isAdmin = role?.includes('admin') || false
 
   if (isAdmin) {
     return true
@@ -115,7 +117,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
       defaultSort: '-contentRankScore',
       access: {
         ...defaultCollection.access,
-        create: authenticated,
+        create: authenticatedCanCreateContent,
         read: anyone,
         update: onlyOwnProductsOrAdmin,
         delete: onlyOwnProductsOrAdmin,

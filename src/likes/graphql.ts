@@ -1,4 +1,4 @@
-import type { CollectionSlug, GraphQLExtension, PayloadRequest } from 'payload'
+import type { GraphQLExtension, PayloadRequest } from 'payload'
 
 import { LIKEABLE_COLLECTIONS } from './constants'
 import { requireVerifiedEmail } from '@/hooks/requireVerifiedEmail'
@@ -92,10 +92,10 @@ const getLikeStatus = async ({
   const likedTargetIDs =
     actorKey !== null
       ? await getCachedLikedTargetIDs({
-          actorKey,
-          collectionSlug: collection.collectionSlug,
-          req,
-        })
+        actorKey,
+        collectionSlug: collection.collectionSlug,
+        req,
+      })
       : new Set<string>()
 
   const targetID = getLikeTargetID(document)

@@ -27,6 +27,7 @@ import { default as default_f3be547b5334e42377862cef8e141005 } from '@/component
 import { default as default_9df2b0dc0e775c6fc38336766e510112 } from '@/components/PayloadEcommerce/VariantOptionsSelector'
 import { default as default_98b1dab40a28e314283235f93db425cc } from '@/components/PayloadEcommerce/PriceCell'
 import { default as default_505a96f788a1dc750b556826d28a1f43 } from '@/components/PayloadEcommerce/PriceInput'
+import { default as default_5b8b6b8f9c4a4f2cb44f72d8a2f0d8d4 } from '@/components/BanUserButton'
 import { default as default_c24628581073b0241679093dd1eba02a } from '@/components/OrderConfirmButton'
 import { default as default_9befb8d035ff1d7dc686a8d08c2ae4bb } from '@/components/OrderInventoryButton'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
@@ -76,6 +77,7 @@ export const importMap = {
   "@/components/PayloadEcommerce/VariantOptionsSelector#default": default_9df2b0dc0e775c6fc38336766e510112,
   "@/components/PayloadEcommerce/PriceCell#default": default_98b1dab40a28e314283235f93db425cc,
   "@/components/PayloadEcommerce/PriceInput#default": default_505a96f788a1dc750b556826d28a1f43,
+  "@/components/BanUserButton#default": default_5b8b6b8f9c4a4f2cb44f72d8a2f0d8d4,
   "@/components/OrderConfirmButton#default": default_c24628581073b0241679093dd1eba02a,
   "@/components/OrderInventoryButton#default": default_9befb8d035ff1d7dc686a8d08c2ae4bb,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,

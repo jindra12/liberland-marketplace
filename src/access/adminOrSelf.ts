@@ -5,6 +5,7 @@ export const adminOrSelf: Access = ({ req }) => {
 
   if (!user) return false
   if (user.role?.includes('admin')) return true
+  if (!user.id) return false
 
   return {
     id: {
