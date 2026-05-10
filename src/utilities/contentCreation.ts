@@ -1,6 +1,5 @@
 import type { AccessUser } from '@/access/types'
-
-const isAdminUser = (user: AccessUser): boolean => user?.role?.includes('admin') || false
+import { isAdminUser } from '@/access/admin'
 
 export const isNonAdminContentCreationBlocked = (): boolean =>
   process.env.BLOCK_NON_ADMIN_CONTENT_CREATION === 'true'

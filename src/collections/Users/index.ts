@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { adminOnlyFieldAccess, isAdminUser } from '@/access/admin'
 import { anyone } from '@/access/anyone'
 import { adminOrSelf } from '@/access/adminOrSelf'
 import { Forbidden } from 'payload'
@@ -8,10 +9,6 @@ import { userWalletsField } from '@/fields/userWalletsField'
 import { createDefaultBotUser } from '@/hooks/createDefaultBotUser'
 import { createDefaultCompany } from '@/hooks/createDefaultCompany'
 import { populateReportedLinks } from './hooks/populateReportedLinks'
-import { AccessUser } from '@/access/types'
-
-const isAdminUser = (user: { role?: null | string | string[] } | null | undefined): boolean =>
-  user?.role?.includes('admin') || false
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -25,7 +22,7 @@ export const Users: CollectionConfig = {
   admin: {
     defaultColumns: ['name', 'email'],
     useAsTitle: 'name',
-    hidden: ({ user }) => !user?.role?.includes('admin'),
+    hidden: ({ user }) => !isAdminUser(user),
     components: {
       edit: {
         beforeDocumentControls: ['@/components/BanUserButton'],
@@ -57,7 +54,7 @@ export const Users: CollectionConfig = {
             }
           }
 
-          if (!req.user?.role?.includes('admin')) {
+          if (!isAdminUser(req.user)) {
             return {
               ...data,
               bot: false,
@@ -69,7 +66,7 @@ export const Users: CollectionConfig = {
       ({ req, operation, data, originalDoc }) => {
         if (operation !== 'update') return data
         if (!req.user) return data
-        if (isAdminUser(req.user as AccessUser)) return data
+        if (isAdminUser(req.user)) return data
 
         return {
           ...data,
@@ -100,9 +97,9 @@ export const Users: CollectionConfig = {
         hidden: true,
       },
       access: {
-        create: ({ req }) => Boolean(req.user?.role?.includes('admin')),
-        read: ({ req }) => Boolean(req.user?.role?.includes('admin')),
-        update: ({ req }) => Boolean(req.user?.role?.includes('admin')),
+        create: adminOnlyFieldAccess,
+        read: adminOnlyFieldAccess,
+        update: adminOnlyFieldAccess,
       },
     },
     {
@@ -114,8 +111,8 @@ export const Users: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       access: {
-        create: ({ req }) => Boolean(req.user?.role?.includes('admin')),
-        update: ({ req }) => Boolean(req.user?.role?.includes('admin')),
+        create: adminOnlyFieldAccess,
+        update: adminOnlyFieldAccess,
       },
     },
     {

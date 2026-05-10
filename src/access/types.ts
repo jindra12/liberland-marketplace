@@ -1,4 +1,4 @@
 export type AccessUser = {
   id?: string | number
-  role?: ('admin' | 'user')[] | null
+  role?: string[] | null
 } | null | undefined

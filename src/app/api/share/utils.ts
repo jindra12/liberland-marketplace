@@ -127,9 +127,8 @@ const getLargestImageURL = ($: cheerio.CheerioAPI, baseURL: URL): string | null 
 
 const detectSinglePageApp = ($: cheerio.CheerioAPI): boolean => {
   const appShellMarkers = $('#root, #app, #__next, [data-reactroot], [data-spa-root]')
-  const scriptCount = $('script').length
 
-  return appShellMarkers.length > 0 || scriptCount > 3
+  return appShellMarkers.length > 0;
 }
 
 export const extractShareMetadataFromHTML = async ({
@@ -150,7 +149,7 @@ export const extractShareMetadataFromHTML = async ({
   )
   const headImage = resolveURL(
     getMetaValue($, ['meta[property="og:image"]', 'meta[name="twitter:image"]', 'link[rel="image_src"]'], 'content') ||
-      getMetaValue($, ['link[rel="image_src"]'], 'href'),
+    getMetaValue($, ['link[rel="image_src"]'], 'href'),
     baseURL,
   )
   const isSinglePageApp = detectSinglePageApp($) || (!headTitle && !headDescription && !headImage)
@@ -213,15 +212,15 @@ export const resolveShareCompany = async ({
 
   const where: Where = companyId
     ? {
-        and: [
-          ownedCompanyWhere,
-          {
-            id: {
-              equals: companyId,
-            },
+      and: [
+        ownedCompanyWhere,
+        {
+          id: {
+            equals: companyId,
           },
-        ],
-      }
+        },
+      ],
+    }
     : ownedCompanyWhere
 
   const companyResult = await payload.find({

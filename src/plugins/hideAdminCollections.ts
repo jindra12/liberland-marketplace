@@ -1,5 +1,7 @@
 import type { CollectionConfig, Config, GlobalConfig } from 'payload'
 
+import { isAdminUser } from '@/access/admin'
+
 const USER_VISIBLE_SLUGS = ['companies', 'jobs', 'identities', 'products', 'startups', 'search']
 
 export const hideAdminCollections = (config: Config): Config => ({
@@ -13,7 +15,7 @@ export const hideAdminCollections = (config: Config): Config => ({
       ...collection,
       admin: {
         ...collection.admin,
-        hidden: ({ user }) => !user?.role?.includes('admin'),
+        hidden: ({ user }) => !isAdminUser(user),
       },
     }
   }),
@@ -24,7 +26,7 @@ export const hideAdminCollections = (config: Config): Config => ({
       ...global,
       admin: {
         ...global.admin,
-        hidden: ({ user }) => !user?.role?.includes('admin'),
+        hidden: ({ user }) => !isAdminUser(user),
       },
     }
   }),

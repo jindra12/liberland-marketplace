@@ -5,11 +5,7 @@ import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
 import { image1 } from './image-1'
-import { image2 } from './image-2'
 import { imageHero1 } from './image-hero-1'
-import { post1 } from './post-1'
-import { post2 } from './post-2'
-import { post3 } from './post-3'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -76,44 +72,18 @@ export const seed = async ({
       .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
   )
 
-  payload.logger.info(`— Seeding demo author and user...`)
-
-  await payload.delete({
-    collection: 'users',
-    depth: 0,
-    where: {
-      email: {
-        equals: 'demo-author@example.com',
-      },
-    },
-  })
-
   payload.logger.info(`— Seeding media...`)
 
-  const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
+  const [image1Buffer, hero1Buffer] = await Promise.all([
     fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-1.webp',
     ),
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp',
     ),
   ])
 
-  const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
-    payload.create({
-      collection: 'users',
-      data: {
-        name: 'Demo Author',
-        email: 'demo-author@example.com',
-        emailVerified: false,
-      },
-    }),
+  const [image1Doc, imageHomeDoc] = await Promise.all([
     payload.create({
       collection: 'media',
       data: image1,
@@ -121,19 +91,12 @@ export const seed = async ({
     } as any),
     payload.create({
       collection: 'media',
-      data: image2,
-      file: image2Buffer,
-    } as any),
-    payload.create({
-      collection: 'media',
-      data: image2,
-      file: image3Buffer,
-    } as any),
-    payload.create({
-      collection: 'media',
       data: imageHero1,
       file: hero1Buffer,
     } as any),
+  ])
+
+  await Promise.all(
     categories.map((category) =>
       payload.create({
         collection: 'categories',
@@ -143,112 +106,7 @@ export const seed = async ({
         },
       } as any),
     ),
-  ])
-
-  const demoCompanyResult = await payload.find({
-    collection: 'companies',
-    depth: 0,
-    limit: 1,
-    overrideAccess: true,
-    where: {
-      and: [
-        {
-          email: {
-            equals: demoAuthor.email,
-          },
-        },
-        {
-          name: {
-            equals: demoAuthor.name,
-          },
-        },
-      ],
-    },
-  })
-
-  const demoCompany = demoCompanyResult.docs[0]
-
-  if (!demoCompany) {
-    throw new Error('Failed to locate the demo company for seeded posts.')
-  }
-
-  payload.logger.info(`— Seeding posts...`)
-
-  // Do not create posts with `Promise.all` because we want the posts to be created in order
-  // This way we can sort them by `createdAt` or `publishedAt` and they will be in the expected order
-  const post1Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post1({
-      heroImage: image1Doc as any,
-      blockImage: image2Doc as any,
-      author: demoAuthor,
-      company: demoCompany,
-    }),
-  })
-
-  const post2Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post2({
-      heroImage: image2Doc as any,
-      blockImage: image3Doc as any,
-      author: demoAuthor,
-      company: demoCompany,
-    }),
-  })
-
-  const post3Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post3({
-      heroImage: image3Doc as any,
-      blockImage: image1Doc as any,
-      author: demoAuthor,
-      company: demoCompany,
-    }),
-  })
-
-  // update each post with related posts
-  await payload.update({
-    id: post1Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [
-        { relationTo: 'posts', value: post2Doc.id },
-        { relationTo: 'posts', value: post3Doc.id },
-      ],
-    },
-  })
-  await payload.update({
-    id: post2Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [
-        { relationTo: 'posts', value: post1Doc.id },
-        { relationTo: 'posts', value: post3Doc.id },
-      ],
-    },
-  })
-  await payload.update({
-    id: post3Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [
-        { relationTo: 'posts', value: post1Doc.id },
-        { relationTo: 'posts', value: post2Doc.id },
-      ],
-    },
-  })
+  )
 
   payload.logger.info(`— Seeding contact form...`)
 
@@ -264,7 +122,7 @@ export const seed = async ({
     payload.create({
       collection: 'pages',
       depth: 0,
-      data: home({ heroImage: imageHomeDoc as any, metaImage: image2Doc as any }),
+      data: home({ heroImage: imageHomeDoc as any, metaImage: image1Doc as any }),
     }),
     payload.create({
       collection: 'pages',
@@ -280,13 +138,6 @@ export const seed = async ({
       slug: 'header',
       data: {
         navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Posts',
-              url: '/posts',
-            },
-          },
           {
             link: {
               type: 'reference',

@@ -1,11 +1,9 @@
 import { anyone } from '@/access/anyone'
+import { adminOnly, isAdminUser } from '@/access/admin'
 import { markdownField } from '@/fields/markdownField'
 import type { Access, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
-import type { Syndication, User } from '@/payload-types'
-
-const adminOnly: Access = ({ req: { user } }) => user?.role?.includes('admin') || false
-const isAdminUser = (user: User | null | undefined): boolean => user?.role?.includes('admin') || false
+import type { Syndication } from '@/payload-types'
 
 const publishedOrAdmin: Access = ({ req: { user } }) => {
   if (isAdminUser(user)) {

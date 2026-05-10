@@ -1,5 +1,7 @@
 import type { CollectionAfterReadHook, PayloadRequest } from 'payload'
 
+import { isAdminUser } from '@/access/admin'
+
 type ReportRecord = {
   contentLink?: string | null
 }
@@ -52,7 +54,7 @@ export const populateReportedLinks: CollectionAfterReadHook = async ({ doc, req 
 
   const docID = typeof doc.id === 'string' ? doc.id : null
 
-  if (!docID || (req.user.id !== docID && !req.user.role?.includes('admin'))) {
+  if (!docID || (req.user.id !== docID && !isAdminUser(req.user))) {
     return doc
   }
 

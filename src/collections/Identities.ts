@@ -7,6 +7,7 @@ import { serverURLField } from '@/fields/serverURLField'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { lazySendItemUpdateNotifications } from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { adminOnly } from '@/access/admin'
 import { ObjectId } from 'mongodb'
 import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
@@ -38,7 +39,7 @@ export const Identities: CollectionConfig = {
   },
   defaultSort: '-contentRankScore',
   access: {
-    create: ({ req }) => Boolean(req.user?.role?.includes('admin')),
+    create: adminOnly,
     delete: onlyOwnDocsOrAdmin,
     read: anyone,
     update: onlyOwnDocsOrAdmin,

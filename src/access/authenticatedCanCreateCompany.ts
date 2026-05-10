@@ -1,10 +1,7 @@
 import type { Access } from 'payload'
 
-import type { AccessUser } from './types'
+import { isAdminUser } from './admin'
 import { isNonAdminContentCreationBlocked } from '@/utilities/contentCreation'
-
-const isAdminUser = (user: AccessUser): boolean =>
-  user?.role?.includes('admin') || false
 
 const hasPrivateFlag = (
   data: unknown,

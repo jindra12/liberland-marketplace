@@ -1,12 +1,11 @@
 import type { PayloadRequest } from 'payload'
 
+import { isAdminUser } from '@/access/admin'
+
 type AdminNotificationUser = {
   email?: string | null
   role?: string[] | null
 }
-
-const isAdminUser = (user: AdminNotificationUser | null | undefined): boolean =>
-  user?.role?.includes('admin') || false
 
 export const getAdminNotificationEmails = async ({
   req,

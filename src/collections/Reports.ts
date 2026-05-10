@@ -1,9 +1,7 @@
-import type { ClientUser, CollectionConfig, PayloadRequest } from 'payload'
+import type { CollectionConfig } from 'payload'
 
 import { lazySendReportCreatedNotifications } from '@/hooks/lazyCollectionHooks'
-
-const isAdminUser = (user: ClientUser | null | undefined): boolean => user?.role?.includes('admin') || false
-const adminOnly = ({ req }: { req: PayloadRequest }): boolean => isAdminUser(req.user)
+import { adminOnly, adminOnlyFieldAccess, isAdminUser } from '@/access/admin'
 
 export const Reports: CollectionConfig = {
   slug: 'reports',
@@ -14,7 +12,7 @@ export const Reports: CollectionConfig = {
     useAsTitle: 'contentLink',
   },
   access: {
-    admin: adminOnly,
+    admin: ({ req }) => isAdminUser(req.user),
     create: adminOnly,
     delete: adminOnly,
     read: adminOnly,
@@ -56,7 +54,7 @@ export const Reports: CollectionConfig = {
         },
       ],
       access: {
-        update: adminOnly,
+        update: adminOnlyFieldAccess,
       },
     },
     {

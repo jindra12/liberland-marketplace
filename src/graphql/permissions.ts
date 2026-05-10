@@ -1,9 +1,7 @@
 import type { GraphQLExtension, PayloadRequest } from 'payload'
 
 import { canCreateContent } from '@/utilities/contentCreation'
-
-const getServerUrl = (): string =>
-  process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export const permissionsGraphQLQueries: GraphQLExtension = (graphQL) => {
   const permissionsType = new graphQL.GraphQLObjectType({
@@ -23,7 +21,7 @@ export const permissionsGraphQLQueries: GraphQLExtension = (graphQL) => {
       resolve: (_source: unknown, _args: unknown, context: { req: PayloadRequest }) => [
         {
           canCreateContentAsNonAdmin: canCreateContent(context.req.user),
-          serverUrl: getServerUrl(),
+          serverUrl: getServerSideURL(),
         },
       ],
       type: new graphQL.GraphQLNonNull(

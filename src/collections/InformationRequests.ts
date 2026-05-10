@@ -1,9 +1,7 @@
 import type { ClientUser, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
+import { adminOnly, isAdminUser } from '@/access/admin'
 import { lazySendInformationRequestCreatedNotifications } from '@/hooks/lazyCollectionHooks'
-
-const isAdminUser = (user: ClientUser | null | undefined): boolean => user?.role?.includes('admin') || false
-
 const ownOrAdmin = ({ req: { user } }: { req: { user?: ClientUser | null } }) => {
   if (isAdminUser(user)) {
     return true
@@ -41,9 +39,9 @@ export const InformationRequests: CollectionConfig = {
   },
   access: {
     create: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => isAdminUser(user),
+    delete: adminOnly,
     read: ownOrAdmin,
-    update: ({ req: { user } }) => isAdminUser(user),
+    update: adminOnly,
   },
   hooks: {
     afterChange: [lazySendInformationRequestCreatedNotifications],
