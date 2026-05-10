@@ -9,6 +9,7 @@ SILENT="${SILENT:-false}"
 TEST_DATA="${TEST_DATA:-false}"
 TEST_DATA_DIR="${TEST_DATA_DIR:-testdata}"
 REUSE_ENV_FILE="${REUSE_ENV_FILE:-${REUSE_EXISTING_ENV:-}}"
+BLOCK_NON_ADMIN_CONTENT_CREATION="${BLOCK_NON_ADMIN_CONTENT_CREATION:-}"
 APP_PORT="3001"
 MONGO_DB_NAME="liberland"
 MONGO_APP_USER="liberland_app"
@@ -20,6 +21,8 @@ usage() {
   cat <<'EOF'
 Usage: deploy-space.sh [--branch <name>] [-b <name>]
                     [--server <url>]
+                    [--no-permission-server]
+                    [--permission-server]
                     [--test-data]
                     [--silent] [-s]
                     [--reuse-env <file>]
@@ -38,6 +41,7 @@ Environment overrides:
 - SERVER_URL: source server URL for the installer route
 - SYNDICATION_NAME: optional name used when creating the syndication draft
 - SYNDICATION_DESCRIPTION: optional description used when creating the syndication draft
+- BLOCK_NON_ADMIN_CONTENT_CREATION: set to true to make the server a no-permission server
 - SILENT: set to true to skip the syndication draft submission
 - TEST_DATA: set to true to seed the database from ./testdata
 - TEST_DATA_DIR: fixture directory relative to the installer script, defaults to testdata
@@ -62,6 +66,14 @@ while [[ $# -gt 0 ]]; do
       fi
       SERVER_URL="$2"
       shift 2
+      ;;
+    --no-permission-server)
+      BLOCK_NON_ADMIN_CONTENT_CREATION="true"
+      shift
+      ;;
+    --permission-server)
+      BLOCK_NON_ADMIN_CONTENT_CREATION="false"
+      shift
       ;;
     -s|--silent)
       SILENT="true"
@@ -150,6 +162,54 @@ prompt_value_or_env() {
   fi
 
   prompt_value "$__target" "$__label" "$__default"
+}
+
+prompt_yes_no_or_env() {
+  local __target="$1"
+  local __env_name="$2"
+  local __label="$3"
+  local __default="${4:-false}"
+  local __value="${!__env_name:-}"
+
+  case "$__value" in
+    true|1|yes|y|on)
+      printf -v "$__target" '%s' 'true'
+      return
+      ;;
+    false|0|no|n|off)
+      printf -v "$__target" '%s' 'false'
+      return
+      ;;
+  esac
+
+  if [[ -n "$__value" ]]; then
+    printf -v "$__target" '%s' "$__value"
+    return
+  fi
+
+  if [[ "$__default" == "true" ]]; then
+    read -r -p "$__label [Y/n]: " __value
+    case "${__value:-}" in
+      n|N|no|NO)
+        __value="false"
+        ;;
+      *)
+        __value="true"
+        ;;
+    esac
+  else
+    read -r -p "$__label [y/N]: " __value
+    case "${__value:-}" in
+      y|Y|yes|YES)
+        __value="true"
+        ;;
+      *)
+        __value="false"
+        ;;
+    esac
+  fi
+
+  printf -v "$__target" '%s' "$__value"
 }
 
 load_existing_env_file() {
@@ -350,11 +410,22 @@ if [[ -n "$REUSE_ENV_FILE" ]]; then
     SYNDICATION_DESCRIPTION="${SYNDICATION_DESCRIPTION:-}"
   fi
 else
-  prompt_value_or_env APP_SUBDOMAIN APP_SUBDOMAIN "Subdomain name" "$DEFAULT_SUBDOMAIN"
   if [[ "$SILENT" != "true" ]]; then
     prompt_value_or_env SYNDICATION_NAME SYNDICATION_NAME "Syndication name" "Liberland Marketplace"
     prompt_value_or_env SYNDICATION_DESCRIPTION SYNDICATION_DESCRIPTION "Syndication description" ""
   fi
+fi
+
+if [[ -z "${BLOCK_NON_ADMIN_CONTENT_CREATION:-}" ]]; then
+  prompt_yes_no_or_env \
+    BLOCK_NON_ADMIN_CONTENT_CREATION \
+    BLOCK_NON_ADMIN_CONTENT_CREATION \
+    "Make this a no-permission server (block non-admin content creation)?" \
+    false
+fi
+
+if [[ -z "${APP_SUBDOMAIN:-}" ]]; then
+  prompt_value_or_env APP_SUBDOMAIN APP_SUBDOMAIN "Subdomain name" "$DEFAULT_SUBDOMAIN"
 fi
 
 SYNDICATION_NAME="${SYNDICATION_NAME:-}"
@@ -444,6 +515,7 @@ set_and_export PREVIEW_SECRET "$PREVIEW_SECRET"
 set_and_export PAYLOAD_DEBUG "$PAYLOAD_DEBUG"
 set_and_export PAYLOAD_ENABLE_LIVE_PREVIEW "$PAYLOAD_ENABLE_LIVE_PREVIEW"
 set_and_export PAYLOAD_LOG_LEVEL "$PAYLOAD_LOG_LEVEL"
+set_and_export BLOCK_NON_ADMIN_CONTENT_CREATION "$BLOCK_NON_ADMIN_CONTENT_CREATION"
 set_and_export SMTP_HOST "$SMTP_HOST"
 set_and_export SMTP_PORT "$SMTP_PORT"
 set_and_export SMTP_USER "$SMTP_USER"
@@ -509,6 +581,7 @@ PREVIEW_SECRET=$(quote_env_value "$PREVIEW_SECRET")
 PAYLOAD_DEBUG=$(quote_env_value "$PAYLOAD_DEBUG")
 PAYLOAD_ENABLE_LIVE_PREVIEW=$(quote_env_value "$PAYLOAD_ENABLE_LIVE_PREVIEW")
 PAYLOAD_LOG_LEVEL=$(quote_env_value "$PAYLOAD_LOG_LEVEL")
+BLOCK_NON_ADMIN_CONTENT_CREATION=$(quote_env_value "$BLOCK_NON_ADMIN_CONTENT_CREATION")
 SMTP_HOST=$(quote_env_value "$SMTP_HOST")
 SMTP_PORT=$(quote_env_value "$SMTP_PORT")
 SMTP_USER=$(quote_env_value "$SMTP_USER")
@@ -698,6 +771,7 @@ ARG PAYLOAD_SECRET
 ARG PAYLOAD_LOG_LEVEL
 ARG PAYLOAD_DEBUG
 ARG PAYLOAD_ENABLE_LIVE_PREVIEW
+ARG BLOCK_NON_ADMIN_CONTENT_CREATION
 ARG PORT
 ARG PREVIEW_SECRET
 ARG GOOGLE_CLIENT_ID
@@ -756,6 +830,7 @@ ENV NEXT_PUBLIC_FRONTEND_URL=$NEXT_PUBLIC_FRONTEND_URL
 ENV NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL
 ENV PAYLOAD_DEBUG=$PAYLOAD_DEBUG
 ENV PAYLOAD_ENABLE_LIVE_PREVIEW=$PAYLOAD_ENABLE_LIVE_PREVIEW
+ENV BLOCK_NON_ADMIN_CONTENT_CREATION=$BLOCK_NON_ADMIN_CONTENT_CREATION
 ENV PAYLOAD_LOG_LEVEL=$PAYLOAD_LOG_LEVEL
 ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
 ENV PORT=$PORT
@@ -936,6 +1011,7 @@ ${MONGO_SEED_SERVICE_BLOCK}
         NEXT_PUBLIC_SERVER_URL: \${NEXT_PUBLIC_SERVER_URL}
         PAYLOAD_DEBUG: \${PAYLOAD_DEBUG:-false}
         PAYLOAD_ENABLE_LIVE_PREVIEW: \${PAYLOAD_ENABLE_LIVE_PREVIEW:-false}
+        BLOCK_NON_ADMIN_CONTENT_CREATION: \${BLOCK_NON_ADMIN_CONTENT_CREATION:-false}
         PAYLOAD_LOG_LEVEL: \${PAYLOAD_LOG_LEVEL:-info}
         PAYLOAD_SECRET: \${PAYLOAD_SECRET}
         PORT: \${PORT}
