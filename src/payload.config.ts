@@ -26,8 +26,11 @@ import { analyticsConfigEndpoint } from './endpoints/analytics/config'
 import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
 import { Subscribers } from './collections/Subscribers'
 import { analyticsGraphQLMutations } from './graphql/analytics'
+import { permissionsGraphQLQueries } from './graphql/permissions'
 import { startupGraphQLMutations } from './graphql/startups'
 import { userGraphQLMutations, userGraphQLQueries } from './graphql/users'
+import { Reports } from './collections/Reports'
+import { InformationRequests } from './collections/InformationRequests'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -121,6 +124,8 @@ export default buildConfig({
     CommentLikes,
     Startups,
     Syndications,
+    Reports,
+    InformationRequests,
     Subscribers,
     NotificationSubscriptions,
   ],
@@ -137,6 +142,7 @@ export default buildConfig({
   secret: payloadSecret,
   sharp,
   typescript: {
+    declare: {},
     outputFile: path.resolve(dirname, 'payload-types.ts'),
     schema: [
       ({ jsonSchema }) => {
@@ -197,6 +203,9 @@ export default buildConfig({
       ...startupGraphQLMutations(graphQL, context),
       ...userGraphQLMutations(graphQL, context),
     }),
-    queries: userGraphQLQueries,
+    queries: (graphQL, context) => ({
+      ...permissionsGraphQLQueries(graphQL, context),
+      ...userGraphQLQueries(graphQL, context),
+    }),
   },
 })

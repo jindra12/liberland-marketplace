@@ -9,6 +9,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
+import { isAdminUser } from '@/access/admin'
 import { authenticated } from '../access/authenticated'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 
@@ -23,7 +24,7 @@ export const Media: CollectionConfig = {
     delete: onlyOwnDocsOrAdmin,
     read: anyone,
     update: onlyOwnDocsOrAdmin,
-    admin: ({ req }) => req.user?.role?.includes('admin') || false,
+    admin: ({ req }) => isAdminUser(req.user),
   },
   fields: [
     {

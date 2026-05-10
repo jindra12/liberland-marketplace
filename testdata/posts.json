@@ -1,0 +1,90 @@
+[{
+	"_id": {
+		"$oid": "69f300000000000000000001"
+	},
+	"createdAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"updatedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"title": "Vertex Test Data Launch",
+	"company": {
+		"$oid": "699a52f1e3cc9546fc95d9b6"
+	},
+	"heroImage": {
+		"$oid": "699af05fe3cc9546fc95dc86"
+	},
+	"content": "# Vertex Test Data Launch\n\nThis post exists in the test dataset so the frontend has something realistic to render.\n\nIt links to the payment-ready demo products and keeps the test environment looking like a real marketplace.\n",
+	"relatedPosts": [
+		{
+			"relationTo": "products",
+			"value": {
+				"$oid": "69f200000000000000000001"
+			}
+		}
+	],
+	"publishedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"authors": [
+		{
+			"$oid": "699a4fb034fa2b9e6436599c"
+		}
+	],
+	"generateSlug": true,
+	"slug": "vertex-test-data-launch",
+	"_status": "published",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "69f300000000000000000002"
+	},
+	"createdAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"updatedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"title": "Three Ways to Pay in the Test Env",
+	"company": {
+		"$oid": "699a52f1e3cc9546fc95d9b6"
+	},
+	"heroImage": {
+		"$oid": "699af05fe3cc9546fc95dc86"
+	},
+	"content": "# Three Ways to Pay in the Test Env\n\nThe backup now includes Ethereum, Solana, and Tron products with matching user wallets so payment flows can be exercised end to end.\n",
+	"relatedPosts": [
+		{
+			"relationTo": "products",
+			"value": {
+				"$oid": "69f200000000000000000002"
+			}
+		},
+		{
+			"relationTo": "products",
+			"value": {
+				"$oid": "69f200000000000000000003"
+			}
+		}
+	],
+	"publishedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"authors": [
+		{
+			"$oid": "699a4fb034fa2b9e6436599c"
+		}
+	],
+	"generateSlug": true,
+	"slug": "three-ways-to-pay-in-the-test-env",
+	"_status": "published",
+	"__v": 0
+}]

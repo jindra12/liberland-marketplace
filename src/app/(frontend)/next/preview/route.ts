@@ -9,7 +9,7 @@ import configPromise from '@payload-config'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(req: NextRequest): Promise<Response> {
+export const GET = async (req: NextRequest): Promise<Response> => {
   const payload = await getPayload({ config: configPromise })
 
   const { searchParams } = new URL(req.url)

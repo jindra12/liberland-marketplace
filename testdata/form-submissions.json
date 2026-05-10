@@ -1,0 +1,32 @@
+[{
+	"_id": {
+		"$oid": "69fa00000000000000000001"
+	},
+	"form": {
+		"$oid": "69f900000000000000000001"
+	},
+	"submissionData": [
+		{
+			"field": "full-name",
+			"value": "Arman Tester"
+		},
+		{
+			"field": "email",
+			"value": "tangianarman@yahoo.com"
+		},
+		{
+			"field": "phone",
+			"value": "+420777000111"
+		},
+		{
+			"field": "message",
+			"value": "This is a test submission for the local backup dataset."
+		}
+	],
+	"updatedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"createdAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	}
+}]

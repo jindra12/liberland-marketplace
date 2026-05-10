@@ -1,0 +1,20 @@
+[{
+	"_id": {
+		"$oid": "69fe00000000000000000001"
+	},
+	"status": "waiting",
+	"userId": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"contentLink": "https://market.ll.land/posts/vertex-test-data-launch",
+	"reason": "Promotional post for test dataset reference.",
+	"updatedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"createdAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	}
+}]

@@ -1,0 +1,6181 @@
+[
+  {
+    "_id": {
+      "$oid": "85c570df3be0deb36be85b45"
+    },
+    "createdAt": {
+      "$date": "2026-02-24T12:31:15.401Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:50:07.791Z"
+    },
+    "inventory": 0,
+    "name": "Web Development (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://vertexobrt.com?variant=testdata1",
+    "price": {
+      "amount": 2500,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "9780873d99648c4be81ee7ee"
+    },
+    "description": "# Custom Web Development - Modern, Fast, Built to Grow With You\n\nWe build websites and web apps that actually work for your business.\n\nWhether you need a clean company site, an online store, a booking system, or a full custom platform, we handle everything from first concept to launch and beyond. Our stack is modern, our code is clean, and we build with performance and SEO baked in from day one.\n\n## What We Offer\n\n- **Custom websites and landing pages** — tailored to your brand and goals\n- **E-commerce stores** — Shopify, WooCommerce, or fully custom solutions\n- **Web applications and dashboards** — powerful tools built for your workflow\n- **Responsive design** — flawless on every device, every time\n- **Website redesigns and migrations** — breathe new life into an outdated site\n- **Ongoing maintenance and support** — we don't disappear after launch\n\n## Why Clients Stick With Us\n\nWe communicate clearly, hit deadlines, and treat your project like our own. No jargon, no surprise invoices, no templates dressed up as \"custom\" work.\n\nWhether you're a startup getting off the ground or an established business that's outgrown its current site, let's talk.\n\n---\n\n**Free initial consultation** — no commitment, just an honest conversation about what you need and how we can help.\n\n📩 **Get in touch today for a quote at vertexobrt@gmail.com.** (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "completenessScore": 3,
+    "properties": [],
+    "priceInUSD": 250000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "cd48860ad266101f58a289b9"
+    },
+    "createdAt": {
+      "$date": "2026-02-24T12:36:35.29Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:50:07.74Z"
+    },
+    "inventory": 0,
+    "name": "AI Setup and Consulting (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://vertexobrt.com?variant=testdata1",
+    "price": {
+      "amount": 3000,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "649edd4628560c9410d98a51"
+    },
+    "description": "# AI Workflow Consulting — Put AI to Work Across Your Business\n\nAI is everywhere, but most companies are still figuring out where it actually fits. That's where we come in.\n\nWe help businesses implement practical, high-impact AI workflows — not hype, not science projects, but real automations and tools that save your team hours every week.\n\n## Our Specialty: AI for IT &amp; Software Development\n\nWe know development inside and out, and we've built AI-powered workflows that transform how teams build software:\n\n- **AI-assisted coding and code review** — accelerate development with intelligent pair programming\n- **Automated testing and QA** — catch bugs faster with AI-driven test generation\n- **Documentation generation** — turn codebases into living, up-to-date docs\n- **DevOps and CI/CD optimization** — smarter deployments, fewer failures\n- **Technical debt analysis** — let AI surface what needs attention before it becomes a crisis\n\n## Beyond Development: AI Across Your Entire Operation\n\nWe also design and implement AI workflows for the teams that keep your business running:\n\n- **Customer support** — intelligent triage, auto-responses, and AI copilots for agents\n- **Administration** — automate document processing, data entry, and reporting\n- **Sales &amp; marketing** — AI-powered lead scoring, content generation, and email outreach\n- **HR &amp; recruitment** — streamline resume screening, onboarding materials, and internal Q&amp;A\n- **Knowledge management** — build internal AI assistants trained on your company's own data\n- **Finance &amp; accounting** — automated invoice processing, anomaly detection, and forecasting\n\n## How We Work\n\n1. **Audit** — We assess your current workflows and identify where AI delivers the biggest ROI\n2. **Implement** — We set up, configure, and integrate AI tools into your existing systems\n3. **Train** — We make sure your team actually knows how to use what we've built\n4. **Support** — We stick around to fine-tune, troubleshoot, and expand as your needs evolve\n\n## Why Work With Us\n\nWe're not selling you a product — we're building you a system. Every workflow is tailored to how your team actually works, using the best available tools (open-source or commercial) for the job. We speak both tech and business, so nothing gets lost in translation.\n\nMost clients see measurable time savings within the first two weeks.\n\n---\n\n**Free workflow assessment** — we'll identify your top 3 AI opportunities at no cost.\n\n📩 **Let's talk about what AI can do for your team. vertexobrt@gmail.com** (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "completenessScore": 3,
+    "properties": [],
+    "priceInUSD": 300000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "6e3f72319bf7093a09bb6396"
+    },
+    "createdAt": {
+      "$date": "2026-02-24T12:42:39.259Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:50:07.625Z"
+    },
+    "inventory": 6,
+    "name": "Web3 Development (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://vertexobrt.com?variant=testdata1",
+    "price": {
+      "amount": 15000,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "3c9d10fb66e4723b77828e5f"
+    },
+    "description": "# Web3 &amp; Crypto Development — From Smart Contracts to Full Ecosystem Delivery\n\nBuilding in Web3 is hard. The stakes are high, the tech moves fast, and one bad design decision can cost millions. We've been in the trenches — shipping protocols, auditing contracts, and designing tokenomics that actually hold up under pressure.\n\nWhether you need a single Solidity dev or an entire technical leadership team, we scale to fit your project.\n\n## What We Build\n\n- **Smart contracts** — secure, gas-optimized, and battle-tested on EVM chains\n- **Substrate &amp; ink! development** — custom parachains, pallets, and Polkadot-native smart contracts\n- **Cross-chain bridges** — trustless and secure asset and message passing between ecosystems\n- **DeFi protocols** — lending, DEXs, staking, vaults, and novel financial primitives\n- **Token launches &amp; NFT infrastructure** — from contract to mint to marketplace\n- **DAOs &amp; governance systems** — on-chain voting, treasury management, and modular governance frameworks\n\n## Deep Expertise Where It Matters\n\n- **Solidity &amp; EVM** — Ethereum, Polygon, Arbitrum, Optimism, BSC, and beyond\n- **Substrate &amp; ink!** — parachain development, runtime logic, and Polkadot ecosystem tooling\n- **Ecosystem design** — protocol architecture that scales without breaking\n- **Incentive alignment &amp; tokenomics** — mechanism design that drives sustainable growth, not just short-term hype\n- **Security-first development** — we write code that's built to be audited, not patched after an exploit\n\n## Flexible Engagement Models\n\nWe adapt to what your project actually needs:\n\n- **Individual developers** — plug senior Web3 engineers directly into your existing team\n- **Dedicated squads** — a full dev team embedded in your project, shipping fast\n- **Fractional CTO / Technical Lead** — we take ownership of the entire technical vision and delivery, from architecture to mainnet launch\n- **End-to-end project delivery** — hand us the whitepaper, we hand you the protocol. Autonomous delivery with transparent communication every step of the way\n\n## Why Teams Choose Us\n\nWe've seen what works and what doesn't in this space. We'll tell you if your architecture won't scale, if your tokenomics have a death spiral baked in, or if there's a simpler way to get to mainnet. We're not here to bill hours — we're here to ship things that last.\n\nWe bring the same rigor to a proof-of-concept as we do to a production protocol managing real user funds.\n\n---\n\n**Let's talk about your project** — whether you're at whitepaper stage or mid-build and need reinforcements.\n\n📩 **Reach out for a free technical consultation at vertexobrt@gmail.** (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "properties": [],
+    "completenessScore": 3,
+    "priceInUSD": 1500000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "812c62f4b898819df7f50ba5"
+    },
+    "createdAt": {
+      "$date": "2026-02-24T13:04:44.095Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:50:07.48Z"
+    },
+    "inventory": 0,
+    "name": "Market Making & Cross-Chain Arbitrage (testdata1)",
+    "company": {
+      "$oid": "4fdad91055a301e9653ad8ef"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://liberstake.ll.land/?variant=testdata1",
+    "price": {
+      "amount": 5,
+      "currency": "ETH"
+    },
+    "description": "Your Token Deserves Real Liquidity, Not Empty Order Books\n\nNothing kills a promising project faster than thin liquidity. High slippage scares off traders, wide spreads signal instability, and price fragmentation across chains confuses your community. We fix all of that.\n\nLiberstake provides professional market making and cross-chain arbitrage services designed specifically for crypto-native projects. We generate real, profitable volume — not artificial inflation — and your markets get healthier with every trade we make.\n\n## Market Making\n\nWe deploy capital across your trading pairs on DEXs and CEXs, maintaining tight spreads and deep order books around the clock.\n\n**What you get:**\n\n- **Lower slippage** — your holders and traders get better execution on every swap\n- **Tighter spreads** — professional-grade order books that signal a healthy, active market\n- **Consistent volume** — organic, profitable trading activity that attracts more participants\n- **Multi-venue coverage** — we operate across Uniswap, Raydium, Sun.io, centralized exchanges, and anywhere your token trades\n- **24/7 operation** — automated infrastructure that doesn't sleep, with human oversight when it matters\n\n## Cross-Chain Arbitrage\n\nIf your token trades on multiple chains, prices will diverge. That's not a bug — but leaving it unaddressed is a problem. We continuously monitor and close price gaps across ecosystems, keeping your token's price consistent no matter where someone buys it.\n\n**What you get:**\n\n- **Price stability across chains** — no more 5% discrepancies between Ethereum, Solana, and TRON\n- **Connected liquidity** — fragmented pools start behaving like a unified market\n- **Organic volume generation** — every arbitrage trade is a real, profitable transaction that contributes to your on-chain metrics\n- **Ecosystem credibility** — consistent pricing signals maturity and builds confidence among investors and integrators\n\n## Who This Is For\n\n- **Token projects** looking to bootstrap or improve liquidity post-launch\n- **DeFi protocols** that need stable, deep liquidity across their pools\n- **Ecosystems and foundations** that want healthier markets across their chain\n- **CEX-listed tokens** that need a reliable market maker with cross-venue expertise\n\n## How We're Different\n\n**We trade profitably or we don't trade.** Every position we take is designed to generate a return. That means you're not subsidizing fake volume — you're partnering with a firm whose incentives are aligned with your market's health. When we profit, it's because we made your market more efficient.\n\n**No wash trading. No inflated metrics. No games.** Just real liquidity, real volume, and real price stability, being MICA compliant while achieving the same results. Magic, we know.\n\n## Engagement Options\n\n- **Standard market making** — we provide liquidity on agreed pairs and venues for a monthly retainer plus performance fees\n- **Easy-start** — we trade profitably on your pairs, requiring no upfront USDT commitment from your project. While USDT liquidity gets to a faster start, your projects tokens are more than enough to get going.\n- **Custom arrangements** — for foundations and larger ecosystems, we design bespoke liquidity strategies across multiple tokens and venues\n\n## Getting Started\n\nOnboarding is fast. We typically go live within days of signing, not weeks.\n\n1. **Discovery call** — we assess your current liquidity landscape and identify gaps\n2. **Proposal** — tailored strategy with clear KPIs: spread targets, volume benchmarks, slippage reduction goals\n3. **Deployment** — we go live and you see results immediately\n4. **Ongoing reporting** — transparent dashboards showing exactly what we're doing and how the market is responding\n\n---\n\n**Liberstake** — the first company on the Liberland Stock Market. Profitable from day one. Making markets better since inception.\n\n📩 **Ready to fix your liquidity? Reach out for a free market assessment.**\n\n\n[Whatsapp](https://wa.me/+385923758682)\n\n[liberstake@gmail.com](liberstake@gmail.com) (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "completenessScore": 2,
+    "properties": [],
+    "priceInUSD": 950000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "c5a2adf795cfc28997785ae8"
+    },
+    "createdAt": {
+      "$date": "2026-03-02T10:21:19.771Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:50:07.303Z"
+    },
+    "inventory": 0,
+    "name": "RebelOps (testdata1)",
+    "company": {
+      "$oid": "3a744b4667278283fc17890a"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://rebelops.app?variant=testdata1",
+    "price": {
+      "amount": 19.95,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "874e11a9f965d38b62c12a40"
+    },
+    "description": "A different project/operations management, AI-first. (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "completenessScore": 3,
+    "properties": [],
+    "priceInUSD": 1995,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "28caa6667bf79d9223428209"
+    },
+    "createdAt": {
+      "$date": "2026-03-03T20:28:39.441Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:50:07.216Z"
+    },
+    "inventory": 0,
+    "name": "Senior Project Management. (testdata1)",
+    "company": {
+      "$oid": "144ebf703e2d8ebe7c67791c"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://llsol.carrd.co?variant=testdata1",
+    "price": {
+      "amount": 98,
+      "currency": "EUR"
+    },
+    "description": "Project Management in civil construction, telecommunications, logistic, transportation, storage/containers, site supervision &amp; accommodation, infrastructure, permits, publishing, translation services, coaching, export &amp; import, sales, (event) organisation, P&amp;R, Communication &amp; Marketing and other LL’s emerging business activities.\n\nLL Solutions &amp; Consulting (short LLsol or LL☀️) is a pure LL company operating exclusively on LL territory and its jurisdiction. Our extensive skills, experience, multi-lingual and multi-cultural staff, allow us to respond to the needs of each project. (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "completenessScore": 2,
+    "properties": [],
+    "priceInUSD": 10780,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "11b0c01969d7fe512bd3f1e7"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:12.973Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:12.973Z"
+    },
+    "inventory": 0,
+    "name": "ZChat Messenger (testdata1)",
+    "company": {
+      "$oid": "64380f322904fb8e1621d516"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://zsend.xyz?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "c03a768b87784b7be51ae225"
+    },
+    "description": "Privacy-first encrypted messenger where every message is a Zcash shielded transaction. No sign-up or phone number required. Built on ZMSG Protocol v4 with end-to-end ECDH + AES-256-GCM encryption.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Platform",
+        "value": "Android (APK beta) (testdata1)",
+        "id": "69a8acd4c83653104b6f59a3"
+      },
+      {
+        "key": "Encryption",
+        "value": "End-to-end (AES-256-GCM) (testdata1)",
+        "id": "69a8acd4c83653104b6f59a4"
+      },
+      {
+        "key": "Blockchain",
+        "value": "Zcash Orchard (testdata1)",
+        "id": "69a8acd4c83653104b6f59a5"
+      },
+      {
+        "key": "Features",
+        "value": "Group chat, reactions, read receipts, time-locked messages, integrated wallet, Keystone HW wallet support (testdata1)",
+        "id": "69a8acd4c83653104b6f59a6"
+      },
+      {
+        "key": "GitHub",
+        "value": "decentrathai/zchat-android (testdata1)",
+        "id": "69a8acd4c83653104b6f59a7"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "2f33be3e2021ddc4b1cdd6ea"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:13.221Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:13.221Z"
+    },
+    "inventory": 0,
+    "name": "AI Ops Sprint (testdata1)",
+    "company": {
+      "$oid": "b6e70219c901c48a7f3211fc"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://boostnetic.xyz/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Rapid workflow automation — automates one high-friction workflow in days, fully implemented. For businesses needing a specific bottleneck eliminated fast.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "AI Automation (testdata1)",
+        "id": "69a8acd5c83653104b6f59a8"
+      },
+      {
+        "key": "Type",
+        "value": "Implementation Service (testdata1)",
+        "id": "69a8acd5c83653104b6f59a9"
+      },
+      {
+        "key": "Delivery",
+        "value": "Days (testdata1)",
+        "id": "69a8acd5c83653104b6f59aa"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "46bdb44e91a4b6066306968f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:13.339Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:13.339Z"
+    },
+    "inventory": 0,
+    "name": "Boostnetic Blueprint (testdata1)",
+    "company": {
+      "$oid": "b6e70219c901c48a7f3211fc"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://boostnetic.xyz/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Operational audit identifying 5 AI automations to reclaim 30+ hours per month. Comprehensive assessment to identify where AI makes the biggest impact.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Consulting (testdata1)",
+        "id": "69a8acd5c83653104b6f59ab"
+      },
+      {
+        "key": "Type",
+        "value": "Operational Audit (testdata1)",
+        "id": "69a8acd5c83653104b6f59ac"
+      },
+      {
+        "key": "Deliverable",
+        "value": "5 automation recommendations + roadmap (testdata1)",
+        "id": "69a8acd5c83653104b6f59ad"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "012c7406b13c0a788d192ec1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:13.456Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:13.456Z"
+    },
+    "inventory": 0,
+    "name": "Micro SaaS Tools (testdata1)",
+    "company": {
+      "$oid": "b6e70219c901c48a7f3211fc"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://boostnetic.xyz/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Lightweight AI products that replace hours of manual work with one click. Pre-built tools for common automation needs.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "SaaS (testdata1)",
+        "id": "69a8acd5c83653104b6f59ae"
+      },
+      {
+        "key": "Type",
+        "value": "AI-powered tools (testdata1)",
+        "id": "69a8acd5c83653104b6f59af"
+      },
+      {
+        "key": "Delivery",
+        "value": "Self-service (testdata1)",
+        "id": "69a8acd5c83653104b6f59b0"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b69f2ab9b8de9de3d7eb61af"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:13.576Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:13.576Z"
+    },
+    "inventory": 0,
+    "name": "Free AI Audit (testdata1)",
+    "company": {
+      "$oid": "b6e70219c901c48a7f3211fc"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://calendly.com/ahmadelshiekh/let-s-chat?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "15-minute consultation identifying 1 automation to save 10+ hours/month, with implementation playbook.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Consultation (testdata1)",
+        "id": "69a8acd5c83653104b6f59b1"
+      },
+      {
+        "key": "Duration",
+        "value": "15 min (testdata1)",
+        "id": "69a8acd5c83653104b6f59b2"
+      },
+      {
+        "key": "Booking",
+        "value": "Calendly (testdata1)",
+        "id": "69a8acd5c83653104b6f59b3"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "a02a6e25e95ec71291f4cb2e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:15.274Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:15.275Z"
+    },
+    "inventory": 0,
+    "name": "OCP Server & Storage Systems (testdata1)",
+    "company": {
+      "$oid": "2eca99689b2c62a9402f34fd"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://sutcoltd.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Custom server hardware based on Open Compute Project (OCP) standard. Platform engineering to create optimal configurations including switches, UPS, rack infrastructure, cooling, power supply, and battery backup.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Data Centre Infrastructure (testdata1)",
+        "id": "69a8acd7c83653104b6f59b4"
+      },
+      {
+        "key": "Type",
+        "value": "Hardware (testdata1)",
+        "id": "69a8acd7c83653104b6f59b5"
+      },
+      {
+        "key": "Components",
+        "value": "Switches, UPS, Racks, Cooling, PSU, Battery, Cables (testdata1)",
+        "id": "69a8acd7c83653104b6f59b6"
+      },
+      {
+        "key": "Standard",
+        "value": "OCP (testdata1)",
+        "id": "69a8acd7c83653104b6f59b7"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "db4a50859f4431c27cb7e694"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:15.438Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:15.439Z"
+    },
+    "inventory": 0,
+    "name": "LED Lighting Solutions (testdata1)",
+    "company": {
+      "$oid": "2eca99689b2c62a9402f34fd"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://sutcoltd.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Energy-efficient customizable illumination systems with various designs and color temperatures for retail and commercial spaces.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Lighting (testdata1)",
+        "id": "69a8acd7c83653104b6f59b8"
+      },
+      {
+        "key": "Type",
+        "value": "Commercial LED (testdata1)",
+        "id": "69a8acd7c83653104b6f59b9"
+      },
+      {
+        "key": "Target",
+        "value": "Retail, commercial spaces (testdata1)",
+        "id": "69a8acd7c83653104b6f59ba"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "6a4b8f72b5ce3ca1e0ac594b"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:15.594Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:15.594Z"
+    },
+    "inventory": 0,
+    "name": "Software Development & QA (testdata1)",
+    "company": {
+      "$oid": "2eca99689b2c62a9402f34fd"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://sutcoltd.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Code development paired with quality assurance. Testing team evaluates software performance and identifies defects before deployment.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Software Services (testdata1)",
+        "id": "69a8acd7c83653104b6f59bb"
+      },
+      {
+        "key": "Type",
+        "value": "Development + QA (testdata1)",
+        "id": "69a8acd7c83653104b6f59bc"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "6b6efc86f069fc54af8b8717"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:15.714Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:15.714Z"
+    },
+    "inventory": 0,
+    "name": "Supply Chain Solutions (testdata1)",
+    "company": {
+      "$oid": "2eca99689b2c62a9402f34fd"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://sutcoltd.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Logistics consulting and trade facilitation across Southeast Asia, Taiwan, and China. Customized training and process optimization.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Logistics (testdata1)",
+        "id": "69a8acd7c83653104b6f59bd"
+      },
+      {
+        "key": "Type",
+        "value": "Consulting (testdata1)",
+        "id": "69a8acd7c83653104b6f59be"
+      },
+      {
+        "key": "Regions",
+        "value": "Southeast Asia, Taiwan, China (testdata1)",
+        "id": "69a8acd7c83653104b6f59bf"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "d63d31e7659d7b5e7e72fc96"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:16.101Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:16.101Z"
+    },
+    "inventory": 0,
+    "name": "LuciVerse Agent Directory (testdata1)",
+    "company": {
+      "$oid": "391ca2c23e800b4b6f0fa610"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://lucidigital.net/agents/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Browse and manage 42 autonomous AI agents across 4 frequency tiers: CORE (432Hz, infrastructure), COMN (528Hz, communication), RAiIiAR (639Hz, intelligence), PAC (741Hz, personal/wisdom).\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "AI Platform (testdata1)",
+        "id": "69a8acd8c83653104b6f59c0"
+      },
+      {
+        "key": "Total Agents",
+        "value": "42 (testdata1)",
+        "id": "69a8acd8c83653104b6f59c1"
+      },
+      {
+        "key": "Tiers",
+        "value": "4 (testdata1)",
+        "id": "69a8acd8c83653104b6f59c2"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "e7e8a469d4b817181e047c29"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:16.214Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:16.214Z"
+    },
+    "inventory": 0,
+    "name": "Command Center (testdata1)",
+    "company": {
+      "$oid": "391ca2c23e800b4b6f0fa610"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://lucidigital.net/command-center/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Operational ERP and control-plane for the LuciVerse. KPI monitoring, finance &amp; governance modules, live dashboard, infrastructure deployments, wallet control plane, and GitLab integration.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "ERP / Control Plane (testdata1)",
+        "id": "69a8acd8c83653104b6f59c3"
+      },
+      {
+        "key": "Modules",
+        "value": "Operations, Finance, Dashboard, Infrastructure, Wallet, GitLab (testdata1)",
+        "id": "69a8acd8c83653104b6f59c4"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "84c5c63818ad591acdddb80c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:16.339Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:16.339Z"
+    },
+    "inventory": 0,
+    "name": "XR Experiences (testdata1)",
+    "company": {
+      "$oid": "391ca2c23e800b4b6f0fa610"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://lucidigital.net/xr/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Four immersive WebXR environments: The Pond (data visualization), Consciousness Room (VR meditation), Agent Inspection (AR infrastructure overlay), ASPERA Racing (virtual horse racing).\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Extended Reality (testdata1)",
+        "id": "69a8acd8c83653104b6f59c5"
+      },
+      {
+        "key": "Type",
+        "value": "WebXR (testdata1)",
+        "id": "69a8acd8c83653104b6f59c6"
+      },
+      {
+        "key": "Sub-products",
+        "value": "4 environments (testdata1)",
+        "id": "69a8acd8c83653104b6f59c7"
+      },
+      {
+        "key": "Tech",
+        "value": "Three.js, WebXR, Spatial Audio (testdata1)",
+        "id": "69a8acd8c83653104b6f59c8"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "34f524ed8bca911859405a04"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:18.131Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:18.131Z"
+    },
+    "inventory": 0,
+    "name": "3D Lion Fresh Hoodie (testdata1)",
+    "company": {
+      "$oid": "b947b42c315d19b03fd10bf6"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.dkmzone-global.com/product/3d-lion-fresh-hoodie/?variant=testdata1",
+    "price": {
+      "amount": 17.2,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "80af526f2d122e10b49f6d09"
+    },
+    "description": "Bold high-definition 3D lion print hoodie blending fierce style with cozy comfort. Soft, breathable fabric for streetwear lovers.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Hoodies (testdata1)",
+        "id": "69a8acdac83653104b6f59c9"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL (testdata1)",
+        "id": "69a8acdac83653104b6f59ca"
+      },
+      {
+        "key": "SKU",
+        "value": "gla_2143 (testdata1)",
+        "id": "69a8acdac83653104b6f59cb"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1720,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "f90f96080cbb59c81140e5dd"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:18.67Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:18.67Z"
+    },
+    "inventory": 0,
+    "name": "Space Galaxy Hoodies (testdata1)",
+    "company": {
+      "$oid": "b947b42c315d19b03fd10bf6"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.dkmzone-global.com/product/awesome-new-design-hoody/?variant=testdata1",
+    "price": {
+      "amount": 20,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "45dd380a3e592d29fcf4a1a1"
+    },
+    "description": "Galaxy-themed unisex hoodie featuring quality trending design. Comfortable fit.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Hoodies (testdata1)",
+        "id": "69a8acdac83653104b6f59cc"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL (testdata1)",
+        "id": "69a8acdac83653104b6f59cd"
+      },
+      {
+        "key": "Colors",
+        "value": "Galaxy print (multi-color) (testdata1)",
+        "id": "69a8acdac83653104b6f59ce"
+      },
+      {
+        "key": "SKU",
+        "value": "gla_1983 (testdata1)",
+        "id": "69a8acdac83653104b6f59cf"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "e6a41bc8aec9dd9ca2d16478"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:19.637Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:19.637Z"
+    },
+    "inventory": 0,
+    "name": "BitcoinGold T-Shirt (testdata1)",
+    "company": {
+      "$oid": "b947b42c315d19b03fd10bf6"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.dkmzone-global.com/product/bitcoingold-t-shirts/?variant=testdata1",
+    "price": {
+      "amount": 16.99,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "86184c03f1f1c232c0a09d5f"
+    },
+    "description": "Cryptocurrency-themed stylish T-shirt for Bitcoin and crypto enthusiasts. High-quality materials, perfect fit.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "T-shirts (testdata1)",
+        "id": "69a8acdbc83653104b6f59d0"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL (testdata1)",
+        "id": "69a8acdbc83653104b6f59d1"
+      },
+      {
+        "key": "SKU",
+        "value": "gla_2179 (testdata1)",
+        "id": "69a8acdbc83653104b6f59d2"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1699,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "26312c827d00d00e85dd965d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:20.051Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:20.051Z"
+    },
+    "inventory": 0,
+    "name": "Blue Galaxy Yoga Pants (testdata1)",
+    "company": {
+      "$oid": "b947b42c315d19b03fd10bf6"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.dkmzone-global.com/product/blue-galaxy-yoga-pants/?variant=testdata1",
+    "price": {
+      "amount": 22.62,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "7f2ebda4a292c432c1d4fa13"
+    },
+    "description": "Stylish activewear with striking blue galaxy print. Sleek silhouette for yoga, workouts, or casual wear. Flexibility, support, and breathability.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Yoga & Active Wears (testdata1)",
+        "id": "69a8acdcc83653104b6f59d3"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL (testdata1)",
+        "id": "69a8acdcc83653104b6f59d4"
+      },
+      {
+        "key": "Colors",
+        "value": "Blue Galaxy (testdata1)",
+        "id": "69a8acdcc83653104b6f59d5"
+      },
+      {
+        "key": "SKU",
+        "value": "gla_2182 (testdata1)",
+        "id": "69a8acdcc83653104b6f59d6"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2262,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "002e1c4345d402e0dee420eb"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:20.958Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:20.958Z"
+    },
+    "inventory": 0,
+    "name": "Yoga Comfortable Set (testdata1)",
+    "company": {
+      "$oid": "b947b42c315d19b03fd10bf6"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.dkmzone-global.com/product/yoga-comfortable-set/?variant=testdata1",
+    "price": {
+      "amount": 24.99,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "b609ee67cadfaf531eaac1d2"
+    },
+    "description": "Comfortable and unique yoga set for active and fitness wear. True-to-size fit.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Yoga & Active Wears (testdata1)",
+        "id": "69a8acdcc83653104b6f59d7"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL (testdata1)",
+        "id": "69a8acdcc83653104b6f59d8"
+      },
+      {
+        "key": "SKU",
+        "value": "gla_1945 (testdata1)",
+        "id": "69a8acdcc83653104b6f59d9"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2499,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "34a529ef1a23d3522c372f0c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:21.642Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:21.643Z"
+    },
+    "inventory": 0,
+    "name": "Blockchain UI Development (testdata1)",
+    "company": {
+      "$oid": "2d7d40d3ff2abe8c50cc6bda"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.danubiusdigital.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Customized user interfaces for blockchain with seamless interaction. Specializing in decentralized systems and UI design.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Development (testdata1)",
+        "id": "69a8acddc83653104b6f59da"
+      },
+      {
+        "key": "Type",
+        "value": "Blockchain UI (testdata1)",
+        "id": "69a8acddc83653104b6f59db"
+      },
+      {
+        "key": "Established",
+        "value": "2020 (testdata1)",
+        "id": "69a8acddc83653104b6f59dc"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "7a6149e1b2edccfc136e19f0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:21.794Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:21.794Z"
+    },
+    "inventory": 0,
+    "name": "Decentralized Services (BaaS) (testdata1)",
+    "company": {
+      "$oid": "2d7d40d3ff2abe8c50cc6bda"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.danubiusdigital.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Migration to decentralized ecosystems. Blockchain-as-a-Service solutions for businesses transitioning to Web3.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "BaaS (testdata1)",
+        "id": "69a8acddc83653104b6f59dd"
+      },
+      {
+        "key": "Type",
+        "value": "Ecosystem Migration (testdata1)",
+        "id": "69a8acddc83653104b6f59de"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "69d230652a6b78f840eff230"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:21.894Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:21.895Z"
+    },
+    "inventory": 0,
+    "name": "Quality Assurance & Consulting (testdata1)",
+    "company": {
+      "$oid": "2d7d40d3ff2abe8c50cc6bda"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.danubiusdigital.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Code audits, quality assurance, and business consulting services for blockchain and web projects.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Consulting (testdata1)",
+        "id": "69a8acddc83653104b6f59df"
+      },
+      {
+        "key": "Services",
+        "value": "Code audits, QA, business consulting (testdata1)",
+        "id": "69a8acddc83653104b6f59e0"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "0e812b1b85cfb62af4dbf800"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:22.047Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:22.047Z"
+    },
+    "inventory": 0,
+    "name": "Technical Documentation (testdata1)",
+    "company": {
+      "$oid": "2d7d40d3ff2abe8c50cc6bda"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.danubiusdigital.com/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "White-papers, technical documentation, and business presentations for blockchain and software projects.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Documentation (testdata1)",
+        "id": "69a8acdec83653104b6f59e1"
+      },
+      {
+        "key": "Deliverables",
+        "value": "White-papers, docs, presentations (testdata1)",
+        "id": "69a8acdec83653104b6f59e2"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "a7885fb01531f05ebfcb20ed"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:31.717Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:31.718Z"
+    },
+    "inventory": 0,
+    "name": "Inaugural T-Shirt (testdata1)",
+    "company": {
+      "$oid": "7a9298ccb37bb6c99f24843d"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.liberlandtreasures.com/products/inaugrual-1?variant=testdata1",
+    "price": {
+      "amount": 21.74,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "7b6ea7c83ff14706d14c1855"
+    },
+    "description": "Designed for the discerning individual who values both form and function. The Inaugural sets the standard for excellence. Cotton DTG printed, regular unisex fit.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "T-Shirt (testdata1)",
+        "id": "69a8ace7c83653104b6f59e3"
+      },
+      {
+        "key": "Collection",
+        "value": "Inaugural (testdata1)",
+        "id": "69a8ace7c83653104b6f59e4"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL, 2XL, 3XL (testdata1)",
+        "id": "69a8ace7c83653104b6f59e5"
+      },
+      {
+        "key": "Colors",
+        "value": "White (testdata1)",
+        "id": "69a8ace7c83653104b6f59e6"
+      },
+      {
+        "key": "Material",
+        "value": "Cotton (testdata1)",
+        "id": "69a8ace7c83653104b6f59e7"
+      },
+      {
+        "key": "Fit",
+        "value": "Unisex, crew neck (testdata1)",
+        "id": "69a8ace7c83653104b6f59e8"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2174,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "12884920ceaada38b0b5b1d1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:33.782Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:33.782Z"
+    },
+    "inventory": 0,
+    "name": "Classic T-Shirt (testdata1)",
+    "company": {
+      "$oid": "7a9298ccb37bb6c99f24843d"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.liberlandtreasures.com/products/classic?variant=testdata1",
+    "price": {
+      "amount": 21.74,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "fd3ba8825de3087b429aedb3"
+    },
+    "description": "Timeless elegance and enduring style. Each piece in the Classic collection is a testament to quality. Cotton DTG printed with neck labels.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "T-Shirt (testdata1)",
+        "id": "69a8ace9c83653104b6f59e9"
+      },
+      {
+        "key": "Collection",
+        "value": "Classic (testdata1)",
+        "id": "69a8ace9c83653104b6f59ea"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL, 2XL, 3XL (testdata1)",
+        "id": "69a8ace9c83653104b6f59eb"
+      },
+      {
+        "key": "Colors",
+        "value": "White (testdata1)",
+        "id": "69a8ace9c83653104b6f59ec"
+      },
+      {
+        "key": "Material",
+        "value": "Cotton (testdata1)",
+        "id": "69a8ace9c83653104b6f59ed"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2174,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "a9e1e7a4259ddde5c0432fe8"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:36.254Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:36.254Z"
+    },
+    "inventory": 0,
+    "name": "Maps T-Shirt (testdata1)",
+    "company": {
+      "$oid": "7a9298ccb37bb6c99f24843d"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.liberlandtreasures.com/products/maps?variant=testdata1",
+    "price": {
+      "amount": 21.74,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "6f7ce3a59adc55e640c93aa9"
+    },
+    "description": "Beautifully designed decorative map art — a piece of exploration and elegance. Cotton DTG printed.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "T-Shirt (testdata1)",
+        "id": "69a8acecc83653104b6f59ee"
+      },
+      {
+        "key": "Collection",
+        "value": "Maps (testdata1)",
+        "id": "69a8acecc83653104b6f59ef"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL, 2XL, 3XL (testdata1)",
+        "id": "69a8acecc83653104b6f59f0"
+      },
+      {
+        "key": "Colors",
+        "value": "Black (testdata1)",
+        "id": "69a8acecc83653104b6f59f1"
+      },
+      {
+        "key": "Material",
+        "value": "Cotton (testdata1)",
+        "id": "69a8acecc83653104b6f59f2"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2174,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b6cac8faa541da8f3c8ccc99"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:39.003Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:39.003Z"
+    },
+    "inventory": 0,
+    "name": "Liberland Crest Unisex Jersey Tee (testdata1)",
+    "company": {
+      "$oid": "7a9298ccb37bb6c99f24843d"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.liberlandtreasures.com/products/liberland-crest-unisex-jersey-short-sleeve-tee?variant=testdata1",
+    "price": {
+      "amount": 21.74,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "2635a5f1617ab3e73abf4ed0"
+    },
+    "description": "Classic unisex jersey tee featuring the Liberland Crest. Soft Airlume combed cotton by Bella+Canvas. Ribbed knit collars, tapered shoulders.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "T-Shirt (testdata1)",
+        "id": "69a8aceec83653104b6f59f3"
+      },
+      {
+        "key": "Sizes",
+        "value": "S, M, L, XL, 2XL, 3XL (testdata1)",
+        "id": "69a8aceec83653104b6f59f4"
+      },
+      {
+        "key": "Colors",
+        "value": "Leaf, White, Ash (testdata1)",
+        "id": "69a8aceec83653104b6f59f5"
+      },
+      {
+        "key": "Material",
+        "value": "99% cotton/1% polyester (testdata1)",
+        "id": "69a8aceec83653104b6f59f6"
+      },
+      {
+        "key": "Brand",
+        "value": "Bella+Canvas (testdata1)",
+        "id": "69a8aceec83653104b6f59f7"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2174,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "5608cc6d55083fe2f5677d00"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:40.843Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:40.843Z"
+    },
+    "inventory": 0,
+    "name": "Liberland Heavy Blend Hoodie (testdata1)",
+    "company": {
+      "$oid": "7a9298ccb37bb6c99f24843d"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.liberlandtreasures.com/products/liberland-unisex-heavy-blend%E2%84%A2-hooded-sweatshirt-1?variant=testdata1",
+    "price": {
+      "amount": 44.94,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "3d1b82c760504cd119742ba0"
+    },
+    "description": "Thick blend hoodie with kangaroo pocket and color-matched drawstring. Double-lined hood, tear-away label. 10% of profits donated to Liberland.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Hoodie (testdata1)",
+        "id": "69a8acf0c83653104b6f59f8"
+      },
+      {
+        "key": "Sizes",
+        "value": "S-5XL (testdata1)",
+        "id": "69a8acf0c83653104b6f59f9"
+      },
+      {
+        "key": "Colors",
+        "value": "Sport Gray, White, Charcoal, Light Blue (testdata1)",
+        "id": "69a8acf0c83653104b6f59fa"
+      },
+      {
+        "key": "Material",
+        "value": "50% cotton/50% polyester (8.0 oz) (testdata1)",
+        "id": "69a8acf0c83653104b6f59fb"
+      },
+      {
+        "key": "Certifications",
+        "value": "OEKO-TEX dyes, ethically grown US cotton (testdata1)",
+        "id": "69a8acf0c83653104b6f59fc"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 4494,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "aedd5e2f7a466c3845d33229"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:41.074Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:41.074Z"
+    },
+    "inventory": 0,
+    "name": "Yellow (testdata1)",
+    "company": {
+      "$oid": "d67b72d8d7b35cac29d8165f"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://yellow.libersoft.org?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Decentralized, secure, modular open-source social media and instant messaging platform. Web client (Svelte) and native apps for Windows, Linux, macOS, Android, iOS (Kotlin).\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "License",
+        "value": "Unlicense (testdata1)",
+        "id": "69a8acf1c83653104b6f59fd"
+      },
+      {
+        "key": "Server",
+        "value": "Node.js, Docker (testdata1)",
+        "id": "69a8acf1c83653104b6f59fe"
+      },
+      {
+        "key": "Client",
+        "value": "Svelte/TypeScript/Vite (testdata1)",
+        "id": "69a8acf1c83653104b6f59ff"
+      },
+      {
+        "key": "Native",
+        "value": "Kotlin (testdata1)",
+        "id": "69a8acf1c83653104b6f5a00"
+      },
+      {
+        "key": "GitHub",
+        "value": "libersoft-org/yellow-server, yellow-client, yellow-client-native (testdata1)",
+        "id": "69a8acf1c83653104b6f5a01"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "cd296418bf194aa25bbf4048"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:41.19Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:41.19Z"
+    },
+    "inventory": 0,
+    "name": "LiberShare (testdata1)",
+    "company": {
+      "$oid": "d67b72d8d7b35cac29d8165f"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://libershare.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Peer-to-peer decentralized file sharing. No central servers or single points of failure. Encrypted P2P communication, custom LISH protocol, role-based access control, media center UI.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "License",
+        "value": "Unlicense (testdata1)",
+        "id": "69a8acf1c83653104b6f5a02"
+      },
+      {
+        "key": "Platforms",
+        "value": "Windows, Linux, macOS (testdata1)",
+        "id": "69a8acf1c83653104b6f5a03"
+      },
+      {
+        "key": "Protocol",
+        "value": "LISH (JSON-based) (testdata1)",
+        "id": "69a8acf1c83653104b6f5a04"
+      },
+      {
+        "key": "Encryption",
+        "value": "All P2P encrypted (testdata1)",
+        "id": "69a8acf1c83653104b6f5a05"
+      },
+      {
+        "key": "UI",
+        "value": "Media center + CLI (testdata1)",
+        "id": "69a8acf1c83653104b6f5a06"
+      },
+      {
+        "key": "GitHub",
+        "value": "libersoft-org/libershare (testdata1)",
+        "id": "69a8acf1c83653104b6f5a07"
+      },
+      {
+        "key": "Stars",
+        "value": "39 (testdata1)",
+        "id": "69a8acf1c83653104b6f5a08"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "ee338d333dc1c1956400c41e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:41.352Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:41.352Z"
+    },
+    "inventory": 0,
+    "name": "LiberDir (testdata1)",
+    "company": {
+      "$oid": "d67b72d8d7b35cac29d8165f"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://liberdir.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Web-based directory service for listing and discovering organizations, businesses, and services in Liberland.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Web directory (testdata1)",
+        "id": "69a8acf1c83653104b6f5a09"
+      },
+      {
+        "key": "Purpose",
+        "value": "Organization discovery for Liberland entities (testdata1)",
+        "id": "69a8acf1c83653104b6f5a0a"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "9b7f44cb9f1ba6124a4b5887"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:42.322Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:42.323Z"
+    },
+    "inventory": 0,
+    "name": "DePix — Decentralized Stablecoin (testdata1)",
+    "company": {
+      "$oid": "8bddc933c5e78f59b633dddf"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://depix.info?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Decentralized stablecoin pegged to Brazilian Real (BRL), built on Liquid Network and Lightning Network (Taproot Assets). Seamlessly integrates with Brazil's PIX payment system for instant nationwide and cross-border transactions. Listed on Enor Securities.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Stablecoin (testdata1)",
+        "id": "69a8acf2c83653104b6f5a0b"
+      },
+      {
+        "key": "Peg",
+        "value": "1 BRL (testdata1)",
+        "id": "69a8acf2c83653104b6f5a0c"
+      },
+      {
+        "key": "Blockchain",
+        "value": "Liquid Network + Lightning (testdata1)",
+        "id": "69a8acf2c83653104b6f5a0d"
+      },
+      {
+        "key": "Launch",
+        "value": "Jan 15, 2024 (testdata1)",
+        "id": "69a8acf2c83653104b6f5a0e"
+      },
+      {
+        "key": "Partners",
+        "value": "19+ platforms (testdata1)",
+        "id": "69a8acf2c83653104b6f5a0f"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "30aecdc62a5fa7b06eb9f7d1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:42.809Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:42.809Z"
+    },
+    "inventory": 0,
+    "name": "Compliance Solutions (testdata1)",
+    "company": {
+      "$oid": "8bddc933c5e78f59b633dddf"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://eulen.app/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Crypto compliance solutions helping businesses navigate regulatory requirements across jurisdictions.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Compliance (testdata1)",
+        "id": "69a8acf2c83653104b6f5a10"
+      },
+      {
+        "key": "Industry",
+        "value": "Cryptocurrency (testdata1)",
+        "id": "69a8acf2c83653104b6f5a11"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b95991cf1ae624944489fa16"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:43.338Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:43.338Z"
+    },
+    "inventory": 0,
+    "name": "Banking Services (testdata1)",
+    "company": {
+      "$oid": "8bddc933c5e78f59b633dddf"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://eulen.app/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Banking bridge services between traditional finance and cryptocurrency ecosystems.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Banking (testdata1)",
+        "id": "69a8acf3c83653104b6f5a12"
+      },
+      {
+        "key": "Industry",
+        "value": "Crypto/TradFi (testdata1)",
+        "id": "69a8acf3c83653104b6f5a13"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "dbc38f5c135fdf996f51b1fc"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:43.862Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:43.863Z"
+    },
+    "inventory": 0,
+    "name": "International Structuring (testdata1)",
+    "company": {
+      "$oid": "8bddc933c5e78f59b633dddf"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://eulen.app/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "International corporate structuring for crypto businesses operating across jurisdictions.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Corporate Structuring (testdata1)",
+        "id": "69a8acf3c83653104b6f5a14"
+      },
+      {
+        "key": "Scope",
+        "value": "International/Multi-jurisdictional (testdata1)",
+        "id": "69a8acf3c83653104b6f5a15"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "3b3684913a24d40d7a39668a"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:45.866Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:45.866Z"
+    },
+    "inventory": 0,
+    "name": "Quick Fix Phonics (testdata1)",
+    "company": {
+      "$oid": "6365eecd2e612aab2ebd2fc0"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://commonsense-edu.org/courses/quick-fix-phonics/?variant=testdata1",
+    "price": {
+      "amount": 399,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "6c2b702dc1e653e1ee4e9bd7"
+    },
+    "description": "4-hour unconventional phonics program for reading and spelling. Simple for students, adults, and educators. 22 lessons, 143 students enrolled.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Phonics (testdata1)",
+        "id": "69a8acf5c83653104b6f5a16"
+      },
+      {
+        "key": "Duration",
+        "value": "4 hours (testdata1)",
+        "id": "69a8acf5c83653104b6f5a17"
+      },
+      {
+        "key": "Lessons",
+        "value": "22 (testdata1)",
+        "id": "69a8acf5c83653104b6f5a18"
+      },
+      {
+        "key": "Students",
+        "value": "143 (testdata1)",
+        "id": "69a8acf5c83653104b6f5a19"
+      },
+      {
+        "key": "Level",
+        "value": "All levels (testdata1)",
+        "id": "69a8acf5c83653104b6f5a1a"
+      },
+      {
+        "key": "Platform",
+        "value": "LearnPress (testdata1)",
+        "id": "69a8acf5c83653104b6f5a1b"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 39900,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "dc2d1100634f0d35d018b008"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:46.909Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:46.909Z"
+    },
+    "inventory": 0,
+    "name": "Phonics Booster & Spelling Support (testdata1)",
+    "company": {
+      "$oid": "6365eecd2e612aab2ebd2fc0"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://commonsense-edu.org/courses/quick-fix-phonics/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "b24ed7f99bb1b2fecae56329"
+    },
+    "description": "Daily phonics booster and spelling support for ages 6-12. Systematic evidence-based literacy covering phonemic awareness, phonics, and fluency. 4-week program, 10 lessons.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Literacy (testdata1)",
+        "id": "69a8acf6c83653104b6f5a1c"
+      },
+      {
+        "key": "Duration",
+        "value": "4 weeks (testdata1)",
+        "id": "69a8acf6c83653104b6f5a1d"
+      },
+      {
+        "key": "Lessons",
+        "value": "10 (testdata1)",
+        "id": "69a8acf6c83653104b6f5a1e"
+      },
+      {
+        "key": "Target Age",
+        "value": "6-12 (testdata1)",
+        "id": "69a8acf6c83653104b6f5a1f"
+      },
+      {
+        "key": "Status",
+        "value": "Coming Soon (testdata1)",
+        "id": "69a8acf6c83653104b6f5a20"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "59bc04c8616226e812b2742f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:49.095Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:49.095Z"
+    },
+    "inventory": 0,
+    "name": "Grammar with Fun (testdata1)",
+    "company": {
+      "$oid": "6365eecd2e612aab2ebd2fc0"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://commonsense-edu.org/courses/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "686c69c9202741e3021b6eaf"
+    },
+    "description": "Engaging daily grammar instruction for ages 6-12. Available as 1-month subscription. 10 lessons.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Grammar (testdata1)",
+        "id": "69a8acf9c83653104b6f5a21"
+      },
+      {
+        "key": "Duration",
+        "value": "4 weeks (testdata1)",
+        "id": "69a8acf9c83653104b6f5a22"
+      },
+      {
+        "key": "Lessons",
+        "value": "10 (testdata1)",
+        "id": "69a8acf9c83653104b6f5a23"
+      },
+      {
+        "key": "Target Age",
+        "value": "6-12 (testdata1)",
+        "id": "69a8acf9c83653104b6f5a24"
+      },
+      {
+        "key": "Status",
+        "value": "Coming Soon (testdata1)",
+        "id": "69a8acf9c83653104b6f5a25"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "a5a0ffd605536f8b2e77d943"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:49.666Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:59.128Z"
+    },
+    "inventory": 0,
+    "name": "Qigong Foundational Course (testdata1)",
+    "company": {
+      "$oid": "e446264f77b55e54ccc2c9ae"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://qiyogalife.com/qigong-training/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Certification course teaching effective Qigong used in Chinese hospitals. Includes meridian warm-up, Wuji + five element Zhan Zhuang, Ba Duan Jin, Chinese medicine theory, anatomy, and final exam.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Certification (testdata1)",
+        "id": "69a8acf9c83653104b6f5a26"
+      },
+      {
+        "key": "Location",
+        "value": "Yang Dojo, Pasig City, Philippines (testdata1)",
+        "id": "69a8acf9c83653104b6f5a27"
+      },
+      {
+        "key": "Format",
+        "value": "In-person (no recordings) (testdata1)",
+        "id": "69a8acf9c83653104b6f5a28"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 34500,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "670e3cb1729f53cc780239da"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:49.803Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:49.803Z"
+    },
+    "inventory": 0,
+    "name": "Chaturanga Foundations Workshop (testdata1)",
+    "company": {
+      "$oid": "e446264f77b55e54ccc2c9ae"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://qiyogalife.com/2026/01/29/chaturanga-foundations/?variant=testdata1",
+    "price": {
+      "amount": 44,
+      "currency": "USD"
+    },
+    "description": "2-hour technique-focused yoga session on safe shoulder, elbow, wrist, and core support. Strength-building, beginner-friendly variations, alignment refinement.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Workshop (testdata1)",
+        "id": "69a8acf9c83653104b6f5a29"
+      },
+      {
+        "key": "Duration",
+        "value": "2 hours (testdata1)",
+        "id": "69a8acf9c83653104b6f5a2a"
+      },
+      {
+        "key": "Level",
+        "value": "All levels (testdata1)",
+        "id": "69a8acf9c83653104b6f5a2b"
+      },
+      {
+        "key": "Location",
+        "value": "Yang Dojo, Pasig City (testdata1)",
+        "id": "69a8acf9c83653104b6f5a2c"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 4400,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "ea0642bad45ff1d6c31dc2fe"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:49.921Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:49.921Z"
+    },
+    "inventory": 0,
+    "name": "Acu-Tuneup (testdata1)",
+    "company": {
+      "$oid": "e446264f77b55e54ccc2c9ae"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://qiyogalife.com/clinic/?variant=testdata1",
+    "price": {
+      "amount": 17.5,
+      "currency": "USD"
+    },
+    "description": "Low-risk, high-efficacy acupuncture to balance and restore natural energy flow. Addresses anxiety, stress, pain, fatigue, sleep issues, mental clarity, and detox.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Clinic (testdata1)",
+        "id": "69a8acf9c83653104b6f5a2d"
+      },
+      {
+        "key": "Type",
+        "value": "Acupuncture (testdata1)",
+        "id": "69a8acf9c83653104b6f5a2e"
+      },
+      {
+        "key": "Location",
+        "value": "G-1, 4 Gen. Araneta, San Antonio Village, Pasig (testdata1)",
+        "id": "69a8acf9c83653104b6f5a2f"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1750,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b8247909794a8ff84de4a868"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:50.045Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:50.046Z"
+    },
+    "inventory": 0,
+    "name": "Acu-Glow Up (testdata1)",
+    "company": {
+      "$oid": "e446264f77b55e54ccc2c9ae"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://qiyogalife.com/clinic/?variant=testdata1",
+    "price": {
+      "amount": 26,
+      "currency": "USD"
+    },
+    "description": "Non-invasive facial treatment using acupressure on ear points. Promotes facial circulation, lymphatic drainage, and calming reset. Includes Acu-Tuneup session.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Clinic (testdata1)",
+        "id": "69a8acfac83653104b6f5a30"
+      },
+      {
+        "key": "Type",
+        "value": "Facial Acupressure (testdata1)",
+        "id": "69a8acfac83653104b6f5a31"
+      },
+      {
+        "key": "Includes",
+        "value": "Acu-Tuneup (testdata1)",
+        "id": "69a8acfac83653104b6f5a32"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2600,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "abfcd9ec285b22b533856328"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:51.609Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:51.609Z"
+    },
+    "inventory": 0,
+    "name": "IP Valuation Services (testdata1)",
+    "company": {
+      "$oid": "de465d9ceeffa56ca68e061a"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://ipponfintech.wordpress.com/our-products/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "AI-driven valuation of intellectual property ensuring accurate, market-aligned assessments. Combines advanced AI tools with third-party expert appraisals.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Valuation (testdata1)",
+        "id": "69a8acfbc83653104b6f5a33"
+      },
+      {
+        "key": "Type",
+        "value": "AI-driven IP Appraisal (testdata1)",
+        "id": "69a8acfbc83653104b6f5a34"
+      },
+      {
+        "key": "Target",
+        "value": "Startups, IP owners (testdata1)",
+        "id": "69a8acfbc83653104b6f5a35"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b30e07db8cad916c8fbc5ef5"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:58.973Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:58.973Z"
+    },
+    "inventory": 0,
+    "name": "IP-Backed Securities (IPVAD & FRD) (testdata1)",
+    "company": {
+      "$oid": "de465d9ceeffa56ca68e061a"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://ipponfintech.wordpress.com/our-products/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "db344eacaef284fc80500021"
+    },
+    "description": "Converts IP assets into structured financial instruments (bonds, equity-linked notes) for global investors. Includes IP Value Assessed Debentures and Future Royalties Debentures.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Securities (testdata1)",
+        "id": "69a8ad02c83653104b6f5a36"
+      },
+      {
+        "key": "Sub-products",
+        "value": "IPVAD, FRD (testdata1)",
+        "id": "69a8ad02c83653104b6f5a37"
+      },
+      {
+        "key": "Target",
+        "value": "Institutional + retail investors (testdata1)",
+        "id": "69a8ad02c83653104b6f5a38"
+      },
+      {
+        "key": "Returns",
+        "value": "Dividends/interest from IP revenue (testdata1)",
+        "id": "69a8ad02c83653104b6f5a39"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "5af06e281681565b66ca99a0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:59.127Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:59.127Z"
+    },
+    "inventory": 0,
+    "name": "Smart Contracts for IP Licensing (testdata1)",
+    "company": {
+      "$oid": "de465d9ceeffa56ca68e061a"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://ipponfintech.wordpress.com/our-products/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Blockchain-based smart contracts for IP licensing with transparent, secure, automated royalty payments. Eliminates intermediaries for long-term income streams.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Blockchain (testdata1)",
+        "id": "69a8ad03c83653104b6f5a3a"
+      },
+      {
+        "key": "Type",
+        "value": "Automated licensing (testdata1)",
+        "id": "69a8ad03c83653104b6f5a3b"
+      },
+      {
+        "key": "Technology",
+        "value": "Smart contracts (testdata1)",
+        "id": "69a8ad03c83653104b6f5a3c"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "0859c253b5353f95e8e03c3e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:01.306Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:01.306Z"
+    },
+    "inventory": 0,
+    "name": "God's Assassin (Book) (testdata1)",
+    "company": {
+      "$oid": "23d42045c3bee4a66f5c6581"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.amazon.com/Gods-Assassin-Steve-Wollett/dp/1662470096?variant=testdata1",
+    "price": {
+      "amount": 25.95,
+      "currency": "USD"
+    },
+    "description": "A spellbinding thriller following a principled killer guided by his faith in the god he serves as an ordained priest. Also available as hardcover ($39.95), eBook ($9.49), and audiobook.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Author",
+        "value": "Steve Wollett (testdata1)",
+        "id": "69a8ad05c83653104b6f5a3d"
+      },
+      {
+        "key": "Publisher",
+        "value": "Page Publishing (testdata1)",
+        "id": "69a8ad05c83653104b6f5a3e"
+      },
+      {
+        "key": "Year",
+        "value": "2021 (testdata1)",
+        "id": "69a8ad05c83653104b6f5a3f"
+      },
+      {
+        "key": "ISBN",
+        "value": "978-1662470097 (testdata1)",
+        "id": "69a8ad05c83653104b6f5a40"
+      },
+      {
+        "key": "Formats",
+        "value": "Paperback, Hardcover, eBook, Audiobook (testdata1)",
+        "id": "69a8ad05c83653104b6f5a41"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2595,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "858f676f0e0d8d698dd133cb"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:01.435Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:01.435Z"
+    },
+    "inventory": 0,
+    "name": "Blasphemous Cocktails (Book) (testdata1)",
+    "company": {
+      "$oid": "23d42045c3bee4a66f5c6581"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.amazon.com/Blasphemous-Cocktails-Steve-Wollett/dp/1620303477?variant=testdata1",
+    "price": {
+      "amount": 15.99,
+      "currency": "USD"
+    },
+    "description": "Book by Steve Wollett and Jason Anarchy. Originally Kickstarter-funded. Limited edition leather-bound hardcover (only 25 copies, hand-sewn, signed and numbered).\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Authors",
+        "value": "Steve Wollett, Jason Anarchy (testdata1)",
+        "id": "69a8ad05c83653104b6f5a42"
+      },
+      {
+        "key": "ISBN",
+        "value": "978-1620303467 (testdata1)",
+        "id": "69a8ad05c83653104b6f5a43"
+      },
+      {
+        "key": "Formats",
+        "value": "Paperback, Limited Hardcover (testdata1)",
+        "id": "69a8ad05c83653104b6f5a44"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1599,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "2e0bbabc38e66a2f8d88fb85"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:01.546Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:01.546Z"
+    },
+    "inventory": 0,
+    "name": "Murder Me Sunshine (Book) (testdata1)",
+    "company": {
+      "$oid": "23d42045c3bee4a66f5c6581"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.amazon.com/dp/1793086788?variant=testdata1",
+    "price": {
+      "amount": 15.99,
+      "currency": "USD"
+    },
+    "description": "Novel by Steve Wollett. Independently published January 2019.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Author",
+        "value": "Steve Wollett (testdata1)",
+        "id": "69a8ad05c83653104b6f5a45"
+      },
+      {
+        "key": "ISBN",
+        "value": "978-1793086785 (testdata1)",
+        "id": "69a8ad05c83653104b6f5a46"
+      },
+      {
+        "key": "Publisher",
+        "value": "Independently Published (testdata1)",
+        "id": "69a8ad05c83653104b6f5a47"
+      },
+      {
+        "key": "Year",
+        "value": "2019 (testdata1)",
+        "id": "69a8ad05c83653104b6f5a48"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1599,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "8b26783e310a8a777bf2ee5e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:01.649Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:01.649Z"
+    },
+    "inventory": 0,
+    "name": "Jack Be Nimble (Film) (testdata1)",
+    "company": {
+      "$oid": "23d42045c3bee4a66f5c6581"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.amazon.com/Jack-Be-Nimble-Bai-Ling/dp/B0B8PHP92G?variant=testdata1",
+    "price": {
+      "amount": 2.99,
+      "currency": "USD"
+    },
+    "description": "Comedy-horror about tabletop gamers in a retirement home who become convinced a demon is killing residents. Stars Bai Ling and Vernon Wells.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Director",
+        "value": "Steve Wollett (testdata1)",
+        "id": "69a8ad05c83653104b6f5a49"
+      },
+      {
+        "key": "Genre",
+        "value": "Horror, Comedy (testdata1)",
+        "id": "69a8ad05c83653104b6f5a4a"
+      },
+      {
+        "key": "Runtime",
+        "value": "80 min (testdata1)",
+        "id": "69a8ad05c83653104b6f5a4b"
+      },
+      {
+        "key": "Rating",
+        "value": "PG-13 (testdata1)",
+        "id": "69a8ad05c83653104b6f5a4c"
+      },
+      {
+        "key": "Year",
+        "value": "2022 (testdata1)",
+        "id": "69a8ad05c83653104b6f5a4d"
+      },
+      {
+        "key": "Cast",
+        "value": "Bai Ling, Vernon Wells (testdata1)",
+        "id": "69a8ad05c83653104b6f5a4e"
+      },
+      {
+        "key": "Free on",
+        "value": "Tubi, Plex (testdata1)",
+        "id": "69a8ad05c83653104b6f5a4f"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 299,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "bad3f064e3c60949a390dca5"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:01.866Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:01.866Z"
+    },
+    "inventory": 0,
+    "name": "@fuck.it Core Email (testdata1)",
+    "company": {
+      "$oid": "3eed36c31a59e1aa522509b9"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://fuck.it?variant=testdata1",
+    "price": {
+      "amount": 5.9,
+      "currency": "USD"
+    },
+    "description": "Privacy-first premium email with 10GB mail storage, 25MB attachments. No ads, no tracking, GDPR compliant, ISO 27001 certified German servers. IMAP/POP3/SMTP support.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Plan",
+        "value": "Core (testdata1)",
+        "id": "69a8ad05c83653104b6f5a50"
+      },
+      {
+        "key": "Storage",
+        "value": "10GB mail (testdata1)",
+        "id": "69a8ad05c83653104b6f5a51"
+      },
+      {
+        "key": "Attachments",
+        "value": "25MB (testdata1)",
+        "id": "69a8ad05c83653104b6f5a52"
+      },
+      {
+        "key": "Annual",
+        "value": "$4.72/mo (20% off) (testdata1)",
+        "id": "69a8ad05c83653104b6f5a53"
+      },
+      {
+        "key": "Hosting",
+        "value": "German ISO 27001 servers (testdata1)",
+        "id": "69a8ad05c83653104b6f5a54"
+      },
+      {
+        "key": "Platform",
+        "value": "Open-Xchange (testdata1)",
+        "id": "69a8ad05c83653104b6f5a55"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 590,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "9c6ae957f462fe61924eee8a"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:02.006Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:02.006Z"
+    },
+    "inventory": 0,
+    "name": "@fuck.it Edge Email (testdata1)",
+    "company": {
+      "$oid": "3eed36c31a59e1aa522509b9"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://fuck.it?variant=testdata1",
+    "price": {
+      "amount": 11.9,
+      "currency": "USD"
+    },
+    "description": "Premium email with 30GB mail storage plus 10GB OX Drive file storage. Includes OX Documents suite (docs, spreadsheets, presentations), calendar, contacts, tasks.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Plan",
+        "value": "Edge (testdata1)",
+        "id": "69a8ad05c83653104b6f5a56"
+      },
+      {
+        "key": "Storage",
+        "value": "30GB mail + 10GB files (testdata1)",
+        "id": "69a8ad05c83653104b6f5a57"
+      },
+      {
+        "key": "Annual",
+        "value": "$9.52/mo (20% off) (testdata1)",
+        "id": "69a8ad05c83653104b6f5a58"
+      },
+      {
+        "key": "Includes",
+        "value": "OX Drive, OX Documents, Calendar, Contacts (testdata1)",
+        "id": "69a8ad05c83653104b6f5a59"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1190,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "cca51c0ffb50839f6e443e24"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:02.147Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:02.147Z"
+    },
+    "inventory": 0,
+    "name": "@fuck.it Apex Email (testdata1)",
+    "company": {
+      "$oid": "3eed36c31a59e1aa522509b9"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://fuck.it?variant=testdata1",
+    "price": {
+      "amount": 24.9,
+      "currency": "USD"
+    },
+    "description": "Top-tier premium email with 100GB mail, 30GB file storage, and end-to-end encryption via OX Guard. Priority support. Full productivity suite included.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Plan",
+        "value": "Apex (testdata1)",
+        "id": "69a8ad06c83653104b6f5a5a"
+      },
+      {
+        "key": "Storage",
+        "value": "100GB mail + 30GB files (testdata1)",
+        "id": "69a8ad06c83653104b6f5a5b"
+      },
+      {
+        "key": "Annual",
+        "value": "$19.92/mo (20% off) (testdata1)",
+        "id": "69a8ad06c83653104b6f5a5c"
+      },
+      {
+        "key": "Encryption",
+        "value": "End-to-end (OX Guard) (testdata1)",
+        "id": "69a8ad06c83653104b6f5a5d"
+      },
+      {
+        "key": "Support",
+        "value": "Priority (testdata1)",
+        "id": "69a8ad06c83653104b6f5a5e"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2490,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "65d6b9755412275dde506e2e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:03.468Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:03.468Z"
+    },
+    "inventory": 0,
+    "name": "Mosaic Protocol (testdata1)",
+    "company": {
+      "$oid": "53e1f11218561c75df41449c"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://mosaicprotocol.xyz?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Decentralized borrowing protocol on Reef Chain (fork of Liquity). Lock REEF as collateral in a \"Trove\" to mint MoUSD/MEUR stablecoins at 0% interest with 110% minimum collateralization. Fully non-custodial, immutable, governance-free after deployment.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Blockchain",
+        "value": "Reef Chain (testdata1)",
+        "id": "69a8ad07c83653104b6f5a5f"
+      },
+      {
+        "key": "Stablecoin",
+        "value": "MoUSD/MEUR (testdata1)",
+        "id": "69a8ad07c83653104b6f5a60"
+      },
+      {
+        "key": "Governance Token",
+        "value": "MSIC (testdata1)",
+        "id": "69a8ad07c83653104b6f5a61"
+      },
+      {
+        "key": "Min Collateral",
+        "value": "110% (testdata1)",
+        "id": "69a8ad07c83653104b6f5a62"
+      },
+      {
+        "key": "Interest",
+        "value": "0% (testdata1)",
+        "id": "69a8ad07c83653104b6f5a63"
+      },
+      {
+        "key": "Forked from",
+        "value": "Liquity (testdata1)",
+        "id": "69a8ad07c83653104b6f5a64"
+      },
+      {
+        "key": "Status",
+        "value": "In development (testdata1)",
+        "id": "69a8ad07c83653104b6f5a65"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "4cbc331162f2e54bc5e597f0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:05.872Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:05.872Z"
+    },
+    "inventory": 0,
+    "name": "Balcony Photovoltaic Power Plant 800 Wp (testdata1)",
+    "company": {
+      "$oid": "2abd5adf0f4d01dcbea6ad51"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/product/balcony-photovoltaic-power-plant-800-wp/?variant=testdata1",
+    "price": {
+      "amount": 560,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "fa9ffc9381bee86cc708c747"
+    },
+    "description": "Grid-tie balcony solar system with SP800W pure sine wave micro inverter and 2x 400Wp PV panels. Smartphone app monitoring, on-grid power selling, zero power feed option.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Inverter",
+        "value": "SP800W (testdata1)",
+        "id": "69a8ad09c83653104b6f5a66"
+      },
+      {
+        "key": "Panels",
+        "value": "2x 400Wp (testdata1)",
+        "id": "69a8ad09c83653104b6f5a67"
+      },
+      {
+        "key": "Total",
+        "value": "800Wp (testdata1)",
+        "id": "69a8ad09c83653104b6f5a68"
+      },
+      {
+        "key": "Output",
+        "value": "AC 220/230V (testdata1)",
+        "id": "69a8ad09c83653104b6f5a69"
+      },
+      {
+        "key": "Grid",
+        "value": "On-grid single-phase (testdata1)",
+        "id": "69a8ad09c83653104b6f5a6a"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 61600,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "c97563131105be5e67f3a537"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:07.145Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:07.145Z"
+    },
+    "inventory": 0,
+    "name": "BYD SEAL Design (testdata1)",
+    "company": {
+      "$oid": "2abd5adf0f4d01dcbea6ad51"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/product/byd-seal-design/?variant=testdata1",
+    "price": {
+      "amount": 49586,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "164ebc57fe0195bd832f4f04"
+    },
+    "description": "Ocean-inspired electric sedan, iF Design Award winner. 230kW power, 570km range, Blade LFP battery 82.5kWh. Includes free test drive and 1000 kWh chip card bonus.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Power",
+        "value": "230kW (testdata1)",
+        "id": "69a8ad0bc83653104b6f5a6b"
+      },
+      {
+        "key": "Range",
+        "value": "570km (testdata1)",
+        "id": "69a8ad0bc83653104b6f5a6c"
+      },
+      {
+        "key": "Battery",
+        "value": "82.5kWh Blade LFP (testdata1)",
+        "id": "69a8ad0bc83653104b6f5a6d"
+      },
+      {
+        "key": "Drive",
+        "value": "RWD (testdata1)",
+        "id": "69a8ad0bc83653104b6f5a6e"
+      },
+      {
+        "key": "Stock",
+        "value": "2 units (testdata1)",
+        "id": "69a8ad0bc83653104b6f5a6f"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 5454460,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "7c59242f24a25a754a1702c2"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:08.616Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:08.616Z"
+    },
+    "inventory": 0,
+    "name": "BYD SEALION 7 Comfort (testdata1)",
+    "company": {
+      "$oid": "2abd5adf0f4d01dcbea6ad51"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/product/byd-sealion-7-comfort/?variant=testdata1",
+    "price": {
+      "amount": 49586,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "fa5c38e379f6abad3fd92537"
+    },
+    "description": "Ocean-inspired electric SUV with sporty styling, extended wheelbase. 230kW, 482km range, Revolion Blade LFP 82.5kWh. Free test drive and 1000 kWh chip card bonus.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Power",
+        "value": "230kW (testdata1)",
+        "id": "69a8ad0cc83653104b6f5a70"
+      },
+      {
+        "key": "Range",
+        "value": "482km (testdata1)",
+        "id": "69a8ad0cc83653104b6f5a71"
+      },
+      {
+        "key": "Battery",
+        "value": "82.5kWh Revolion Blade LFP (testdata1)",
+        "id": "69a8ad0cc83653104b6f5a72"
+      },
+      {
+        "key": "Doors",
+        "value": "5 (testdata1)",
+        "id": "69a8ad0cc83653104b6f5a73"
+      },
+      {
+        "key": "Stock",
+        "value": "2 units (testdata1)",
+        "id": "69a8ad0cc83653104b6f5a74"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 5454460,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b06a728ea3606c1d987a428c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:09.983Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:09.983Z"
+    },
+    "inventory": 0,
+    "name": "DEYE 2.7kW Solar Air Conditioning (testdata1)",
+    "company": {
+      "$oid": "2abd5adf0f4d01dcbea6ad51"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/product/deye-27-kw-ac-dc-on-off-grid-solar-aircondition-free-cooling-heating/?variant=testdata1",
+    "price": {
+      "amount": 1499,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "d55b78dfd48c8ebfac4d8f77"
+    },
+    "description": "4th-gen hybrid solar air conditioning with DC inverter VRF technology. Split system with direct DC solar panel connection (MC4) and AC grid connection. Free cooling and heating from solar.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Power",
+        "value": "2.7kW (testdata1)",
+        "id": "69a8ad0dc83653104b6f5a75"
+      },
+      {
+        "key": "System",
+        "value": "Split (indoor+outdoor) (testdata1)",
+        "id": "69a8ad0dc83653104b6f5a76"
+      },
+      {
+        "key": "Grid",
+        "value": "On/Off compatible (testdata1)",
+        "id": "69a8ad0dc83653104b6f5a77"
+      },
+      {
+        "key": "Functions",
+        "value": "Cooling+Heating (testdata1)",
+        "id": "69a8ad0dc83653104b6f5a78"
+      },
+      {
+        "key": "Solar",
+        "value": "Direct DC via MC4 (testdata1)",
+        "id": "69a8ad0dc83653104b6f5a79"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 164890,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "1edbf170ab61d3ff67b4f796"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:10.957Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:10.957Z"
+    },
+    "inventory": 0,
+    "name": "Photovoltaic Water Heating 2460Wp (testdata1)",
+    "company": {
+      "$oid": "2abd5adf0f4d01dcbea6ad51"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/product/photovoltaic-water-heating-2460wp/?variant=testdata1",
+    "price": {
+      "amount": 1652,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "e8048dc676ecf62557965893"
+    },
+    "description": "Off-grid PV water heating system. Direct use of solar panels to power electric boilers, radiators, heating mats. 6x 410Wp panels.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Total",
+        "value": "2460Wp (testdata1)",
+        "id": "69a8ad0ec83653104b6f5a7a"
+      },
+      {
+        "key": "Panels",
+        "value": "6x 410Wp (testdata1)",
+        "id": "69a8ad0ec83653104b6f5a7b"
+      },
+      {
+        "key": "System",
+        "value": "Off-grid (testdata1)",
+        "id": "69a8ad0ec83653104b6f5a7c"
+      },
+      {
+        "key": "Compatible",
+        "value": "Boilers, radiators, heating mats (testdata1)",
+        "id": "69a8ad0ec83653104b6f5a7d"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 181720,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b4eea661757a220073a7dd3b"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:16.539Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:16.539Z"
+    },
+    "inventory": 0,
+    "name": "Liberpulco 2026 — General Admission (testdata1)",
+    "company": {
+      "$oid": "06adab0afd1c6677f5b6653c"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://anarchapulco.com/liberpulco-2026-sales/?variant=testdata1",
+    "price": {
+      "amount": 100,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "4c4de483bbd0bdf61c7bbd3b"
+    },
+    "description": "Libertarian gathering at Ark Village, Apatin, Serbia. Aug 14-17, 2026. Joint event by Liberland and Anarchapulco. Three days of speakers, networking, workshops. Culminates with excursion day to Liberland by boat, bike, or foot.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Dates",
+        "value": "Aug 14-17, 2026 (testdata1)",
+        "id": "69a8ad14c83653104b6f5a7e"
+      },
+      {
+        "key": "Location",
+        "value": "Ark Village, Apatin, Serbia (testdata1)",
+        "id": "69a8ad14c83653104b6f5a7f"
+      },
+      {
+        "key": "Organizers",
+        "value": "Liberland + Anarchapulco (testdata1)",
+        "id": "69a8ad14c83653104b6f5a80"
+      },
+      {
+        "key": "Theme",
+        "value": "Individual freedom, voluntary governance (testdata1)",
+        "id": "69a8ad14c83653104b6f5a81"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 10000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "3e599614ad44e001f0a2bc9e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:16.75Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:16.75Z"
+    },
+    "inventory": 0,
+    "name": "TomYum Swap DEX (testdata1)",
+    "company": {
+      "$oid": "e1973cd5ec2041c938f1933c"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://tomyum.xyz?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Decentralized exchange on Solana with Proof of Liquidity (PoL) mechanism. Crypto-to-fiat (THB) exchange with low fees and no limits. Deflationary tokenomics with token-burning mechanics.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Blockchain",
+        "value": "Solana (testdata1)",
+        "id": "69a8ad14c83653104b6f5a82"
+      },
+      {
+        "key": "Type",
+        "value": "DEX (testdata1)",
+        "id": "69a8ad14c83653104b6f5a83"
+      },
+      {
+        "key": "Fiat",
+        "value": "THB (Thai Baht) (testdata1)",
+        "id": "69a8ad14c83653104b6f5a84"
+      },
+      {
+        "key": "Mechanism",
+        "value": "Proof of Liquidity (testdata1)",
+        "id": "69a8ad14c83653104b6f5a85"
+      },
+      {
+        "key": "Fees",
+        "value": "Low (testdata1)",
+        "id": "69a8ad14c83653104b6f5a86"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "f17dfe08622f7eabd069ba0e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:17.661Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:17.661Z"
+    },
+    "inventory": 0,
+    "name": "MeetRush App (testdata1)",
+    "company": {
+      "$oid": "a4665553b5e34b76aebb6266"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://meetrush.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "3462979767e45407e58600a7"
+    },
+    "description": "Social platform for finding people nearby, meeting new people, chatting, and dating. Angular-based web application.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Social/Dating (testdata1)",
+        "id": "69a8ad15c83653104b6f5a87"
+      },
+      {
+        "key": "Platform",
+        "value": "Web (Angular SPA) (testdata1)",
+        "id": "69a8ad15c83653104b6f5a88"
+      },
+      {
+        "key": "Pricing",
+        "value": "Free (testdata1)",
+        "id": "69a8ad15c83653104b6f5a89"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "eccb4e2eb12ee1c1e59c665b"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:49.703Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:49.703Z"
+    },
+    "inventory": 0,
+    "name": "Stem Cell Therapy (testdata1)",
+    "company": {
+      "$oid": "125954d29fe1125a9087ca48"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://garmclinic.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Advanced stem cell therapy for joint repair, injury recovery, and chronic pain management with 2-year post-treatment follow-up monitoring.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Regenerative Medicine (testdata1)",
+        "id": "69a8ad35c83653104b6f5a8a"
+      },
+      {
+        "key": "Type",
+        "value": "Stem Cell (testdata1)",
+        "id": "69a8ad35c83653104b6f5a8b"
+      },
+      {
+        "key": "Follow-up",
+        "value": "2 years (testdata1)",
+        "id": "69a8ad35c83653104b6f5a8c"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "4daaa5bc627b227d8814f1de"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:49.827Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:49.827Z"
+    },
+    "inventory": 0,
+    "name": "Follistatin Gene Therapy (testdata1)",
+    "company": {
+      "$oid": "125954d29fe1125a9087ca48"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://garmclinic.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Plasmid-based gene therapy targeting muscle growth, anti-aging, and metabolism optimization. Clinical trial participation available.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Gene Therapy (testdata1)",
+        "id": "69a8ad35c83653104b6f5a8d"
+      },
+      {
+        "key": "Type",
+        "value": "Follistatin Plasmid (testdata1)",
+        "id": "69a8ad35c83653104b6f5a8e"
+      },
+      {
+        "key": "Status",
+        "value": "Active (testdata1)",
+        "id": "69a8ad35c83653104b6f5a8f"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "c482e1e3e87a1c54259048b7"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:49.935Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:49.935Z"
+    },
+    "inventory": 0,
+    "name": "Longevity Program (testdata1)",
+    "company": {
+      "$oid": "125954d29fe1125a9087ca48"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://garmclinic.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Comprehensive longevity protocol including Muse cells, exosome-enhanced cognitive support, and metabolic optimization.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Longevity (testdata1)",
+        "id": "69a8ad35c83653104b6f5a90"
+      },
+      {
+        "key": "Type",
+        "value": "Multi-protocol (testdata1)",
+        "id": "69a8ad35c83653104b6f5a91"
+      },
+      {
+        "key": "CRO",
+        "value": "Yes (testdata1)",
+        "id": "69a8ad35c83653104b6f5a92"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "707abc09f51cc6e1b2e164cb"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:50.641Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:50.641Z"
+    },
+    "inventory": 0,
+    "name": "VEGF Gene Therapy (testdata1)",
+    "company": {
+      "$oid": "9b9e74dd11cab57e1f6a075d"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://unlimited.bio/vegf?variant=testdata1",
+    "price": {
+      "amount": 25000,
+      "currency": "USD"
+    },
+    "description": "Angiogenetic gene therapy using VEGF plasmids to build new capillaries. Targets muscle rejuvenation, improved circulation, and hair growth.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Gene Therapy (testdata1)",
+        "id": "69a8ad36c83653104b6f5a93"
+      },
+      {
+        "key": "Type",
+        "value": "VEGF Plasmid (testdata1)",
+        "id": "69a8ad36c83653104b6f5a94"
+      },
+      {
+        "key": "Delivery",
+        "value": "Injection (testdata1)",
+        "id": "69a8ad36c83653104b6f5a95"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2500000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "680e0831055743c85f30b549"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:50.781Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:50.782Z"
+    },
+    "inventory": 0,
+    "name": "Follistatin Gene Therapy (testdata1)",
+    "company": {
+      "$oid": "9b9e74dd11cab57e1f6a075d"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://unlimited.bio?variant=testdata1",
+    "price": {
+      "amount": 25000,
+      "currency": "USD"
+    },
+    "description": "Gene therapy supporting muscle growth and anti-aging through follistatin expression. Administered in Prospera ZEDE and Mexico.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Gene Therapy (testdata1)",
+        "id": "69a8ad36c83653104b6f5a96"
+      },
+      {
+        "key": "Type",
+        "value": "Follistatin (testdata1)",
+        "id": "69a8ad36c83653104b6f5a97"
+      },
+      {
+        "key": "Disclaimer",
+        "value": "Not FDA approved (testdata1)",
+        "id": "69a8ad36c83653104b6f5a98"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2500000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "4be438b663a6c58a43210b7f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:51.307Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:58.933Z"
+    },
+    "inventory": 0,
+    "name": "NODE Pass (testdata1)",
+    "company": {
+      "$oid": "d2339fcb9498ec08050be23e"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.infinita.city?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Flexible access to all Infinita City spaces, community events, and facilities. Tiered daily, monthly, and yearly options.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Membership (testdata1)",
+        "id": "69a8ad37c83653104b6f5a99"
+      },
+      {
+        "key": "Location",
+        "value": "Duna Tower, Roatan (testdata1)",
+        "id": "69a8ad37c83653104b6f5a9a"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 100000,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "3bd51a32242bfe82ce015cce"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:51.414Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:51.414Z"
+    },
+    "inventory": 0,
+    "name": "Health Clinic Pass (testdata1)",
+    "company": {
+      "$oid": "d2339fcb9498ec08050be23e"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.infinita.city/forever-2025/health-clinic?variant=testdata1",
+    "price": {
+      "amount": 100,
+      "currency": "USD"
+    },
+    "description": "Access to primary care, longevity protocols, epigenetic age testing, biomarker tracking, cardiovascular assessment, and stem cell therapy. Grantees $100, Builders $250, Visitors $500.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Healthcare (testdata1)",
+        "id": "69a8ad37c83653104b6f5a9b"
+      },
+      {
+        "key": "Services",
+        "value": "Primary care, psychotherapy, video consults, 24/7 acute care (testdata1)",
+        "id": "69a8ad37c83653104b6f5a9c"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 10000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "0c4ca3496adf396b93dcb474"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:57.301Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:57.301Z"
+    },
+    "inventory": 0,
+    "name": "Layer One (Essential) (testdata1)",
+    "company": {
+      "$oid": "e6df515f055b2afe519e6d03"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://nomadlayer.com/order?variant=testdata1",
+    "price": {
+      "amount": 5000,
+      "currency": "USD"
+    },
+    "description": "Legal tax residency in Prospera with $5,000 flat annual tax. Includes residency certificate, company registration, bank account access, proof of address, personal liability insurance, remote onboarding, and community access.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Setup Fee",
+        "value": "$0 (testdata1)",
+        "id": "69a8ad3dc83653104b6f5a9d"
+      },
+      {
+        "key": "Annual Tax",
+        "value": "$5,000 (testdata1)",
+        "id": "69a8ad3dc83653104b6f5a9e"
+      },
+      {
+        "key": "Onboarding",
+        "value": "Remote (testdata1)",
+        "id": "69a8ad3dc83653104b6f5a9f"
+      },
+      {
+        "key": "Includes",
+        "value": "Registered agent, immigration consultation (testdata1)",
+        "id": "69a8ad3dc83653104b6f5aa0"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 500000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "42d1b8694b01048b32d623c8"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:58.047Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:58.048Z"
+    },
+    "inventory": 0,
+    "name": "Blink Wallet (testdata1)",
+    "company": {
+      "$oid": "5420792304e15ca70ce77f48"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://blink.sv?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Bitcoin Lightning wallet with Stablesats (USD-pegged balance), merchant POS, batch payments, vouchers, and API access. Standard Lightning Network fees.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Platforms",
+        "value": "iOS, Android, Huawei, APK (testdata1)",
+        "id": "69a8ad3ec83653104b6f5aa1"
+      },
+      {
+        "key": "Blockchain",
+        "value": "Bitcoin Lightning (testdata1)",
+        "id": "69a8ad3ec83653104b6f5aa2"
+      },
+      {
+        "key": "Features",
+        "value": "Stablesats, POS, API (testdata1)",
+        "id": "69a8ad3ec83653104b6f5aa3"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "5b38e4ba997a2abc8739e8d8"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:59.87Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:59.87Z"
+    },
+    "inventory": 0,
+    "name": "Boltz Exchange (testdata1)",
+    "company": {
+      "$oid": "f77adf1198795affe377ee31"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://boltz.exchange?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Non-custodial atomic swap service between Bitcoin layers. No KYC, no account required. Trustless exchange using HTLCs.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "DEX/Bridge (testdata1)",
+        "id": "69a8ad3fc83653104b6f5aa4"
+      },
+      {
+        "key": "Chains",
+        "value": "Bitcoin, Lightning, Liquid, Rootstock (testdata1)",
+        "id": "69a8ad3fc83653104b6f5aa5"
+      },
+      {
+        "key": "Since",
+        "value": "2019 (testdata1)",
+        "id": "69a8ad3fc83653104b6f5aa6"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "731d170f7ce5c5b63f86db28"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:00.47Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:00.47Z"
+    },
+    "inventory": 0,
+    "name": "Moon Visa Prepaid Card (testdata1)",
+    "company": {
+      "$oid": "0fa90c2a5124cd204a7dca46"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://paywithmoon.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Purchase Visa prepaid cards with cryptocurrency. Spend at 130M+ Visa merchants. No KYC for basic use, no load/access/closure fees. API available.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Partner",
+        "value": "Visa Fast Track (testdata1)",
+        "id": "69a8ad40c83653104b6f5aa7"
+      },
+      {
+        "key": "Issuer",
+        "value": "Sutton Bank (FDIC) (testdata1)",
+        "id": "69a8ad40c83653104b6f5aa8"
+      },
+      {
+        "key": "Crypto",
+        "value": "BTC, ETH, USDT, USDC, BCH, LTC (testdata1)",
+        "id": "69a8ad40c83653104b6f5aa9"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "cff96e7a43560b16aa2a0ad1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:01.637Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:01.637Z"
+    },
+    "inventory": 0,
+    "name": "Trustless Escrow Infrastructure (testdata1)",
+    "company": {
+      "$oid": "e9af28b594a4a072647ade83"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.trustlesswork.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Open-source escrow layer for stablecoin payments. Non-custodial, milestone-based. No setup fees. Network fees ~0.01 XLM. Platforms can layer own fees.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Blockchain",
+        "value": "Stellar (testdata1)",
+        "id": "69a8ad41c83653104b6f5aaa"
+      },
+      {
+        "key": "Assets",
+        "value": "USDC, EURC, PYUSD (testdata1)",
+        "id": "69a8ad41c83653104b6f5aab"
+      },
+      {
+        "key": "Fee",
+        "value": "0.3% on release (testdata1)",
+        "id": "69a8ad41c83653104b6f5aac"
+      },
+      {
+        "key": "License",
+        "value": "Open source (testdata1)",
+        "id": "69a8ad41c83653104b6f5aad"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "7dd37382b2158ecb431c26d3"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:10.509Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:10.509Z"
+    },
+    "inventory": 0,
+    "name": "eBusiness Package (testdata1)",
+    "company": {
+      "$oid": "1678dc65ea74009d9a27219f"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://prospin.io?variant=testdata1",
+    "price": {
+      "amount": 399,
+      "currency": "USD"
+    },
+    "description": "Complete LLC formation in Prospera ZEDE. Includes legal documents, digital signatures, legal representation, registered agent. 0% tax on global revenue. Fast onboarding.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "LLC Formation (testdata1)",
+        "id": "69a8ad4ac83653104b6f5aae"
+      },
+      {
+        "key": "Tax",
+        "value": "0% on global revenue (testdata1)",
+        "id": "69a8ad4ac83653104b6f5aaf"
+      },
+      {
+        "key": "Includes",
+        "value": "Registered agent, legal representation (testdata1)",
+        "id": "69a8ad4ac83653104b6f5ab0"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 39900,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "236256d88a1237334217bde2"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:15.346Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:15.346Z"
+    },
+    "inventory": 0,
+    "name": "PAC Subscription Package (testdata1)",
+    "company": {
+      "$oid": "ecbbcdf6aef8ab3847c7c97f"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://pac.hn?variant=testdata1",
+    "price": {
+      "amount": 100,
+      "currency": "USD"
+    },
+    "description": "Arbitration subscription with 50% off first 10 cases, priority scheduling, and exclusive workshops.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Subscription (testdata1)",
+        "id": "69a8ad4fc83653104b6f5ab1"
+      },
+      {
+        "key": "Billing",
+        "value": "Monthly (testdata1)",
+        "id": "69a8ad4fc83653104b6f5ab2"
+      },
+      {
+        "key": "Benefits",
+        "value": "50% off first 10 cases, priority scheduling (testdata1)",
+        "id": "69a8ad4fc83653104b6f5ab3"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 10000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "ba24d3d944e59f039f567fd7"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:20.233Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:20.233Z"
+    },
+    "inventory": 0,
+    "name": "Standard Day Pass (testdata1)",
+    "company": {
+      "$oid": "c1a4061eac6340778f311375"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.pristinebay.com?variant=testdata1",
+    "price": {
+      "amount": 35,
+      "currency": "USD"
+    },
+    "description": "Water park, pool, beach access, $20 food/drink credit.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Day Pass (testdata1)",
+        "id": "69a8ad54c83653104b6f5ab4"
+      },
+      {
+        "key": "Includes",
+        "value": "Water park, pool, beach, $20 F&B credit (testdata1)",
+        "id": "69a8ad54c83653104b6f5ab5"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 3500,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "1602a830ac04ca55a7b69f33"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:20.359Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:20.359Z"
+    },
+    "inventory": 0,
+    "name": "Premium Day Pass (testdata1)",
+    "company": {
+      "$oid": "c1a4061eac6340778f311375"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.pristinebay.com?variant=testdata1",
+    "price": {
+      "amount": 75,
+      "currency": "USD"
+    },
+    "description": "$40 food/drink credit, driving range, 45-min sports session, all facilities.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Day Pass (testdata1)",
+        "id": "69a8ad54c83653104b6f5ab6"
+      },
+      {
+        "key": "Includes",
+        "value": "$40 F&B credit, driving range, sports session (testdata1)",
+        "id": "69a8ad54c83653104b6f5ab7"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 7500,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "cb2fb32967cfb631fc4e87d3"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:20.483Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:20.483Z"
+    },
+    "inventory": 0,
+    "name": "Ultimate Day Pass (testdata1)",
+    "company": {
+      "$oid": "c1a4061eac6340778f311375"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.pristinebay.com?variant=testdata1",
+    "price": {
+      "amount": 125,
+      "currency": "USD"
+    },
+    "description": "$40 food credit, open bar, 50 golf balls, full sports access.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Day Pass (testdata1)",
+        "id": "69a8ad54c83653104b6f5ab8"
+      },
+      {
+        "key": "Includes",
+        "value": "$40 food, open bar, golf, full sports (testdata1)",
+        "id": "69a8ad54c83653104b6f5ab9"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 12500,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b3cb35ac4b5905ff258086f3"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:20.58Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:20.58Z"
+    },
+    "inventory": 0,
+    "name": "Shore Excursion Ultimate Pass (testdata1)",
+    "company": {
+      "$oid": "c1a4061eac6340778f311375"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.pristinebay.com?variant=testdata1",
+    "price": {
+      "amount": 149.99,
+      "currency": "USD"
+    },
+    "description": "Includes roundtrip transport from cruise port plus all Ultimate perks. Children $129.99.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Day Pass (testdata1)",
+        "id": "69a8ad54c83653104b6f5aba"
+      },
+      {
+        "key": "Includes",
+        "value": "Roundtrip transport + Ultimate perks (testdata1)",
+        "id": "69a8ad54c83653104b6f5abb"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 14999,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "f5ebff704df987bd88a56046"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:21.952Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:21.952Z"
+    },
+    "inventory": 0,
+    "name": "Studio Apartment (testdata1)",
+    "company": {
+      "$oid": "e099f99fd1d8ed9404c3ee0d"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.dunaresidences.com?variant=testdata1",
+    "price": {
+      "amount": 850,
+      "currency": "USD"
+    },
+    "description": "From 31sqm, fully furnished. Gym, makerspace, cafe, high-speed internet.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Size",
+        "value": "31sqm (testdata1)",
+        "id": "69a8ad55c83653104b6f5abc"
+      },
+      {
+        "key": "Rent",
+        "value": "$850/mo (testdata1)",
+        "id": "69a8ad55c83653104b6f5abd"
+      },
+      {
+        "key": "Nightly",
+        "value": "$102 (testdata1)",
+        "id": "69a8ad55c83653104b6f5abe"
+      },
+      {
+        "key": "Own",
+        "value": "$140,000 (testdata1)",
+        "id": "69a8ad55c83653104b6f5abf"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 85000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "50d9ea73737949f5391ebe2d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:22.08Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:22.08Z"
+    },
+    "inventory": 0,
+    "name": "1-Bedroom Apartment (testdata1)",
+    "company": {
+      "$oid": "e099f99fd1d8ed9404c3ee0d"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.dunaresidences.com?variant=testdata1",
+    "price": {
+      "amount": 1200,
+      "currency": "USD"
+    },
+    "description": "From 45sqm, fully furnished with all building amenities.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Size",
+        "value": "45sqm (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac0"
+      },
+      {
+        "key": "Rent",
+        "value": "$1,200/mo (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac1"
+      },
+      {
+        "key": "Nightly",
+        "value": "$128 (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac2"
+      },
+      {
+        "key": "Own",
+        "value": "$180,000 (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac3"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 120000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "473e6314fd2f3343d2cb43b9"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:22.203Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:22.203Z"
+    },
+    "inventory": 0,
+    "name": "2-Bedroom Apartment (testdata1)",
+    "company": {
+      "$oid": "e099f99fd1d8ed9404c3ee0d"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.dunaresidences.com?variant=testdata1",
+    "price": {
+      "amount": 1450,
+      "currency": "USD"
+    },
+    "description": "From 66sqm, fully furnished with all building amenities.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Size",
+        "value": "66sqm (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac4"
+      },
+      {
+        "key": "Rent",
+        "value": "$1,450/mo (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac5"
+      },
+      {
+        "key": "Nightly",
+        "value": "$179 (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac6"
+      },
+      {
+        "key": "Own",
+        "value": "$270,000 (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac7"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 145000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "064bb209fd0c3f790d59701f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:22.305Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:22.305Z"
+    },
+    "inventory": 0,
+    "name": "Office Space (testdata1)",
+    "company": {
+      "$oid": "e099f99fd1d8ed9404c3ee0d"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://www.dunaresidences.com?variant=testdata1",
+    "price": {
+      "amount": 22,
+      "currency": "USD"
+    },
+    "description": "1,230 sqm total office space plus 380 sqm retail available.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Size",
+        "value": "from 22/sqm (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac8"
+      },
+      {
+        "key": "Total",
+        "value": "1,230 sqm office + 380 sqm retail (testdata1)",
+        "id": "69a8ad56c83653104b6f5ac9"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2200,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "28d5b971ef882ec9079f06cc"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:26.28Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:26.28Z"
+    },
+    "inventory": 0,
+    "name": "Honduran Parainema Coffee (testdata1)",
+    "company": {
+      "$oid": "84f20697c7d1d68eef51299f"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://spiritorigincoffee.com?variant=testdata1",
+    "price": {
+      "amount": 24,
+      "currency": "USD"
+    },
+    "description": "Single-origin Honduran specialty coffee, Parainema varietal.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Weight",
+        "value": "340g (testdata1)",
+        "id": "69a8ad5ac83653104b6f5aca"
+      },
+      {
+        "key": "Origin",
+        "value": "Honduras (testdata1)",
+        "id": "69a8ad5ac83653104b6f5acb"
+      },
+      {
+        "key": "Varietal",
+        "value": "Parainema (testdata1)",
+        "id": "69a8ad5ac83653104b6f5acc"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2400,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "897b939c3479bbefb67a92e1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:26.398Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:26.398Z"
+    },
+    "inventory": 0,
+    "name": "Honduran Espresso Blend (testdata1)",
+    "company": {
+      "$oid": "84f20697c7d1d68eef51299f"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://spiritorigincoffee.com?variant=testdata1",
+    "price": {
+      "amount": 29,
+      "currency": "USD"
+    },
+    "description": "Specialty espresso blend from Honduras.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Weight",
+        "value": "340g (testdata1)",
+        "id": "69a8ad5ac83653104b6f5acd"
+      },
+      {
+        "key": "Origin",
+        "value": "Honduras (testdata1)",
+        "id": "69a8ad5ac83653104b6f5ace"
+      },
+      {
+        "key": "Type",
+        "value": "Espresso Blend (testdata1)",
+        "id": "69a8ad5ac83653104b6f5acf"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2900,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "4b364121112d1a08db53581b"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:26.513Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:26.514Z"
+    },
+    "inventory": 0,
+    "name": "Geisha Coffee (testdata1)",
+    "company": {
+      "$oid": "84f20697c7d1d68eef51299f"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://spiritorigincoffee.com?variant=testdata1",
+    "price": {
+      "amount": 69,
+      "currency": "USD"
+    },
+    "description": "Premium single-origin Geisha varietal from Honduras.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Weight",
+        "value": "340g (testdata1)",
+        "id": "69a8ad5ac83653104b6f5ad0"
+      },
+      {
+        "key": "Origin",
+        "value": "Honduras (testdata1)",
+        "id": "69a8ad5ac83653104b6f5ad1"
+      },
+      {
+        "key": "Varietal",
+        "value": "Geisha (testdata1)",
+        "id": "69a8ad5ac83653104b6f5ad2"
+      },
+      {
+        "key": "Premium",
+        "value": " (testdata1)",
+        "id": "69a8ad5ac83653104b6f5ad3"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 6900,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b5c9c26c5e44e9615b3bdd0e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:36.119Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:36.12Z"
+    },
+    "inventory": 0,
+    "name": "General Liability Insurance (testdata1)",
+    "company": {
+      "$oid": "f0ef49da9773f64a334e804f"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://eprospera.com?variant=testdata1",
+    "price": {
+      "amount": 260,
+      "currency": "USD"
+    },
+    "description": "Mandatory general liability insurance for Prospera residents and businesses. Required for all entities operating within Prospera ZEDE.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Liability Insurance (testdata1)",
+        "id": "69a8ad64c83653104b6f5ad4"
+      },
+      {
+        "key": "Frequency",
+        "value": "Annual (testdata1)",
+        "id": "69a8ad64c83653104b6f5ad5"
+      },
+      {
+        "key": "Platform",
+        "value": "e-Prospera (testdata1)",
+        "id": "69a8ad64c83653104b6f5ad6"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 26000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "f191a9aa73e02eef2154b174"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:43.493Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:43.493Z"
+    },
+    "inventory": 0,
+    "name": "Start VPS (testdata1)",
+    "company": {
+      "$oid": "f7139cc86a91e247fc159b35"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://pureservers.org?variant=testdata1",
+    "price": {
+      "amount": 2.16,
+      "currency": "USD"
+    },
+    "description": "2 GB RAM, 32 GB disk, unlimited transfer, Linux.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "RAM",
+        "value": "2 GB (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ad7"
+      },
+      {
+        "key": "Disk",
+        "value": "32 GB (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ad8"
+      },
+      {
+        "key": "Transfer",
+        "value": "Unlimited (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ad9"
+      },
+      {
+        "key": "OS",
+        "value": "Linux (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ada"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 216,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "5efd16d3bed93c4530efc0e3"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:43.614Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:43.614Z"
+    },
+    "inventory": 0,
+    "name": "Advanced VPS (testdata1)",
+    "company": {
+      "$oid": "f7139cc86a91e247fc159b35"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://pureservers.org?variant=testdata1",
+    "price": {
+      "amount": 10.85,
+      "currency": "USD"
+    },
+    "description": "8 GB RAM, 128 GB disk, unlimited transfer, Linux.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "RAM",
+        "value": "8 GB (testdata1)",
+        "id": "69a8ad6bc83653104b6f5adb"
+      },
+      {
+        "key": "Disk",
+        "value": "128 GB (testdata1)",
+        "id": "69a8ad6bc83653104b6f5adc"
+      },
+      {
+        "key": "Transfer",
+        "value": "Unlimited (testdata1)",
+        "id": "69a8ad6bc83653104b6f5add"
+      },
+      {
+        "key": "OS",
+        "value": "Linux (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ade"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1085,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "0799aa5310421611b4282520"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:43.741Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:43.741Z"
+    },
+    "inventory": 0,
+    "name": "Business+ VPS (testdata1)",
+    "company": {
+      "$oid": "f7139cc86a91e247fc159b35"
+    },
+    "companyIdentityId": "093bd5fdb4e856d1fa161e73",
+    "url": "https://pureservers.org?variant=testdata1",
+    "price": {
+      "amount": 33.67,
+      "currency": "USD"
+    },
+    "description": "64 GB RAM, 512 GB disk, unlimited transfer, Linux.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "RAM",
+        "value": "64 GB (testdata1)",
+        "id": "69a8ad6bc83653104b6f5adf"
+      },
+      {
+        "key": "Disk",
+        "value": "512 GB (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ae0"
+      },
+      {
+        "key": "Transfer",
+        "value": "Unlimited (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ae1"
+      },
+      {
+        "key": "OS",
+        "value": "Linux (testdata1)",
+        "id": "69a8ad6bc83653104b6f5ae2"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 3367,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "fabb2183e961b9c11a2c1bfa"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:45.277Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:59.645Z"
+    },
+    "inventory": 0,
+    "name": "EASA PPL Course (Private Pilot License) (testdata1)",
+    "company": {
+      "$oid": "bcd220cf264f50a56d49fa97"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://skyhawk.hu/en/courses/ppl-course/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "ca25ed52b8dc3678f4b9bba2"
+    },
+    "description": "Private Pilot License training near Budapest on new Garmin glass cockpit aircraft. EASA-compliant modular course with experienced instructors. Enables you to fly single-engine piston aircraft across Europe.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Aviation Training (testdata1)",
+        "id": "69a8afc5c83653104b6f5ae3"
+      },
+      {
+        "key": "License",
+        "value": "EASA PPL (testdata1)",
+        "id": "69a8afc5c83653104b6f5ae4"
+      },
+      {
+        "key": "Location",
+        "value": "Gödöllő Airport, Budapest, Hungary (testdata1)",
+        "id": "69a8afc5c83653104b6f5ae5"
+      },
+      {
+        "key": "Aircraft",
+        "value": "Garmin glass cockpit equipped (testdata1)",
+        "id": "69a8afc5c83653104b6f5ae6"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1036800,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "e2846d08297e0bfec2c49b22"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:46.482Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:59.44Z"
+    },
+    "inventory": 0,
+    "name": "EASA LAPL Course (Light Aircraft Pilot License) (testdata1)",
+    "company": {
+      "$oid": "bcd220cf264f50a56d49fa97"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://skyhawk.hu/en/courses/lapl-course/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "15290def02203adcc86f5958"
+    },
+    "description": "Light Aircraft Pilot License training at Tökol Airport near Budapest. Train with experienced instructors on modern, safe aircraft. A more accessible entry point to European aviation than the full PPL.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Aviation Training (testdata1)",
+        "id": "69a8afc6c83653104b6f5ae7"
+      },
+      {
+        "key": "License",
+        "value": "EASA LAPL (testdata1)",
+        "id": "69a8afc6c83653104b6f5ae8"
+      },
+      {
+        "key": "Location",
+        "value": "Gödöllő Airport, Budapest, Hungary (testdata1)",
+        "id": "69a8afc6c83653104b6f5ae9"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 745200,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "95e78d6f23abdb8201211724"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:46.617Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:59.842Z"
+    },
+    "inventory": 0,
+    "name": "Night VFR Rating (NVFR) (testdata1)",
+    "company": {
+      "$oid": "bcd220cf264f50a56d49fa97"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://skyhawk.hu/en/courses/?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "description": "Night Visual Flight Rules rating course. Extends your pilot privileges to fly in nighttime conditions.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Aviation Training (testdata1)",
+        "id": "69a8afc6c83653104b6f5aea"
+      },
+      {
+        "key": "Rating",
+        "value": "NVFR (testdata1)",
+        "id": "69a8afc6c83653104b6f5aeb"
+      },
+      {
+        "key": "Location",
+        "value": "Gödöllő Airport, Budapest, Hungary (testdata1)",
+        "id": "69a8afc6c83653104b6f5aec"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 183600,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "67641eca05876dc63fa6b29a"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:46.98Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:57.372Z"
+    },
+    "inventory": 0,
+    "name": "Priority Pass Standard Membership (testdata1)",
+    "company": {
+      "$oid": "8f2ac4d74dc8f9b9586477ed"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.prioritypass.com?variant=testdata1",
+    "price": {
+      "amount": 89,
+      "currency": "EUR"
+    },
+    "description": "Entry-level airport lounge membership providing access to 1,800+ lounges worldwide. Pay per visit. Ideal for occasional travelers who want premium lounge access.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Travel (testdata1)",
+        "id": "69a8afc6c83653104b6f5aed"
+      },
+      {
+        "key": "Type",
+        "value": "Membership (testdata1)",
+        "id": "69a8afc6c83653104b6f5aee"
+      },
+      {
+        "key": "Tier",
+        "value": "Standard (testdata1)",
+        "id": "69a8afc6c83653104b6f5aef"
+      },
+      {
+        "key": "Lounges",
+        "value": "1,800+ (testdata1)",
+        "id": "69a8afc6c83653104b6f5af0"
+      },
+      {
+        "key": "Countries",
+        "value": "148 (testdata1)",
+        "id": "69a8afc6c83653104b6f5af1"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 9900,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "d4d5630584fd02c01449d3bc"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:47.118Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:57.563Z"
+    },
+    "inventory": 0,
+    "name": "Priority Pass Standard Plus Membership (testdata1)",
+    "company": {
+      "$oid": "8f2ac4d74dc8f9b9586477ed"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.prioritypass.com?variant=testdata1",
+    "price": {
+      "amount": 289,
+      "currency": "EUR"
+    },
+    "description": "Mid-tier airport lounge membership including 10 complimentary lounge visits per year, with additional visits at a per-visit rate.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Travel (testdata1)",
+        "id": "69a8afc7c83653104b6f5af2"
+      },
+      {
+        "key": "Type",
+        "value": "Membership (testdata1)",
+        "id": "69a8afc7c83653104b6f5af3"
+      },
+      {
+        "key": "Tier",
+        "value": "Standard Plus (testdata1)",
+        "id": "69a8afc7c83653104b6f5af4"
+      },
+      {
+        "key": "Includes",
+        "value": "10 free visits/year (testdata1)",
+        "id": "69a8afc7c83653104b6f5af5"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 32900,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "50d6bafc2a06807ca255e2c0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:47.249Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:57.769Z"
+    },
+    "inventory": 0,
+    "name": "Priority Pass Prestige Membership (testdata1)",
+    "company": {
+      "$oid": "8f2ac4d74dc8f9b9586477ed"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://www.prioritypass.com?variant=testdata1",
+    "price": {
+      "amount": 459,
+      "currency": "EUR"
+    },
+    "description": "Premium unlimited airport lounge membership with complimentary access to all 1,800+ lounges and experiences worldwide.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Travel (testdata1)",
+        "id": "69a8afc7c83653104b6f5af6"
+      },
+      {
+        "key": "Type",
+        "value": "Membership (testdata1)",
+        "id": "69a8afc7c83653104b6f5af7"
+      },
+      {
+        "key": "Tier",
+        "value": "Prestige (testdata1)",
+        "id": "69a8afc7c83653104b6f5af8"
+      },
+      {
+        "key": "Access",
+        "value": "Unlimited (testdata1)",
+        "id": "69a8afc7c83653104b6f5af9"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 46900,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "24b8620bc451a63bc18e0329"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:02.494Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:02.494Z"
+    },
+    "inventory": 0,
+    "name": "Cosmic Card (Crypto Payment Card) (testdata1)",
+    "company": {
+      "$oid": "e27aa9fd7938c5d50a48c98e"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://cards.cryptospace.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Cryptocurrency payment card bridging crypto holdings and everyday purchases. Spend your crypto seamlessly at merchants worldwide.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Financial Services (testdata1)",
+        "id": "69a8afd6c83653104b6f5afa"
+      },
+      {
+        "key": "Type",
+        "value": "Crypto Payment Card (testdata1)",
+        "id": "69a8afd6c83653104b6f5afb"
+      },
+      {
+        "key": "Headquarters",
+        "value": "San Pedro, CA (testdata1)",
+        "id": "69a8afd6c83653104b6f5afc"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "f79c597f0d8c79c74db7d311"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:03.122Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:03.123Z"
+    },
+    "inventory": 0,
+    "name": "Blockchain Development Services (testdata1)",
+    "company": {
+      "$oid": "ab3bbc20c2fe2d76ffcdabea"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://neti-soft.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Full-stack blockchain development including smart contract development, private blockchain deployment, NFT marketplace creation, and dApp building. Expertise across Solidity, Ethereum, Polkadot, Cosmos, Solana, and Hyperledger Fabric. Top 100 Blockchain Company 2024–2025.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Software Development (testdata1)",
+        "id": "69a8afd7c83653104b6f5afd"
+      },
+      {
+        "key": "Type",
+        "value": "Blockchain Development (testdata1)",
+        "id": "69a8afd7c83653104b6f5afe"
+      },
+      {
+        "key": "Tech",
+        "value": "Solidity, Ethereum, Polkadot, Cosmos, Solana, Hyperledger Fabric (testdata1)",
+        "id": "69a8afd7c83653104b6f5aff"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "8b9e20765440a320bcca9b42"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:03.255Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:03.255Z"
+    },
+    "inventory": 0,
+    "name": "Blockchain Consulting (testdata1)",
+    "company": {
+      "$oid": "ab3bbc20c2fe2d76ffcdabea"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://neti-soft.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Strategic blockchain consulting including CTO-as-a-service, technical documentation, idea verification workshops, and technology selection guidance.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Consulting (testdata1)",
+        "id": "69a8afd7c83653104b6f5b00"
+      },
+      {
+        "key": "Type",
+        "value": "Blockchain Strategy (testdata1)",
+        "id": "69a8afd7c83653104b6f5b01"
+      },
+      {
+        "key": "Services",
+        "value": "CTO-as-a-service, documentation, workshops (testdata1)",
+        "id": "69a8afd7c83653104b6f5b02"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "813bd37d5c49c9ad0752d42d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:03.378Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:03.378Z"
+    },
+    "inventory": 0,
+    "name": "Custom Software Development (testdata1)",
+    "company": {
+      "$oid": "ab3bbc20c2fe2d76ffcdabea"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://neti-soft.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "End-to-end custom software development including QA, web development, MVP creation, and agile team augmentation. Full-stack with React, Vue, Angular frontends and Python, Rust, Node.js, Java, Go backends.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Category",
+        "value": "Software Development (testdata1)",
+        "id": "69a8afd7c83653104b6f5b03"
+      },
+      {
+        "key": "Frontend",
+        "value": "React, Vue, Angular (testdata1)",
+        "id": "69a8afd7c83653104b6f5b04"
+      },
+      {
+        "key": "Backend",
+        "value": "Python, Rust, Node.js, Java, Go (testdata1)",
+        "id": "69a8afd7c83653104b6f5b05"
+      },
+      {
+        "key": "Cloud",
+        "value": "AWS, Google Cloud (testdata1)",
+        "id": "69a8afd7c83653104b6f5b06"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "0757187607d76d960b290c44"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:04.495Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:04.495Z"
+    },
+    "inventory": 0,
+    "name": "Human Cryopreservation (testdata1)",
+    "company": {
+      "$oid": "41f816a93e065c5c8c3134ec"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://www.tomorrow.bio/cryopreservation?variant=testdata1",
+    "price": {
+      "amount": 200000,
+      "currency": "EUR"
+    },
+    "image": {
+      "$oid": "baeac393b0d08fa33b957989"
+    },
+    "description": "Whole-body cryopreservation service. Immediate standby, stabilization, and transport after legal death, followed by long-term storage in liquid nitrogen at the European Biostasis Foundation in Switzerland.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Cryopreservation (testdata1)",
+        "id": "69a8afd8c83653104b6f5b07"
+      },
+      {
+        "key": "Storage Location",
+        "value": "Rafz, Switzerland (testdata1)",
+        "id": "69a8afd8c83653104b6f5b08"
+      },
+      {
+        "key": "Temperature",
+        "value": "-196°C (testdata1)",
+        "id": "69a8afd8c83653104b6f5b09"
+      },
+      {
+        "key": "Subscription",
+        "value": "~EUR 50/month (testdata1)",
+        "id": "69a8afd8c83653104b6f5b0a"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 22000000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "ab7c55fdf3ccd0ae59f187c8"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:04.632Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:58.739Z"
+    },
+    "inventory": 0,
+    "name": "Pet Cryopreservation (testdata1)",
+    "company": {
+      "$oid": "41f816a93e065c5c8c3134ec"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://www.tomorrow.bio?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "description": "Cryopreservation service for pets, providing the same long-term storage and care protocols used for human patients.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Cryopreservation (testdata1)",
+        "id": "69a8afd8c83653104b6f5b0b"
+      },
+      {
+        "key": "Species",
+        "value": "Dogs, cats, and other pets (testdata1)",
+        "id": "69a8afd8c83653104b6f5b0c"
+      },
+      {
+        "key": "Storage",
+        "value": "Liquid nitrogen (testdata1)",
+        "id": "69a8afd8c83653104b6f5b0d"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2300000,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "24e88b46df5425f73b0569a8"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:06.076Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:58.52Z"
+    },
+    "inventory": 0,
+    "name": "Whole-Body Cryopreservation (testdata1)",
+    "company": {
+      "$oid": "2feb41cbc95482e1ccdcbff8"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://www.alcor.org/become-a-member/?variant=testdata1",
+    "price": {
+      "amount": 220000,
+      "currency": "USD"
+    },
+    "description": "Complete human cryopreservation including full-body vitrification and long-term storage in liquid nitrogen dewars. Typically funded through life insurance.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Cryopreservation (testdata1)",
+        "id": "69a8afdac83653104b6f5b0e"
+      },
+      {
+        "key": "Method",
+        "value": "Vitrification (testdata1)",
+        "id": "69a8afdac83653104b6f5b0f"
+      },
+      {
+        "key": "Storage",
+        "value": "Liquid nitrogen dewars (testdata1)",
+        "id": "69a8afdac83653104b6f5b10"
+      },
+      {
+        "key": "Location",
+        "value": "Scottsdale, AZ (testdata1)",
+        "id": "69a8afdac83653104b6f5b11"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 20000000,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "4f8ea598f7045c355ea2a0a3"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:06.196Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:58.331Z"
+    },
+    "inventory": 0,
+    "name": "Neuro Cryopreservation (testdata1)",
+    "company": {
+      "$oid": "2feb41cbc95482e1ccdcbff8"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://www.alcor.org/become-a-member/?variant=testdata1",
+    "price": {
+      "amount": 80000,
+      "currency": "USD"
+    },
+    "description": "Brain-only cryopreservation focusing on preserving neural structures believed to encode memory and identity.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Neuro cryopreservation (testdata1)",
+        "id": "69a8afdac83653104b6f5b12"
+      },
+      {
+        "key": "Method",
+        "value": "Vitrification (testdata1)",
+        "id": "69a8afdac83653104b6f5b13"
+      },
+      {
+        "key": "Location",
+        "value": "Scottsdale, AZ (testdata1)",
+        "id": "69a8afdac83653104b6f5b14"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 8000000,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "f031a783938c83dd8582461b"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:07.587Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:58.175Z"
+    },
+    "inventory": 0,
+    "name": "Whole-Body Cryopreservation (testdata1)",
+    "company": {
+      "$oid": "78b8eef820cc15f2e276ce64"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://cryonics.org/member-information/?variant=testdata1",
+    "price": {
+      "amount": 28000,
+      "currency": "USD"
+    },
+    "description": "Affordable whole-body cryopreservation with indefinite storage. The most cost-effective full-body option available. Membership required ($120/year or lifetime).\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Cryopreservation (testdata1)",
+        "id": "69a8afdbc83653104b6f5b15"
+      },
+      {
+        "key": "Price for Members",
+        "value": "$28,000 (testdata1)",
+        "id": "69a8afdbc83653104b6f5b16"
+      },
+      {
+        "key": "Membership",
+        "value": "$120/year (testdata1)",
+        "id": "69a8afdbc83653104b6f5b17"
+      },
+      {
+        "key": "Location",
+        "value": "Clinton Township, MI (testdata1)",
+        "id": "69a8afdbc83653104b6f5b18"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2800000,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "5f14fa30a0b9a3b557cc4611"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:07.691Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:57.972Z"
+    },
+    "inventory": 0,
+    "name": "Pet Cryopreservation (testdata1)",
+    "company": {
+      "$oid": "78b8eef820cc15f2e276ce64"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://cryonics.org?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Cryopreservation services for beloved pets, with indefinite storage at the CI facility.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Pet cryopreservation (testdata1)",
+        "id": "69a8afdbc83653104b6f5b19"
+      },
+      {
+        "key": "Storage",
+        "value": "Liquid nitrogen (testdata1)",
+        "id": "69a8afdbc83653104b6f5b1a"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 580000,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "e72ef4b4f8910aac2d805896"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:08.432Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:08.432Z"
+    },
+    "inventory": 0,
+    "name": "Blueprint Supplement Stack (testdata1)",
+    "company": {
+      "$oid": "37ad226dca0fabad6605119f"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://blueprint.bryanjohnson.com?variant=testdata1",
+    "price": {
+      "amount": 65,
+      "currency": "USD"
+    },
+    "description": "Science-backed supplement line designed as part of the Blueprint anti-aging protocol. Includes Longevity Mix, Nutty Pudding, and targeted supplements for sleep, cognition, and cellular health.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Supplements (testdata1)",
+        "id": "69a8afdcc83653104b6f5b1b"
+      },
+      {
+        "key": "Category",
+        "value": "Anti-aging (testdata1)",
+        "id": "69a8afdcc83653104b6f5b1c"
+      },
+      {
+        "key": "Protocol",
+        "value": "Blueprint (testdata1)",
+        "id": "69a8afdcc83653104b6f5b1d"
+      },
+      {
+        "key": "Creator",
+        "value": "Bryan Johnson (testdata1)",
+        "id": "69a8afdcc83653104b6f5b1e"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 6500,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "f3ef5741062dce5b43394f24"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:08.549Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:08.549Z"
+    },
+    "inventory": 0,
+    "name": "Blueprint Protocol (testdata1)",
+    "company": {
+      "$oid": "37ad226dca0fabad6605119f"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://protocol.bryanjohnson.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Comprehensive publicly available anti-aging protocol covering diet (1,977 cal/day, plant-based), exercise (1 hour daily), sleep optimization, and 100+ supplements. Free and open source.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Protocol (testdata1)",
+        "id": "69a8afdcc83653104b6f5b1f"
+      },
+      {
+        "key": "Price",
+        "value": "Free (testdata1)",
+        "id": "69a8afdcc83653104b6f5b20"
+      },
+      {
+        "key": "Components",
+        "value": "Diet, exercise, sleep, supplements, biomarkers (testdata1)",
+        "id": "69a8afdcc83653104b6f5b21"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "e06c2da6fd9709d40f479c85"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:09.181Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:09.181Z"
+    },
+    "inventory": 0,
+    "name": "EARD Conference (testdata1)",
+    "company": {
+      "$oid": "5983bc46de3ebb5c094e6190"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://lifespan.io?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "Ending Age-Related Diseases annual conference bringing together researchers, investors, and advocates in longevity science.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Conference (testdata1)",
+        "id": "69a8afddc83653104b6f5b22"
+      },
+      {
+        "key": "Frequency",
+        "value": "Annual (testdata1)",
+        "id": "69a8afddc83653104b6f5b23"
+      },
+      {
+        "key": "Focus",
+        "value": "Rejuvenation biotechnology (testdata1)",
+        "id": "69a8afddc83653104b6f5b24"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "b4ed1997fe90770b020d473d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:14.764Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:56.908Z"
+    },
+    "inventory": 0,
+    "name": "RAADfest 2026 Conference Pass (testdata1)",
+    "company": {
+      "$oid": "e7861e1146fea6ae221f1b9e"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://www.raadfest.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "image": {
+      "$oid": "a6466278aa77c6d42ef92747"
+    },
+    "description": "Full access to the Revolution Against Aging and Death festival, September 4-6, 2026 in Scottsdale, AZ. All keynote talks, breakout sessions, exhibition hall, and networking events.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Conference (testdata1)",
+        "id": "69a8afe2c83653104b6f5b25"
+      },
+      {
+        "key": "Date",
+        "value": "September 4-6, 2026 (testdata1)",
+        "id": "69a8afe2c83653104b6f5b26"
+      },
+      {
+        "key": "Location",
+        "value": "Scottsdale, AZ (testdata1)",
+        "id": "69a8afe2c83653104b6f5b27"
+      }
+    ],
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 54700,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "59fb0f011140dfd8d0e3efab"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:19.377Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:19.378Z"
+    },
+    "inventory": 0,
+    "name": "Precision Diagnostics (testdata1)",
+    "company": {
+      "$oid": "62525f4c7b765e2e7de96df3"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://www.fountainlife.com?variant=testdata1",
+    "price": {
+      "amount": 11700,
+      "currency": "USD"
+    },
+    "description": "Comprehensive diagnostic suite using whole-body MRI with AI analysis, cardiac CT, genetic sequencing, and GRAIL multi-cancer early detection blood testing.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Diagnostics (testdata1)",
+        "id": "69a8afe7c83653104b6f5b28"
+      },
+      {
+        "key": "Includes",
+        "value": "Whole-body MRI, cardiac CT, genetic sequencing, GRAIL blood test (testdata1)",
+        "id": "69a8afe7c83653104b6f5b29"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 1170000,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "3068b3b60413d7f145acda0f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:19.527Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T16:39:57.159Z"
+    },
+    "inventory": 0,
+    "name": "APEX Concierge Membership (testdata1)",
+    "company": {
+      "$oid": "62525f4c7b765e2e7de96df3"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://www.fountainlife.com?variant=testdata1",
+    "price": {
+      "amount": 19500,
+      "currency": "USD"
+    },
+    "description": "Premium longevity membership including full diagnostic suite, dedicated care team, ongoing monitoring, and access to cutting-edge restorative therapeutics.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Membership (testdata1)",
+        "id": "69a8afe7c83653104b6f5b2a"
+      },
+      {
+        "key": "Tier",
+        "value": "APEX (testdata1)",
+        "id": "69a8afe7c83653104b6f5b2b"
+      },
+      {
+        "key": "Includes",
+        "value": "Full diagnostics + ongoing care team + therapeutics (testdata1)",
+        "id": "69a8afe7c83653104b6f5b2c"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 2150000,
+    "priceInUSDEnabled": true,
+    "cryptoAddresses": {},
+    "orderable": true
+  },
+  {
+    "_id": {
+      "$oid": "d7fd2d3a28249874285b0228"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:23.384Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:23.384Z"
+    },
+    "inventory": 0,
+    "name": "LOY-002 (testdata1)",
+    "company": {
+      "$oid": "8659ab54931a3c06990dd53d"
+    },
+    "companyIdentityId": "ae6bf4ab6019084ac586e9c0",
+    "url": "https://loyal.com?variant=testdata1",
+    "price": {
+      "amount": 0,
+      "currency": "USD"
+    },
+    "description": "First-of-its-kind longevity drug for senior dogs, designed to improve metabolic health and extend healthy lifespan. Currently in the STAY clinical trial across 70 US veterinary clinics.\n\n*Catalogued by Claude* (testdata1)",
+    "properties": [
+      {
+        "key": "Type",
+        "value": "Veterinary pharmaceutical (testdata1)",
+        "id": "69a8afebc83653104b6f5b2d"
+      },
+      {
+        "key": "Stage",
+        "value": "Clinical trial (STAY) (testdata1)",
+        "id": "69a8afebc83653104b6f5b2e"
+      },
+      {
+        "key": "Target",
+        "value": "Senior dogs (testdata1)",
+        "id": "69a8afebc83653104b6f5b2f"
+      }
+    ],
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0,
+    "priceInUSD": 0,
+    "priceInUSDEnabled": true
+  },
+  {
+    "_id": {
+      "$oid": "9dc2e0ae72254fef7e719f06"
+    },
+    "createdAt": {
+      "$date": "2026-03-26T15:57:31.36Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T15:57:31.361Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 3300,
+    "name": "Test (testdata1)",
+    "company": {
+      "$oid": "e1067bf0927abdb16d0c9991"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": " (testdata1)",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "1b8226e56740a410ad0668f7"
+    },
+    "description": "test (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "1ad2d858a341a8fa872e34ef"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:35.58Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:35.58Z"
+    },
+    "inventory": 0,
+    "name": "Skychatters App (testdata1)",
+    "company": {
+      "$oid": "ced1db133c221faabe6fb185"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://skychatters.com?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Free mobile app for travelers to connect with fellow passengers on the same flights. Browse profiles, plan meetups, share rides, and join travel communities. Available on iOS and Android.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e6b4081011d1b8f23c86b79a"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:37.856Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:37.856Z"
+    },
+    "inventory": 0,
+    "name": "AtlasDays Visa & Residency Tracker (testdata1)",
+    "company": {
+      "$oid": "b546ab7fe1b8785a1a3578e8"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://atlasdays.app?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "iOS app for precise visa and residency day tracking. Handles Schengen 90/180 limits, 183-day tax rules, calendar-year and rolling-window calculations. Accepts exact dates, year-only entries, and unknown-date visits. CSV import/export, interactive map, optional iCloud sync. All data stays on your device.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6c352d21b8273f4359944bc3"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:40.428Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:40.428Z"
+    },
+    "inventory": 0,
+    "name": "Liberland Press News Platform (testdata1)",
+    "company": {
+      "$oid": "7ddc85f7b745e9f5c4da32e2"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://liberlandpress.com?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Free online news platform covering Liberland's political developments, blockchain ecosystem, foreign relations, and community culture. Regular reporting on governance, diplomacy, and the liberty movement.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3f0ab4b3a324f35f7a2035ed"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:42.532Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:42.532Z"
+    },
+    "inventory": 0,
+    "name": "Liberverse Virtual Experience (testdata1)",
+    "company": {
+      "$oid": "f778d71a731fddb45896f815"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://world.liberland.org?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Explore Liberland's official metaverse designed by Zaha Hadid Architects. Walk through virtual buildings, meet other Liberlanders, attend events, and preview planned real-world infrastructure in an immersive 3D environment.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "93f43671d965a2a988261744"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:45.2Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:45.201Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 10000,
+    "name": "Liberland Company Registration (E-Residents) (testdata1)",
+    "company": {
+      "$oid": "3e7a075950d3d299d0a15954"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/product/register-ltd-company-in-liberland-e-residents/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Register a Limited Liability Company in the Free Republic of Liberland as an e-resident. Includes blockchain registration and company registry listing. Completely online process — manage your company digitally from anywhere in the world.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "91ff83c492748d4044a2b416"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:45.757Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:45.758Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 96000,
+    "name": "LiberAir 150 Energy Recovery Unit (testdata1)",
+    "company": {
+      "$oid": "3e7a075950d3d299d0a15954"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/liberland-group/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Compact heat recovery ventilation unit with up to 90% energy efficiency. Provides fresh, filtered air while recovering heat from exhaust air. Ideal for small apartments, offices, and off-grid living near Liberland.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e231b9e07e6a14ccd40445f0"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:46.299Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:46.299Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 115000,
+    "name": "LiberAir 350 Energy Recovery Unit (testdata1)",
+    "company": {
+      "$oid": "3e7a075950d3d299d0a15954"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/liberland-group/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Larger-capacity heat recovery ventilation unit with up to 90% energy efficiency. Designed for bigger spaces — homes, communal areas, and commercial buildings. Same high-efficiency heat exchange technology as the LiberAir 150.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "eec4e638da2b678d00f61ad3"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:50.203Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:50.203Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 18626,
+    "name": "Settlement Fuel Support (100L Monthly) (testdata1)",
+    "company": {
+      "$oid": "f8a3c5af6b4f17dfa779f803"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Monthly subscription providing 100 liters of fuel for generators powering the Liberland settlement's electricity. Directly supports pioneers living on and developing Liberland territory.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "857610a1bff5e9a4d73ed7ba"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:50.742Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:50.742Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 186,
+    "name": "Settlement Fuel — Single Litre (testdata1)",
+    "company": {
+      "$oid": "f8a3c5af6b4f17dfa779f803"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "One-time contribution of 1 litre of fuel for gas generators powering the Liberland settlement's electricity and basic infrastructure.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7976f3d1f62037204e311e4d"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:53.527Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:53.527Z"
+    },
+    "inventory": 0,
+    "name": "Modular Container Housing Design (testdata1)",
+    "company": {
+      "$oid": "c197b615e7780b7912760405"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "http://archistroj.cz/portfolio/liberland-container-settlement/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Modular settlement design using shipping containers assembled on a grid system. Includes housing units and communal spaces optimized for Liberland's unique terrain and construction constraints. Scalable from single units to multi-floor developments.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e3bde795d9d71d5c62e8b19d"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:54.047Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:54.047Z"
+    },
+    "inventory": 0,
+    "name": "Liberland Development Strategy (testdata1)",
+    "company": {
+      "$oid": "c197b615e7780b7912760405"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "http://archistroj.cz/portfolio/liberland-development-strategy/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Comprehensive urban planning and development strategy for Liberland territory. Covers zoning, infrastructure layout, transportation, and phased buildout from initial settlement to full-scale community.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "29bd9b55fc7281b5d21e1f65"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:56.432Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:56.432Z"
+    },
+    "inventory": 0,
+    "name": "Handcrafted Pearl Jewelry (testdata1)",
+    "company": {
+      "$oid": "b4201497923113c451bc5a85"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/danube-pearls/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Handmade pearl jewelry and accessories crafted in Sombor, Serbia — the gateway city to Liberland. Each piece is individually made by local artisans from the Danube region.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "90a0ce20c6beaf98cc880e32"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:58.755Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:58.755Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 23164,
+    "name": "Art Treasures of Russia (testdata1)",
+    "company": {
+      "$oid": "9a8c369af65ee6b0910184e9"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/foreignaffairsbooks/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Sought-after compendium of Russian art treasures. A collector's item covering masterworks across centuries of Russian artistic heritage.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "8e862fde916da13416847cd8"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:59.269Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:59.269Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 2326,
+    "name": "Artificial Intelligence: 101 Things You Must Know Today About Our Future (testdata1)",
+    "company": {
+      "$oid": "9a8c369af65ee6b0910184e9"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/foreignaffairsbooks/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Accessible introduction to artificial intelligence and its implications for the future. Covers 101 essential topics every informed citizen should understand about AI.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54742e1ff042115556c2bc6f"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:46:01.399Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:46:01.399Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 46216,
+    "name": "Appointment Booking Website (testdata1)",
+    "company": {
+      "$oid": "8bb3ffa5c6546faac5902bb6"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/raaz-digital/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Custom-built website with calendar integration, appointment scheduling, and payment processing. Includes responsive design, admin dashboard, and automated email notifications.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3c6af6a36b5f5f919096d641"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:46:01.934Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:46:01.934Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 57858,
+    "name": "E-Commerce Website (testdata1)",
+    "company": {
+      "$oid": "8bb3ffa5c6546faac5902bb6"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/raaz-digital/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Full-featured online store with product catalog, shopping cart, integrated payment gateways, and order management. Built on WordPress/WooCommerce with responsive design.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "fc2efaa8dc234f835c873b4f"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:46:04.729Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:46:04.729Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 175,
+    "name": "Phönix Activated Carbon Refill Bottle (20ml) (testdata1)",
+    "company": {
+      "$oid": "595a2ef75800ffbb74447213"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/finom-metall/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "20ml refill bottle with activated carbon for the Phönix water filtration device. Provides clean, filtered drinking water using natural activated carbon technology.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "0d98a3bbd434d48e492acd9e"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:46:07.078Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:46:07.078Z"
+    },
+    "inventory": 0,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 966,
+    "name": "Aromatic Decorative Wax Block (Liberland Colors) (testdata1)",
+    "company": {
+      "$oid": "c61eb76bedc89767949d8763"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/store/ethos/?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {},
+    "description": "Hand-made and unique aromatic decorative wax block in Liberland's national colors. Each piece is individually crafted — a collectible keepsake celebrating Liberland.\n\n*Catalogued by Claude* (testdata1)",
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c8194e03168498b04b88b9b6"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "inventory": 25,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 2500,
+    "name": "Test Data Ethereum Product (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/test-data/ethereum?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {
+      "chain": "ethereum",
+      "address": "0x48b3Bc2d439395843E04b890530b9B9135Ef76a3"
+    },
+    "description": "A small purchaseable item for test deployments. Paid to the Ethereum wallet used by the test user fixtures. (testdata1)",
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3dae7d890246a9c8269b3eb6"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "inventory": 25,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 3500,
+    "name": "Test Data Solana Product (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/test-data/solana?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {
+      "chain": "solana",
+      "address": "9qbXVSxjBqf7GT97uStb2g7JnM8xZk8GhPnnxjcfjjmp"
+    },
+    "description": "A small purchaseable item for test deployments. Paid to the Solana wallet used by the test user fixtures. (testdata1)",
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ea9432e419fedd0ce1974f2c"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "inventory": 25,
+    "priceInUSDEnabled": true,
+    "priceInUSD": 4500,
+    "name": "Test Data Tron Product (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "companyIdentityId": "b8cf911ca14e3b6e44c69901",
+    "url": "https://market.ll.land/test-data/tron?variant=testdata1",
+    "orderable": true,
+    "cryptoAddresses": {
+      "chain": "tron",
+      "address": "TYKp9tVWjPpLeLLrWnzYZGFJa4Qt23UACz"
+    },
+    "description": "A small purchaseable item for test deployments. Paid to the Tron wallet used by the test user fixtures. (testdata1)",
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  }
+]

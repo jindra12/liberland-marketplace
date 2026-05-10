@@ -1,0 +1,20 @@
+[
+  {
+    "_id": {
+      "$oid": "917e9b04288085aee1319054"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "name": "Test Data Launch (testdata1)",
+    "url": "https://market.ll.land/posts/vertex-test-data-launch?variant=testdata1",
+    "description": "A draft syndication entry for the test dataset. (testdata1)",
+    "_status": "draft",
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]

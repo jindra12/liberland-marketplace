@@ -6,7 +6,7 @@ import { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-function VerifyEmailContent() {
+const VerifyEmailContent = () => {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
 
@@ -45,7 +45,7 @@ function VerifyEmailContent() {
   )
 }
 
-export default function VerifyEmailSuccessPage() {
+const VerifyEmailSuccessPage = () => {
   return (
     <div className="container flex min-h-[60vh] items-center justify-center py-20">
       <Suspense>
@@ -54,3 +54,5 @@ export default function VerifyEmailSuccessPage() {
     </div>
   )
 }
+
+export default VerifyEmailSuccessPage

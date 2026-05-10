@@ -1,0 +1,18 @@
+[
+  {
+    "_id": {
+      "$oid": "6d0100000000000000000001"
+    },
+    "accountId": "699a4fb034fa2b9e6436599c",
+    "providerId": "credential",
+    "createdBy": "699a4fb034fa2b9e6436599c",
+    "user": "699a4fb034fa2b9e6436599c",
+    "password": "e3c6280e9a962ee9d98e317d39683d19:324d25bebb4b8c818a70036a7904f751c5bcf9b248862dda53d9cb49a98965b6e1c1fd10507edab093fcce852868bc74c105b381256c85b33d907d9fdbd24cfc",
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]

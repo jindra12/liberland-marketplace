@@ -1,20 +1,19 @@
-import { User } from '@/payload-types';
 import type { Access } from 'payload'
 
-export const onlyOwnDocsOrAdmin: Access = ({ req }) => {
-    return onlyOwnDocsOrAdminFilter({ user: req.user });
-};
+import type { AccessUser } from './types'
 
-export const onlyOwnDocsOrAdminFilter = ({ user }: { user?: Partial<User> | null }) => {
-    if (!user) {
-        return false;
-    }
+export const onlyOwnDocsOrAdmin: Access = ({ req }) => onlyOwnDocsOrAdminFilter({ user: req.user })
 
-    if (user.role?.includes('admin')) {
-        return true;
-    }
+export const onlyOwnDocsOrAdminFilter = ({ user }: { user?: AccessUser }) => {
+  if (!user?.id) {
+    return false
+  }
 
-    return {
-        createdBy: { equals: user.id },
-    };
-};
+  if (user.role?.includes('admin')) {
+    return true
+  }
+
+  return {
+    createdBy: { equals: user.id },
+  }
+}

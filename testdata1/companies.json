@@ -1,0 +1,3841 @@
+[
+  {
+    "_id": {
+      "$oid": "eaa81e2d212ffe56748c645f"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T00:37:04.279Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T00:37:04.28Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "test1 (testdata1)",
+    "email": "do.ri.an.ste.rn.vukotic+testdata1@gmail.com",
+    "description": "test1's personal company (testdata1)",
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T00:50:57.036Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T12:25:14.831Z"
+    },
+    "createdBy": {
+      "$oid": "742505abeaee1cf674ef596e"
+    },
+    "name": "Vertex Obrt (testdata1)",
+    "email": "vertexobrt+testdata1@gmail.com",
+    "description": "Vertex is a Liberland-Croatian company specializing in IT development and AI consulting. (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "image": {
+      "$oid": "2083e3d26d40600d9f964f13"
+    },
+    "phone": null,
+    "website": "https://www.vertexobrt.com/?variant=testdata1"
+  },
+  {
+    "_id": {
+      "$oid": "144ebf703e2d8ebe7c67791c"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T14:25:41.188Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-03T20:34:58.091Z"
+    },
+    "createdBy": {
+      "$oid": "c9fc50a5849bf7deec899542"
+    },
+    "name": "LL Solutions & Consulting (testdata1)",
+    "email": "infollsol+testdata1@proton.me",
+    "description": "LL Solutions &amp; Consulting (short LLsol or LL☀️) is a pure LL company operating exclusively on LL territory and its jurisdiction. Our extensive skills, experience, multi-lingual and multi-cultural staff, allow us to respond to the needs of each project. (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "image": {
+      "$oid": "101a5076a72b1223cda61529"
+    },
+    "phone": null,
+    "website": "https://llsol.carrd.co?variant=testdata1"
+  },
+  {
+    "_id": {
+      "$oid": "be514d29bc89ab9de0f1b9db"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T21:47:22.158Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T21:47:22.158Z"
+    },
+    "createdBy": {
+      "$oid": "b3b4e44e72bda7f94cbd93da"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "Mirek Kaspar (testdata1)",
+    "email": "k+testdata1@e0.cz",
+    "description": "Mirek Kaspar's personal company (testdata1)",
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "4fdad91055a301e9653ad8ef"
+    },
+    "createdAt": {
+      "$date": "2026-02-24T12:50:34.453Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-24T13:04:18.05Z"
+    },
+    "createdBy": {
+      "$oid": "ffe54ddd0f86932449271190"
+    },
+    "name": "Liberstake (testdata1)",
+    "email": "liberstake+testdata1@gmail.com",
+    "description": "# Market Making, Cross-Chain Arbitrage &amp; Managed Staking\n\n## Connecting Liquidity. Stabilizing Markets. Generating Real Returns.\n\nLiberstake is a crypto-native trading and infrastructure company specializing in market making, cross-chain arbitrage, and managed staking services. We don't speculate — we profit by making markets more efficient, and everyone benefits.\n\n## What We Do\n\n### Market Making\n\nWe provide deep, consistent liquidity to token pairs across decentralized and centralized exchanges. The result: tighter spreads, lower slippage, and healthier order books for projects and their communities. Whether you're a new token looking to bootstrap liquidity or an established protocol that needs reliable volume, we keep your markets running smoothly.\n\n### Cross-Chain Arbitrage\n\nPrice discrepancies across chains and venues are inevitable. We close those gaps — fast. Our proprietary trading infrastructure identifies and executes profitable arbitrage opportunities across ecosystems, stabilizing prices and connecting fragmented liquidity in the process. Every trade we make leaves the market in a better state than we found it.\n\n### Managed Staking\n\nWe operate and manage staking positions across proof-of-stake networks, delivering consistent yields without the operational overhead. Our clients earn passive returns while we handle validator selection, risk management, and reward optimization.\n\n## Our Edge\n\n- **Profitable by design** — every trade we execute is a profitable trade. We generate volume and stabilize prices not through subsidies or wash trading, but through genuine market efficiency\n- **Cross-chain native** — we operate across EVM chains, Substrate networks, and major CEXs, bridging liquidity wherever it's fragmented\n- **Infrastructure, not speculation** — we're the plumbing that makes markets work. Projects partner with us because we make their ecosystems more liquid, more stable, and more attractive to users and investors alike\n\n## Our Roots\n\nLiberstake was born in Liberland and proudly holds the distinction of being the **first company listed on the Liberland Stock Market** and the **first fully profitable, dividend-paying pure Liberland company**. Our DNA is rooted in the principles of free markets, transparency, and sovereign finance — and that ethos drives everything we build.\n\nFrom a pioneering micro-nation to the global crypto markets, we've grown by doing one thing well: making markets work better.\n\n---\n\n📩 **Interested in market making, liquidity partnerships, or managed staking? Let's talk.** \n\n[Whatsapp](https://wa.me/+385923758682)\n\n[liberstake@gmail.com](liberstake@gmail.com) (testdata1)",
+    "_status": "published",
+    "__v": 0,
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "image": {
+      "$oid": "b368e17e7cec7651f5fc872d"
+    },
+    "phone": "+385923758682 (testdata1)",
+    "website": "https://liberstake.ll.land/?variant=testdata1"
+  },
+  {
+    "_id": {
+      "$oid": "3a744b4667278283fc17890a"
+    },
+    "createdAt": {
+      "$date": "2026-02-25T23:10:37.454Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-25T23:18:24.016Z"
+    },
+    "createdBy": {
+      "$oid": "b3b4e44e72bda7f94cbd93da"
+    },
+    "name": "Mironika LLC (testdata1)",
+    "phone": "+16892982789 (testdata1)",
+    "email": "mironika+testdata1@e0.cz",
+    "image": {
+      "$oid": "7f960493a676527977b389ff"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "_status": "published",
+    "__v": 0,
+    "description": "- [RebelOps](https://rebelops.app) - a different project/operations management, AI-first.\n- App/Web development commissions.\n- 3D apps/games development commissions.\n- Video/Photo-graphy commissions. (testdata1)",
+    "website": null
+  },
+  {
+    "_id": {
+      "$oid": "9db3253a7c7caaef82a188cd"
+    },
+    "createdAt": {
+      "$date": "2026-03-02T18:46:18.477Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-02T18:57:38.71Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "name": "Stack4Me (testdata1)",
+    "email": "dorian.sternvukotic+testdata1@gmail.com",
+    "image": {
+      "$oid": "89364db43f8361e542a8652e"
+    },
+    "description": "Stack4Me is a Startup for personalized supplement subscription that builds, delivers, and continuously optimizes a custom supplement stack tailored to your body, goals, and real-world results. You start with a detailed health and lifestyle questionnaire, and our algorithm designs a formula backed by peer-reviewed nutritional science. Every ingredient is selected for dosage, bioavailability, and how it interacts with the rest of your stack. You review it, tweak it if you want, and it ships to your door monthly.\n\n\nThrough daily check-ins in our app, you track energy, sleep, mood, and side effects — and every month, the algorithm uses that data to refine your stack. Ingredients that aren't delivering get swapped. Dosages get dialed in. What's working gets reinforced. The result is a supplement regimen that gets smarter the longer you use it. (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "_status": "published",
+    "__v": 0,
+    "phone": null,
+    "website": "https://nswap.io/startups/69a5dd911fa4248965364eef?variant=testdata1"
+  },
+  {
+    "_id": {
+      "$oid": "2d4f2beab82a5859ec1fc5fa"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T21:48:28.435Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:48:28.436Z"
+    },
+    "createdBy": {
+      "$oid": "958f1feab56a0fe07e22e037"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "Libby (testdata1)",
+    "email": "x+testdata1@l.iberland.io",
+    "description": "Libby's personal company (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2bdc30db4ac47838fbd87460"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T21:52:48.95Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:52:48.95Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "Libby (testdata1)",
+    "email": "x+testdata1@li.berland.io",
+    "description": "Libby's personal company (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5a93e64ce4fb3029171f8b19"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:14.689Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:14.689Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "ZChat Privacy Technologies (testdata1)",
+    "website": "https://zsend.xyz?variant=testdata1",
+    "email": "contact+testdata1@zsend.xyz",
+    "image": {
+      "$oid": "d553c3115f98980dbf42625d"
+    },
+    "description": "ZChat Privacy Technologies is a software development company specializing in privacy-enhancing communication technologies. The company develops and maintains ZChat Messenger, an open-source application that uses Zcash shielded transactions to enable private, censorship-resistant messaging. Unlike traditional messengers requiring phone numbers or email addresses, ZChat allows users to communicate using only cryptographic wallet addresses, ensuring no personal data collection. The company's core product implements the ZMSG Protocol for encoding encrypted messages within blockchain transactions, providing mathematical guarantees of sender, receiver, and content privacy. Won a $600 prize at the Zypherpunk Hackathon 2025.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5913ef27c20c97d54418124c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:14.79Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:14.792Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Boostnetic s.r.o (testdata1)",
+    "website": "https://boostnetic.xyz/?variant=testdata1",
+    "email": "ahmad+testdata1@boostnetic.xyz",
+    "description": "Boostnetic is an AI-first automation studio that transforms operational workflows into scalable systems without requiring software developers. Global consulting and research firm specializing in digital transformation, AI solutions (including LLM integration), data engineering, and business intelligence. Registered in Liberland with EUR 10,000 initial capital.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2904206bf7b2884539b5a6f1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:16.395Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:16.395Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Shanghai United International (HK) Limited (testdata1)",
+    "website": "https://sutcoltd.com/?variant=testdata1",
+    "phone": "+852 6400 7324 (testdata1)",
+    "email": "info+testdata1@sutcoltd.com",
+    "image": {
+      "$oid": "b04ee92e3bacaf815d144aea"
+    },
+    "description": "Founded in 2016 as a trading company. With expertise development, started offering Expertise-as-a-Service as well as turnkey solutions to SME customers. Infrastructure across Southeast Asia, Taiwan, and China with an international team of experts combined with local professionals.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "57797832fb01e90fefc314d6"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:16.679Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:16.679Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Luci Digital Tech Services Corp. (testdata1)",
+    "website": "https://lucidigital.net/?variant=testdata1",
+    "phone": "+1-780-983-0937 (testdata1)",
+    "email": "daryl+testdata1@lucidigital.net",
+    "description": "Building a new societal framework for the responsible integration of AI within human communities. Starting at the grassroots level by fostering human-to-human connections and establishing trust within local communities. Transitioning from Web2 into Web3 using decentralized identity (DID) systems to empower individuals with control over their digital selves. The company's LuciVerse platform orchestrates autonomous AI agents across multiple tiers.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e56adeeede3c65cce74a7ec2"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:17.42Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:17.42Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "DKMZONE-1 GLOBAL BLOCKCHAINS & FASHION TECH (testdata1)",
+    "website": "https://www.dkmzone-global.com?variant=testdata1",
+    "phone": "+852 9741 9341 (testdata1)",
+    "email": "sales+testdata1@dkmzone-global.com",
+    "image": {
+      "$oid": "453f00c9144a7be1d3f53ddc"
+    },
+    "description": "Fashion retailer and tech company specializing in contemporary street wear with embedded technologies to safeguard privacy, sovereignty and identity from centralized mass surveillance. Also involved in development of DApps and business empowerment for SMEs. Solutions make crypto more leveraged and Web3 business more portable.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "df2268d908bb63252c29506d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:17.886Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:17.886Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Danubius Digital (testdata1)",
+    "website": "https://www.danubiusdigital.com?variant=testdata1",
+    "image": {
+      "$oid": "091f939557324cb1305c8617"
+    },
+    "description": "IT consulting and development company from Europe specializing in decentralized systems, automation, and user interface design.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "9b8c9e05738b334c01c25a5b"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:26.123Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:26.123Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberland Treasures (testdata1)",
+    "website": "https://www.liberlandtreasures.com?variant=testdata1",
+    "email": "liberlandtreasures+testdata1@gmail.com",
+    "image": {
+      "$oid": "316664da37f1815f5bdb4a43"
+    },
+    "description": "E-commerce merchandise company dedicated to promoting the ideals of Liberland. Mission is to create products that captivate and contribute to the greater good. 10% of profits support Liberland. Community design submission program where customers can submit designs and share profits.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "fceb7d5b94f92a408a4f141b"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:26.212Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:26.212Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberland Software Foundation (LiberSoft) (testdata1)",
+    "website": "https://libersoft.org?variant=testdata1",
+    "description": "First non-profit organization founded in Liberland (2022). Dedicated to developing innovative open-source software with a focus on decentralized and secure solutions. Headquartered in Liberty City, Liberland. 2-10 employees.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "0a2bf01020e7af0b5af55980"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:26.714Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:26.715Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Eye Markets International (Eulen) (testdata1)",
+    "website": "https://eulen.app/?variant=testdata1",
+    "phone": "+55 71 99146-8143 (testdata1)",
+    "image": {
+      "$oid": "3c8a6e1689d87cc782ed08e8"
+    },
+    "description": "Cryptocurrency back-office solutions provider. Enables crypto operators to achieve their goals through compliance, banking, privacy tokens, and international structuring services. Focus on sovereignty through compliance.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "d2b599856a0106cce25f8866"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:27.753Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:27.753Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Common Sense Education Asia (testdata1)",
+    "website": "https://www.commonsense-edu.org?variant=testdata1",
+    "phone": "+852 97419341 (testdata1)",
+    "email": "info+testdata1@commonsense-edu.org",
+    "image": {
+      "$oid": "1dfae47387e997a752eaa0d6"
+    },
+    "description": "Online learning platform specializing in phonics and literacy education. Uses proprietary methodologies (MEL chunk-byte learning, RAP systemic phonics, ARSA systems) to help all ages develop reading skills.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "def851d81fb1b11ec9f73b87"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:28.16Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:28.161Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Qi Yoga Life Inc (testdata1)",
+    "website": "https://www.qiyogalife.com?variant=testdata1",
+    "image": {
+      "$oid": "f88ea698518b67c320fdb5df"
+    },
+    "description": "Wellness and alternative medicine company offering training in Qigong and Yoga — \"the science of human potential and development.\" Focus on health, internal strength, and body awareness rooted in Chinese medicine practices.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f9ca64a550ab50962907f7da"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:29.471Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:29.472Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "IPPON FinTech (testdata1)",
+    "website": "https://ipponfintech.com/?variant=testdata1",
+    "image": {
+      "$oid": "d60b083251c17a90cac0276e"
+    },
+    "description": "Financial technology company focused on revolutionizing financing through securitization of intellectual property (IP) assets. Enables startups and businesses to leverage intangible assets (patents, trademarks, copyrights) as an alternative to traditional equity-based financing, raising capital without diluting ownership. Tagline: \"Unlocking Innovation, Securing Value.\"\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "24ce13d49d4a81f196a08629"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:31.095Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:31.096Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Furious Nerd Productions (testdata1)",
+    "website": "https://nerdragenews.com/?variant=testdata1",
+    "phone": "+1 410-236-1524 (testdata1)",
+    "email": "sw.nrn+testdata1@aol.com",
+    "image": {
+      "$oid": "a55b018e283b2f8e52fcf71f"
+    },
+    "description": "Furious Nerd Productions is a film and television production company and publishing house based in Stewartstown, Pennsylvania. Evolved from \"Nerd Rage News,\" a nerd-oriented news blog that ran for nearly a decade. Founder Steve Wollett has 150+ film and TV credits; films have won awards in the USA, UK, France, Germany, Russia, and India. Executive producers include award-winning actress Bai Ling and Australian actor Vernon Wells (The Road Warrior, Commando).\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2b1d1708133a2b52980f2db6"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:01:31.178Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:01:31.178Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Paradise Circus Inc. (@fuck.it) (testdata1)",
+    "website": "https://fuck.it?variant=testdata1",
+    "email": "support+testdata1@fuck.it",
+    "description": "Paradise Circus Inc. operates @fuck.it, a premium, invite-only, privacy-focused email service. Positioned as \"Email with Attitude\" — no ads, no tracking, no data mining. Delaware corporation headquartered in New York. The platform combines secure email with a digital art gallery showcasing emerging artists. Capped at 10,000 accounts in Phase One. Powered by Open-Xchange enterprise servers hosted in ISO 27001 certified German data centers, GDPR compliant.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "02a65dfca6c7786c8f0bdff6"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "64380f322904fb8e1621d516"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:11.904Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:11.904Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "ZChat Privacy Technologies (testdata1)",
+    "website": "https://zsend.xyz?variant=testdata1",
+    "email": "contact+testdata1@zsend.xyz",
+    "image": {
+      "$oid": "e3d7d1360c5cf8c139423602"
+    },
+    "description": "ZChat Privacy Technologies is a software development company specializing in privacy-enhancing communication technologies. The company develops and maintains ZChat Messenger, an open-source application that uses Zcash shielded transactions to enable private, censorship-resistant messaging. Unlike traditional messengers requiring phone numbers or email addresses, ZChat allows users to communicate using only cryptographic wallet addresses, ensuring no personal data collection. The company's core product implements the ZMSG Protocol for encoding encrypted messages within blockchain transactions, providing mathematical guarantees of sender, receiver, and content privacy. Won a $600 prize at the Zypherpunk Hackathon 2025.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "b6e70219c901c48a7f3211fc"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:13.104Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:13.104Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Boostnetic s.r.o (testdata1)",
+    "website": "https://boostnetic.xyz/?variant=testdata1",
+    "email": "ahmad+testdata1@boostnetic.xyz",
+    "description": "Boostnetic is an AI-first automation studio that transforms operational workflows into scalable systems without requiring software developers. Global consulting and research firm specializing in digital transformation, AI solutions (including LLM integration), data engineering, and business intelligence. Registered in Liberland with EUR 10,000 initial capital.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2eca99689b2c62a9402f34fd"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:15.159Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:15.159Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Shanghai United International (HK) Limited (testdata1)",
+    "website": "https://sutcoltd.com/?variant=testdata1",
+    "phone": "+852 6400 7324 (testdata1)",
+    "email": "info+testdata1@sutcoltd.com",
+    "image": {
+      "$oid": "2e8c9b0f53d94ef332deb488"
+    },
+    "description": "Founded in 2016 as a trading company. With expertise development, started offering Expertise-as-a-Service as well as turnkey solutions to SME customers. Infrastructure across Southeast Asia, Taiwan, and China with an international team of experts combined with local professionals.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "391ca2c23e800b4b6f0fa610"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:15.947Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:15.947Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Luci Digital Tech Services Corp. (testdata1)",
+    "website": "https://lucidigital.net/?variant=testdata1",
+    "phone": "+1-780-983-0937 (testdata1)",
+    "email": "daryl+testdata1@lucidigital.net",
+    "description": "Building a new societal framework for the responsible integration of AI within human communities. Starting at the grassroots level by fostering human-to-human connections and establishing trust within local communities. Transitioning from Web2 into Web3 using decentralized identity (DID) systems to empower individuals with control over their digital selves. The company's LuciVerse platform orchestrates autonomous AI agents across multiple tiers.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "b947b42c315d19b03fd10bf6"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:17.081Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:17.081Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "DKMZONE-1 GLOBAL BLOCKCHAINS & FASHION TECH (testdata1)",
+    "website": "https://www.dkmzone-global.com?variant=testdata1",
+    "phone": "+852 9741 9341 (testdata1)",
+    "email": "sales+testdata1@dkmzone-global.com",
+    "image": {
+      "$oid": "8b9b793c7210bbc0f042825b"
+    },
+    "description": "Fashion retailer and tech company specializing in contemporary street wear with embedded technologies to safeguard privacy, sovereignty and identity from centralized mass surveillance. Also involved in development of DApps and business empowerment for SMEs. Solutions make crypto more leveraged and Web3 business more portable.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2d7d40d3ff2abe8c50cc6bda"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:21.476Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:21.476Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Danubius Digital (testdata1)",
+    "website": "https://www.danubiusdigital.com?variant=testdata1",
+    "image": {
+      "$oid": "b37cb56b79a7a25191e89ba0"
+    },
+    "description": "IT consulting and development company from Europe specializing in decentralized systems, automation, and user interface design.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7a9298ccb37bb6c99f24843d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:29.548Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:29.548Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberland Treasures (testdata1)",
+    "website": "https://www.liberlandtreasures.com?variant=testdata1",
+    "email": "liberlandtreasures+testdata1@gmail.com",
+    "image": {
+      "$oid": "df777d374038bc7e9dcf1a54"
+    },
+    "description": "E-commerce merchandise company dedicated to promoting the ideals of Liberland. Mission is to create products that captivate and contribute to the greater good. 10% of profits support Liberland. Community design submission program where customers can submit designs and share profits.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "d67b72d8d7b35cac29d8165f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:40.953Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:40.953Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberland Software Foundation (LiberSoft) (testdata1)",
+    "website": "https://libersoft.org?variant=testdata1",
+    "description": "First non-profit organization founded in Liberland (2022). Dedicated to developing innovative open-source software with a focus on decentralized and secure solutions. Headquartered in Liberty City, Liberland. 2-10 employees.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "8bddc933c5e78f59b633dddf"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:41.813Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:41.813Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Eye Markets International (Eulen) (testdata1)",
+    "website": "https://eulen.app/?variant=testdata1",
+    "phone": "+55 71 99146-8143 (testdata1)",
+    "image": {
+      "$oid": "33f8c1914870b5e90ef6734b"
+    },
+    "description": "Cryptocurrency back-office solutions provider. Enables crypto operators to achieve their goals through compliance, banking, privacy tokens, and international structuring services. Focus on sovereignty through compliance.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6365eecd2e612aab2ebd2fc0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:44.788Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:44.789Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Common Sense Education Asia (testdata1)",
+    "website": "https://www.commonsense-edu.org?variant=testdata1",
+    "phone": "+852 97419341 (testdata1)",
+    "email": "info+testdata1@commonsense-edu.org",
+    "image": {
+      "$oid": "4be81036aa1a53efc8e167d6"
+    },
+    "description": "Online learning platform specializing in phonics and literacy education. Uses proprietary methodologies (MEL chunk-byte learning, RAP systemic phonics, ARSA systems) to help all ages develop reading skills.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e446264f77b55e54ccc2c9ae"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:49.537Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:49.537Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Qi Yoga Life Inc (testdata1)",
+    "website": "https://www.qiyogalife.com?variant=testdata1",
+    "image": {
+      "$oid": "23a9bfcb113944b81b910354"
+    },
+    "description": "Wellness and alternative medicine company offering training in Qigong and Yoga — \"the science of human potential and development.\" Focus on health, internal strength, and body awareness rooted in Chinese medicine practices.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "de465d9ceeffa56ca68e061a"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:06:51.45Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:06:51.45Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "IPPON FinTech (testdata1)",
+    "website": "https://ipponfintech.com/?variant=testdata1",
+    "image": {
+      "$oid": "84d7127e8ef460ebb76be48e"
+    },
+    "description": "Financial technology company focused on revolutionizing financing through securitization of intellectual property (IP) assets. Enables startups and businesses to leverage intangible assets (patents, trademarks, copyrights) as an alternative to traditional equity-based financing, raising capital without diluting ownership. Tagline: \"Unlocking Innovation, Securing Value.\"\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "23d42045c3bee4a66f5c6581"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:01.157Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:01.157Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Furious Nerd Productions (testdata1)",
+    "website": "https://nerdragenews.com/?variant=testdata1",
+    "phone": "+1 410-236-1524 (testdata1)",
+    "email": "sw.nrn+testdata1@aol.com",
+    "image": {
+      "$oid": "f2b871a1fdda11134fcabdfb"
+    },
+    "description": "Furious Nerd Productions is a film and television production company and publishing house based in Stewartstown, Pennsylvania. Evolved from \"Nerd Rage News,\" a nerd-oriented news blog that ran for nearly a decade. Founder Steve Wollett has 150+ film and TV credits; films have won awards in the USA, UK, France, Germany, Russia, and India. Executive producers include award-winning actress Bai Ling and Australian actor Vernon Wells (The Road Warrior, Commando).\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3eed36c31a59e1aa522509b9"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:01.766Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:01.766Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Paradise Circus Inc. (@fuck.it) (testdata1)",
+    "website": "https://fuck.it?variant=testdata1",
+    "email": "support+testdata1@fuck.it",
+    "description": "Paradise Circus Inc. operates @fuck.it, a premium, invite-only, privacy-focused email service. Positioned as \"Email with Attitude\" — no ads, no tracking, no data mining. Delaware corporation headquartered in New York. The platform combines secure email with a digital art gallery showcasing emerging artists. Capped at 10,000 accounts in Phase One. Powered by Open-Xchange enterprise servers hosted in ISO 27001 certified German data centers, GDPR compliant.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "96e78bcaaac528bb3c375d76"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:03.257Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:03.257Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "LSU Corp. (testdata1)",
+    "website": "https://liberland.team?variant=testdata1",
+    "email": "info+testdata1@liberland.team",
+    "image": {
+      "$oid": "d9cc2f82103152cca308f8e0"
+    },
+    "description": "For-profit NGO committed to establishing a permanent settlement and developing the Liberland ecosystem, while constructively and peacefully cooperating with local authorities in Liberland, Croatia, and Serbia. Provides a portion of profit for non-profit purposes. Runs the Pioneer Program to boost the Liberland settlement economy.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "53e1f11218561c75df41449c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:03.356Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:03.356Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Sponsian Studios (testdata1)",
+    "website": "https://sponsian.org?variant=testdata1",
+    "description": "Second company registered on the Liberland Blockchain. Focuses on promoting freedom through financial products. Developing and deploying blockchain-based protocols and applications.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2abd5adf0f4d01dcbea6ad51"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:05.369Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:05.37Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "LIBERSOLAR Ltd. (testdata1)",
+    "website": "https://market.ll.land/store/place4camping?variant=testdata1",
+    "phone": "+420 603 184 319 (testdata1)",
+    "email": "place4camping+testdata1@gmail.com",
+    "image": {
+      "$oid": "4719801432ab8300a1b0e53c"
+    },
+    "description": "Energy solutions provider specializing in photovoltaic power plants, PV panels, battery energy storage systems (BESS), and BYD electric cars.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "06adab0afd1c6677f5b6653c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:13.883Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:13.883Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberpulco 2026 (testdata1)",
+    "website": "http://liberpulco.com/?variant=testdata1",
+    "email": "president+testdata1@liberland.org",
+    "image": {
+      "$oid": "371e2b19d92608c93ccc2417"
+    },
+    "description": "The world's first major shareholding libertarian gathering, with shares issued on the Liberland blockchain. After two years of financial success with Libercopulco (generating over 50% profit margins, 249 sold tickets), Liberpulco 2026 is scaling up. Initial investment $20,000, last year's profit $10,000 (50%+ ROI).\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e1973cd5ec2041c938f1933c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:16.631Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:16.631Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Tom Yum Swap (testdata1)",
+    "website": "https://tomyum.xyz?variant=testdata1",
+    "description": "Decentralized financial (DeFi) platform built on the Solana blockchain. Mission: \"turn liquidity into security\" through innovative deflationary tokenomics and token-burning mechanics using a Proof of Liquidity (PoL) model. Crypto to fiat exchange focused on Asia.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "724b0d9827365889249bf5c0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:16.861Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:16.861Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "LL Solutions & Consulting (testdata1)",
+    "website": "https://llsol.carrd.co/?variant=testdata1",
+    "email": "infollsol+testdata1@proton.me",
+    "description": "Pure Liberland company operating exclusively on LL territory and its jurisdiction. Multi-lingual and multi-cultural staff providing consulting services to respond to diverse project needs.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "a4665553b5e34b76aebb6266"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:17.254Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:17.254Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "MeetRush (testdata1)",
+    "website": "https://meetrush.com?variant=testdata1",
+    "image": {
+      "$oid": "35add9e490498c8ac3ba86c1"
+    },
+    "description": "Social platform that helps users find people nearby, meet new people, chat, and date.\n\n*Pulled from blockchain.liberland.org by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "125954d29fe1125a9087ca48"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:49.551Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:49.551Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "GARM Clinic (testdata1)",
+    "website": "https://garmclinic.com?variant=testdata1",
+    "phone": "+1 (305) 848-0144 (testdata1)",
+    "email": "info+testdata1@garmclinic.com",
+    "image": {
+      "$oid": "efc8378011e785524c567452"
+    },
+    "description": "Global Alliance of Regenerative Medicine. Regenerative medicine clinic on Roatan dedicated to helping patients \"Live Life Healthier Longer\" through advanced stem cell therapy, gene therapy, and personalized longevity protocols. Founded by Olympic team physician Dr. Glenn Terry. Operates as a Contract Research Organization (CRO) with 2-year post-treatment follow-up. Featured in Netflix documentary \"Don't Die.\"\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "9b9e74dd11cab57e1f6a075d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:50.506Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:50.507Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Unlimited Bio (testdata1)",
+    "website": "https://unlimited.bio?variant=testdata1",
+    "email": "contact+testdata1@unlimit.bio",
+    "image": {
+      "$oid": "24456f1babfad444594e554b"
+    },
+    "description": "Biotech company offering advanced rejuvenation through gene therapies in Prospera. Founded April 2024 with Infinita VC funding, mission to run 100 clinical trials within 10 years. Building multiple gene therapies to combat aging effects. Featured in MIT Technology Review.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "d2339fcb9498ec08050be23e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:51.188Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:51.188Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Infinita City (testdata1)",
+    "website": "https://www.infinita.city?variant=testdata1",
+    "image": {
+      "$oid": "ddc67efa0bba8d09a9cf76a3"
+    },
+    "description": "Network city in Prospera focused on longevity biotech, computation, and science. \"The City That Never Dies.\" Home to 89 permanent residents, 21 funded startups, $25M+ raised by residents. Notable visitors include Tim Draper, Brian Armstrong, Balaji Srinivasan, Naval Ravikant, Bryan Johnson, and Aubrey de Grey. Contact via Telegram: t.me/infinitacity\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e6df515f055b2afe519e6d03"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:57.162Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:57.162Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Nomad Layer (testdata1)",
+    "website": "https://nomadlayer.com?variant=testdata1",
+    "email": "hello+testdata1@nomadlayer.com",
+    "image": {
+      "$oid": "7c72c10e649a494b729da5f1"
+    },
+    "description": "Architect of Prospera's Lump Sum Tax Regime for digital nomads. Helps globally mobile professionals secure legal $5,000 flat annual tax residency with remote onboarding. Directly collaborated with Prospera government on tax program design. Application form at nomadlayer.com/order.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5420792304e15ca70ce77f48"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:57.876Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:57.876Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Blink Wallet (testdata1)",
+    "website": "https://blink.sv?variant=testdata1",
+    "phone": "+503 6983 5117 (testdata1)",
+    "email": "support+testdata1@blink.sv",
+    "image": {
+      "$oid": "9123e702baafcc9466b4bd9a"
+    },
+    "description": "The everyday Bitcoin Lightning wallet, originally launched as \"Bitcoin Beach Wallet\" in El Zonte, El Salvador (2020). Provides reliable Bitcoin payments with Stablesats (USD-equivalent holdings), merchant POS, and earn-to-learn program. Built on Galoy open-source banking infrastructure.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f77adf1198795affe377ee31"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:07:59.752Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:07:59.752Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Boltz (testdata1)",
+    "website": "https://boltz.exchange?variant=testdata1",
+    "image": {
+      "$oid": "e92767e197920fdd27b015b2"
+    },
+    "description": "Non-custodial Bitcoin bridge enabling fast atomic swaps between Bitcoin base chain, Lightning Network, Liquid, and Rootstock without KYC or account creation. Uses hash time-locked contracts (HTLCs). Launched mainnet April 2019. The leading cross-layer Bitcoin bridge.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "0fa90c2a5124cd204a7dca46"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:00.331Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:00.331Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Moon (Pay with Moon) (testdata1)",
+    "website": "https://paywithmoon.com?variant=testdata1",
+    "email": "privacy+testdata1@paywithmoon.com",
+    "image": {
+      "$oid": "d9a84e00a29d242a34ef7c27"
+    },
+    "description": "Fintech enabling crypto-to-Visa prepaid card purchases for spending at 130M+ Visa merchants worldwide. Visa Fast Track partner, cards issued by Sutton Bank (FDIC). Founded 2018. Non-custodial, privacy-focused (no KYC for basic use).\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "1b58ef7373390b3fdbd3913f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:00.852Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:00.852Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "The Network Bank (testdata1)",
+    "website": "https://www.thenetworkbank.com?variant=testdata1",
+    "email": "contact+testdata1@thenetworkbank.com",
+    "image": {
+      "$oid": "33638761e28e027a24212caa"
+    },
+    "description": "Full-service Class B bank licensed by Roatan Financial Services Authority (RFSA). 100% full-reserve, multi-currency banking for entrepreneurs and network state citizens. Supports 140+ countries with digital asset wallet integration, international payments, and Web3 features.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e9af28b594a4a072647ade83"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:01.496Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:01.496Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Trustless Work (testdata1)",
+    "website": "https://www.trustlesswork.com?variant=testdata1",
+    "image": {
+      "$oid": "a13d25e1053fd32df0380475"
+    },
+    "description": "Open-source, non-custodial escrow infrastructure for stablecoin payments on Stellar blockchain. Enables milestone-based escrow without smart contract development. 0.3% fee on successful release. 8,000+ repo clones, 50+ open-source contributors, 15+ products building on platform.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7246fc00440c96405af74a6c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:03.798Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:03.798Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Bay Islands Trust (testdata1)",
+    "website": "https://bayislandstrust.net?variant=testdata1",
+    "phone": "+501 610 3141 (testdata1)",
+    "email": "info+testdata1@bayislandstrust.net",
+    "image": {
+      "$oid": "ae05c50a920422f6ddad025a"
+    },
+    "description": "Professional full-service commercial registered agent in Prospera ZEDE. ~40 combined years of offshore financial services experience. Offers company formation, agent services, filing services, and ancillary services.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6d5103946a7ae0fcfbb1e982"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:04.651Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:04.651Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "AmityAge (testdata1)",
+    "website": "https://www.amityage.com?variant=testdata1",
+    "phone": "+504 8800-6934 (testdata1)",
+    "email": "hello+testdata1@amityage.com",
+    "image": {
+      "$oid": "63ad6fd4a8a002e8140e7f3e"
+    },
+    "description": "Bitcoin-focused organization on a mission to welcome 100 million people into Bitcoin through education, mining, and financial services. Operates Bitcoin Center Roatan and mining operations in Ethiopia. \"Mining Bitcoin to Educate the World.\"\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e3258770d48919d3295aa7c7"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:05.749Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:05.749Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "BIFAT Center (testdata1)",
+    "website": "https://bifat.life?variant=testdata1",
+    "phone": "+504 3183-8381 (testdata1)",
+    "email": "hello+testdata1@bifat.life",
+    "image": {
+      "$oid": "e9db45cb47ed2fb632b24122"
+    },
+    "description": "Peptide therapy and wellness clinic in Roatan. Founded January 2023 by pharmacist Dr. Nikki Javit (16+ years experience). Pharmacist-formulated, pre-mixed peptide treatments from cGMP-certified, FDA-registered facilities.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f4cd98e0742e3062e8cb7908"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:06.881Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:06.881Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Circular Factory (testdata1)",
+    "website": "https://www.thecircularfactory.com?variant=testdata1",
+    "image": {
+      "$oid": "b4c7b5482faa7d6fcd4ed889"
+    },
+    "description": "Designs and deploys flexible robotic micro-factories for the construction industry. In partnership with Prospera and IAAC (Institute for Advanced Architecture of Catalonia), created a robotic micro-factory on Roatan that mills sustainably harvested local timber into parametric architectural components. Featured in Dezeen and Designboom. Expected to generate ~300 jobs.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "bc7ddd65ab2d6ec584356f7f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:07.541Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:07.541Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Odisea Labs (testdata1)",
+    "website": "https://www.odisea.xyz?variant=testdata1",
+    "email": "hola+testdata1@odisea.xyz",
+    "image": {
+      "$oid": "fcafc806817a65a90912adc8"
+    },
+    "description": "Frontier technology innovation lab accelerating Latin America's deep tech ecosystem through research, education, acceleration, and capital. Produced the largest mapping of 2,500+ deep-tech startups in the region with Eric Schmidt's International Strategy Forum. Ethereum Foundation grant recipient.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "eacf8d30568a58e8439fc29e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:07.941Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:07.941Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Ixian Services (testdata1)",
+    "website": "https://www.ixian.tech?variant=testdata1",
+    "image": {
+      "$oid": "a99df5dc39fa31727f8624fd"
+    },
+    "description": "Legal engineering and technology services firm for network states. Founded 2023 in Prospera ZEDE. Designs Ricardian contracts, on-chain organizations, automates legal processes, and develops regulatory frameworks for crypto, biotech, and SEZ industries. Offices in Prospera, City of London, and British Columbia.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "1678dc65ea74009d9a27219f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:10.393Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:10.393Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "ProspIn (testdata1)",
+    "website": "https://www.prospin.io?variant=testdata1",
+    "email": "support+testdata1@prospin.io",
+    "image": {
+      "$oid": "4225fa7155fd80b637e1f1f8"
+    },
+    "description": "Business incorporation platform for Prospera ZEDE. Streamlined all-inclusive eBusiness package with legal documents, digital signatures, legal representation, and registered agent services. 0% tax on global revenue.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "466bf17ad50c2d1778168c77"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:12.25Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:12.25Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "INERTIA Advisory Group (testdata1)",
+    "website": "https://spi-inertia.com?variant=testdata1",
+    "phone": "+504 92216815 (testdata1)",
+    "email": "info+testdata1@spi-inertia.com",
+    "image": {
+      "$oid": "3d7cf1369349e3f6adf15f2f"
+    },
+    "description": "Multidisciplinary professional services firm delivering legal, financial, and management expertise. Specializes in sovereign risk defense, investment structuring, international tax planning, digital assets, and corporate governance. Experts in U.S. and Honduras law including Prospera ZEDE rules.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3846815ce412e5a446ef613a"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:13.23Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:13.23Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Relay Human Cloud (testdata1)",
+    "website": "https://www.relayhumancloud.com?variant=testdata1",
+    "phone": "214-467-3529 (testdata1)",
+    "email": "info+testdata1@relayhumancloud.com",
+    "image": {
+      "$oid": "f44c66990c80c60d87258555"
+    },
+    "description": "Global staff augmentation company that simplifies adding dedicated remote workers. SOC 2-compliant offices in India, Mexico, Honduras, and Philippines. Save up to 75% on labor costs. 10,000+ LinkedIn followers.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ecbbcdf6aef8ab3847c7c97f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:15.231Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:15.231Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Próspera Arbitration Center (PAC) (testdata1)",
+    "website": "https://pac.hn?variant=testdata1",
+    "phone": "+504 9486-8057 (testdata1)",
+    "email": "legal+testdata1@pac.hn",
+    "image": {
+      "$oid": "feae62b347754d8f8ab123e4"
+    },
+    "description": "First default arbitration services provider under the Constitution of Honduras, headquartered in Prospera ZEDE. Provides world-class arbitration and ADR with internationally credentialed senior arbiters including retired US judges. English and Spanish proceedings.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "0743f08589c5397e620b24be"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:15.919Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:15.92Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Seso Global (testdata1)",
+    "website": "https://app.seso.global/home?variant=testdata1",
+    "phone": "+234 903 699 9862 (testdata1)",
+    "email": "info+testdata1@seso.global",
+    "description": "Africa's premier property marketplace connecting diaspora communities with verified properties across Ghana, Nigeria, Liberia, South Africa, and Dubai. Founded 2019 after blockchain land registry research funded by Bill &amp; Melinda Gates Foundation. $15M+ in properties sold, 200+ developers on platform.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ccf3f45216f0440a44e7f6ac"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:17.274Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:17.274Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "SUAZO LEX (testdata1)",
+    "website": "https://www.suazolex.com?variant=testdata1",
+    "phone": "+504 9906-6831 (testdata1)",
+    "image": {
+      "$oid": "2cfc046e6cfc278a90964cbb"
+    },
+    "description": "Honduran intellectual property law firm with 20+ years experience. Specializes in IP enforcement, trademarks, patents, copyrights, anti-counterfeiting, internet law, and criminal law in IP crimes. Regional coordination across Central America.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "70f0bd6c70355d72f504adf1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:18.342Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:18.343Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Las Verandas Hotel & Villas (testdata1)",
+    "website": "https://www.lasverandasroatan.com?variant=testdata1",
+    "phone": "+504-3288-5020 (testdata1)",
+    "email": "lasverandas+testdata1@pristinebay.hn",
+    "image": {
+      "$oid": "736a66c019a0eeb7499a1a88"
+    },
+    "description": "Luxury oceanfront boutique hotel in Pristine Bay, Roatan, on a crescent-shaped white sand beach adjacent to Black Pearl Golf Course. Modern-classic rooms and villas with private pools on the Mesoamerican Barrier Reef.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c1a4061eac6340778f311375"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:20.113Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:20.113Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Pristine Bay Beach Club (testdata1)",
+    "website": "https://www.pristinebay.com?variant=testdata1",
+    "phone": "+1 840 841 25 69 (testdata1)",
+    "image": {
+      "$oid": "f6d0fa9d39e4a3475957b84c"
+    },
+    "description": "Expansive 300+ acre oceanfront luxury resort destination in French Harbour, Roatan. Private beach, infinity pools, water park, sports facilities, dining venues, and the 18-hole Black Pearl Golf Course designed by Pete Dye.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e099f99fd1d8ed9404c3ee0d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:21.82Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:21.82Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Duna Residences (testdata1)",
+    "website": "https://www.dunaresidences.com?variant=testdata1",
+    "phone": "+504 9296-8581 (testdata1)",
+    "email": "desk+testdata1@dunaresidences.com",
+    "image": {
+      "$oid": "a78d0518789749c7142e6ece"
+    },
+    "description": "The tallest building on Roatan. Mixed-use residential, commercial, and retail tower in Prospera with 82 fully furnished apartments, office spaces, coworking, and retail. First residential units in the Prospera jurisdiction. Accepts cryptocurrency.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "84f20697c7d1d68eef51299f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:26.163Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:26.163Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Spirit Origin Coffee (testdata1)",
+    "website": "https://spiritorigincoffee.com?variant=testdata1",
+    "phone": "+504 3178-2287 (testdata1)",
+    "image": {
+      "$oid": "22baf051b3b89c46ee82f49e"
+    },
+    "description": "B Corp-certified specialty coffee company — the only B Corp coffee company in Latin America. 12,000 sq ft flagship in Roatan (\"Central America's largest specialty coffee destination\") with roastery, luxury cafe, coffee omakase, and \"From the Roots\" fine dining by Chef Edwin Garcia.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "788c0e32180c7442666110bd"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:28.018Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:28.018Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "The Scuba Shop (testdata1)",
+    "website": "https://scuba.shop?variant=testdata1",
+    "phone": "+504 3293-4293 (testdata1)",
+    "email": "ok+testdata1@scuba.shop",
+    "image": {
+      "$oid": "e44641c9f3d4456865376476"
+    },
+    "description": "\"Home of the Deep Thinker.\" Premier scuba diving center on Roatan at Bitcoin Beach, Pristine Bay, and Las Verandas. PADI/SSI certifications from beginner to instructor. Accepts credit cards, Apple Pay, PayPal in 19+ currencies.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5f705ff40ff97c7a716216c6"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:31.578Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:31.578Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Atlantis Rent a Car (testdata1)",
+    "website": "https://atlantisroatan.com?variant=testdata1",
+    "email": "admin+testdata1@atlantisroatan.com",
+    "image": {
+      "$oid": "3081e0fbe968cab5e349eae7"
+    },
+    "description": "White-glove car rental with contactless delivery, digital reservations, e-signatures, and real-time tracking. Fleet of SUVs, sedans, and minivans. 400+ satisfied customers, 5-star reviews. Accepts Bitcoin, Ethereum, USDC, and Infinita Credit Coins.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "0928868c21d6c355f5995ace"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:33.053Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:33.053Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Pristine Academy (testdata1)",
+    "website": "https://pristineacademy.co?variant=testdata1",
+    "phone": "(504) 3186-5234 (testdata1)",
+    "email": "admin+testdata1@pristineacademy.hn",
+    "image": {
+      "$oid": "5b33973a695bc46ba998e9d6"
+    },
+    "description": "U.S.-accredited, Montessori-inspired bilingual K-12 school in Pristine Bay, Roatan. Fosters independence, creativity, and fluency in English and Spanish within Prospera ZEDE.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "58141b37c4d52d48c432bd55"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:33.734Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:33.734Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Prospera Havens (testdata1)",
+    "website": "https://prosperahavens.space?variant=testdata1",
+    "phone": "+1 (909) 530-3043 (testdata1)",
+    "email": "hello+testdata1@lyvena.com",
+    "image": {
+      "$oid": "f84dd380f75e200626732d3e"
+    },
+    "description": "Premium real estate, residency, and business formation concierge for Prospera ZEDE. Complimentary white-glove support for property search, legal due diligence, residency applications, company formation (24-hour turnaround), tax optimization, and banking. By Lyvena.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "39b1eab3c9107cfa3428b429"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:35.486Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:35.486Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Roatan Tourism Bureau (testdata1)",
+    "website": "https://roatantourismbureau.com?variant=testdata1",
+    "image": {
+      "$oid": "eb927c998b3e2569144534ff"
+    },
+    "description": "Private NGO promoting Roatan as a premier travel destination. Authorized marketing and booking agent for Bay Islands tourism. Operates roatan.online marketplace connecting tourists with local operators.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f0ef49da9773f64a334e804f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:35.984Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:35.984Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Próspera Insurance Company (testdata1)",
+    "website": "https://eprospera.com?variant=testdata1",
+    "email": "lonis+testdata1@prospera.hn",
+    "image": {
+      "$oid": "9b91fd4bbfb9795a70078bb9"
+    },
+    "description": "Insurer of Last Resort within Prospera ZEDE. Provides mandatory general liability insurance for residents and businesses. Integrated into the e-Prospera governance platform.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "dc5b7297fdfdc44d6ba55c07"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:38.21Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:38.21Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Muse Bio (testdata1)",
+    "website": "https://www.mycells.bio?variant=testdata1",
+    "email": "muse+testdata1@mycells.bio",
+    "image": {
+      "$oid": "7c7cc2d91d6447fd9b7fd187"
+    },
+    "description": "Collects and banks menstrual stem cells for research and future personalized wellness. Aims to reduce cost of 100M stem cells from $100,000 to $1,000 through non-invasive at-home collection. Pitched on \"Meet the Drapers.\" Currently R&amp;D stage.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "0d2727641ad352d4a25cca8d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:38.329Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:38.33Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Duality (testdata1)",
+    "website": "https://glebrazgar.github.io/Duality?variant=testdata1",
+    "phone": "+44 7384 860204 (testdata1)",
+    "email": "gleb.studios+testdata1@gmail.com",
+    "description": "Neurotechnology startup focused on whole brain uploading and digital brain simulation. Raising $500k pre-seed. Adviser: Anders Sandberg (Oxford, 30+ years brain emulation). Pre-product stage.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7f0d1c468ec038a4b0cc27a0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:39.631Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:39.631Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Symbiont Labs (testdata1)",
+    "website": "https://symbiontlabs.io?variant=testdata1",
+    "email": "support+testdata1@symbiontlabs.io",
+    "image": {
+      "$oid": "706c66b76849bde8faeb1b24"
+    },
+    "description": "Human augmentation and cybernetics company developing implantable biosensors and subdermal devices. Fabrication lab in Prospera. Moving biohacking \"from the fringes into regulated, accessible reality.\"\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "cd17c9729376b9dd93744c84"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:39.736Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:39.736Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Fracta (testdata1)",
+    "website": "https://www.fracta.city?variant=testdata1",
+    "description": "Tokenized real estate investment platform for fractional ownership of Prospera properties. Minimum $100 investment. $2.5M+ TVL, 127+ active investors, 8.2% average annual ROI. Ownership on Base blockchain.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7c54e85c28e59fed38f3159d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:39.848Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:39.849Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "BitBooks (testdata1)",
+    "website": "https://bitbooks.com?variant=testdata1",
+    "description": "\"Accounting for the Bitcoin Standard.\" Platform automating Bitcoin-denominated bookkeeping and purchasing power tracking. Premium domain. Early stage.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "b6ebfbfa961ffc1fe756e81c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:43.228Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:43.228Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Golden Order Diplomats (testdata1)",
+    "website": "https://www.goldenorderdiplomats.com?variant=testdata1",
+    "image": {
+      "$oid": "566aa7e328705409751d7354"
+    },
+    "description": "Diplomatic consulting firm focused on global influence through diplomacy, education, and ethical innovation. Elite consulting, leadership formation, strategic nation branding, protocol training, and peacebuilding.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f7139cc86a91e247fc159b35"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:43.362Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:43.362Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "PureServers (testdata1)",
+    "website": "https://pureservers.org?variant=testdata1",
+    "phone": "+447887628486 (testdata1)",
+    "email": "support+testdata1@pureservers.org",
+    "description": "Budget VPS hosting with KVM virtualization in Germany. Unmetered 1Gbps bandwidth. Operated by MTK Global Ltd (London). 3.9/5 on Trustpilot.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "eb655239c5c781697c8559af"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:43.871Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:43.871Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Westy (testdata1)",
+    "website": "https://www.westy.com.br?variant=testdata1",
+    "email": "contato+testdata1@westy.com.br",
+    "description": "Brazilian fintech offering corporate cards with up to 5% cashback on cloud/SaaS/ads spending. Zero FX fees, real-time tracking, unlimited virtual cards. Also WestyPay for invoicing with PIX integration.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "d9e687789d79a102eb9b2e93"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:44.454Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:44.454Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "raker LLC (testdata1)",
+    "website": "https://www.rakerwork.com?variant=testdata1",
+    "email": "info+testdata1@rakerwork.com",
+    "image": {
+      "$oid": "6b7da4b4b99556f11f40f6c6"
+    },
+    "description": "Collaborative firm providing security, compliance, and commerce expertise to reduce risks for entrepreneurs. \"We work for you to work.\"\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c489d6bbef34ebe842e400e4"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:45.534Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:45.534Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Appetite LLC (testdata1)",
+    "website": "https://appetite.studio?variant=testdata1",
+    "email": "hi+testdata1@appetite.studio",
+    "image": {
+      "$oid": "77abdcc7c2da703c7efbe435"
+    },
+    "description": "Web3 technology studio focused on social impact. Blockchain solutions for people, governments, and impact startups. Also AI solutions, custom software, and website design. Incorporated 2025 in Bangalore, India.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f43c604aa4aa730f806d321f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:46.467Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:46.467Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Terminus (testdata1)",
+    "website": "https://terminus.town?variant=testdata1",
+    "phone": "+504 9536 0327 (testdata1)",
+    "email": "syrtsov.ivan+testdata1@gmail.com",
+    "image": {
+      "$oid": "097a3360f367f1ed25d74534"
+    },
+    "description": "Modern residential village in Prospera for entrepreneurs and creators. Curated community with furnished units overlooking the Caribbean, smart home, cleaning, high-speed internet, coworking. $1,111/month.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "959a2cbc32212a9c35273a30"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:46.58Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:46.58Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "NOMAD (testdata1)",
+    "website": "https://nomad.homes?variant=testdata1",
+    "email": "zach+testdata1@nomad.homes",
+    "description": "International coliving/coworking network (\"Nodes\") for digital nomads. Prospera Node: 30-unit community with diamond-shaped community building. License, rent, or buy-in options.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7bb9bdc4d8132418f84754b0"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:46.703Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:46.704Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Darien Village (testdata1)",
+    "website": "https://darienvillage.com?variant=testdata1",
+    "description": "Purpose-driven residential development in Prospera's Beta District. 55 units across 5 buildings, walkable village-style. Investment units from $76,560. Target yields 7.35–9.60%.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 2,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2b9e8958e4a7dae8fe4aa72a"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:46.84Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:46.84Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Pete's Place (testdata1)",
+    "description": "2-story golf-themed dining and entertainment venue at Pristine Bay with aqua driving range overlooking the Caribbean. Part of Pristine Bay resort.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 1,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5b4a48e88a5745c1c8edd0d5"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:08:46.95Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:08:46.95Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Pristine Water Sports (testdata1)",
+    "description": "Ocean adventure company at Pristine Bay. Guided snorkeling tours, fishing trips, sunset cruises, Cayos Cochinos day trips, nurse shark encounters, mangrove exploration, kayaking.\n\n*Catalogued from prospera.co/en/marketplace by Claude* (testdata1)",
+    "identity": {
+      "$oid": "093bd5fdb4e856d1fa161e73"
+    },
+    "completenessScore": 1,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "bcd220cf264f50a56d49fa97"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:44.382Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:18:44.383Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Skyhawk Aviation (testdata1)",
+    "website": "https://skyhawk.hu?variant=testdata1",
+    "phone": "+36 20 287 7955 (testdata1)",
+    "email": "balazs+testdata1@skyhawk.hu",
+    "image": {
+      "$oid": "ff8b2cfe013db835cce3c8f2"
+    },
+    "description": "Skyhawk Aviation is a pilot training school based at Gödöllő Airport near Budapest, Hungary. They offer modular EASA flight training courses — LAPL (Light Aircraft Pilot License), PPL (Private Pilot License), and NVFR (Night Vision Flight Rating) — using some of the market's safest and most modern aircraft equipped with Garmin glass cockpit avionics. Training is led by experienced instructors and the school welcomes international students. Owned by a Liberlander.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "8f2ac4d74dc8f9b9586477ed"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:18:46.852Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:18:46.853Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Priority Pass (testdata1)",
+    "website": "https://www.prioritypass.com?variant=testdata1",
+    "phone": "+1-800-352-2834 (testdata1)",
+    "email": "info+testdata1@prioritypass.com",
+    "description": "Priority Pass is the world's largest independent airport lounge access network, providing members entry to 1,800+ airport lounges and experiences in over 600 cities across 148 countries. Founded in 1992 and owned by the Collinson Group (UK). Offers three membership tiers — Standard, Standard Plus, and Prestige — with benefits including lounge access, dining, spa experiences, and airport services. Owned by a Liberlander.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e27aa9fd7938c5d50a48c98e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:02.382Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:02.382Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Cryptospace Cards (testdata1)",
+    "website": "https://cards.cryptospace.com?variant=testdata1",
+    "phone": "(310) 981-6973 (testdata1)",
+    "image": {
+      "$oid": "66fd8418ce3fd146cd297dbd"
+    },
+    "description": "Cryptospace is a cryptocurrency services company headquartered in San Pedro, California. Their cards division offers cryptocurrency credit/debit cards — the \"Cosmic Card\" — designed to bridge the gap between cryptocurrency holdings and everyday spending. The company also operates across SaaS, media, NFT, and outsourcing divisions. Owned by a Liberlander.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ab3bbc20c2fe2d76ffcdabea"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:02.997Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:02.998Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Neti (Neti Sp. z o.o.) (testdata1)",
+    "website": "https://neti-soft.com?variant=testdata1",
+    "phone": "+48 666 594 854 (testdata1)",
+    "email": "slawomir.pasko+testdata1@neti-soft.com",
+    "image": {
+      "$oid": "3ab92702a84a7dc650a2def7"
+    },
+    "description": "Neti is a Polish blockchain consulting and development company founded in 2010 in Rzeszów, Poland. Started as a software boutique specializing in JavaScript solutions and expanded into blockchain technology in 2019. Recognized as a Top 100 Blockchain Company for 2024–2025. Neti has partnered with Liberland and works across major blockchain ecosystems including Polkadot, Ethereum, Cosmos, Solana, and Hyperledger Fabric. Owned by a Liberlander.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "41f816a93e065c5c8c3134ec"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:03.843Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:03.844Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Tomorrow Bio (testdata1)",
+    "website": "https://www.tomorrow.bio?variant=testdata1",
+    "email": "hello+testdata1@tomorrow.bio",
+    "image": {
+      "$oid": "b72ebb4d7a343d6850f639f5"
+    },
+    "description": "Europe's first cryonics company, providing emergency medical stabilization and long-term cryopreservation of the human body at -196°C immediately after legal death. Founded in 2020 by Dr. Emil Kendziorra and Fernando Azevedo Pinheiro. Collaborates with the European Biostasis Foundation in Rafz, Switzerland. Has cryopreserved 20 people and 10 pets, with 800+ signed up. Total contract value exceeds EUR 160M.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2feb41cbc95482e1ccdcbff8"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:05.953Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:05.953Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Alcor Life Extension Foundation (testdata1)",
+    "website": "https://www.alcor.org?variant=testdata1",
+    "phone": "+1 (480) 905-1906 (testdata1)",
+    "email": "info+testdata1@alcor.org",
+    "description": "The world's oldest and largest cryonics organization, founded in 1972. A 501(c)(3) nonprofit that preserves human bodies and brains in liquid nitrogen after legal death. Approximately 1,000 members and ~117 patients preserved. State-of-the-art facilities in Scottsdale, Arizona.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "78b8eef820cc15f2e276ce64"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:07.477Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:07.477Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Cryonics Institute (testdata1)",
+    "website": "https://cryonics.org?variant=testdata1",
+    "phone": "+1 (586) 791-5961 (testdata1)",
+    "email": "cihq+testdata1@aol.com",
+    "image": {
+      "$oid": "625b71f62054b0dc4166b50f"
+    },
+    "description": "Nonprofit cooperative membership organization providing affordable cryonics services, founded April 4, 1976 by Robert Ettinger, \"the Father of Cryonics.\" Owns its 7,000 sq ft facility in Clinton Township, Michigan outright — no debt, no stockholders, no landlords.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "37ad226dca0fabad6605119f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:08.306Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:08.306Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Blueprint by Bryan Johnson (testdata1)",
+    "website": "https://blueprint.bryanjohnson.com?variant=testdata1",
+    "email": "support+testdata1@bryanjohnson.com",
+    "image": {
+      "$oid": "adfe76ba46d6c40ed3968182"
+    },
+    "description": "A comprehensive anti-aging program integrating diet, exercise, sleep, and medical protocols, created by Bryan Johnson (founder of Braintree/Venmo, sold to PayPal for $800M). Johnson spent $2M+ annually testing rejuvenation protocols on himself, achieving measurable biological age reversal. The \"Don't Die\" movement advocates human survival and radical life extension. Featured in the Netflix documentary \"Don't Die.\"\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5983bc46de3ebb5c094e6190"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:09.049Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:09.049Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "SENS Research Foundation / Lifespan Research Institute (testdata1)",
+    "website": "https://lifespan.io?variant=testdata1",
+    "email": "info+testdata1@lifespan.io",
+    "description": "Originally the SENS Research Foundation (Strategies for Engineered Negligible Senescence), founded in 2009 by Dr. Aubrey de Grey. In October 2024, SENS merged with LEAF to form the Lifespan Research Institute. Operates the Lifespan.io crowdfunding platform (raised $750,000+), publishes 1,000+ longevity articles, and runs the EARD conference and Longevity Investor Network.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65670134041d34723ef4e774"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:12.323Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:12.323Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Longevity Escape Velocity (LEV) Foundation (testdata1)",
+    "website": "https://www.levf.org?variant=testdata1",
+    "email": "foundation+testdata1@levf.org",
+    "image": {
+      "$oid": "8ce0a77bf952daf866696785"
+    },
+    "description": "Nonprofit research foundation founded in October 2022 by Dr. Aubrey de Grey. Focused on empirically demonstrating the divide-and-conquer approach to treating age-related disease, achieving \"longevity escape velocity\" — the point where science extends life faster than time passes.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e7861e1146fea6ae221f1b9e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:13.72Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:13.72Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "RAADfest (Revolution Against Aging and Death) (testdata1)",
+    "website": "https://www.raadfest.com?variant=testdata1",
+    "email": "info+testdata1@rlecoalition.com",
+    "image": {
+      "$oid": "31f4409505c86e4cbdf8904c"
+    },
+    "description": "The world's largest event focused on healthy human life extension. Annual gathering of scientists, researchers, entrepreneurs, and longevity enthusiasts. Produced by the Coalition for Radical Life Extension. 2026 edition: September 4-6 in Scottsdale, Arizona.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "de81e796e07f3f8b4a2b3f61"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:16.175Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:16.175Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Coalition for Radical Life Extension (testdata1)",
+    "website": "https://www.rlecoalition.com?variant=testdata1",
+    "email": "info+testdata1@rlecoalition.com",
+    "image": {
+      "$oid": "3407b97c8fbddef0753a5c95"
+    },
+    "description": "Nonprofit organization focused on educating, uniting, and activating people who support radical life extension. Umbrella coalition including the LEV Foundation, People Unlimited Inc., Maximum Life Foundation, and others. Produces RAADfest. Based in Scottsdale, Arizona.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ae9bc5da6286046a60e60138"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:16.945Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:16.945Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Altos Labs (testdata1)",
+    "website": "https://www.altoslabs.com?variant=testdata1",
+    "email": "info+testdata1@altoslabs.com",
+    "image": {
+      "$oid": "b2bfec154da20528c66ac958"
+    },
+    "description": "Cellular rejuvenation programming company focused on restoring cell health to reverse disease, injury, and disabilities. Uses Yamanaka factors to reprogram cells to a youthful state. Launched in 2022 with $3 billion in funding — one of the largest biotech launches in history. Backed by Jeff Bezos. Initiated first human clinical trials in 2026.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "103b767b039a2973ea0cef4d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:18.809Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:18.809Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Retro Biosciences (testdata1)",
+    "website": "https://retro.bio?variant=testdata1",
+    "email": "hi+testdata1@retro.bio",
+    "image": {
+      "$oid": "281784b0c42eeb97a1b7191d"
+    },
+    "description": "Longevity biotech company aiming to extend average human lifespan by 10 years using epigenetic editing, cell replacement therapies, and AI-designed protein engineering (in partnership with OpenAI). Founded in 2022. Backed by $180M personal investment from Sam Altman. Raising $1 billion for clinical trials.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "62525f4c7b765e2e7de96df3"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:19.251Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:19.251Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Fountain Life (testdata1)",
+    "website": "https://www.fountainlife.com?variant=testdata1",
+    "email": "care+testdata1@fountainlife.com",
+    "description": "The world's most advanced longevity destination offering AI-guided diagnostics, restorative therapeutics, and dedicated care teams. Co-founded by Peter Diamandis, Tony Robbins, and Dr. William Kapp. Uses whole-body MRI with AI, cardiac scans, genetic sequencing, and GRAIL multi-cancer blood testing. Locations in Naples FL, Orlando, Dallas, Westchester NY, and Houston.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "117f1db80042a79813aad474"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:20.505Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:20.505Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Calico Life Sciences (testdata1)",
+    "website": "https://www.calicolabs.com?variant=testdata1",
+    "email": "privacy+testdata1@calicolabs.com",
+    "image": {
+      "$oid": "21419178f6b5027b2245f00c"
+    },
+    "description": "Alphabet (Google) subsidiary focused on the biology of aging, founded in 2013. Takes a data-driven approach to understanding mechanisms of aging. Continues independent research in immunology, oncology, and neuroscience at their South San Francisco campus.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "8659ab54931a3c06990dd53d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:23.263Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:23.263Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Loyal (for Dogs) (testdata1)",
+    "website": "https://loyal.com?variant=testdata1",
+    "email": "info+testdata1@loyal.com",
+    "image": {
+      "$oid": "8132c6782a155ae44551b083"
+    },
+    "description": "Clinical-stage veterinary medicine company developing the first-ever drugs specifically designed to extend dog healthspan and lifespan. Founded in 2019 by CEO Celine Halioua. The STAY clinical trial enrolled 1,000+ dogs at 70 US veterinary clinics. Received FDA acceptance of safety in early 2025/2026.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f76b563b79852c204def80ab"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:23.944Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:23.944Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Vitalia (testdata1)",
+    "website": "https://www.vitalia.city?variant=testdata1",
+    "email": "contact+testdata1@vitalia.city",
+    "description": "A pop-up longevity city experiment in Prospera, Honduras, leveraging the progressive legal framework for medical freedom and biotech innovation. Brought together longevity biotech founders, biohackers, and researchers to co-live and co-work while testing experimental treatments.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "1c8bb4db414e17260644f858"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:24.568Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:24.568Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Insilico Medicine (testdata1)",
+    "website": "https://insilico.com?variant=testdata1",
+    "email": "info+testdata1@insilico.com",
+    "image": {
+      "$oid": "5fc9b4ed156ac8a539837e0b"
+    },
+    "description": "AI-powered drug discovery company whose mission is to extend healthy, productive longevity for everyone. Founded in 2014. Combines AI and deep learning for target identification and therapeutic design. Dual HQ in Boston and Hong Kong. First AI-discovered drug entering Phase 2 clinical trials for idiopathic pulmonary fibrosis.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f08d6348860ff93e3130cb86"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:25.413Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:25.414Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Life Biosciences (testdata1)",
+    "website": "https://www.lifebiosciences.com?variant=testdata1",
+    "email": "info+testdata1@lifebiosciences.com",
+    "image": {
+      "$oid": "10db3e9031d9be629970f1b4"
+    },
+    "description": "Developing a novel partial epigenetic reprogramming (PER) platform targeting the underlying mechanisms of aging. FDA cleared the first-ever human trial of their epigenetic reprogramming therapy (ER-100) in early 2026, targeting optic neuropathies.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c7bc9381ef98e64439c02b11"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:25.873Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:25.873Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Cambrian Bio (testdata1)",
+    "website": "https://www.cambrianbio.com?variant=testdata1",
+    "email": "press+testdata1@cambrianbio.com",
+    "description": "Clinical-stage distributed development company building medicines to prevent diseases and lengthen healthspan. Founded in 2019. Operates as a portfolio of subsidiary \"PipeCos\" each targeting a different biological driver of aging. Raised $210M+ across 12+ pipeline programs.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "32315b44f53c3eb9ab75364f"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:26.819Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:26.819Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Elevian (testdata1)",
+    "website": "https://www.elevian.com?variant=testdata1",
+    "email": "info+testdata1@elevian.com",
+    "image": {
+      "$oid": "3c2f0df518f86c962aae16f6"
+    },
+    "description": "Develops medicines to restore regenerative capacity by replenishing GDF11, a Harvard-discovered protein linked to age-related diseases. Scientific founders from Harvard Department of Stem Cell and Regenerative Biology. Raised $15M led by Prime Movers Lab.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "61c0d36e1af9d9d062528b3c"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:28.02Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:28.02Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "BioViva Sciences (testdata1)",
+    "website": "https://bioviva-science.com?variant=testdata1",
+    "email": "info+testdata1@bioviva-science.com",
+    "image": {
+      "$oid": "65902030de896dabe3fdf154"
+    },
+    "description": "Gene therapy company targeting the underpinning causes of aging. Founded in 2015 by CEO Elizabeth Parrish, \"Patient Zero\" — the first person to undergo gene therapy to reverse aging. Patented AAV-based and proprietary CMV gene therapy vector platform.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "17abdbc895dadf7ef78241e1"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:29.327Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:29.327Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Gordian Biotechnology (testdata1)",
+    "website": "https://www.gordian.bio?variant=testdata1",
+    "email": "careers+testdata1@gordian.bio",
+    "image": {
+      "$oid": "d3d05e3b1b79d967d5fc56aa"
+    },
+    "description": "In vivo drug discovery company whose mission is to cure age-related diseases. Founded in 2018. Developed an innovative screening platform that tests thousands of gene therapies in living animals. Raised $60M from The Longevity Fund, Founders Fund, and Gigafund.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3f69caf1c6ddc87ca047c20d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:30.416Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:30.417Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Repair Biotechnologies (testdata1)",
+    "website": "https://www.repairbiotechnologies.com?variant=testdata1",
+    "email": "info+testdata1@repairbiotechnologies.com",
+    "image": {
+      "$oid": "e9e1f827aa13f0fb28ea5fe1"
+    },
+    "description": "Biotechnology company developing therapies to reverse atherosclerosis and regenerate the thymus gland. Cholesterol Degrading Platform (CDP) achieved a 48% reversal of aortic plaque obstruction in a single preclinical treatment. Raised $2.15M seed led by Jim Mellon.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "becb8d2f908dc23e1e1cc3f2"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:31.19Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:31.19Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "KrioRus (testdata1)",
+    "website": "https://kriorus.ru/en?variant=testdata1",
+    "email": "kriorus+testdata1@gmail.com",
+    "image": {
+      "$oid": "cd72dfaa02e9072f300e2243"
+    },
+    "description": "The first cryonics company in Russia and Eurasia, founded in 2005. Has cryopreserved 104 people and 88 pets, with ~600 people signed up from 20+ countries. Storage facilities in Moscow and Voronezh.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "0a81b16c33cc807924465e1d"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:31.285Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:31.285Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Southern Cryonics (testdata1)",
+    "website": "https://southerncryonics.com?variant=testdata1",
+    "email": "contact+testdata1@southerncryonics.com",
+    "description": "Australian nonprofit providing cryopreservation services for the Southern Hemisphere. Facility in Holbrook, New South Wales, completed in February 2023. Has cryopreserved 3 patients, with 34 members.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ea1a507af76a6d89a6386390"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:32.461Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:32.462Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Hevolution Foundation (testdata1)",
+    "website": "https://hevolution.com?variant=testdata1",
+    "email": "info+testdata1@hevolution.com",
+    "image": {
+      "$oid": "4fdcc9ff4fa6f35562848d6f"
+    },
+    "description": "Saudi Arabia's billion-dollar-a-year anti-aging initiative, established in 2018 via Royal Order. Chaired by Crown Prince Mohammed Bin Salman. The second-largest funder of geroscience on the planet. Launched $400M+ in research grants.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7e3a1c52f9720b6f8e184ffe"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:32.587Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:32.587Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Human Longevity Inc. (HLI) (testdata1)",
+    "website": "https://www.humanlongevity.com?variant=testdata1",
+    "email": "clientservices+testdata1@humanlongevity.com",
+    "description": "Genomics and cell therapy-based diagnostic and therapeutic company building the world's most comprehensive database on human genotypes and phenotypes using AI. Founded in 2013 by Craig Venter, Robert Hariri, and Peter Diamandis.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "b98b7b80b50bf77ad43f65fa"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:32.7Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:32.7Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "The Longevity Fund / age1 (testdata1)",
+    "website": "https://age1.com?variant=testdata1",
+    "email": "hello+testdata1@age1.com",
+    "description": "The first specialist venture capital fund created to invest only in companies extending human healthy lifespan, founded in 2011 by Laura Deming (Thiel Fellow). In 2023, launched age1 with $55M as the next-generation longevity fund.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "64bd1bc9bf376307aff7a2ce"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:32.813Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:32.813Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Life Extension (testdata1)",
+    "website": "https://www.lifeextension.com?variant=testdata1",
+    "email": "Privacy+testdata1@LifeExtension.com",
+    "description": "Privately owned vitamin and supplement company focused on science-backed longevity products, founded in 1980. 99% manufactured in the USA. 400+ products, all third-party tested and based on clinical trial evidence.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5bc5e9de0f206479a243d787"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:33.548Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:33.548Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "NOVOS (testdata1)",
+    "website": "https://novoslabs.com?variant=testdata1",
+    "email": "info+testdata1@novoslabs.com",
+    "image": {
+      "$oid": "3cae4d25b5ef7ca2c59e24c4"
+    },
+    "description": "Public Benefit Corporation translating aging research into clinically studied consumer solutions, founded in 2018. Scientific advisors from Harvard, MIT, University of Liverpool, and the Salk Institute. Donates profits and equity to longevity nonprofits.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "63a28b1b4155e989b0562ea5"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:33.665Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:33.665Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Turn Biotechnologies (testdata1)",
+    "website": "https://www.turn.bio?variant=testdata1",
+    "email": "info+testdata1@turn.bio",
+    "description": "Cell rejuvenation company developing novel mRNA medicines for untreatable age-related conditions via epigenetic reprogramming. Founded in 2018. Proprietary ERA (Epigenetic Reprogramming of Age) methodology and eTurna RNA delivery system. Backed by Astellas Pharma.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7e732d60234d227a9211d806"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:33.766Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:33.767Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Church of Perpetual Life (testdata1)",
+    "website": "https://churchofperpetuallife.org?variant=testdata1",
+    "email": "neal+testdata1@churchofperpetuallife.org",
+    "description": "The first brick-and-mortar transhumanist church, founded in 2013 by Bill Faloon and Saul Kent. A science-based, non-denominational community united by a commitment to radical life extension through biotechnology, nanotechnology, and AI.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ecebda859be7ac9b2e2c642e"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T22:19:33.874Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T22:19:33.874Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Juvenescence (testdata1)",
+    "website": "https://juvlabs.com?variant=testdata1",
+    "email": "care+testdata1@juvlabs.com",
+    "description": "Develops therapies specializing in aging disorders and increasing human longevity. Founded in 2016 by Dr. Greg Bailey and Jim Mellon. Valued at ~$500M with ~$219M raised. Lead candidate is an oral PAI-1 inhibitor for fibrosis in Phase 1 trials.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "ae6bf4ab6019084ac586e9c0"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f2a28cb33ec547b08f86454c"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T11:53:25.539Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T11:53:25.539Z"
+    },
+    "createdBy": {
+      "$oid": "da7dcd789c799a6ba68d591f"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "Liberland X (testdata1)",
+    "email": "x+testdata1@liberland.io",
+    "cryptoAddresses": {},
+    "description": "Liberland X's personal company (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "897aa2f57dd2cb41369cd8f9"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T11:54:56.337Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T11:54:56.337Z"
+    },
+    "createdBy": {
+      "$oid": "6c1b773b49c0f5826e701b0b"
+    },
+    "name": "vertex.o.brt@gmail.com (testdata1)",
+    "email": "vertex.o.brt+testdata1@gmail.com",
+    "cryptoAddresses": {},
+    "description": "vertex.o.brt@gmail.com's personal company (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c9ab3db8a81ceb217015d738"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T20:12:14.759Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T20:12:14.759Z"
+    },
+    "createdBy": {
+      "$oid": "f0e4cfc80d1bf1de79aa9f95"
+    },
+    "name": "Liberstake (testdata1)",
+    "email": "huknofamla+testdata1@necub.com",
+    "cryptoAddresses": {},
+    "description": "Liberstake's personal company (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "2dfb34f12b0750c2b52f5820"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T22:59:13.152Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T22:59:13.153Z"
+    },
+    "createdBy": {
+      "$oid": "6c03bc16acc5454d99b013f4"
+    },
+    "name": "Liberstake 2 (testdata1)",
+    "email": "nodragopsi+testdata1@necub.com",
+    "cryptoAddresses": {},
+    "description": "Liberstake 2's personal company (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e1067bf0927abdb16d0c9991"
+    },
+    "createdAt": {
+      "$date": "2026-03-26T15:56:19.773Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T15:56:19.773Z"
+    },
+    "createdBy": {
+      "$oid": "d919023cc69b9a0519af6508"
+    },
+    "name": "v.e.r.texobrt@gmail.com (testdata1)",
+    "email": "v.e.r.texobrt+testdata1@gmail.com",
+    "cryptoAddresses": {},
+    "description": "v.e.r.texobrt@gmail.com's personal company (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "db5aa3495004f447a9edd7dc"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T12:46:37Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T12:46:37.001Z"
+    },
+    "createdBy": {
+      "$oid": "31073b1877cac392c8feb050"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "admin (testdata1)",
+    "email": "qlnpfs.f1oz+testdata1@dg75x9.com",
+    "cryptoAddresses": {},
+    "description": "admin's personal company (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ced1db133c221faabe6fb185"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:34.787Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:34.787Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Skychatters (testdata1)",
+    "website": "https://skychatters.com?variant=testdata1",
+    "email": "info+testdata1@skychatters.com",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "5cfe69a7d00bff158647bc75"
+    },
+    "description": "Community platform for professional global citizens, travelers, digital nomads, and entrepreneurs. Skychatters connects airline passengers before departure, letting them browse profiles, network, and coordinate travel plans. Features include flight-based matching, travel groups, community discussions, and ride-sharing coordination. Official Liberland partner — Liberland maintains a community presence on the platform. Based in Prague, Czech Republic. Available on iOS and Android.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "b546ab7fe1b8785a1a3578e8"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:37.102Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:37.102Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "AtlasDays (testdata1)",
+    "website": "https://atlasdays.app?variant=testdata1",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "9f2188523850d6dc2dbd97b3"
+    },
+    "description": "Privacy-first iOS app for tracking visa limits, residency thresholds, and travel history. Supports Schengen 90/180-day rolling windows, 183-day tax presence rules, per-stay restrictions, and custom fiscal-year thresholds. All calculations run on-device — no accounts, no servers storing your data. Features CSV import/export, interactive visited-countries map, iCloud sync (optional), and offline functionality. Ideal for digital nomads, e-residents, and frequent travelers managing multi-jurisdiction compliance.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7ddc85f7b745e9f5c4da32e2"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:39.697Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:39.697Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberland Press (testdata1)",
+    "website": "https://liberlandpress.com?variant=testdata1",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "e556e9dd438a9dbdd6fdd4c9"
+    },
+    "description": "The national news source for the Free Republic of Liberland. Covers blockchain developments, foreign relations, governance updates, art &amp; culture, and the broader Liberland ecosystem. Provides independent reporting on micronation politics, cryptocurrency policy, and international diplomatic efforts. Active across Facebook, Instagram, Twitter/X, and YouTube.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f778d71a731fddb45896f815"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:41.797Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:41.797Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberverse (testdata1)",
+    "website": "https://world.liberland.org?variant=testdata1",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "c3b1445f98dd18ab75ce14a8"
+    },
+    "description": "Liberland's official virtual world — a digital twin of the Free Republic designed in collaboration with Zaha Hadid Architects. The Liberverse features a cyber-urban metaverse city where users can explore buildings (city hall, plaza, exhibition center), purchase virtual land plots with cryptocurrency, and collaborate with other Liberlanders. Built on the Mytaverse cloud platform, it serves as both a networking hub for the Web3 community and a preview of Liberland's planned physical infrastructure.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3e7a075950d3d299d0a15954"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:44.471Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:44.471Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberland Group (testdata1)",
+    "website": "https://market.ll.land/store/liberland-group/?variant=testdata1",
+    "phone": "+420 7353 549 23 (testdata1)",
+    "email": "liberlandgroup+testdata1@liberland.org",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "f5b87e0d3ed8df9e2fbcced5"
+    },
+    "description": "Comprehensive relocation and government services provider based in Sombor, Serbia — directly adjacent to Liberland territory. Offers Liberland company registration for e-residents, energy-efficient building technology (LiberAir heat recovery units with up to 90% efficiency), and handmade Liberland-themed ceramic souvenirs. Serves as a physical gateway for people looking to establish a presence near Liberland.\n\nAddress: Čitaonička 3, Sombor, 25000, Serbia\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f8a3c5af6b4f17dfa779f803"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:49.474Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:49.474Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Liberland Settlement Association (testdata1)",
+    "website": "https://liberland.org?variant=testdata1",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "e4cbc37c38f2b65b5642e72e"
+    },
+    "description": "Nonprofit organization supporting the physical development and settlement of Liberland territory on the Danube River. Funds infrastructure including generators, fuel, building materials, and essential supplies for pioneers living on and around Liberty Island. The association ran an Indiegogo campaign and accepts ongoing contributions. In 2025 Liberland announced a $30 million regional development initiative supporting Croatian and Serbian communities near its territory. Any citizen with 5,000 LLM is eligible to homestead land.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c197b615e7780b7912760405"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:52.81Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:52.81Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Archistroj (testdata1)",
+    "website": "https://archistroj.cz?variant=testdata1",
+    "phone": "+420 736 606 769 (testdata1)",
+    "email": "info+testdata1@archistroj.cz",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "9126fe9150c60f4f24e8b09f"
+    },
+    "description": "Czech architecture firm that designed Liberland's modular container settlement and overall development strategy. Their proposal uses shipping containers on a 2.3×3.0m grid system, with housing and public units in 2.3×6.0m and 2.3×12.0m configurations. The modular design allows consistent infrastructure systems for energy delivery and drainage. Initial development takes place on the deck of Liberland's ship, with structures limited to 3 floors. Also provides general architecture, urban planning, and project management services.\n\nAddress: Prague, Czech Republic\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "b4201497923113c451bc5a85"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:55.697Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:55.697Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Danube Pearls (testdata1)",
+    "website": "https://market.ll.land/store/danube-pearls/?variant=testdata1",
+    "phone": "+381691959990 (testdata1)",
+    "email": "bezbradicashop+testdata1@gmail.com",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "b7c352d1045be2600b1cd85c"
+    },
+    "description": "Artisan jewelry and handcraft shop based in Sombor, Serbia — the closest city to Liberland. Specializes in handmade pearl jewelry, accessories, and locally crafted goods from the Danube region. Vendor on the official Liberland Marketplace (market.ll.land).\n\nAddress: Beogradska 60, 25000 Sombor, Serbia\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "9a8c369af65ee6b0910184e9"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:45:58.02Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:45:58.02Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Foreign Affairs Books (testdata1)",
+    "website": "https://market.ll.land/store/foreignaffairsbooks/?variant=testdata1",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "aba4f1619810c7906c3d2b0a"
+    },
+    "description": "International affairs bookshop and vendor on the Liberland Marketplace. Offers curated selections of books on geopolitics, diplomacy, Russian art history, artificial intelligence, and other topics relevant to global citizens and liberty-minded readers. Based in Lake Worth, Florida, United States.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 3,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "8bb3ffa5c6546faac5902bb6"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:46:00.672Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:46:00.672Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Raaz Digital (testdata1)",
+    "website": "https://market.ll.land/store/raaz-digital/?variant=testdata1",
+    "phone": "+923403092805 (testdata1)",
+    "email": "raazdigital1+testdata1@gmail.com",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "4129939c97f508e235a609ed"
+    },
+    "description": "Web development and digital services agency on the Liberland Marketplace. Builds appointment booking websites, e-commerce stores, and custom web applications with payment gateway integration. Serves the Liberland ecosystem and international clients.\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "595a2ef75800ffbb74447213"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:46:03.969Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:46:03.97Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "finom Metall Kft. (testdata1)",
+    "website": "https://market.ll.land/store/finom-metall/?variant=testdata1",
+    "email": "info+testdata1@finom-metall.com",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "522ecb578b811ed55af51127"
+    },
+    "description": "Precision metalwork and filter technology company. Produces the Phönix activated carbon water filtration system and related accessories. Operated by Fabian Topfermann, vendor on the Liberland Marketplace.\n\nAddress: Loretánské náměstí 109/3, 11800, Prague, Czech Republic\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 4,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c61eb76bedc89767949d8763"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T21:46:06.343Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T21:46:06.343Z"
+    },
+    "createdBy": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "name": "Ethos (testdata1)",
+    "website": "https://market.ll.land/store/ethos/?variant=testdata1",
+    "phone": "+61492800759 (testdata1)",
+    "email": "ethos_sales+testdata1@protonmail.com",
+    "cryptoAddresses": {},
+    "image": {
+      "$oid": "ded0abb9500c17ed9469225f"
+    },
+    "description": "Handmade decorative products and artisan goods. Creates unique aromatic wax blocks in Liberland colors and other handcrafted items. Vendor on the Liberland Marketplace. Based in Belmont, Western Australia.\n\nAddress: 169 Great Eastern Highway, Belmont, WA 6104, Australia\n\n*Catalogued by Claude* (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 5,
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e72bcbcb55c70eb360494616"
+    },
+    "createdAt": {
+      "$date": "2026-03-29T14:21:49.705Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-29T14:21:49.705Z"
+    },
+    "createdBy": {
+      "$oid": "8058441bf6e35e05d11da53d"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "admin (testdata1)",
+    "email": "qbqr55.d9lg+testdata1@qnxo7d.com",
+    "cryptoAddresses": {},
+    "description": "admin's personal company (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "783f41536c5e76070a41cfb2"
+    },
+    "createdAt": {
+      "$date": "2026-03-31T07:10:36.616Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-31T07:10:36.616Z"
+    },
+    "createdBy": {
+      "$oid": "7261022230ef9f5be319e201"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "Steve Wollett (testdata1)",
+    "email": "baalshamon+testdata1@gmail.com",
+    "cryptoAddresses": {},
+    "description": "Steve Wollett's personal company (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7f878118c5e20ece6b3261ff"
+    },
+    "createdAt": {
+      "$date": "2026-03-31T10:47:31.108Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-31T10:47:31.108Z"
+    },
+    "createdBy": {
+      "$oid": "807195c54240332de11adbde"
+    },
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "name": "admin (testdata1)",
+    "email": "4tklfs.xamf+testdata1@3sjd81.com",
+    "cryptoAddresses": {},
+    "description": "admin's personal company (testdata1)",
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "4664c4e5c3ac3bfef34e9a90"
+    },
+    "createdAt": {
+      "$date": "2026-04-08T06:47:21.032Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-08T06:47:21.032Z"
+    },
+    "createdBy": {
+      "$oid": "e025f62ecfc919c3cd7112ef"
+    },
+    "name": "Arman (testdata1)",
+    "email": "tangianarman+testdata1@yahoo.com",
+    "cryptoAddresses": {},
+    "description": "Arman's personal company (testdata1)",
+    "identity": {
+      "$oid": "b8cf911ca14e3b6e44c69901"
+    },
+    "completenessScore": 2,
+    "_status": "draft",
+    "__v": 0
+  }
+]

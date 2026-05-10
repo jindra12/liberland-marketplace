@@ -50,7 +50,7 @@ export const syncCompanyIdentityId: CollectionBeforeChangeHook = async ({
 
   const shouldRecalculate =
     operation === 'create' ||
-    Object.prototype.hasOwnProperty.call(next, 'company') ||
+    'company' in next ||
     !originalDoc?.companyIdentityId
 
   if (!shouldRecalculate) {

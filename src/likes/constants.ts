@@ -1,9 +1,11 @@
-import type { CollectionSlug } from 'payload'
-
-export type LikeableCollectionSlug = Extract<
-  CollectionSlug,
-  'companies' | 'comments' | 'identities' | 'jobs' | 'posts' | 'products' | 'startups'
->
+export type LikeableCollectionSlug =
+  | 'companies'
+  | 'comments'
+  | 'identities'
+  | 'jobs'
+  | 'posts'
+  | 'products'
+  | 'startups'
 
 export type LikeableGraphQLCollection =
   | 'companies'

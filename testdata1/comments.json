@@ -1,0 +1,27 @@
+[
+  {
+    "_id": {
+      "$oid": "f44410b450fb3c8fcb3e25d4"
+    },
+    "createdAt": {
+      "$date": "2026-04-05T11:06:05.392Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-05T11:06:05.392Z"
+    },
+    "createdBy": {
+      "$oid": "7a522ee22679047cc29cdd60"
+    },
+    "company": {
+      "$oid": "eaa81e2d212ffe56748c645f"
+    },
+    "content": "Looking forward to it! (testdata1)",
+    "replyPost": {
+      "relationTo": "products",
+      "value": {
+        "$oid": "b4eea661757a220073a7dd3b"
+      }
+    },
+    "__v": 0
+  }
+]

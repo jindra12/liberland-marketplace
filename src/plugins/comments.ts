@@ -5,6 +5,7 @@ import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { markdownField } from '@/fields/markdownField'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
+import { requireVerifiedEmailToCreate } from '@/hooks/requireVerifiedEmail'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
@@ -100,6 +101,7 @@ export const comments: Plugin = (config: Config): Config => {
           beforeChange: [
             setCommentServerUrl,
             requireOwnCompany,
+            requireVerifiedEmailToCreate,
             computeContentRanking({
               fieldPaths: ['content', 'replyPost', 'replyComment'],
               includeSubscriberCount: false,

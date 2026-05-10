@@ -1,0 +1,15 @@
+[
+  {
+    "_id": {
+      "$oid": "ebe3e815d6e019963e13e2e9"
+    },
+    "userId": "eb4a56a38dd5c05623069ca9",
+    "targetID": "b8cf911ca14e3b6e44c69901",
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]

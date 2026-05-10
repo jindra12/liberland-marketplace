@@ -501,7 +501,7 @@ describe('Notification subscriptions collection GraphQL', () => {
       docID: 'tribe-123',
       title: 'Frontend Tribe',
       unsubscribeURL:
-        'https://frontend.example.com/unsubscribe?type=Tribes&id=tribe-123&email=tribe@example.com',
+        'https://frontend.example.com/unsubscribe?type=Tribes&id=tribe-123&email=tribe@example.com&serverUrl=68747470733a2f2f7365727665722e6578616d706c652e636f6d',
     })
 
     expect(email.html).toContain('https://frontend.example.com/tribes/tribe-123')

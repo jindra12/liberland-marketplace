@@ -1,12 +1,12 @@
-import type { Field, FieldAccess } from 'payload'
+import type { Field } from 'payload'
+
+import { adminOnlyFieldAccess } from '@/access/admin'
 
 const chainOptions = [
   { label: 'Ethereum', value: 'ethereum' },
   { label: 'Solana', value: 'solana' },
   { label: 'Tron', value: 'tron' },
 ]
-
-const isAdminUpdate: FieldAccess = ({ req }) => req.user?.role?.includes('admin') || false
 
 type TransactionHashRow = {
   product?: unknown
@@ -119,7 +119,7 @@ export const orderFields: Field[] = [
     hooks: {
       beforeChange: [
         ({ operation, req, originalDoc, value }) => {
-          if (operation !== 'update' || isAdminUpdate({ req })) {
+          if (operation !== 'update' || adminOnlyFieldAccess({ req })) {
             return value
           }
 

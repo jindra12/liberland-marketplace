@@ -35,11 +35,11 @@ const getPostsSitemap = unstable_cache(
 
     const sitemap = results.docs
       ? results.docs
-          .filter((post) => Boolean(post?.slug))
-          .map((post) => ({
-            loc: `${SITE_URL}/posts/${post?.slug}`,
-            lastmod: post.updatedAt || dateFallback,
-          }))
+        .filter((post) => Boolean(post?.slug))
+        .map((post) => ({
+          loc: `${SITE_URL}/posts/${post?.slug}`,
+          lastmod: (post.updatedAt || dateFallback) as string,
+        }))
       : []
 
     return sitemap
@@ -50,7 +50,7 @@ const getPostsSitemap = unstable_cache(
   },
 )
 
-export async function GET() {
+export const GET = async () => {
   const sitemap = await getPostsSitemap()
 
   return getServerSideSitemap(sitemap)

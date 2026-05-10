@@ -28,6 +28,7 @@ import { default as default_9df2b0dc0e775c6fc38336766e510112 } from '@/component
 import { default as default_98b1dab40a28e314283235f93db425cc } from '@/components/PayloadEcommerce/PriceCell'
 import { default as default_505a96f788a1dc750b556826d28a1f43 } from '@/components/PayloadEcommerce/PriceInput'
 import { default as default_c24628581073b0241679093dd1eba02a } from '@/components/OrderConfirmButton'
+import { default as default_9befb8d035ff1d7dc686a8d08c2ae4bb } from '@/components/OrderInventoryButton'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
@@ -38,7 +39,6 @@ import { LogoutButton as LogoutButton_5a568d0e24198ca3140489e0d330f424 } from 'p
 import { RSCRedirect as RSCRedirect_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
 import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
-import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 import { default as default_d5c46dcc503730108317a9b057f5f239 } from '@/components/AdminAnalyticsView'
 import { AdminLogin as AdminLogin_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
 import { AdminSignup as AdminSignup_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
@@ -77,6 +77,7 @@ export const importMap = {
   "@/components/PayloadEcommerce/PriceCell#default": default_98b1dab40a28e314283235f93db425cc,
   "@/components/PayloadEcommerce/PriceInput#default": default_505a96f788a1dc750b556826d28a1f43,
   "@/components/OrderConfirmButton#default": default_c24628581073b0241679093dd1eba02a,
+  "@/components/OrderInventoryButton#default": default_9befb8d035ff1d7dc686a8d08c2ae4bb,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
@@ -87,7 +88,6 @@ export const importMap = {
   "payload-auth/better-auth/plugin/rsc#RSCRedirect": RSCRedirect_5afe2312a68aef77a0242fe42f239ed0,
   "@/components/BeforeDashboard#default": default_1a7510af427896d367a49dbf838d2de6,
   "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e,
-  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
   "@/components/AdminAnalyticsView#default": default_d5c46dcc503730108317a9b057f5f239,
   "payload-auth/better-auth/plugin/rsc#AdminLogin": AdminLogin_5afe2312a68aef77a0242fe42f239ed0,
   "payload-auth/better-auth/plugin/rsc#AdminSignup": AdminSignup_5afe2312a68aef77a0242fe42f239ed0,

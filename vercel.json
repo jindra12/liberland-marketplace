@@ -5,6 +5,10 @@
     {
       "path": "/api/cron/crypto-rates",
       "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/ai-reposts",
+      "schedule": "0 * * * *"
     }
   ]
 }

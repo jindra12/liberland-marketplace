@@ -1,0 +1,92 @@
+[
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6ea6b6"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Vertex Test Data Launch (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Vertex Test Data Launch\n\nThis post exists in the test dataset so the frontend has something realistic to render.\n\nIt links to the payment-ready demo products and keeps the test environment looking like a real marketplace.\n (testdata1)",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "vertex-test-data-launch (testdata1)",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "461e3ae60b1f71d06d9ea828"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Three Ways to Pay in the Test Env (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Three Ways to Pay in the Test Env\n\nThe backup now includes Ethereum, Solana, and Tron products with matching user wallets so payment flows can be exercised end to end.\n (testdata1)",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "three-ways-to-pay-in-the-test-env (testdata1)",
+    "_status": "published",
+    "__v": 0
+  }
+]

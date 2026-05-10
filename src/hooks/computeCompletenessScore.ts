@@ -7,9 +7,9 @@ import type { CollectionBeforeChangeHook } from 'payload'
  *
  * @param fieldPaths - dot-notation paths to check (e.g. 'image', 'salaryRange.min')
  */
-export function computeCompletenessScore(
+export const computeCompletenessScore = (
   fieldPaths: string[],
-): CollectionBeforeChangeHook {
+): CollectionBeforeChangeHook => {
   return ({ data }) => {
     let score = 0
 
@@ -24,7 +24,7 @@ export function computeCompletenessScore(
   }
 }
 
-function getNestedValue(obj: Record<string, unknown> | undefined, path: string): unknown {
+const getNestedValue = (obj: Record<string, unknown> | undefined, path: string): unknown => {
   if (!obj) return undefined
   const parts = path.split('.')
   let current: unknown = obj
@@ -35,7 +35,7 @@ function getNestedValue(obj: Record<string, unknown> | undefined, path: string):
   return current
 }
 
-function isFilled(value: unknown): boolean {
+const isFilled = (value: unknown): boolean => {
   if (value == null) return false
   if (typeof value === 'string') return value.trim().length > 0
   if (Array.isArray(value)) return value.length > 0

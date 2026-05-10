@@ -1,0 +1,38 @@
+[{
+	"_id": {
+		"$oid": "69f500000000000000000001"
+	},
+	"items": [
+		{
+			"product": {
+				"$oid": "69f200000000000000000001"
+			},
+			"quantity": 1
+		},
+		{
+			"product": {
+				"$oid": "69f200000000000000000002"
+			},
+			"quantity": 1
+		},
+		{
+			"product": {
+				"$oid": "69f200000000000000000003"
+			},
+			"quantity": 1
+		}
+	],
+	"secret": "test-cart-secret",
+	"customer": {
+		"$oid": "69d5f9f91f3f15d84d8aac92"
+	},
+	"status": "active",
+	"subtotal": 10500,
+	"currency": "USD",
+	"updatedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"createdAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	}
+}]

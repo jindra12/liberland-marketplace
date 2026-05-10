@@ -1,0 +1,25 @@
+[{
+	"_id": {
+		"$oid": "69f400000000000000000001"
+	},
+	"customer": {
+		"$oid": "69d5f9f91f3f15d84d8aac92"
+	},
+	"title": "Home",
+	"firstName": "Arman",
+	"lastName": "Tester",
+	"company": "Test Data LLC",
+	"addressLine1": "1 Test Street",
+	"addressLine2": "Suite 42",
+	"city": "Prague",
+	"state": "Prague",
+	"postalCode": "11000",
+	"country": "CZ",
+	"phone": "+420777000111",
+	"updatedAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	},
+	"createdAt": {
+		"$date": "2026-05-03T00:00:00.000Z"
+	}
+}]

@@ -2,6 +2,7 @@ import { Banner } from '@payloadcms/ui/elements/Banner'
 import Link from 'next/link'
 import React from 'react'
 
+import AIRepostButton from './AIRepostButton'
 import { SeedButton } from './SeedButton'
 import './index.scss'
 
@@ -26,6 +27,12 @@ const BeforeDashboard: React.FC = () => {
           </a>
           {' to see the results.'}
         </li>
+        {process.env.CHATGPT_KEY ? (
+          <li>
+            <AIRepostButton />
+            {' to scan recent social posts and create reposts automatically.'}
+          </li>
+        ) : null}
         <li>
           {'Modify your '}
           <a

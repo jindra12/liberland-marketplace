@@ -1,0 +1,15 @@
+[
+  {
+    "_id": {
+      "$oid": "ed88ec92822b8356c785b405"
+    },
+    "email": "test-subscriber+testdata1@example.com",
+    "isActive": true,
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    }
+  }
+]

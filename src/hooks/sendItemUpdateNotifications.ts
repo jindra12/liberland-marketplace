@@ -11,6 +11,7 @@ import {
   getNotificationDocumentTitle,
   renderItemUpdateEmail,
 } from '@/utilities/notificationDiff'
+import { getServerSideURL } from '@/utilities/getURL'
 
 type NotificationTargetDoc = Company | Identity | Job | Product | Startup
 
@@ -61,6 +62,7 @@ export const sendItemUpdateNotifications = (
             email: recipient.email,
             targetCollection,
             targetID: String(doc.id),
+            serverUrl: doc.serverURL ?? getServerSideURL(),
           }),
         })
 

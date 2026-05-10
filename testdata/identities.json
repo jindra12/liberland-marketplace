@@ -1,0 +1,151 @@
+[{
+	"_id": {
+		"$oid": "699af07de3cc9546fc95dd12"
+	},
+	"createdAt": {
+		"$date": "2026-02-22T12:03:09.6Z"
+	},
+	"updatedAt": {
+		"$date": "2026-04-08T06:47:21.101Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"name": "Liberland",
+	"website": "https://liberland.org",
+	"image": {
+		"$oid": "699af05fe3cc9546fc95dc86"
+	},
+	"description": "The Free Republic of Liberland is a sovereign state on the Danube River between Serbia and Croatia.\n\nLiberland is the freest country in the world and the first meritocratic republic governed on blockchain. Liberland Merits (LLMs) represent each citizen’s stake in the country.\n\nWith sovereign land, no bureaucracy, and voluntary taxes, Liberland uses Bitcoin alongside the Liberland Dollar (LLD) as currencies of choice.\n\nLiberland’s motto: To Live and Let Live",
+	"__v": 0,
+	"itemCount": 140
+},
+{
+	"_id": {
+		"$oid": "699af106e3cc9546fc95ddc3"
+	},
+	"createdAt": {
+		"$date": "2026-02-22T12:05:26.775Z"
+	},
+	"updatedAt": {
+		"$date": "2026-03-26T16:39:58.982Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"name": "Prospera",
+	"website": "https://www.prospera.co/en",
+	"image": {
+		"$oid": "699af0b1e3cc9546fc95dd7c"
+	},
+	"description": "Próspera creates startup zones with unique laws, regulations and taxes.\n\nThe Prósperian Ethos\nThese principles guide the vision and development of Próspera as a beacon of freedom and prosperity.\nCreate Value\n\nWe honor those who build. Productivity is our purpose. To create is to live fully.\nLive Free\n\nWe reject force. We live by reason and choose our path with integrity and courage.\nTrade Voluntarily\n\nAll exchange must be free, consensual, and earned. Value for value—always.\nProtect Property\n\nWhat you build is yours. Property is sacred—a reflection of the self.\nEarn, Don't Take\n\nNo entitlements. No handouts. We give and take only what is earned.\nPursue Happiness\n\nJoy through purpose is a moral life. We do not sacrifice, we achieve.\nTechnological progress is Good\n\nWe push beyond the limits—of knowledge, productivity, and what's possible.",
+	"__v": 0,
+	"itemCount": 75
+},
+{
+	"_id": {
+		"$oid": "699af15ee3cc9546fc95deaf"
+	},
+	"createdAt": {
+		"$date": "2026-02-22T12:06:54.448Z"
+	},
+	"updatedAt": {
+		"$date": "2026-03-04T21:50:08.439Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"name": "Network School",
+	"website": "ns.com",
+	"image": {
+		"$oid": "699af135e3cc9546fc95de57"
+	},
+	"description": "The Network School is a frontier community for techno-optimists. Our members include remote workers, digital nomads, online creators, personal trainers, self-improvers, event organizers, and engineers of all stripes. You should apply if you want to build yourself up while also building a startup society that bootstraps other startup societies.\n\nIf you're accepted to the Network School, membership starts at $1500/month with roommates, and includes everything from meals to gym to accommodations. We think of it as society-as-a-service.\n\nAnd you might be our next member. If you want to join us, please do apply!",
+	"__v": 0,
+	"itemCount": 0
+},
+{
+	"_id": {
+		"$oid": "699af288e3cc9546fc95df9d"
+	},
+	"createdAt": {
+		"$date": "2026-02-22T12:11:52.221Z"
+	},
+	"updatedAt": {
+		"$date": "2026-03-04T21:50:08.405Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"name": "Zuzalu",
+	"website": "https://www.zuzalu.city/",
+	"image": {
+		"$oid": "699af22ae3cc9546fc95df25"
+	},
+	"description": "\"What if cultures or tribes that have formed online with their own goals and values could materialize offline, and new physical places could grow due to intention rather than random chance?\"\n\nZuzalu is a public good community, a pop-up city, a playground for cross-pollination experiments, a debating ground for exciting topics, a testing space for Ethereum-based technology, and a hub for futuristic-sounding disciplines such as longevity, synthetic biology, network states, and more. One thing we can guarantee is that Zuzalu is a magical community where real innovation and transformations happen. You will get future-pilled here\n\nhttps://zuzalu.notion.site/Zuzalu-s-Mission-and-Vision-28d0dfaf60c043ab8bb1943f493a225f",
+	"__v": 0,
+	"itemCount": 0
+},
+{
+	"_id": {
+		"$oid": "699af38ee3cc9546fc95e0e2"
+	},
+	"createdAt": {
+		"$date": "2026-02-22T12:16:14.645Z"
+	},
+	"updatedAt": {
+		"$date": "2026-03-04T21:50:08.376Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"name": "Superpower Europa",
+	"website": "https://x.com/SuperpowerEU",
+	"image": {
+		"$oid": "699af2f9e3cc9546fc95e07d"
+	},
+	"description": "The EU can be the #1 superpower if we unify our economies,  markets and foreign policy while fixing eurosclerosis and demographics.\nSuperpower Europa aims to achieve it with a propaganda team boosting kingmaker parties for maximum leverage.\nNational Eurosclerosis\nOur people’s compassion is hijacked by the green-communist ideoligion, and our pride is hijacked by small regional nationalism, both making us weak. However, our compassion and pride can be used to Make Europe Great.\n\nThe member states happily overregulate, overspend, overpolice and overmigrate themselves into irrelevance even without the EU. Eurosclerosis is not inherent to the EU, but a result of its member states. Fixing politics in member states will fix the EU and make it a superpower it is meant to be.\nKingmakers\nPolitics, parties and election campaigns of member states are largely similar. Most parties only campaign for elections, without a dedicated full time team. \nAn European propaganda network will boost aligned “Kingmaker” parties in member states. \nAs elections are always happening across Europe, the network will focus on pro-EU campaigns, using economies of scale and experience in cooperation with aligned parties to put them in power.\n\nValues \nWe are consistent about core values, but flexible on others. While further goals are desirable, we won't bicker about the details on the path to Superpower Europa.\n\n- Truly unified market, free flow of Europeans, goods and capital\n- Stop unrestricted third world immigration\n- EU command similar to NATO command\n- Pro growth, pro energy\n- Unified foreign policy\n- English as the common language of the West\n- National self governance enabling innovation through competition for talent and capital",
+	"__v": 0,
+	"itemCount": 0
+},
+{
+	"_id": {
+		"$oid": "699af625e3cc9546fc95e5be"
+	},
+	"createdAt": {
+		"$date": "2026-02-22T12:27:17.207Z"
+	},
+	"updatedAt": {
+		"$date": "2026-03-04T21:50:08.349Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"name": "Other Groups",
+	"description": "I just wanna be a part of this man, i havent yet joined any specific group.",
+	"__v": 0,
+	"itemCount": 0
+},
+{
+	"_id": {
+		"$oid": "69a5d8051fa4248965364bed"
+	},
+	"createdAt": {
+		"$date": "2026-03-02T18:33:41.078Z"
+	},
+	"updatedAt": {
+		"$date": "2026-03-26T16:39:58.8Z"
+	},
+	"createdBy": {
+		"$oid": "699a4fb034fa2b9e6436599c"
+	},
+	"name": "Radical Longevity",
+	"website": "https://en.wikipedia.org/wiki/Strategies_for_engineered_negligible_senescence",
+	"image": {
+		"$oid": "69a5aabe1fa4248965364b31"
+	},
+	"description": "We don't plan to die. A community for radical life extensionists, from supplement optimizers and biohackers to SENS believers and longevity investors. Aging is a disease worth curing.",
+	"__v": 0,
+	"itemCount": 46
+}]
+
