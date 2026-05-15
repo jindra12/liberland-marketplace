@@ -94,6 +94,12 @@ describe('deploy-space installer', () => {
   const testData1ComposeStateFile = path.join(fixtureRoot, 'compose-state-test-data-1.pid')
   const graphqlHitFile = path.join(fixtureRoot, 'graphql-hit.json')
   const silentGraphqlHitFile = path.join(fixtureRoot, 'graphql-hit-silent.json')
+  const aptGetHitFile = path.join(fixtureRoot, 'apt-get-hit.txt')
+  const aptGetSkipHitFile = path.join(fixtureRoot, 'apt-get-skip-hit.txt')
+  const nginxHitFile = path.join(fixtureRoot, 'nginx-hit.txt')
+  const certbotHitFile = path.join(fixtureRoot, 'certbot-hit.txt')
+  const nginxSitesAvailableDir = path.join(fixtureRoot, 'nginx-sites-available')
+  const nginxSitesEnabledDir = path.join(fixtureRoot, 'nginx-sites-enabled')
   let appPort = 0
 
   beforeAll(async () => {
@@ -223,6 +229,85 @@ exec "$@"
       path.join(stubBinDir, 'apt-get'),
       `#!/usr/bin/env bash
 set -euo pipefail
+if [[ -n "\${APT_GET_HIT_FILE:-}" ]]; then
+  printf '%s\n' "$*" >> "$APT_GET_HIT_FILE"
+fi
+exit 0
+`,
+    )
+    makeExecutable(
+      path.join(stubBinDir, 'nginx'),
+      `#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -n "\${NGINX_HIT_FILE:-}" ]]; then
+  printf '%s\n' "$*" >> "$NGINX_HIT_FILE"
+fi
+
+if [[ "\${1:-}" == "-t" ]]; then
+  exit 0
+fi
+
+exit 0
+`,
+    )
+    makeExecutable(
+      path.join(stubBinDir, 'certbot'),
+      `#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -n "\${CERTBOT_HIT_FILE:-}" ]]; then
+  printf '%s\n' "$*" >> "$CERTBOT_HIT_FILE"
+fi
+
+exit 0
+`,
+    )
+    makeExecutable(
+      path.join(stubBinDir, 'apt-cache'),
+      `#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "\${1:-}" == "policy" ]]; then
+  case "\${2:-}" in
+    docker-compose-v2)
+      cat <<'EOF'
+docker-compose-v2:
+  Installed: (none)
+  Candidate: 2.40.3+ds1-0ubuntu1~24.04.1
+  Version table:
+     2.40.3+ds1-0ubuntu1~24.04.1 500
+        500 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages
+EOF
+      exit 0
+      ;;
+    docker-compose-plugin)
+      cat <<'EOF'
+docker-compose-plugin:
+  Installed: (none)
+  Candidate: (none)
+EOF
+      exit 0
+      ;;
+    docker-compose)
+      cat <<'EOF'
+docker-compose:
+  Installed: (none)
+  Candidate: 1.29.2-6ubuntu1
+EOF
+      exit 0
+      ;;
+    docker.io)
+      cat <<'EOF'
+docker.io:
+  Installed: (none)
+  Candidate: 29.1.3-0ubuntu3~24.04.2
+EOF
+      exit 0
+      ;;
+  esac
+fi
+
 exit 0
 `,
     )
@@ -261,6 +346,10 @@ exit 0
       'port="${DEPLOY_SPACE_TEST_PORT:-43111}"',
       '',
       'if [[ "${1:-}" == "info" ]]; then',
+      '  if [[ "${DOCKER_INFO_FAIL:-}" == "1" ]]; then',
+      '    exit 1',
+      '  fi',
+      '',
       '  exit 0',
       'fi',
       '',
@@ -330,11 +419,18 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
+        APT_GET_HIT_FILE: aptGetHitFile,
+        CERTBOT_HIT_FILE: certbotHitFile,
         COMPOSE_STATE_FILE: composeStateFile,
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         DEPLOY_SPACE_GRAPHQL_HIT_FILE: graphqlHitFile,
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        NGINX_HIT_FILE: nginxHitFile,
+        NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+        NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
+        DOCKER_INFO_FAIL: '1',
         INSTALL_ROOT: installRoot,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
@@ -357,10 +453,30 @@ exit 0
       )
 
       const adminUrl = 'https://marketplace.203-0-113-10.nip.io/admin'
+      const dockerfile = path.join(installRoot, 'source', '.deploy', 'Dockerfile')
+      const runtimeEnv = path.join(installRoot, 'source', '.deploy', 'runtime.env')
+      const composeFile = path.join(installRoot, 'source', '.deploy', 'docker-compose.yml')
+      const nginxSiteFile = path.join(nginxSitesAvailableDir, 'marketplace.203-0-113-10.nip.io.conf')
       expect(stdout).toContain(`Admin: ${adminUrl}`)
       expect(stdout).toContain('Installer: https://marketplace.203-0-113-10.nip.io/deploy-space')
       expect(stdout).toContain(`Installer source: http://127.0.0.1:${appPort}/deploy-space`)
       expect(stdout).toContain('Syndication draft payload:')
+      expect(readFileSync(aptGetHitFile, 'utf8')).toContain('install -y docker.io docker-compose-v2')
+      expect(readFileSync(aptGetHitFile, 'utf8')).not.toContain('docker-compose-plugin')
+      expect(readFileSync(dockerfile, 'utf8')).toContain('FROM node:22-bookworm-slim AS base')
+      expect(readFileSync(dockerfile, 'utf8')).toContain('RUN corepack enable && corepack prepare pnpm@10.30.1 --activate')
+      expect(readFileSync(runtimeEnv, 'utf8')).toContain('OIDC_REDIRECT_URLS="https://')
+      expect(readFileSync(runtimeEnv, 'utf8')).toContain('/auth/callback"')
+      expect(readFileSync(composeFile, 'utf8')).toContain('127.0.0.1:3001:3001')
+      expect(readFileSync(composeFile, 'utf8')).not.toContain('caddy:')
+      expect(readFileSync(composeFile, 'utf8')).toContain('mongo-keyfile-init:')
+      expect(readFileSync(composeFile, 'utf8')).toContain('mongo-keyfile:/etc/mongo-keyfile:ro')
+      expect(readFileSync(composeFile, 'utf8')).toContain('--keyFile')
+      expect(readFileSync(composeFile, 'utf8')).toContain('/etc/mongo-keyfile/mongo-keyfile')
+      expect(readFileSync(nginxSiteFile, 'utf8')).toContain('server_name marketplace.203-0-113-10.nip.io;')
+      expect(readFileSync(nginxSiteFile, 'utf8')).toContain('proxy_pass http://127.0.0.1:3001;')
+      expect(readFileSync(certbotHitFile, 'utf8')).toContain('--nginx -d marketplace.203-0-113-10.nip.io')
+      expect(readFileSync(nginxHitFile, 'utf8')).toContain('-t')
 
       await waitForServer(`http://127.0.0.1:${appPort}/admin`)
 
@@ -406,16 +522,60 @@ exit 0
   )
 
   it(
+    'skips apt installation when docker info already succeeds',
+    async () => {
+      const env = {
+        ...process.env,
+        APP_SUBDOMAIN: 'marketplace',
+        APT_GET_HIT_FILE: aptGetSkipHitFile,
+        BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
+        COMPOSE_STATE_FILE: path.join(fixtureRoot, 'compose-state-skip-apt.pid'),
+        CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
+        DEPLOY_SPACE_TEST_PORT: String(appPort),
+        DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        INSTALL_ROOT: path.join(fixtureRoot, 'install-skip-apt'),
+        NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+        NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
+        PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+        REPO_URL: bareRepoDir,
+        SYNDICATION_DESCRIPTION: 'Deployment created from the installer.',
+        SYNDICATION_NAME: 'Marketplace mirror',
+      }
+
+      const { stdout } = await execFileAsync(
+        deployScriptPath,
+        [
+          '--branch',
+          'feature',
+          '--server',
+          `http://127.0.0.1:${appPort}`,
+        ],
+        {
+          env,
+          maxBuffer: 20 * 1024 * 1024,
+        },
+      )
+
+      expect(stdout).toContain(`Admin: https://marketplace.203-0-113-10.nip.io/admin`)
+      expect(existsSync(aptGetSkipHitFile)).toBe(false)
+    },
+    deployTimeoutMs,
+  )
+
+  it(
     'copies test fixtures and wires the seed service when test data mode is enabled',
     async () => {
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         COMPOSE_STATE_FILE: testDataComposeStateFile,
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
         INSTALL_ROOT: testDataInstallRoot,
+        NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+        NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
       }
@@ -483,11 +643,14 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'devserver1',
+        BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         COMPOSE_STATE_FILE: testData1ComposeStateFile,
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
         INSTALL_ROOT: testData1InstallRoot,
+        NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+        NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
         TEST_DATA_DIR: 'testdata1',
@@ -553,12 +716,15 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         COMPOSE_STATE_FILE: silentComposeStateFile,
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         DEPLOY_SPACE_GRAPHQL_HIT_FILE: silentGraphqlHitFile,
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
         INSTALL_ROOT: silentInstallRoot,
+        NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+        NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
       }
@@ -625,6 +791,13 @@ exit 0
         [
           '# Generated by test',
           'APP_SUBDOMAIN="devserver"',
+          'MONGO_INITDB_ROOT_USERNAME="rootAdmin"',
+          'MONGO_INITDB_ROOT_PASSWORD="reuse-root-password"',
+          'MONGO_APP_DB_NAME="liberland"',
+          'MONGO_APP_USER="liberland_app"',
+          'MONGO_APP_PASSWORD="reuse-app-password"',
+          'MONGO_KEYFILE="reuse-keyfile"',
+          'DATABASE_URL="mongodb://liberland_app:reuse-app-password@mongo:27017/liberland?authSource=liberland&replicaSet=rs0"',
           'SYNDICATION_NAME="Devserver"',
           'SYNDICATION_DESCRIPTION="Devserver deployment"',
           '',
@@ -634,9 +807,12 @@ exit 0
       const env: NodeJS.ProcessEnv = {
         ...process.env,
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
+        BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
         INSTALL_ROOT: reuseInstallRoot,
+        NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+        NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
       }
@@ -666,6 +842,9 @@ exit 0
       expect(stdout).toContain('Subdomain: devserver')
       expect(stdout).toContain('Domain: https://devserver.203-0-113-10.nip.io')
       expect(stdout).toContain('Devserver')
+      expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_INITDB_ROOT_PASSWORD="reuse-root-password"')
+      expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_APP_PASSWORD="reuse-app-password"')
+      expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_KEYFILE="reuse-keyfile"')
 
       await waitForServer(`http://127.0.0.1:${appPort}/admin`)
 

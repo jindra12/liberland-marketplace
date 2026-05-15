@@ -109,8 +109,9 @@ RUNTIME_ENV_FILE="$DEPLOY_DIR/runtime.env"
 DOCKERFILE_FILE="$DEPLOY_DIR/Dockerfile"
 COMPOSE_FILE="$DEPLOY_DIR/docker-compose.yml"
 MONGO_INIT_FILE="$DEPLOY_DIR/mongo-init.js"
-CADDYFILE_FILE="$DEPLOY_DIR/Caddyfile"
 TESTDATA_DEPLOY_DIR="$DEPLOY_DIR/testdata"
+NGINX_SITES_AVAILABLE_DIR="${NGINX_SITES_AVAILABLE_DIR:-/etc/nginx/sites-available}"
+NGINX_SITES_ENABLED_DIR="${NGINX_SITES_ENABLED_DIR:-/etc/nginx/sites-enabled}"
 
 if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
   SUDO=()
@@ -118,12 +119,23 @@ else
   SUDO=(sudo)
 fi
 
+DOCKER_COMPOSE_BIN="docker compose"
+
 run_sudo() {
   "${SUDO[@]}" "$@"
 }
 
 run_docker() {
   "${SUDO[@]}" docker "$@"
+}
+
+run_compose() {
+  if [[ "$DOCKER_COMPOSE_BIN" == "docker-compose" ]]; then
+    "${SUDO[@]}" docker-compose "$@"
+    return
+  fi
+
+  "${SUDO[@]}" docker compose "$@"
 }
 
 require_cmd() {
@@ -259,6 +271,12 @@ ensure_reuse_env_loaded() {
   echo "Reusing existing environment was requested, but '$REUSE_ENV_FILE' was not found." >&2
 }
 
+ensure_generated_env_loaded() {
+  if [[ -f "$RUNTIME_ENV_FILE" ]]; then
+    load_existing_env_file "$RUNTIME_ENV_FILE"
+  fi
+}
+
 prepare_test_data() {
   if [[ "$TEST_DATA" != "true" ]]; then
     return 0
@@ -299,21 +317,39 @@ write_env_line() {
 }
 
 ensure_docker_engine() {
-  run_sudo apt-get update
-  run_sudo apt-get install -y ca-certificates curl gnupg openssl git
-
   if docker info >/dev/null 2>&1; then
     return
   fi
 
+  run_sudo apt-get update
+  run_sudo apt-get install -y ca-certificates curl gnupg openssl git
+
   echo "Installing Docker and supporting packages..."
-  run_sudo apt-get install -y docker.io docker-compose-plugin
+  if ! apt-cache policy docker-compose-v2 2>/dev/null | grep -q '^  Candidate: (none)$'; then
+    run_sudo apt-get install -y docker.io docker-compose-v2
+    DOCKER_COMPOSE_BIN="docker compose"
+  elif ! apt-cache policy docker-compose-plugin 2>/dev/null | grep -q '^  Candidate: (none)$'; then
+    run_sudo apt-get install -y docker.io docker-compose-plugin
+    DOCKER_COMPOSE_BIN="docker compose"
+  else
+    run_sudo apt-get install -y docker.io docker-compose
+    DOCKER_COMPOSE_BIN="docker-compose"
+  fi
   run_sudo systemctl enable --now docker
 
   if command -v ufw >/dev/null 2>&1; then
     run_sudo ufw allow 80/tcp >/dev/null 2>&1 || true
     run_sudo ufw allow 443/tcp >/dev/null 2>&1 || true
   fi
+}
+
+ensure_nginx_tools() {
+  if command -v nginx >/dev/null 2>&1 && command -v certbot >/dev/null 2>&1; then
+    return 0
+  fi
+
+  run_sudo apt-get update
+  run_sudo apt-get install -y nginx certbot python3-certbot-nginx
 }
 
 prepare_source_checkout() {
@@ -387,6 +423,7 @@ mkdir -p "$DEPLOY_DIR"
 
 PUBLIC_IP="$(detect_public_ip)"
 ensure_reuse_env_loaded
+ensure_generated_env_loaded
 prepare_test_data
 DEFAULT_SUBDOMAIN="marketplace"
 DEFAULT_DOMAIN="$(make_nip_domain "$PUBLIC_IP" "$DEFAULT_SUBDOMAIN")"
@@ -454,7 +491,7 @@ GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
 
 OIDC_CLIENT_ID="${OIDC_CLIENT_ID:-}"
 OIDC_CLIENT_SECRET="${OIDC_CLIENT_SECRET:-}"
-OIDC_REDIRECT_URLS="${OIDC_REDIRECT_URLS:-${APP_DOMAIN}/auth/callback}"
+OIDC_REDIRECT_URLS="${OIDC_REDIRECT_URLS:-https://${APP_DOMAIN}/auth/callback}"
 
 THIRDWEB_SECRET_KEY="${THIRDWEB_SECRET_KEY:-}"
 THIRDWEB_CLIENT_ID="${THIRDWEB_CLIENT_ID:-}"
@@ -490,11 +527,12 @@ CRYPTO_RATE_REFRESH_INTERVAL_SECONDS="300"
 CRYPTO_RATE_CACHE_MAX_AGE_MS="900000"
 CRYPTO_ETH_RPC_TIMEOUT_MS="8000"
 
-MONGO_INITDB_ROOT_USERNAME="$MONGO_ROOT_USER"
-MONGO_INITDB_ROOT_PASSWORD="$(generate_secret)"
-MONGO_APP_DB_NAME="$MONGO_DB_NAME"
-MONGO_APP_USER="$MONGO_APP_USER"
-MONGO_APP_PASSWORD="$(generate_secret)"
+MONGO_INITDB_ROOT_USERNAME="${MONGO_INITDB_ROOT_USERNAME:-rootAdmin}"
+MONGO_INITDB_ROOT_PASSWORD="${MONGO_INITDB_ROOT_PASSWORD:-$(generate_secret)}"
+MONGO_APP_DB_NAME="${MONGO_APP_DB_NAME:-liberland}"
+MONGO_APP_USER="${MONGO_APP_USER:-liberland_app}"
+MONGO_APP_PASSWORD="${MONGO_APP_PASSWORD:-$(generate_secret)}"
+MONGO_KEYFILE="${MONGO_KEYFILE:-$(generate_secret)}"
 
 DATABASE_URL="mongodb://${MONGO_APP_USER}:${MONGO_APP_PASSWORD}@mongo:27017/${MONGO_DB_NAME}?authSource=${MONGO_DB_NAME}&replicaSet=rs0"
 NEXT_PUBLIC_SERVER_URL="https://${APP_DOMAIN}"
@@ -560,6 +598,7 @@ set_and_export MONGO_INITDB_ROOT_PASSWORD "$MONGO_INITDB_ROOT_PASSWORD"
 set_and_export MONGO_APP_DB_NAME "$MONGO_APP_DB_NAME"
 set_and_export MONGO_APP_USER "$MONGO_APP_USER"
 set_and_export MONGO_APP_PASSWORD "$MONGO_APP_PASSWORD"
+set_and_export MONGO_KEYFILE "$MONGO_KEYFILE"
 set_and_export DATABASE_URL "$DATABASE_URL"
 set_and_export NEXT_PUBLIC_SERVER_URL "$NEXT_PUBLIC_SERVER_URL"
 set_and_export NEXT_PUBLIC_FRONTEND_URL "$NEXT_PUBLIC_FRONTEND_URL"
@@ -626,6 +665,7 @@ MONGO_INITDB_ROOT_PASSWORD=$(quote_env_value "$MONGO_INITDB_ROOT_PASSWORD")
 MONGO_APP_DB_NAME=$(quote_env_value "$MONGO_APP_DB_NAME")
 MONGO_APP_USER=$(quote_env_value "$MONGO_APP_USER")
 MONGO_APP_PASSWORD=$(quote_env_value "$MONGO_APP_PASSWORD")
+MONGO_KEYFILE=$(quote_env_value "$MONGO_KEYFILE")
 DATABASE_URL=$(quote_env_value "$DATABASE_URL")
 NEXT_PUBLIC_SERVER_URL=$(quote_env_value "$NEXT_PUBLIC_SERVER_URL")
 NEXT_PUBLIC_FRONTEND_URL=$(quote_env_value "$NEXT_PUBLIC_FRONTEND_URL")
@@ -707,7 +747,7 @@ print(`MongoDB app user ready for database: ${appDbName}`)
 EOF
 
 cat > "$DOCKERFILE_FILE" <<'EOF'
-FROM node:20-bookworm-slim AS base
+FROM node:22-bookworm-slim AS base
 
 ENV PNPM_HOME=/pnpm
 ENV PATH=/pnpm:$PATH
@@ -716,7 +756,7 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends curl ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm@10.30.1 --activate
 
 WORKDIR /app
 
@@ -866,13 +906,6 @@ EXPOSE 3001
 CMD ["pnpm", "start"]
 EOF
 
-cat > "$CADDYFILE_FILE" <<EOF
-$APP_DOMAIN {
-  encode zstd gzip
-  reverse_proxy app:$APP_PORT
-}
-EOF
-
 APP_DEPENDS_ON_BLOCK=$'      mongo-init:\n        condition: service_completed_successfully'
 MONGO_SEED_SERVICE_BLOCK=""
 
@@ -917,13 +950,33 @@ fi
 
 cat > "$COMPOSE_FILE" <<EOF
 services:
+  mongo-keyfile-init:
+    image: mongo:8.0
+    environment:
+      MONGO_KEYFILE: \${MONGO_KEYFILE}
+    volumes:
+      - mongo-keyfile:/mongo-keyfile
+    command:
+      - sh
+      - -lc
+      - |
+        umask 177
+        printf '%s' "\$MONGO_KEYFILE" > /mongo-keyfile/mongo-keyfile
+        chown 999:999 /mongo-keyfile/mongo-keyfile
+    restart: "no"
+
   mongo:
     image: mongo:8.0
+    depends_on:
+      mongo-keyfile-init:
+        condition: service_completed_successfully
     command:
       - mongod
       - --replSet
       - rs0
       - --bind_ip_all
+      - --keyFile
+      - /etc/mongo-keyfile/mongo-keyfile
     environment:
       MONGO_INITDB_ROOT_USERNAME: \${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: \${MONGO_INITDB_ROOT_PASSWORD}
@@ -938,6 +991,7 @@ services:
       retries: 30
     volumes:
       - mongo-data:/data/db
+      - mongo-keyfile:/etc/mongo-keyfile:ro
     restart: unless-stopped
 
   mongo-init:
@@ -1037,35 +1091,81 @@ ${MONGO_SEED_SERVICE_BLOCK}
 ${APP_DEPENDS_ON_BLOCK}
     expose:
       - "3001"
-    restart: unless-stopped
-
-  caddy:
-    image: caddy:2.8-alpine
-    depends_on:
-      - app
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy-data:/data
-      - caddy-config:/config
     ports:
-      - "80:80"
-      - "443:443"
+      - "127.0.0.1:3001:3001"
     restart: unless-stopped
 
 volumes:
   mongo-data:
-  caddy-data:
-  caddy-config:
+  mongo-keyfile:
 EOF
 
 echo
 echo "Generated deployment files under: $DEPLOY_DIR"
 echo "Building and starting the stack..."
 
-run_docker compose --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" down --remove-orphans >/dev/null 2>&1 || true
-run_docker compose --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" up -d --build --remove-orphans
+run_compose --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" down -v --remove-orphans >/dev/null 2>&1 || true
+run_compose --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" up -d --build --remove-orphans
 
 echo
+
+ensure_nginx_tools
+
+write_nginx_proxy() {
+  local site_name="${APP_DOMAIN}.conf"
+  local site_file="${NGINX_SITES_AVAILABLE_DIR}/${site_name}"
+  local site_link="${NGINX_SITES_ENABLED_DIR}/${site_name}"
+  local tmp_file
+  local backup_file
+  tmp_file="$(mktemp)"
+  backup_file="${site_file}.$(date +%Y%m%d%H%M%S).bak"
+
+  run_sudo mkdir -p "$NGINX_SITES_AVAILABLE_DIR" "$NGINX_SITES_ENABLED_DIR"
+
+  cat > "$tmp_file" <<EOF
+server {
+  listen 80;
+  listen [::]:80;
+  server_name $APP_DOMAIN;
+
+  client_max_body_size 100m;
+
+  location / {
+    proxy_pass http://127.0.0.1:$APP_PORT;
+    proxy_http_version 1.1;
+    proxy_set_header Host \$host;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header Upgrade \$http_upgrade;
+    proxy_set_header Connection "upgrade";
+  }
+}
+EOF
+
+  if run_sudo test -f "$site_file"; then
+    echo "Existing Nginx config found. Creating backup: $backup_file"
+    run_sudo cp "$site_file" "$backup_file"
+  fi
+
+  run_sudo mv "$tmp_file" "$site_file"
+  run_sudo chown root:root "$site_file"
+  run_sudo chmod 644 "$site_file"
+
+  if ! run_sudo test -L "$site_link"; then
+    run_sudo ln -s "$site_file" "$site_link"
+  fi
+
+  run_sudo nginx -t
+  run_sudo systemctl reload nginx
+
+  run_sudo certbot --nginx -d "$APP_DOMAIN" --agree-tos --non-interactive --redirect --register-unsafely-without-email
+
+  run_sudo nginx -t
+  run_sudo systemctl reload nginx
+}
+
+write_nginx_proxy
 
 json_escape() {
   local value="$1"
