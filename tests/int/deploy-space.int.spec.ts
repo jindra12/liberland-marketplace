@@ -169,6 +169,50 @@ describe('deploy-space installer', () => {
         '',
       ].join('\n'),
     )
+    writeFileSync(
+      path.join(fixtureRoot, 'mongo-seed-sim.mjs'),
+      [
+        "import { createRequire } from 'node:module'",
+        "import { writeFileSync } from 'node:fs'",
+        '',
+        'const [scriptPath, stateFile] = process.argv.slice(2)',
+        'const state = { collections: {} }',
+        'const require = createRequire(import.meta.url)',
+        'const dbApi = {',
+        '  getSiblingDB() {',
+        '    return {',
+        '      getCollection(collectionName) {',
+        '        return {',
+        '          deleteMany() {',
+        '            state.collections[collectionName] = []',
+        '          },',
+        '          insertMany(documents) {',
+        '            state.collections[collectionName] = documents',
+        '            return { insertedIds: Object.fromEntries(documents.map((_, index) => [index, index])) }',
+        '          },',
+        '        }',
+        '      },',
+        '    }',
+        '  },',
+        '}',
+        'globalThis.db = dbApi',
+        'globalThis.EJSON = {',
+        "  parse: (value) => JSON.parse(value, (key, entry) => {",
+        "    if (entry && typeof entry === 'object' && '$oid' in entry && Object.keys(entry).length === 1) {",
+        '      return entry.$oid',
+        '    }',
+        "    if (entry && typeof entry === 'object' && '$date' in entry && Object.keys(entry).length === 1) {",
+        '      return entry.$date',
+        '    }',
+        '    return entry',
+        '  }),',
+        '}',
+        'globalThis.print = (...args) => console.log(...args)',
+        'require(scriptPath)',
+        "writeFileSync(stateFile, JSON.stringify(state, null, 2), 'utf8')",
+        '',
+      ].join('\n'),
+    )
 
     await runGit(repoWorkDir, ['add', '.'])
     await runGit(repoWorkDir, ['commit', '-m', 'main branch fixture'])
@@ -338,6 +382,49 @@ fi
 exit 0
 `,
     )
+    makeExecutable(
+      path.join(stubBinDir, 'mongosh'),
+      `#!/usr/bin/env bash
+set -euo pipefail
+
+script_path=""
+for arg in "$@"; do
+  case "$arg" in
+    -*)
+      continue
+      ;;
+    *)
+      script_path="$arg"
+      ;;
+  esac
+done
+
+if [[ -z "$script_path" ]]; then
+  echo "Missing script path." >&2
+  exit 1
+fi
+
+if [[ "$script_path" == *"mongo-init.js" ]]; then
+  exit 0
+fi
+
+if [[ "$script_path" == *"mongo-seed.js" ]]; then
+  if [[ -z "\${MONGO_SEED_STATE_FILE:-}" ]]; then
+    echo "Missing MONGO_SEED_STATE_FILE." >&2
+    exit 1
+  fi
+
+  if [[ -n "\${MONGO_SEED_TESTDATA_DIR:-}" ]]; then
+    ln -sfn "\${MONGO_SEED_TESTDATA_DIR}" /testdata
+  fi
+
+  node "\${MONGO_SEED_SIMULATOR:-}" "$script_path" "$MONGO_SEED_STATE_FILE" "$MONGO_SEED_TESTDATA_DIR"
+  exit 0
+fi
+
+exit 0
+`,
+    )
     const dockerStub = [
       '#!/usr/bin/env bash',
       'set -euo pipefail',
@@ -388,6 +475,9 @@ exit 0
       '  if [[ "$action" == "up" ]]; then',
       '    branch="$(git -C "$source_dir" branch --show-current)"',
       '    branch="${branch:-main}"',
+      '    if grep -q "mongo-seed.js" "$compose_file"; then',
+      '      :',
+      '    fi',
       `    python3 -c "import os, subprocess, sys; source_dir = sys.argv[1]; state_file = sys.argv[2]; branch = sys.argv[3]; port = sys.argv[4]; env = os.environ.copy(); env['DEPLOY_SPACE_BRANCH'] = branch; env['DEPLOY_SPACE_TEST_PORT'] = port; process = subprocess.Popen(['node', 'server.mjs'], cwd=source_dir, env=env, start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); open(state_file, 'w', encoding='utf-8').write(str(process.pid))" "$source_dir" "$state_file" "$branch" "$port"`,
       '    exit 0',
       '  fi',
@@ -425,6 +515,7 @@ exit 0
         COMPOSE_STATE_FILE: composeStateFile,
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         DEPLOY_SPACE_GRAPHQL_HIT_FILE: graphqlHitFile,
+        CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
         NGINX_HIT_FILE: nginxHitFile,
@@ -533,6 +624,7 @@ exit 0
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         INSTALL_ROOT: path.join(fixtureRoot, 'install-skip-apt'),
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
@@ -573,6 +665,7 @@ exit 0
         COMPOSE_STATE_FILE: testDataComposeStateFile,
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         INSTALL_ROOT: testDataInstallRoot,
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
@@ -648,6 +741,7 @@ exit 0
         COMPOSE_STATE_FILE: testData1ComposeStateFile,
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         INSTALL_ROOT: testData1InstallRoot,
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
@@ -722,6 +816,7 @@ exit 0
         DEPLOY_SPACE_GRAPHQL_HIT_FILE: silentGraphqlHitFile,
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         INSTALL_ROOT: silentInstallRoot,
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
@@ -810,6 +905,7 @@ exit 0
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         INSTALL_ROOT: reuseInstallRoot,
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
@@ -871,6 +967,45 @@ exit 0
       await waitForFileRemoval(reuseComposeStateFile)
 
       expect(existsSync(reuseComposeStateFile)).toBe(false)
+    },
+    deployTimeoutMs,
+  )
+
+  it(
+    'removes the source checkout after a successful deploy by default',
+    async () => {
+      const cleanInstallRoot = path.join(fixtureRoot, 'install-clean')
+      const env = {
+        ...process.env,
+        APP_SUBDOMAIN: 'marketplace',
+        BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
+        COMPOSE_STATE_FILE: path.join(fixtureRoot, 'compose-state-clean.pid'),
+        CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
+        DEPLOY_SPACE_TEST_PORT: String(appPort),
+        DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        INSTALL_ROOT: cleanInstallRoot,
+        NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+        NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
+        PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+        REPO_URL: bareRepoDir,
+      }
+
+      await execFileAsync(
+        deployScriptPath,
+        [
+          '--branch',
+          'feature',
+          '--server',
+          `http://127.0.0.1:${appPort}`,
+          '--silent',
+        ],
+        {
+          env,
+          maxBuffer: 20 * 1024 * 1024,
+        },
+      )
+
+      expect(existsSync(path.join(cleanInstallRoot, 'source'))).toBe(false)
     },
     deployTimeoutMs,
   )

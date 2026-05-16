@@ -10,6 +10,7 @@ TEST_DATA="${TEST_DATA:-false}"
 TEST_DATA_DIR="${TEST_DATA_DIR:-testdata}"
 REUSE_ENV_FILE="${REUSE_ENV_FILE:-${REUSE_EXISTING_ENV:-}}"
 BLOCK_NON_ADMIN_CONTENT_CREATION="${BLOCK_NON_ADMIN_CONTENT_CREATION:-}"
+CLEAN_SOURCE_AFTER_DEPLOY="${CLEAN_SOURCE_AFTER_DEPLOY:-true}"
 APP_PORT="3001"
 MONGO_DB_NAME="liberland"
 MONGO_APP_USER="liberland_app"
@@ -46,6 +47,7 @@ Environment overrides:
 - TEST_DATA: set to true to seed the database from ./testdata
 - TEST_DATA_DIR: fixture directory relative to the installer script, defaults to testdata
 - REUSE_ENV_FILE: env file to reuse values from before prompting
+- CLEAN_SOURCE_AFTER_DEPLOY: set to false to keep the cloned source checkout after deploy
 EOF
 }
 
@@ -109,6 +111,7 @@ RUNTIME_ENV_FILE="$DEPLOY_DIR/runtime.env"
 DOCKERFILE_FILE="$DEPLOY_DIR/Dockerfile"
 COMPOSE_FILE="$DEPLOY_DIR/docker-compose.yml"
 MONGO_INIT_FILE="$DEPLOY_DIR/mongo-init.js"
+MONGO_SEED_FILE="$DEPLOY_DIR/mongo-seed.js"
 TESTDATA_DEPLOY_DIR="$DEPLOY_DIR/testdata"
 NGINX_SITES_AVAILABLE_DIR="${NGINX_SITES_AVAILABLE_DIR:-/etc/nginx/sites-available}"
 NGINX_SITES_ENABLED_DIR="${NGINX_SITES_ENABLED_DIR:-/etc/nginx/sites-enabled}"
@@ -911,6 +914,57 @@ MONGO_SEED_SERVICE_BLOCK=""
 
 if [[ "$TEST_DATA" == "true" ]]; then
   APP_DEPENDS_ON_BLOCK=$'      mongo-seed:\n        condition: service_completed_successfully'
+  cat > "$MONGO_SEED_FILE" <<'EOF'
+const fs = require('fs')
+const path = require('path')
+
+const dbName = process.env.MONGO_APP_DB_NAME
+const dataDir = '/testdata'
+const collections = fs
+  .readdirSync(dataDir)
+  .filter((file) => file.endsWith('.json'))
+  .sort()
+
+if (!dbName) {
+  throw new Error('Missing MONGO_APP_DB_NAME.')
+}
+
+const appDb = db.getSiblingDB(dbName)
+const parseFixture = (raw) => {
+  if (typeof EJSON !== 'undefined' && typeof EJSON.parse === 'function') {
+    return EJSON.parse(raw)
+  }
+
+  return JSON.parse(raw)
+}
+
+for (const fileName of collections) {
+  const sourcePath = path.join(dataDir, fileName)
+  const raw = fs.readFileSync(sourcePath, 'utf8').trim()
+
+  if (!raw) {
+    print(`Skipping empty fixture file: ${fileName}`)
+    continue
+  }
+
+  const collectionName = fileName === 'searches.json' ? 'search' : path.basename(fileName, '.json')
+  const documents = parseFixture(raw)
+
+  if (!Array.isArray(documents)) {
+    throw new Error(`Fixture file is not an array: ${fileName}`)
+  }
+
+  appDb.getCollection(collectionName).deleteMany({})
+
+  if (documents.length === 0) {
+    print(`Seeded ${collectionName}: 0 documents`)
+    continue
+  }
+
+  const result = appDb.getCollection(collectionName).insertMany(documents, { ordered: false })
+  print(`Seeded ${collectionName}: ${Object.keys(result.insertedIds).length} documents`)
+}
+EOF
   MONGO_SEED_SERVICE_BLOCK=$(cat <<EOF
   mongo-seed:
     image: mongo:8.0
@@ -923,25 +977,12 @@ if [[ "$TEST_DATA" == "true" ]]; then
       MONGO_APP_PASSWORD: \${MONGO_APP_PASSWORD}
     volumes:
       - ./testdata:/testdata:ro
+      - ./mongo-seed.js:/mongo-seed.js:ro
     command:
       - sh
       - -lc
       - |
-        for file in /testdata/*.json; do
-          if [ ! -f "\$file" ]; then
-            continue
-          fi
-
-          collection="\$(basename "\$file" .json)"
-
-          case "\$collection" in
-            searches)
-              collection="search"
-              ;;
-          esac
-
-          mongoimport --host mongo --port 27017 --username "\$MONGO_APP_USER" --password "\$MONGO_APP_PASSWORD" --authenticationDatabase "\$MONGO_APP_DB_NAME" --db "\$MONGO_APP_DB_NAME" --collection "\$collection" --drop --jsonArray --file "\$file"
-        done
+        mongosh "mongodb://\${MONGO_APP_USER}:\${MONGO_APP_PASSWORD}@mongo:27017/\${MONGO_APP_DB_NAME}?authSource=\${MONGO_APP_DB_NAME}&replicaSet=rs0" --quiet /mongo-seed.js
     restart: "no"
 
 EOF
@@ -1216,11 +1257,25 @@ create_syndication_draft() {
   exit 1
 }
 
+cleanup_source_checkout() {
+  if [[ "$CLEAN_SOURCE_AFTER_DEPLOY" != "true" ]]; then
+    echo "Keeping source checkout because CLEAN_SOURCE_AFTER_DEPLOY is not true."
+    return 0
+  fi
+
+  if [[ -d "$SOURCE_DIR" ]]; then
+    echo "Removing source checkout: $SOURCE_DIR"
+    rm -rf "$SOURCE_DIR"
+  fi
+}
+
 if [[ "$SILENT" == "true" ]]; then
   echo "Skipping syndication draft submission because --silent was supplied."
 else
   create_syndication_draft
 fi
+
+cleanup_source_checkout
 
 echo
 echo "Deployment complete."

@@ -272,6 +272,7 @@ const buildValidators = async () => {
   const schema = configToJSONSchema(sanitizedConfig, sanitizedConfig.db?.defaultIDType)
   const ajv = new Ajv({
     allErrors: true,
+    strict: false,
   })
   const normalizedDefinitions = normalizeSchemaNode(schema.definitions ?? {})
 
