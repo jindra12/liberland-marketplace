@@ -22,8 +22,8 @@ export const createDefaultCompany: CollectionAfterChangeHook = async ({
     description,
     email: doc.email,
     identity,
-    _status: 'draft',
-  } satisfies RequiredDataFromCollectionSlug<'companies'>
+    _status: 'draft' as const,
+  };
 
   await req.payload.create({
     collection: 'companies',
