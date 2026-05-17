@@ -551,6 +551,7 @@ exit 0
       expect(stdout).toContain(`Admin: ${adminUrl}`)
       expect(stdout).toContain('Installer: https://marketplace.203-0-113-10.nip.io/deploy-space')
       expect(stdout).toContain(`Installer source: http://127.0.0.1:${appPort}/deploy-space`)
+      expect(stdout).toContain('MongoDB database: liberland_marketplace')
       expect(stdout).toContain('Syndication draft payload:')
       expect(readFileSync(aptGetHitFile, 'utf8')).toContain('install -y docker.io docker-compose-v2')
       expect(readFileSync(aptGetHitFile, 'utf8')).not.toContain('docker-compose-plugin')
@@ -649,6 +650,7 @@ exit 0
       )
 
       expect(stdout).toContain(`Admin: https://marketplace.203-0-113-10.nip.io/admin`)
+      expect(stdout).toContain('MongoDB database: liberland_marketplace')
       expect(existsSync(aptGetSkipHitFile)).toBe(false)
     },
     deployTimeoutMs,

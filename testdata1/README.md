@@ -1,6 +1,7 @@
 # Test Data Backup
 
 This directory contains a direct Mongo export of the live test data from the remote server.
+It is intended for the `devserver1` deployment, which uses the `liberland_devserver1` database by default.
 
 Included collections:
 - `companies`
