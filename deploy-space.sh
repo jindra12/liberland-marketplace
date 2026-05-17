@@ -241,9 +241,7 @@ load_existing_env_file() {
         ;;
     esac
 
-    if [[ -z "${!key+x}" ]]; then
-      eval "export $key=$value"
-    fi
+    eval "export $key=$value"
   done < "$env_file"
 }
 

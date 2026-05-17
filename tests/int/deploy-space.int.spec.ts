@@ -903,6 +903,7 @@ exit 0
 
       const env: NodeJS.ProcessEnv = {
         ...process.env,
+        APP_SUBDOMAIN: 'wrongsubdomain',
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         DEPLOY_SPACE_TEST_PORT: String(appPort),
@@ -913,12 +914,14 @@ exit 0
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
+        MONGO_INITDB_ROOT_PASSWORD: 'stale-root-password',
+        MONGO_APP_PASSWORD: 'stale-app-password',
+        MONGO_KEYFILE: 'stale-keyfile',
+        SYNDICATION_NAME: 'Wrong syndication',
+        SYNDICATION_DESCRIPTION: 'Wrong description',
       }
 
       delete env.APP_DOMAIN
-      delete env.APP_SUBDOMAIN
-      delete env.SYNDICATION_DESCRIPTION
-      delete env.SYNDICATION_NAME
 
       const { stdout } = await execFileAsync(
         deployScriptPath,
@@ -940,6 +943,7 @@ exit 0
       expect(stdout).toContain('Subdomain: devserver')
       expect(stdout).toContain('Domain: https://devserver.203-0-113-10.nip.io')
       expect(stdout).toContain('Devserver')
+      expect(stdout).not.toContain('wrongsubdomain')
       expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_INITDB_ROOT_PASSWORD="reuse-root-password"')
       expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_APP_PASSWORD="reuse-app-password"')
       expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_KEYFILE="reuse-keyfile"')

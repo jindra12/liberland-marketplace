@@ -1,90 +1,902 @@
-[{
-	"_id": {
-		"$oid": "69f300000000000000000001"
-	},
-	"createdAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"updatedAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"createdBy": {
-		"$oid": "699a4fb034fa2b9e6436599c"
-	},
-	"title": "Vertex Test Data Launch",
-	"company": {
-		"$oid": "699a52f1e3cc9546fc95d9b6"
-	},
-	"heroImage": {
-		"$oid": "699af05fe3cc9546fc95dc86"
-	},
-	"content": "# Vertex Test Data Launch\n\nThis post exists in the test dataset so the frontend has something realistic to render.\n\nIt links to the payment-ready demo products and keeps the test environment looking like a real marketplace.\n",
-	"relatedPosts": [
-		{
-			"relationTo": "products",
-			"value": {
-				"$oid": "69f200000000000000000001"
-			}
-		}
-	],
-	"publishedAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"authors": [
-		{
-			"$oid": "699a4fb034fa2b9e6436599c"
-		}
-	],
-	"generateSlug": true,
-	"slug": "vertex-test-data-launch",
-	"_status": "published",
-	"__v": 0
-},
-{
-	"_id": {
-		"$oid": "69f300000000000000000002"
-	},
-	"createdAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"updatedAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"createdBy": {
-		"$oid": "699a4fb034fa2b9e6436599c"
-	},
-	"title": "Three Ways to Pay in the Test Env",
-	"company": {
-		"$oid": "699a52f1e3cc9546fc95d9b6"
-	},
-	"heroImage": {
-		"$oid": "699af05fe3cc9546fc95dc86"
-	},
-	"content": "# Three Ways to Pay in the Test Env\n\nThe backup now includes Ethereum, Solana, and Tron products with matching user wallets so payment flows can be exercised end to end.\n",
-	"relatedPosts": [
-		{
-			"relationTo": "products",
-			"value": {
-				"$oid": "69f200000000000000000002"
-			}
-		},
-		{
-			"relationTo": "products",
-			"value": {
-				"$oid": "69f200000000000000000003"
-			}
-		}
-	],
-	"publishedAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"authors": [
-		{
-			"$oid": "699a4fb034fa2b9e6436599c"
-		}
-	],
-	"generateSlug": true,
-	"slug": "three-ways-to-pay-in-the-test-env",
-	"_status": "published",
-	"__v": 0
-}]
+[
+  {
+    "_id": {
+      "$oid": "69f300000000000000000001"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Vertex Test Data Launch",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Vertex Test Data Launch\n\nThis post exists in the test dataset so the frontend has something realistic to render.\n\nIt links to the payment-ready demo products and keeps the test environment looking like a real marketplace.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "vertex-test-data-launch",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000002"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Three Ways to Pay in the Test Env",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Three Ways to Pay in the Test Env\n\nThe backup now includes Ethereum, Solana, and Tron products with matching user wallets so payment flows can be exercised end to end.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "three-ways-to-pay-in-the-test-env",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000003"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Marketplace Snapshot",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Marketplace Snapshot\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "marketplace-snapshot",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000004"
+    },
+    "createdAt": {
+      "$date": "2026-05-04T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-04T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Community Spotlight",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af22ae3cc9546fc95df25"
+    },
+    "content": "# Community Spotlight\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-04T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "community-spotlight",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000005"
+    },
+    "createdAt": {
+      "$date": "2026-05-05T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-05T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Payments Roundup",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af2f9e3cc9546fc95e07d"
+    },
+    "content": "# Payments Roundup\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-05T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "payments-roundup",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000006"
+    },
+    "createdAt": {
+      "$date": "2026-05-06T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-06T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Settlement Notes",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Settlement Notes\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-06T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "settlement-notes",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000007"
+    },
+    "createdAt": {
+      "$date": "2026-05-07T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-07T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Product Directory Update",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af22ae3cc9546fc95df25"
+    },
+    "content": "# Product Directory Update\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-07T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "product-directory-update",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000008"
+    },
+    "createdAt": {
+      "$date": "2026-05-08T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-08T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Company Showcase",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af2f9e3cc9546fc95e07d"
+    },
+    "content": "# Company Showcase\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-08T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "company-showcase",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000009"
+    },
+    "createdAt": {
+      "$date": "2026-05-09T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-09T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Launch Brief",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Launch Brief\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-09T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "launch-brief",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f30000000000000000000a"
+    },
+    "createdAt": {
+      "$date": "2026-05-10T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-10T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Operations Log",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af22ae3cc9546fc95df25"
+    },
+    "content": "# Operations Log\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-10T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "operations-log",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f30000000000000000000b"
+    },
+    "createdAt": {
+      "$date": "2026-05-11T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-11T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Infrastructure Memo",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af2f9e3cc9546fc95e07d"
+    },
+    "content": "# Infrastructure Memo\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-11T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "infrastructure-memo",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f30000000000000000000c"
+    },
+    "createdAt": {
+      "$date": "2026-05-12T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-12T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Trading Desk Update",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Trading Desk Update\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-12T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "trading-desk-update",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f30000000000000000000d"
+    },
+    "createdAt": {
+      "$date": "2026-05-13T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-13T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Growth Report",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af22ae3cc9546fc95df25"
+    },
+    "content": "# Growth Report\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-13T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "growth-report",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f30000000000000000000e"
+    },
+    "createdAt": {
+      "$date": "2026-05-14T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-14T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Creator Digest",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af2f9e3cc9546fc95e07d"
+    },
+    "content": "# Creator Digest\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-14T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "creator-digest",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f30000000000000000000f"
+    },
+    "createdAt": {
+      "$date": "2026-05-15T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-15T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Weekend Briefing",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Weekend Briefing\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-15T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "weekend-briefing",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000010"
+    },
+    "createdAt": {
+      "$date": "2026-05-16T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-16T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Developer Notes",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af22ae3cc9546fc95df25"
+    },
+    "content": "# Developer Notes\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-16T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "developer-notes",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000011"
+    },
+    "createdAt": {
+      "$date": "2026-05-17T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-17T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Marketplace Signals",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af2f9e3cc9546fc95e07d"
+    },
+    "content": "# Marketplace Signals\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-17T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "marketplace-signals",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000012"
+    },
+    "createdAt": {
+      "$date": "2026-05-18T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-18T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Ecosystem Report",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "# Ecosystem Report\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-18T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "ecosystem-report",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000013"
+    },
+    "createdAt": {
+      "$date": "2026-05-19T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-19T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Field Update",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af22ae3cc9546fc95df25"
+    },
+    "content": "# Field Update\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000001"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-19T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "field-update",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000014"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Release Notes",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af2f9e3cc9546fc95e07d"
+    },
+    "content": "# Release Notes\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000002"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "69f200000000000000000003"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "release-notes",
+    "_status": "published",
+    "__v": 0
+  }
+]
