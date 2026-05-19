@@ -6,8 +6,8 @@
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "deploy:test": "yarn deploy:test1 && yarn deploy:test2",
-    "deploy:test1": "cross-env APP_SUBDOMAIN=devserver bash ./deploy-space.sh --branch \"$(git branch --show-current)\" --reuse-env ./dev.env --permission-server --silent --test-data",
-    "deploy:test2": "cross-env APP_SUBDOMAIN=devserver1 TEST_DATA_DIR=testdata1 bash ./deploy-space.sh --branch \"$(git branch --show-current)\" --reuse-env ./dev1.env --no-permission-server --silent --test-data",
+    "deploy:test1": "bash ./deploy-space.sh --branch \"$(git branch --show-current)\" --reuse-env ./dev.env --permission-server --silent --test-data",
+    "deploy:test2": "bash ./deploy-space.sh --branch \"$(git branch --show-current)\" --reuse-env ./dev1.env --no-permission-server --silent --test-data",
     "deploy": "pm2 delete liberstake-market; pnpm build; pm2 start pnpm --name liberstake-market -- start; pm2 startup; pm2 save",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "predev": "rm -rf .next",
@@ -25,6 +25,7 @@
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
     "start": "cross-env NODE_OPTIONS=--no-deprecation ./scripts/next-with-crypto-rate-cron.sh start",
     "test": "pnpm run test:int && pnpm run test:e2e",
+    "test:e2e:admin-login-cors": "pnpm exec playwright test tests/e2e/admin-login-cors.e2e.spec.ts --config=./playwright.remote.config.ts",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test --config=playwright.config.ts",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },

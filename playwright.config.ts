@@ -11,6 +11,11 @@ import 'dotenv/config'
  */
 export default defineConfig({
   testDir: './tests/e2e',
+  webServer: {
+    command: 'pnpm dev',
+    reuseExistingServer: true,
+    url: 'http://localhost:3001',
+  },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -33,9 +38,4 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], channel: 'chromium' },
     },
   ],
-  webServer: {
-    command: 'pnpm dev',
-    reuseExistingServer: true,
-    url: 'http://localhost:3001',
-  },
 })

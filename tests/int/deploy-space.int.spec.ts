@@ -11,6 +11,7 @@ const execFileAsync = promisify(execFile)
 const deployScriptPath = path.resolve(process.cwd(), 'deploy-space.sh')
 const deployTimeoutMs = 120_000
 const deployScriptText = readFileSync(deployScriptPath, 'utf8')
+const composeProjectName = (subdomain: string) => `liberland_${subdomain}`
 
 const makeExecutable = (filePath: string, contents: string) => {
   writeFileSync(filePath, contents, 'utf8')
@@ -84,12 +85,16 @@ describe('deploy-space installer', () => {
   const installRoot = path.join(fixtureRoot, 'install-normal')
   const silentInstallRoot = path.join(fixtureRoot, 'install-silent')
   const reuseInstallRoot = path.join(fixtureRoot, 'install-reuse')
+  const devEnvInstallRoot = path.join(fixtureRoot, 'install-dev-env')
+  const dev1EnvInstallRoot = path.join(fixtureRoot, 'install-dev1-env')
   const testDataInstallRoot = path.join(fixtureRoot, 'install-test-data')
   const testData1InstallRoot = path.join(fixtureRoot, 'install-test-data-1')
   const stubBinDir = path.join(fixtureRoot, 'bin')
   const composeStateFile = path.join(fixtureRoot, 'compose-state.pid')
   const silentComposeStateFile = path.join(fixtureRoot, 'compose-state-silent.pid')
   const reuseComposeStateFile = path.join(fixtureRoot, 'compose-state-reuse.pid')
+  const devEnvComposeStateFile = path.join(fixtureRoot, 'compose-state-dev-env.pid')
+  const dev1EnvComposeStateFile = path.join(fixtureRoot, 'compose-state-dev1-env.pid')
   const testDataComposeStateFile = path.join(fixtureRoot, 'compose-state-test-data.pid')
   const testData1ComposeStateFile = path.join(fixtureRoot, 'compose-state-test-data-1.pid')
   const graphqlHitFile = path.join(fixtureRoot, 'graphql-hit.json')
@@ -509,6 +514,7 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        COMPOSE_PROJECT_NAME: composeProjectName('marketplace'),
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         APT_GET_HIT_FILE: aptGetHitFile,
         CERTBOT_HIT_FILE: certbotHitFile,
@@ -590,6 +596,8 @@ exit 0
         'docker',
         [
           'compose',
+          '-p',
+          composeProjectName('marketplace'),
           '--env-file',
           path.join(installRoot, 'source', '.deploy', 'runtime.env'),
           '-f',
@@ -619,6 +627,7 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        COMPOSE_PROJECT_NAME: composeProjectName('marketplace'),
         APT_GET_HIT_FILE: aptGetSkipHitFile,
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         COMPOSE_STATE_FILE: path.join(fixtureRoot, 'compose-state-skip-apt.pid'),
@@ -662,6 +671,7 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        COMPOSE_PROJECT_NAME: composeProjectName('marketplace'),
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         COMPOSE_STATE_FILE: testDataComposeStateFile,
@@ -709,6 +719,8 @@ exit 0
         'docker',
         [
           'compose',
+          '-p',
+          composeProjectName('marketplace'),
           '--env-file',
           path.join(testDataInstallRoot, 'source', '.deploy', 'runtime.env'),
           '-f',
@@ -738,6 +750,8 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'devserver1',
+        COMPOSE_PROJECT_NAME: composeProjectName('devserver1'),
+        APP_PORT: '3002',
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         COMPOSE_STATE_FILE: testData1ComposeStateFile,
@@ -783,6 +797,8 @@ exit 0
         'docker',
         [
           'compose',
+          '-p',
+          composeProjectName('devserver1'),
           '--env-file',
           path.join(testData1InstallRoot, 'source', '.deploy', 'runtime.env'),
           '-f',
@@ -812,6 +828,7 @@ exit 0
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        COMPOSE_PROJECT_NAME: composeProjectName('marketplace'),
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         COMPOSE_STATE_FILE: silentComposeStateFile,
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
@@ -853,6 +870,8 @@ exit 0
         'docker',
         [
           'compose',
+          '-p',
+          composeProjectName('marketplace'),
           '--env-file',
           path.join(silentInstallRoot, 'source', '.deploy', 'runtime.env'),
           '-f',
@@ -904,6 +923,7 @@ exit 0
       const env: NodeJS.ProcessEnv = {
         ...process.env,
         APP_SUBDOMAIN: 'wrongsubdomain',
+        COMPOSE_PROJECT_NAME: composeProjectName('devserver'),
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         DEPLOY_SPACE_TEST_PORT: String(appPort),
@@ -954,6 +974,8 @@ exit 0
         'docker',
         [
           'compose',
+          '-p',
+          composeProjectName('devserver'),
           '--env-file',
           path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'),
           '-f',
@@ -978,12 +1000,135 @@ exit 0
   )
 
   it(
+    'loads the correct server-specific env file during deploy',
+    async () => {
+      const cases = [
+        {
+          composeStateFile: devEnvComposeStateFile,
+          envFile: path.join(process.cwd(), 'dev.env'),
+          expectedAppPort: '3001',
+          expectedSubdomain: 'devserver',
+          installRoot: devEnvInstallRoot,
+        },
+        {
+          composeStateFile: dev1EnvComposeStateFile,
+          envFile: path.join(process.cwd(), 'dev1.env'),
+          expectedAppPort: '3002',
+          expectedSubdomain: 'devserver1',
+          installRoot: dev1EnvInstallRoot,
+        },
+      ]
+
+      for (let index = 0; index < cases.length; index += 1) {
+        const currentCase = cases[index]
+        const env = {
+          ...process.env,
+          APP_SUBDOMAIN: 'wrongsubdomain',
+          COMPOSE_PROJECT_NAME: composeProjectName(currentCase.expectedSubdomain),
+          BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
+          CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',
+          COMPOSE_STATE_FILE: currentCase.composeStateFile,
+          DEPLOY_SPACE_TEST_PORT: String(appPort),
+          DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+          CLEAN_SOURCE_AFTER_DEPLOY: 'false',
+          INSTALL_ROOT: currentCase.installRoot,
+          NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
+          NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
+          PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+          REPO_URL: bareRepoDir,
+        }
+
+        const { stdout } = await execFileAsync(
+          deployScriptPath,
+          [
+            '--branch',
+            'feature',
+            '--server',
+            `http://127.0.0.1:${appPort}`,
+            '--reuse-env',
+            currentCase.envFile,
+            '--silent',
+            '--test-data',
+          ],
+          {
+            env,
+            maxBuffer: 20 * 1024 * 1024,
+          },
+        )
+
+        const runtimeEnvPath = path.join(currentCase.installRoot, 'source', '.deploy', 'runtime.env')
+        const runtimeEnv = readFileSync(runtimeEnvPath, 'utf8')
+        const expectedTestDataUrl =
+          currentCase.expectedSubdomain === 'devserver'
+            ? 'https://devserver1.203-0-113-10.nip.io/posts/vertex-test-data-launch?variant=testdata1'
+            : 'https://market.ll.land/posts/vertex-test-data-launch?variant=testdata1'
+        const deployedSyndicationsPath = path.join(
+          currentCase.installRoot,
+          'source',
+          '.deploy',
+          'testdata',
+          'syndications.json',
+        )
+        const deployedSyndications = JSON.parse(readFileSync(deployedSyndicationsPath, 'utf8')) as Array<{
+          url: string
+        }>
+
+        expect(stdout).toContain(`Reusing existing environment from: ${currentCase.envFile}`)
+        expect(stdout).toContain(`Subdomain: ${currentCase.expectedSubdomain}`)
+        expect(stdout).toContain(`Compose project: liberland_${currentCase.expectedSubdomain}`)
+        expect(stdout).toContain(`Domain: https://${currentCase.expectedSubdomain}.203-0-113-10.nip.io`)
+        expect(stdout).toContain(`App port: ${currentCase.expectedAppPort}`)
+        expect(stdout).toContain(
+          `Preparing test data fixtures from: ${path.join(process.cwd(), currentCase.expectedSubdomain === 'devserver' ? 'testdata' : 'testdata1')}`,
+        )
+        expect(stdout).not.toContain('wrongsubdomain')
+        expect(runtimeEnv).toContain(`APP_SUBDOMAIN="${currentCase.expectedSubdomain}"`)
+        expect(runtimeEnv).toContain(`APP_PORT="${currentCase.expectedAppPort}"`)
+        expect(runtimeEnv).toContain(`COMPOSE_PROJECT_NAME="liberland_${currentCase.expectedSubdomain}"`)
+        expect(runtimeEnv).toContain(
+          `NEXT_PUBLIC_SERVER_URL="https://${currentCase.expectedSubdomain}.203-0-113-10.nip.io"`,
+        )
+        expect(deployedSyndications[0]?.url).toBe(expectedTestDataUrl)
+
+        await waitForServer(`http://127.0.0.1:${appPort}/admin`)
+
+        await execFileAsync(
+          'docker',
+          [
+            'compose',
+            '-p',
+            composeProjectName(currentCase.expectedSubdomain),
+            '--env-file',
+            runtimeEnvPath,
+            '-f',
+            path.join(currentCase.installRoot, 'source', '.deploy', 'docker-compose.yml'),
+            'down',
+            '--remove-orphans',
+          ],
+          {
+            env: {
+              ...env,
+              PATH: `${stubBinDir}:${process.env.PATH || ''}`,
+            },
+            maxBuffer: 10 * 1024 * 1024,
+          },
+        )
+
+        await waitForFileRemoval(currentCase.composeStateFile)
+        expect(existsSync(currentCase.composeStateFile)).toBe(false)
+      }
+    },
+    deployTimeoutMs,
+  )
+
+  it(
     'removes the source checkout after a successful deploy by default',
     async () => {
       const cleanInstallRoot = path.join(fixtureRoot, 'install-clean')
       const env = {
         ...process.env,
         APP_SUBDOMAIN: 'marketplace',
+        COMPOSE_PROJECT_NAME: composeProjectName('marketplace'),
         BLOCK_NON_ADMIN_CONTENT_CREATION: 'false',
         COMPOSE_STATE_FILE: path.join(fixtureRoot, 'compose-state-clean.pid'),
         CODEX_NETWORK_ALLOW_LOCAL_BINDING: '1',

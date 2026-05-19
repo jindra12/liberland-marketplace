@@ -1,5 +1,9 @@
-import PageTemplate, { generateMetadata } from './[slug]/page'
+import { redirect } from 'next/navigation'
 
-export default PageTemplate
+export const dynamic = 'force-dynamic'
 
-export { generateMetadata }
+const HomePage = async () => {
+  redirect('https://nswap.io')
+}
+
+export default HomePage
