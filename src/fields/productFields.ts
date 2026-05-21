@@ -77,6 +77,17 @@ const unlimitedInventoryField: CheckboxField = {
 export const productFields: Field[] = [
   serverURLField(),
   {
+    name: 'createdBy',
+    type: 'relationship',
+    relationTo: 'users',
+    required: true,
+    maxDepth: 0,
+    admin: {
+      hidden: true,
+      readOnly: true,
+    },
+  },
+  {
     name: 'name',
     type: 'text',
     required: true,

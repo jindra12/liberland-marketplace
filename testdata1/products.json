@@ -29,7 +29,8 @@
     "completenessScore": 3,
     "properties": [],
     "priceInUSD": 250000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -61,7 +62,8 @@
     "completenessScore": 3,
     "properties": [],
     "priceInUSD": 300000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -93,7 +95,8 @@
     "properties": [],
     "completenessScore": 3,
     "priceInUSD": 1500000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -122,7 +125,8 @@
     "completenessScore": 2,
     "properties": [],
     "priceInUSD": 950000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -154,7 +158,8 @@
     "completenessScore": 3,
     "properties": [],
     "priceInUSD": 1995,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -183,7 +188,8 @@
     "completenessScore": 2,
     "properties": [],
     "priceInUSD": 10780,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -241,7 +247,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -286,7 +293,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -331,7 +339,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -376,7 +385,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -421,7 +431,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -471,7 +482,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -516,7 +528,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -556,7 +569,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -601,7 +615,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -646,7 +661,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -686,7 +702,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -736,7 +753,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -784,7 +802,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1720,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -837,7 +856,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -885,7 +905,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1699,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -938,7 +959,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2262,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -986,7 +1008,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2499,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1031,7 +1054,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1071,7 +1095,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1111,7 +1136,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1151,7 +1177,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1214,7 +1241,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2174,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1272,7 +1300,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2174,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1330,7 +1359,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2174,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1388,7 +1418,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2174,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1446,7 +1477,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 4494,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1501,7 +1533,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1566,7 +1599,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1606,7 +1640,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1661,7 +1696,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1701,7 +1737,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1741,7 +1778,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1781,7 +1819,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1844,7 +1883,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 39900,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1902,7 +1942,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -1960,7 +2001,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2007,7 +2049,8 @@
     "priceInUSD": 34500,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2057,7 +2100,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 4400,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2102,7 +2146,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1750,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2147,7 +2192,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2600,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2192,7 +2238,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2245,7 +2292,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2290,7 +2338,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2345,7 +2394,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2595,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2390,7 +2440,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1599,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2440,7 +2491,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1599,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2505,7 +2557,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 299,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2565,7 +2618,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 590,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2615,7 +2669,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1190,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2670,7 +2725,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2490,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2735,7 +2791,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2793,7 +2850,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 61600,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2851,7 +2909,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 5454460,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2909,7 +2968,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 5454460,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -2967,7 +3027,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 164890,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3020,7 +3081,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 181720,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3073,7 +3135,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 10000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3128,7 +3191,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3176,7 +3240,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3221,7 +3286,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3266,7 +3332,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3311,7 +3378,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3356,7 +3424,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2500000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3401,7 +3470,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2500000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3443,7 +3513,8 @@
     "priceInUSD": 100000,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3483,7 +3554,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 10000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3533,7 +3605,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 500000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3578,7 +3651,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3623,7 +3697,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3668,7 +3743,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3718,7 +3794,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3763,7 +3840,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 39900,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3808,7 +3886,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 10000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3848,7 +3927,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 3500,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3888,7 +3968,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 7500,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3928,7 +4009,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 12500,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -3968,7 +4050,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 14999,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4018,7 +4101,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 85000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4068,7 +4152,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 120000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4118,7 +4203,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 145000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4158,7 +4244,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2200,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4203,7 +4290,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2400,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4248,7 +4336,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 2900,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4298,7 +4387,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 6900,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4343,7 +4433,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 26000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4393,7 +4484,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 216,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4443,7 +4535,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1085,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4493,7 +4586,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 3367,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4548,7 +4642,8 @@
     "priceInUSD": 1036800,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4598,7 +4693,8 @@
     "priceInUSD": 745200,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4645,7 +4741,8 @@
     "priceInUSD": 183600,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4702,7 +4799,8 @@
     "priceInUSD": 9900,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4754,7 +4852,8 @@
     "priceInUSD": 32900,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4806,7 +4905,8 @@
     "priceInUSD": 46900,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4851,7 +4951,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4896,7 +4997,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4941,7 +5043,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -4991,7 +5094,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5044,7 +5148,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 22000000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5091,7 +5196,8 @@
     "priceInUSD": 2300000,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5143,7 +5249,8 @@
     "priceInUSD": 20000000,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5190,7 +5297,8 @@
     "priceInUSD": 8000000,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5242,7 +5350,8 @@
     "priceInUSD": 2800000,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5284,7 +5393,8 @@
     "priceInUSD": 580000,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5334,7 +5444,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 6500,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5379,7 +5490,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5424,7 +5536,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5474,7 +5587,8 @@
     "priceInUSD": 54700,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5514,7 +5628,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 1170000,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5561,7 +5676,8 @@
     "priceInUSD": 2150000,
     "priceInUSDEnabled": true,
     "cryptoAddresses": {},
-    "orderable": true
+    "orderable": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5606,7 +5722,8 @@
     "_status": "published",
     "__v": 0,
     "priceInUSD": 0,
-    "priceInUSDEnabled": true
+    "priceInUSDEnabled": true,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5635,7 +5752,8 @@
     "description": "test (testdata1)",
     "completenessScore": 2,
     "_status": "draft",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5659,7 +5777,8 @@
     "description": "Free mobile app for travelers to connect with fellow passengers on the same flights. Browse profiles, plan meetups, share rides, and join travel communities. Available on iOS and Android.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5683,7 +5802,8 @@
     "description": "iOS app for precise visa and residency day tracking. Handles Schengen 90/180 limits, 183-day tax rules, calendar-year and rolling-window calculations. Accepts exact dates, year-only entries, and unknown-date visits. CSV import/export, interactive map, optional iCloud sync. All data stays on your device.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5707,7 +5827,8 @@
     "description": "Free online news platform covering Liberland's political developments, blockchain ecosystem, foreign relations, and community culture. Regular reporting on governance, diplomacy, and the liberty movement.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5731,7 +5852,8 @@
     "description": "Explore Liberland's official metaverse designed by Zaha Hadid Architects. Walk through virtual buildings, meet other Liberlanders, attend events, and preview planned real-world infrastructure in an immersive 3D environment.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5757,7 +5879,8 @@
     "description": "Register a Limited Liability Company in the Free Republic of Liberland as an e-resident. Includes blockchain registration and company registry listing. Completely online process — manage your company digitally from anywhere in the world.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5783,7 +5906,8 @@
     "description": "Compact heat recovery ventilation unit with up to 90% energy efficiency. Provides fresh, filtered air while recovering heat from exhaust air. Ideal for small apartments, offices, and off-grid living near Liberland.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5809,7 +5933,8 @@
     "description": "Larger-capacity heat recovery ventilation unit with up to 90% energy efficiency. Designed for bigger spaces — homes, communal areas, and commercial buildings. Same high-efficiency heat exchange technology as the LiberAir 150.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5835,7 +5960,8 @@
     "description": "Monthly subscription providing 100 liters of fuel for generators powering the Liberland settlement's electricity. Directly supports pioneers living on and developing Liberland territory.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5861,7 +5987,8 @@
     "description": "One-time contribution of 1 litre of fuel for gas generators powering the Liberland settlement's electricity and basic infrastructure.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5885,7 +6012,8 @@
     "description": "Modular settlement design using shipping containers assembled on a grid system. Includes housing units and communal spaces optimized for Liberland's unique terrain and construction constraints. Scalable from single units to multi-floor developments.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5909,7 +6037,8 @@
     "description": "Comprehensive urban planning and development strategy for Liberland territory. Covers zoning, infrastructure layout, transportation, and phased buildout from initial settlement to full-scale community.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5933,7 +6062,8 @@
     "description": "Handmade pearl jewelry and accessories crafted in Sombor, Serbia — the gateway city to Liberland. Each piece is individually made by local artisans from the Danube region.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5959,7 +6089,8 @@
     "description": "Sought-after compendium of Russian art treasures. A collector's item covering masterworks across centuries of Russian artistic heritage.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -5985,7 +6116,8 @@
     "description": "Accessible introduction to artificial intelligence and its implications for the future. Covers 101 essential topics every informed citizen should understand about AI.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -6011,7 +6143,8 @@
     "description": "Custom-built website with calendar integration, appointment scheduling, and payment processing. Includes responsive design, admin dashboard, and automated email notifications.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -6037,7 +6170,8 @@
     "description": "Full-featured online store with product catalog, shopping cart, integrated payment gateways, and order management. Built on WordPress/WooCommerce with responsive design.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -6063,7 +6197,8 @@
     "description": "20ml refill bottle with activated carbon for the Phönix water filtration device. Provides clean, filtered drinking water using natural activated carbon technology.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -6089,7 +6224,8 @@
     "description": "Hand-made and unique aromatic decorative wax block in Liberland's national colors. Each piece is individually crafted — a collectible keepsake celebrating Liberland.\n\n*Catalogued by Claude* (testdata1)",
     "completenessScore": 2,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -6118,7 +6254,8 @@
     "description": "A small purchaseable item for test deployments. Paid to the Ethereum wallet used by the test user fixtures. (testdata1)",
     "completenessScore": 3,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -6147,7 +6284,8 @@
     "description": "A small purchaseable item for test deployments. Paid to the Solana wallet used by the test user fixtures. (testdata1)",
     "completenessScore": 3,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   },
   {
     "_id": {
@@ -6176,6 +6314,7 @@
     "description": "A small purchaseable item for test deployments. Paid to the Tron wallet used by the test user fixtures. (testdata1)",
     "completenessScore": 3,
     "_status": "published",
-    "__v": 0
+    "__v": 0,
+    "createdBy": "699a4fb034fa2b9e6436599c"
   }
 ]

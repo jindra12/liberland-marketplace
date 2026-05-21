@@ -1,16 +1,17 @@
 import { expect, test } from '@playwright/test'
 
-const deployedAdminURL = 'https://devserver.207-180-231-104.nip.io/admin'
+import {
+  captureScreenshot,
+  deployedAdminURL,
+  loginEmail,
+  loginPassword,
+} from './helpers'
+
 const expectedAuthOrigin = 'https://devserver.207-180-231-104.nip.io'
 const wrongAuthOrigin = 'https://devserver1.207-180-231-104.nip.io'
-const loginEmail = 'dorian.sternvukotic@gmail.com'
-const loginPassword = 'test-password'
 
 test.describe('Deployed admin login', () => {
-  test('posts login to the devserver origin', async ({ page }) => {
-    test.setTimeout(45000)
-    page.setDefaultTimeout(15000)
-
+  test('posts login to the devserver origin', async ({ page }, testInfo) => {
     const consoleErrors: string[] = []
     const authRequests: string[] = []
 
@@ -35,7 +36,8 @@ test.describe('Deployed admin login', () => {
       authRequests.push(request.url())
     })
 
-    await page.goto(deployedAdminURL, { waitUntil: 'domcontentloaded', timeout: 15000 })
+    await page.goto(deployedAdminURL, { waitUntil: 'domcontentloaded' })
+    await captureScreenshot(page, testInfo, 'admin-login-form')
     await expect(page.getByRole('textbox').first()).toBeVisible()
 
     await page.getByRole('textbox').first().fill(loginEmail)
@@ -43,10 +45,12 @@ test.describe('Deployed admin login', () => {
 
     const requestPromise = page.waitForRequest((request) => {
       return request.method() === 'POST' && (request.postData() || '').includes(loginEmail)
-    }, { timeout: 15000 })
+    })
 
     await page.getByRole('button', { name: 'Login' }).click()
     const request = await requestPromise
+
+    await captureScreenshot(page, testInfo, 'admin-login-submitted')
 
     expect(request.url(), [
       `Expected login to stay on ${expectedAuthOrigin} but it was sent elsewhere.`,

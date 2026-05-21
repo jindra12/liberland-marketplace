@@ -86,7 +86,7 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
   }
 
   const ownerSource = data && ('authors' in data || 'createdBy' in data) ? data : originalDoc
-  const ownerID = getOwnerID(ownerSource)
+  const ownerID = getOwnerID(ownerSource) ?? (operation === 'create' ? toStringID(req.user?.id as MaybeID) : null)
 
   if (!ownerID) {
     throw new APIError('You can only attach records to companies you own.', 403)
