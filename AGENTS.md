@@ -62,6 +62,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - If asked to generate ad hoc queries, images, or similar throwaway artifacts, write them to `/tmp` instead of adding them to the repo unless the user explicitly asks to keep them in the workspace.
 - Do not remove `experimental.esmExternals: 'loose'` from `next.config.js` unless there is direct evidence that setting is the root cause or the user explicitly asks for that change.
 - Do not disable, gate, or remove local development features as a performance optimization unless the user explicitly asks for that behavior. Prefer lazy-loading, deferring work, or measuring first.
+- Do not "fix" a bug by removing unrelated UI or app functionality. Preserve the existing feature surface and address the actual root cause instead.
 
 ## Project Structure
 

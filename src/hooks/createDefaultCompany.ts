@@ -1,4 +1,4 @@
-import type { CollectionAfterChangeHook, RequiredDataFromCollectionSlug } from 'payload'
+import type { CollectionAfterChangeHook } from 'payload'
 
 export const createDefaultCompany: CollectionAfterChangeHook = async ({
   operation,
@@ -23,7 +23,7 @@ export const createDefaultCompany: CollectionAfterChangeHook = async ({
     email: doc.email,
     identity,
     _status: 'draft' as const,
-  };
+  }
 
   await req.payload.create({
     collection: 'companies',

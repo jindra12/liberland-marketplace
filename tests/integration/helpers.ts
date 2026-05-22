@@ -1,12 +1,6 @@
 import path from 'node:path'
-import { createHmac } from 'node:crypto'
-import { readFileSync } from 'node:fs'
 
-import { expect, type Page, type TestInfo } from '@playwright/test'
-import { parse } from 'dotenv'
-
-type JsonPrimitive = string | number | boolean | null
-export type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue }
+import { expect, type Locator, type Page, type TestInfo } from '@playwright/test'
 
 type CreatedDocumentResponse = {
   doc?: {
@@ -18,19 +12,11 @@ type CreatedDocumentResponse = {
 }
 
 export const deployedAdminURL = 'https://devserver.207-180-231-104.nip.io/admin'
+export const deployedAdminLoginURL = 'https://devserver.207-180-231-104.nip.io/admin/login'
 export const deployedOrigin = new URL(deployedAdminURL).origin
-export const deployedApiOrigin = new URL('/api', deployedOrigin).origin
 export const loginEmail = 'dorian.sternvukotic@gmail.com'
 export const loginPassword = 'test-password'
 export const deployedAdminUserID = '699a4fb034fa2b9e6436599c'
-const deployedSessionToken = 'playwright-session-devserver'
-const deployedSessionCookieName = '__Secure-better-auth.session_token'
-const deployedAuthSecret = parse(readFileSync(path.resolve(process.cwd(), 'dev.env'), 'utf8'))
-  .BETTER_AUTH_SECRET
-
-if (!deployedAuthSecret) {
-  throw new Error('Missing BETTER_AUTH_SECRET in dev.env.')
-}
 
 export const generatedImagePath = path.resolve(
   process.cwd(),
@@ -41,12 +27,6 @@ export const createUniqueLabel = (prefix: string): string =>
   `${prefix} ${Date.now()} ${Math.random().toString(36).slice(2, 8)}`
 
 export const toAdminUrl = (pathname: string): string => new URL(pathname, deployedOrigin).toString()
-export const toApiUrl = (pathname: string): string => new URL(pathname, deployedOrigin).toString()
-
-const signSessionCookieValue = (token: string): string => {
-  const signature = createHmac('sha256', deployedAuthSecret).update(token).digest('base64')
-  return encodeURIComponent(`${token}.${signature}`)
-}
 
 export const captureScreenshot = async (
   page: Page,
@@ -62,104 +42,153 @@ export const captureScreenshot = async (
 }
 
 export const loginToAdmin = async (page: Page, testInfo: TestInfo): Promise<string> => {
-  await page.context().addCookies([
-    {
-      name: deployedSessionCookieName,
-      secure: true,
-      url: deployedOrigin,
-      value: signSessionCookieValue(deployedSessionToken),
-    },
+  await page.goto(deployedAdminLoginURL, { waitUntil: 'domcontentloaded' })
+  await captureScreenshot(page, testInfo, 'admin-login-form')
+
+  await page.locator('input[type="text"]').first().fill(loginEmail)
+  await page.locator('input[type="password"]').first().fill(loginPassword)
+
+  await Promise.all([
+    page.getByRole('button', { name: /login/i }).click({ noWaitAfter: true }),
   ])
 
-  await page.goto(deployedAdminURL, { waitUntil: 'domcontentloaded' })
-  await captureScreenshot(page, testInfo, 'admin-authenticated-page')
+  await expect.poll(() => page.url()).toMatch(/\/admin\/?$/)
   await captureScreenshot(page, testInfo, 'admin-dashboard')
 
   return deployedAdminUserID
 }
 
-export const createDocument = async (
+export const openCollectionCreate = async (page: Page, collection: string): Promise<void> => {
+  await page.goto(toAdminUrl(`/admin/collections/${collection}/create`), {
+    waitUntil: 'domcontentloaded',
+  })
+}
+
+export const fillTextField = async (page: Page, label: string, value: string): Promise<void> => {
+  await page.getByRole('textbox', { name: label }).fill(value)
+}
+
+export const fillRelationshipField = async (
   page: Page,
-  collection: string,
-  data: Record<string, JsonValue>,
-): Promise<string> => {
-  const response = await page.evaluate(
-    async ({
-      collection: nextCollection,
-      data: nextData,
-      origin,
-    }: {
-      collection: string
-      data: Record<string, JsonValue>
-      origin: string
-    }) => {
-      const response = await fetch(`${origin}/api/${nextCollection}`, {
-        body: JSON.stringify(nextData),
-        credentials: 'include',
-        headers: {
-          'content-type': 'application/json',
-        },
-        method: 'POST',
-      })
-
-      return {
-        ok: response.ok,
-        status: response.status,
-        text: await response.text(),
-      }
-    },
-    {
-      collection,
-      data,
-      origin: deployedOrigin,
-    },
+  label: string,
+  value: string,
+): Promise<void> => {
+  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const labelPattern = new RegExp(`^${escapedLabel}(\\s*\\*)?$`)
+  const fieldCandidates: Locator[] = [
+    page
+      .locator('label')
+      .filter({ hasText: labelPattern })
+      .locator('xpath=ancestor::div[contains(@class,"field")][1]//div[contains(@class,"relationship__wrap")]//input')
+      .first(),
+    page.getByRole('combobox', { name: label }),
+  ]
+  const fieldMatches = await Promise.all(
+    fieldCandidates.map(async (candidate) => ((await candidate.count()) > 0 ? candidate : null)),
   )
+  const field = fieldMatches.find((candidate): candidate is Locator => candidate !== null)
 
-  if (!response.ok) {
-    throw new Error(`Create ${collection} failed (${response.status}): ${response.text}`)
+  if (!field) {
+    throw new Error(`Relationship field ${label} was not found.`)
   }
 
-  const body = JSON.parse(response.text) as CreatedDocumentResponse
+  await field.waitFor({ state: 'visible' })
+  await field.evaluate((element) => {
+    if (element instanceof HTMLInputElement) {
+      element.focus()
+    }
+  })
+  await page.keyboard.type(value)
+  await page.getByRole('option', { name: value }).first().click()
+}
+
+export const fillSelectField = async (
+  page: Page,
+  label: string,
+  value: string,
+): Promise<void> => {
+  const field = page.getByRole('combobox', { name: label })
+
+  await field.click()
+  await page.getByRole('option', { name: value }).first().click()
+}
+
+export const toggleCheckboxField = async (
+  page: Page,
+  label: string,
+  checked: boolean,
+): Promise<void> => {
+  const checkbox = page.getByRole('checkbox', { name: label })
+
+  if (checked) {
+    await checkbox.check()
+    return
+  }
+
+  await checkbox.uncheck()
+}
+
+export const saveNewCollectionDocument = async (
+  page: Page,
+  collection: string,
+): Promise<string> => {
+  const saveButton = page.getByRole('button', { name: /save/i }).first()
+  const nextURL = new RegExp(`/admin/collections/${collection}/[^/]+$`)
+  const responsePromise = page.waitForResponse((response) => {
+    return (
+      (response.request().method() === 'POST' || response.request().method() === 'PATCH') &&
+      response.url().includes(`/api/${collection}`)
+    )
+  })
+  const navigationPromise = page.waitForURL(nextURL, { timeout: 60000 }).catch(() => {})
+
+  await saveButton.click()
+
+  const response = await responsePromise
+  const responseText = await response.text()
+
+  if (!response.ok()) {
+    throw new Error(`Create ${collection} failed (${response.status()}): ${responseText}`)
+  }
+
+  await navigationPromise
+  await page.waitForLoadState('networkidle').catch(() => {})
+
+  const body = JSON.parse(responseText) as CreatedDocumentResponse
   const id = body.doc?._id ?? body.doc?.id ?? body._id ?? body.id
 
-  if (!id) {
-    throw new Error(`Missing created document ID for ${collection}.`)
+  if (!id || id === 'create') {
+    throw new Error(`Missing created document ID for ${collection}. Response: ${responseText}`)
   }
 
   return id
 }
 
 export const deleteDocument = async (page: Page, collection: string, id: string): Promise<void> => {
-  const response = await page.evaluate(
-    async ({
-      collection: nextCollection,
-      id: nextID,
-      origin,
-    }: {
-      collection: string
-      id: string
-      origin: string
-    }) => {
-      const response = await fetch(`${origin}/api/${nextCollection}/${nextID}`, {
-        credentials: 'include',
-        method: 'DELETE',
-      })
+  const deleteButtons = page.getByRole('button', { name: /^delete$/i })
+  const deleteButtonCount = await deleteButtons.count()
 
-      return {
-        ok: response.ok,
-        status: response.status,
-        text: await response.text(),
-      }
-    },
-    {
-      collection,
-      id,
-      origin: deployedOrigin,
-    },
-  )
+  if (!deleteButtonCount) {
+    throw new Error(`Delete button not found for ${collection}/${id}.`)
+  }
 
-  expect(response.status).toBeGreaterThanOrEqual(200)
-  expect(response.status).toBeLessThan(500)
+  const deleteButton = deleteButtons.first()
+  const dialog = page.getByRole('dialog')
+  page.once('dialog', async (browserDialog) => {
+    await browserDialog.accept()
+  })
+
+  await deleteButton.click()
+
+  if (await dialog.count()) {
+    const confirmDeleteButton = dialog.getByRole('button', { name: /^delete$/i })
+
+    if (await confirmDeleteButton.count()) {
+      await confirmDeleteButton.first().click()
+    }
+  }
+
+  await page.waitForLoadState('domcontentloaded').catch(() => {})
 }
 
 export const openCollectionDocument = async (

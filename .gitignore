@@ -22,5 +22,6 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 .env*.local
+local.env
 .local/email-snapshots/
 .local/analytics/

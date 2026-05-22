@@ -21,6 +21,7 @@ load_env_file() {
 
 load_env_file ".env"
 load_env_file ".env.local"
+load_env_file "local.env"
 
 PORT="${PORT:-3001}"
 SERVER_HOST="${HOST:-127.0.0.1}"
