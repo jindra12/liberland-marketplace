@@ -18,5 +18,3 @@ cleanup() {
 }
 
 trap cleanup EXIT INT TERM
-
-NODE_OPTIONS=--no-deprecation ./scripts/next-with-crypto-rate-cron.sh dev

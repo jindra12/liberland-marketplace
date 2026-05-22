@@ -11,9 +11,13 @@ type CreatedDocumentResponse = {
   id?: string
 }
 
-export const deployedAdminURL = 'https://devserver.207-180-231-104.nip.io/admin'
-export const deployedAdminLoginURL = 'https://devserver.207-180-231-104.nip.io/admin/login'
-export const deployedOrigin = new URL(deployedAdminURL).origin
+const defaultAdminURL = 'https://devserver.207-180-231-104.nip.io/admin'
+const adminURL = process.env.PLAYWRIGHT_ADMIN_URL ?? defaultAdminURL
+const adminOrigin = new URL(adminURL).origin
+
+export const deployedAdminURL = adminURL
+export const deployedAdminLoginURL = new URL('/admin/login', adminURL).toString()
+export const deployedOrigin = adminOrigin
 export const loginEmail = 'dorian.sternvukotic@gmail.com'
 export const loginPassword = 'test-password'
 export const deployedAdminUserID = '699a4fb034fa2b9e6436599c'
@@ -26,7 +30,7 @@ export const generatedImagePath = path.resolve(
 export const createUniqueLabel = (prefix: string): string =>
   `${prefix} ${Date.now()} ${Math.random().toString(36).slice(2, 8)}`
 
-export const toAdminUrl = (pathname: string): string => new URL(pathname, deployedOrigin).toString()
+export const toAdminUrl = (pathname: string): string => new URL(pathname, adminOrigin).toString()
 
 export const captureScreenshot = async (
   page: Page,
@@ -45,14 +49,24 @@ export const loginToAdmin = async (page: Page, testInfo: TestInfo): Promise<stri
   await page.goto(deployedAdminLoginURL, { waitUntil: 'domcontentloaded' })
   await captureScreenshot(page, testInfo, 'admin-login-form')
 
-  await page.locator('input[type="text"]').first().fill(loginEmail)
-  await page.locator('input[type="password"]').first().fill(loginPassword)
+  const loginRequestPromise = page.waitForResponse((response) => {
+    return (
+      response.request().method() === 'POST' &&
+      response.url().includes('/api/auth/sign-in/email')
+    )
+  })
 
-  await Promise.all([
-    page.getByRole('button', { name: /login/i }).click({ noWaitAfter: true }),
-  ])
+  await page.locator('input').first().fill(loginEmail)
+  await page.locator('input').nth(1).fill(loginPassword)
 
-  await expect.poll(() => page.url()).toMatch(/\/admin\/?$/)
+  await page.getByRole('button', { name: /^login$/i }).click()
+
+  const loginResponse = await loginRequestPromise
+  if (!loginResponse.ok()) {
+    throw new Error(`Admin login failed (${loginResponse.status()}).`)
+  }
+
+  await page.goto(deployedAdminURL, { waitUntil: 'domcontentloaded' })
   await captureScreenshot(page, testInfo, 'admin-dashboard')
 
   return deployedAdminUserID

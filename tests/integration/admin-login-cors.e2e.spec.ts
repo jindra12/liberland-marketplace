@@ -39,11 +39,11 @@ test.describe('Deployed admin login', () => {
     await page.goto(deployedAdminLoginURL, { waitUntil: 'domcontentloaded' })
     await captureScreenshot(page, testInfo, 'admin-login-form')
 
-    await expect(page.locator('input[type="text"]').first()).toBeVisible()
-    await expect(page.locator('input[type="password"]').first()).toBeVisible()
+    await expect(page.locator('input').first()).toBeVisible()
+    await expect(page.locator('input').nth(1)).toBeVisible()
 
-    await page.locator('input[type="text"]').first().fill(loginEmail)
-    await page.locator('input[type="password"]').first().fill(loginPassword)
+    await page.locator('input').first().fill(loginEmail)
+    await page.locator('input').nth(1).fill(loginPassword)
 
     const requestPromise = page.waitForRequest((request) => {
       return request.method() === 'POST' && (request.postData() || '').includes(loginEmail)

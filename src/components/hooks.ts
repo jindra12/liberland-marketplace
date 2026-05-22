@@ -6,36 +6,17 @@ export const useLazyLoad = <T,>(
   load: () => Promise<T>,
   errorMessage = 'Failed to lazy load module.',
 ): null | T => {
-  const [value, setValue] = React.useState<T | null>(null)
-  const loadRef = React.useRef(load)
-
-  loadRef.current = load
+  const loadRef = React.useRef<T | null>(null)
 
   React.useEffect(() => {
-    let isMounted = true
-
-    const loadValue = async () => {
+    (async () => {
       try {
-        const nextValue = await loadRef.current()
-
-        if (!isMounted) {
-          return
-        }
-
-        React.startTransition(() => {
-          setValue(nextValue)
-        })
-      } catch (error) {
-        console.error(errorMessage, error)
+        loadRef.current = await load()
+      } catch (e) {
+        console.error(errorMessage, e)
       }
-    }
+    })()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    loadValue()
-
-    return () => {
-      isMounted = false
-    }
-  }, [errorMessage])
-
-  return value
+  return loadRef.current
 }

@@ -1,5 +1,9 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const adminURL = process.env.PLAYWRIGHT_ADMIN_URL ?? 'https://devserver.207-180-231-104.nip.io/admin'
+
+console.log(`[playwright] baseURL=${adminURL}`)
+
 export default defineConfig({
   testDir: './tests/integration',
   timeout: 90000,
@@ -8,6 +12,7 @@ export default defineConfig({
   },
   reporter: 'line',
   use: {
+    baseURL: adminURL,
     trace: 'on-first-retry',
   },
   projects: [

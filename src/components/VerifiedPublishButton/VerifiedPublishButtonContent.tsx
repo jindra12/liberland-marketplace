@@ -9,7 +9,7 @@ import './index.scss'
 const baseClass = 'verified-publish-button'
 const COOLDOWN_SECONDS = 60
 
-export default function VerifiedPublishButtonContent() {
+const VerifiedPublishButtonContent = () => {
   const { user } = useAuth<User>()
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
@@ -84,4 +84,7 @@ export default function VerifiedPublishButtonContent() {
       )}
     </div>
   )
-}
+};
+
+export default VerifiedPublishButtonContent;
+
