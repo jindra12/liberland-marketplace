@@ -17,6 +17,8 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - To validate typescript correctness after modifying code run `tsc --noEmit`
 - Delete `tsconfig.tsbuildinfo` after you finish your work.
 - Do not stop after a partial verification; keep going until `tsc --noEmit` and the relevant build pass, or identify the blocking failure and fix it.
+- Run tests outside the sandbox when they depend on live network access, browser automation, DNS, Docker, or other host services.
+- Always run `pnpm dev` outside the sandbox when you need a live local server for debugging or host-bound browser/API probes.
 - Generate import maps after creating or modifying components.
 - Do not claim a test or verification path is finished until the command exits successfully and you have checked the final result.
 - If `generate:types` fails, do not manually edit `src/payload-types.ts` or any generated type file as a fallback; report the failure and stop until the underlying issue is fixed.

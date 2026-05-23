@@ -4,6 +4,7 @@ import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
+import mongoose from 'mongoose'
 
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
@@ -99,6 +100,58 @@ export default buildConfig({
   editor: defaultLexical,
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
+    afterCreateConnection: (adapter) => {
+      if (!payloadDebug) return
+
+      console.log('[mongo] afterCreateConnection', {
+        dbName: adapter.connection.db?.databaseName,
+      })
+    },
+    afterOpenConnection: (adapter) => {
+      if (!payloadDebug) return
+
+      mongoose.set('debug', (collectionName, method, query, doc, options) => {
+        console.log('[mongo] mongoose', {
+          collectionName,
+          method,
+          query,
+          doc,
+          options,
+        })
+      })
+
+      const client = adapter.connection.getClient()
+      client.removeAllListeners('commandStarted')
+      client.removeAllListeners('commandSucceeded')
+      client.removeAllListeners('commandFailed')
+      client.on('commandStarted', (event) => {
+        if (event.commandName === 'insert' || event.commandName === 'update' || event.commandName === 'find') {
+          console.log('[mongo] commandStarted', {
+            commandName: event.commandName,
+            databaseName: event.databaseName,
+            command: event.command,
+          })
+        }
+      })
+      client.on('commandSucceeded', (event) => {
+        if (event.commandName === 'insert' || event.commandName === 'update' || event.commandName === 'find') {
+          console.log('[mongo] commandSucceeded', {
+            commandName: event.commandName,
+            duration: event.duration,
+            reply: event.reply,
+          })
+        }
+      })
+      client.on('commandFailed', (event) => {
+        console.log('[mongo] commandFailed', {
+          commandName: event.commandName,
+          duration: event.duration,
+          failure: event.failure,
+          requestId: event.requestId,
+          connectionId: event.connectionId,
+        })
+      })
+    },
   }),
   email: nodemailerAdapter({
     defaultFromAddress: process.env.SMTP_FROM_ADDRESS || 'noreply@liberland.org',

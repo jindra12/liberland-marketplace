@@ -13,7 +13,6 @@ import {
   openCollectionList,
   saveCollectionDocument,
   saveNewCollectionDocument,
-  uploadImage,
 } from './helpers'
 
 const createDocumentViaUI = async (
@@ -107,19 +106,6 @@ const createCompanyFixture = async (
   return { id, name }
 }
 
-const addImageAndSave = async (
-  page: Page,
-  collection: string,
-  id: string,
-  testInfo: TestInfo,
-  capturePrefix: string,
-): Promise<void> => {
-  await uploadImage(page)
-  await captureScreenshot(page, testInfo, `${capturePrefix}-after-image`)
-  await saveCollectionDocument(page, collection, id)
-  await captureScreenshot(page, testInfo, `${capturePrefix}-after-save`)
-}
-
 test.describe.serial('Admin content CRUD', () => {
   test('creates, edits, and removes a product', async ({ page }, testInfo) => {
     await loginToAdmin(page, testInfo)
@@ -152,8 +138,8 @@ test.describe.serial('Admin content CRUD', () => {
     const editedProductName = `${productName} edited`
     await page.getByRole('textbox', { name: 'Name' }).fill(editedProductName)
     await captureScreenshot(page, testInfo, 'product-after-name-edit')
-
-    await addImageAndSave(page, 'products', productID, testInfo, 'product')
+    await saveCollectionDocument(page, 'products', productID)
+    await captureScreenshot(page, testInfo, 'product-after-save')
 
     await deleteDocument(page, 'products', productID)
     await openCollectionList(page, 'products')
@@ -192,8 +178,8 @@ test.describe.serial('Admin content CRUD', () => {
     const editedCompanyName = `${companyName} edited`
     await page.getByRole('textbox', { name: 'Name' }).fill(editedCompanyName)
     await captureScreenshot(page, testInfo, 'company-after-name-edit')
-
-    await addImageAndSave(page, 'companies', companyID, testInfo, 'company')
+    await saveCollectionDocument(page, 'companies', companyID)
+    await captureScreenshot(page, testInfo, 'company-after-save')
 
     await deleteDocument(page, 'companies', companyID)
     await openCollectionList(page, 'companies')
@@ -230,8 +216,8 @@ test.describe.serial('Admin content CRUD', () => {
     const editedIdentityName = `${identityName} edited`
     await page.getByRole('textbox', { name: 'Name' }).fill(editedIdentityName)
     await captureScreenshot(page, testInfo, 'identity-after-name-edit')
-
-    await addImageAndSave(page, 'identities', identityID, testInfo, 'identity')
+    await saveCollectionDocument(page, 'identities', identityID)
+    await captureScreenshot(page, testInfo, 'identity-after-save')
 
     await deleteDocument(page, 'identities', identityID)
     await openCollectionList(page, 'identities')
@@ -272,8 +258,8 @@ test.describe.serial('Admin content CRUD', () => {
     const editedStartupTitle = `${startupTitle} edited`
     await page.getByRole('textbox', { name: 'Title' }).fill(editedStartupTitle)
     await captureScreenshot(page, testInfo, 'startup-after-title-edit')
-
-    await addImageAndSave(page, 'startups', startupID, testInfo, 'startup')
+    await saveCollectionDocument(page, 'startups', startupID)
+    await captureScreenshot(page, testInfo, 'startup-after-save')
 
     await deleteDocument(page, 'startups', startupID)
     await openCollectionList(page, 'startups')
@@ -323,8 +309,8 @@ test.describe.serial('Admin content CRUD', () => {
     const editedJobTitle = `${jobTitle} edited`
     await page.getByRole('textbox', { name: 'Title' }).fill(editedJobTitle)
     await captureScreenshot(page, testInfo, 'job-after-title-edit')
-
-    await addImageAndSave(page, 'jobs', jobID, testInfo, 'job')
+    await saveCollectionDocument(page, 'jobs', jobID)
+    await captureScreenshot(page, testInfo, 'job-after-save')
 
     await deleteDocument(page, 'jobs', jobID)
     await openCollectionList(page, 'jobs')

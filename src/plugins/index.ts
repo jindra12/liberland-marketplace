@@ -23,6 +23,7 @@ import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
 import { likesPlugin } from './likes'
+import { deferSearchSyncPlugin } from './deferSearchSync'
 
 const betterAuthSecret = process.env.BETTER_AUTH_SECRET
 
@@ -204,5 +205,6 @@ export const plugins: Plugin[] = [
       },
     },
   }),
+  deferSearchSyncPlugin,
   hideAdminCollections,
 ]

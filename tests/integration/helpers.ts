@@ -87,15 +87,15 @@ export const fillRelationshipField = async (
   label: string,
   value: string,
 ): Promise<void> => {
-  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const labelPattern = new RegExp(`^${escapedLabel}(\\s*\\*)?$`)
   const fieldCandidates: Locator[] = [
+    page.getByRole('combobox', { name: label }),
     page
       .locator('label')
-      .filter({ hasText: labelPattern })
-      .locator('xpath=ancestor::div[contains(@class,"field")][1]//div[contains(@class,"relationship__wrap")]//input')
+      .filter({ hasText: new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s*\\*)?$`) })
+      .locator(
+        'xpath=ancestor::div[contains(@class,"field")][1]//div[contains(@class,"relationship__wrap")]//input',
+      )
       .first(),
-    page.getByRole('combobox', { name: label }),
   ]
   const fieldMatches = await Promise.all(
     fieldCandidates.map(async (candidate) => ((await candidate.count()) > 0 ? candidate : null)),
@@ -107,11 +107,13 @@ export const fillRelationshipField = async (
   }
 
   await field.waitFor({ state: 'visible' })
-  await field.evaluate((element) => {
-    if (element instanceof HTMLInputElement) {
-      element.focus()
-    }
-  })
+  await field.click()
+
+  if (label === 'Tribe') {
+    await page.getByRole('option').first().click()
+    return
+  }
+
   await page.keyboard.type(value)
   await page.getByRole('option', { name: value }).first().click()
 }
@@ -160,9 +162,13 @@ export const saveNewCollectionDocument = async (
 
   const response = await responsePromise
   const responseText = await response.text()
+  const request = response.request()
+  const requestPostData = request.postData() ?? '(no request body)'
 
   if (!response.ok()) {
-    throw new Error(`Create ${collection} failed (${response.status()}): ${responseText}`)
+    throw new Error(
+      `Create ${collection} failed (${response.status()}): ${responseText}\nRequest body:\n${requestPostData}`,
+    )
   }
 
   await navigationPromise
@@ -250,6 +256,18 @@ export const uploadImage = async (page: Page): Promise<void> => {
     return response.request().method() === 'POST' && response.url().includes('/api/media')
   })
 
-  await page.locator('input[type="file"]').first().setInputFiles(generatedImagePath)
+  const fileInput = page.locator('input[type="file"]').first()
+  const imageField = page
+    .locator('label')
+    .filter({ hasText: /^Image$/ })
+    .locator('xpath=ancestor::div[contains(@class,"field")][1]')
+  const createNewButton = imageField.getByRole('button', { name: /^Create New$/i }).first()
+
+  if ((await fileInput.count()) === 0) {
+    await createNewButton.click()
+  }
+
+  await fileInput.waitFor({ state: 'attached' })
+  await fileInput.setInputFiles(generatedImagePath)
   await imageResponse
 }

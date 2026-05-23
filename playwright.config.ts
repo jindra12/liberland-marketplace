@@ -13,7 +13,7 @@ export default defineConfig({
   reporter: 'line',
   use: {
     baseURL: adminURL,
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
   },
   projects: [
     {
