@@ -1,10 +1,16 @@
 import { APIError, type CollectionBeforeChangeHook } from 'payload'
 
+import type { AccessUser } from '@/access/types'
+
 type MaybeID = null | number | string | { id?: unknown }
 
 type MaybeOwnerDoc = {
   authors?: unknown
   createdBy?: unknown
+}
+
+type BotAccessUser = Exclude<AccessUser, null | undefined> & {
+  bot?: boolean | null
 }
 
 const toStringID = (value: MaybeID): null | string => {
@@ -32,13 +38,15 @@ const getOwnerID = (doc?: MaybeOwnerDoc | null): null | string => {
   return toStringID(doc?.createdBy as MaybeID)
 }
 
-const isBotUser = (user: unknown): boolean => {
-  if (!user || typeof user !== 'object' || !('bot' in user)) {
+const isBotUser = (user: AccessUser): user is BotAccessUser => {
+  if (!user) {
     return false
   }
 
-  return (user as { bot?: unknown }).bot === true
+  return 'bot' in user && user.bot === true
 }
+
+const isAdminUser = (user: AccessUser): boolean => user?.role?.includes('admin') || false
 
 const canBotBypassOwnership = async ({
   companyID,
@@ -64,6 +72,10 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
   originalDoc,
   req,
 }) => {
+  if (isAdminUser(req.user)) {
+    return data
+  }
+
   const companyInput = (data?.company ?? originalDoc?.company) as MaybeID
   const companyID = toStringID(companyInput)
 
@@ -96,7 +108,7 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
     collection: 'companies',
     depth: 0,
     limit: 1,
-    overrideAccess: false,
+    overrideAccess: true,
     req,
     where: {
       and: [

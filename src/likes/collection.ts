@@ -7,6 +7,7 @@ import type {
   Field,
 } from 'payload'
 
+import { createdByField } from '@/fields/createdByField'
 import type { LikeableCollectionSlug } from './constants'
 import { getLikeActorKey, getLikeCollectionConfig, getLikeCollectionSlug, getLikeTargetID } from './utils'
 import {
@@ -74,6 +75,7 @@ const setLikeActorKey: CollectionBeforeValidateHook = ({ data, operation, req })
 
   return {
     ...nextData,
+    createdBy: actorKey,
     userId: actorKey,
   }
 }
@@ -120,6 +122,7 @@ const buildLikeCountDeleteHook =
   }
 
 const likeFields: Field[] = [
+  createdByField,
   {
     name: 'userId',
     relationTo: 'users',

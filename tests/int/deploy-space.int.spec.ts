@@ -567,10 +567,11 @@ exit 0
       expect(readFileSync(runtimeEnv, 'utf8')).toContain('/auth/callback"')
       expect(readFileSync(composeFile, 'utf8')).toContain('127.0.0.1:3001:3001')
       expect(readFileSync(composeFile, 'utf8')).not.toContain('caddy:')
-      expect(readFileSync(composeFile, 'utf8')).toContain('mongo-keyfile-init:')
-      expect(readFileSync(composeFile, 'utf8')).toContain('mongo-keyfile:/etc/mongo-keyfile:ro')
-      expect(readFileSync(composeFile, 'utf8')).toContain('--keyFile')
-      expect(readFileSync(composeFile, 'utf8')).toContain('/etc/mongo-keyfile/mongo-keyfile')
+      expect(readFileSync(composeFile, 'utf8')).toContain('image: mongo:8.0.19')
+      expect(readFileSync(composeFile, 'utf8')).not.toContain('mongo-keyfile-init:')
+      expect(readFileSync(composeFile, 'utf8')).not.toContain('mongo-keyfile:/etc/mongo-keyfile:ro')
+      expect(readFileSync(composeFile, 'utf8')).not.toContain('--keyFile')
+      expect(readFileSync(composeFile, 'utf8')).not.toContain('replicaSet=rs0')
       expect(readFileSync(nginxSiteFile, 'utf8')).toContain('server_name marketplace.203-0-113-10.nip.io;')
       expect(readFileSync(nginxSiteFile, 'utf8')).toContain('proxy_pass http://127.0.0.1:3001;')
       expect(readFileSync(certbotHitFile, 'utf8')).toContain('--nginx -d marketplace.203-0-113-10.nip.io')
@@ -912,8 +913,7 @@ exit 0
           'MONGO_APP_DB_NAME="liberland"',
           'MONGO_APP_USER="liberland_app"',
           'MONGO_APP_PASSWORD="reuse-app-password"',
-          'MONGO_KEYFILE="reuse-keyfile"',
-          'DATABASE_URL="mongodb://liberland_app:reuse-app-password@mongo:27017/liberland?authSource=liberland&replicaSet=rs0"',
+          'DATABASE_URL="mongodb://liberland_app:reuse-app-password@mongo:27017/liberland?authSource=liberland"',
           'SYNDICATION_NAME="Devserver"',
           'SYNDICATION_DESCRIPTION="Devserver deployment"',
           '',
@@ -966,7 +966,7 @@ exit 0
       expect(stdout).not.toContain('wrongsubdomain')
       expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_INITDB_ROOT_PASSWORD="reuse-root-password"')
       expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_APP_PASSWORD="reuse-app-password"')
-      expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).toContain('MONGO_KEYFILE="reuse-keyfile"')
+      expect(readFileSync(path.join(reuseInstallRoot, 'source', '.deploy', 'runtime.env'), 'utf8')).not.toContain('MONGO_KEYFILE=')
 
       await waitForServer(`http://127.0.0.1:${appPort}/admin`)
 

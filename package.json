@@ -16,8 +16,8 @@
     "dev:next": "cross-env NODE_OPTIONS=--no-deprecation ./scripts/next-dev.sh",
     "dev:crypto-rate-cron": "cross-env NODE_OPTIONS=--no-deprecation ./scripts/crypto-rate-cron.sh",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation node --import tsx ./scripts/generate-importmap.ts",
-    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation node --experimental-specifier-resolution=node --import tsx ./node_modules/payload/dist/bin/index.js generate:types",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation pnpm exec tsx ./scripts/generate-importmap.ts",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation pnpm exec tsx ./node_modules/payload/dist/bin/index.js generate:types",
     "ii": "cross-env NODE_OPTIONS=--no-deprecation pnpm --ignore-workspace install",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
@@ -28,7 +28,7 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation ./scripts/next-start.sh",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e:admin-login-cors": "pnpm exec playwright test tests/integration/admin-login-cors.e2e.spec.ts --config=./playwright.config.ts",
-    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test --config=playwright.config.ts",
+    "test:e2e": "cross-env NODE_OPTIONS=--no-deprecation pnpm exec playwright test --config=playwright.config.ts",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {

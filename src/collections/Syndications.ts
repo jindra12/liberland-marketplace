@@ -1,5 +1,6 @@
 import { anyone } from '@/access/anyone'
 import { adminOnly, isAdminUser } from '@/access/admin'
+import { createdByField } from '@/fields/createdByField'
 import { markdownField } from '@/fields/markdownField'
 import type { Access, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
@@ -48,17 +49,7 @@ export const Syndications: CollectionConfig = {
     beforeValidate: [forceDraftOnCreate],
   },
   fields: [
-    {
-      name: 'createdBy',
-      type: 'relationship',
-      relationTo: 'users',
-      required: false,
-      maxDepth: 0,
-      admin: {
-        hidden: true,
-        readOnly: true,
-      },
-    },
+    createdByField,
     {
       name: 'name',
       type: 'text',

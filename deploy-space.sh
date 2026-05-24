@@ -15,6 +15,7 @@ APP_PORT="${APP_PORT:-3001}"
 MONGO_DB_NAME="liberland"
 MONGO_APP_USER="liberland_app"
 MONGO_ROOT_USER="rootAdmin"
+MONGO_IMAGE_TAG="${MONGO_IMAGE_TAG:-mongo:8.0.19}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 usage() {
@@ -367,6 +368,9 @@ prepare_source_checkout() {
     return
   fi
 
+  git -C "$SOURCE_DIR" reset --hard HEAD >/dev/null 2>&1
+  git -C "$SOURCE_DIR" clean -fd -e .deploy >/dev/null 2>&1
+
   if [[ -n "$BRANCH" ]]; then
     git -C "$SOURCE_DIR" fetch origin "$BRANCH"
     git -C "$SOURCE_DIR" checkout -B "$BRANCH" "origin/$BRANCH"
@@ -535,10 +539,9 @@ MONGO_INITDB_ROOT_USERNAME="${MONGO_INITDB_ROOT_USERNAME:-rootAdmin}"
 MONGO_INITDB_ROOT_PASSWORD="${MONGO_INITDB_ROOT_PASSWORD:-$(generate_secret)}"
 MONGO_APP_USER="${MONGO_APP_USER:-liberland_app}"
 MONGO_APP_PASSWORD="${MONGO_APP_PASSWORD:-$(generate_secret)}"
-MONGO_KEYFILE="${MONGO_KEYFILE:-$(generate_secret)}"
 MONGO_APP_DB_NAME="${MONGO_APP_DB_NAME:-liberland_${APP_SUBDOMAIN}}"
 
-DATABASE_URL="mongodb://${MONGO_APP_USER}:${MONGO_APP_PASSWORD}@mongo:27017/${MONGO_APP_DB_NAME}?authSource=${MONGO_APP_DB_NAME}&replicaSet=rs0"
+DATABASE_URL="mongodb://${MONGO_APP_USER}:${MONGO_APP_PASSWORD}@mongo:27017/${MONGO_APP_DB_NAME}?authSource=${MONGO_APP_DB_NAME}"
 NEXT_PUBLIC_SERVER_URL="https://${APP_DOMAIN}"
 NEXT_PUBLIC_FRONTEND_URL="$NEXT_PUBLIC_SERVER_URL"
 FRONTEND_URL="$NEXT_PUBLIC_SERVER_URL"
@@ -604,7 +607,6 @@ set_and_export MONGO_INITDB_ROOT_PASSWORD "$MONGO_INITDB_ROOT_PASSWORD"
 set_and_export MONGO_APP_DB_NAME "$MONGO_APP_DB_NAME"
 set_and_export MONGO_APP_USER "$MONGO_APP_USER"
 set_and_export MONGO_APP_PASSWORD "$MONGO_APP_PASSWORD"
-set_and_export MONGO_KEYFILE "$MONGO_KEYFILE"
 set_and_export DATABASE_URL "$DATABASE_URL"
 set_and_export NEXT_PUBLIC_SERVER_URL "$NEXT_PUBLIC_SERVER_URL"
 set_and_export NEXT_PUBLIC_FRONTEND_URL "$NEXT_PUBLIC_FRONTEND_URL"
@@ -673,7 +675,6 @@ MONGO_INITDB_ROOT_PASSWORD=$(quote_env_value "$MONGO_INITDB_ROOT_PASSWORD")
 MONGO_APP_DB_NAME=$(quote_env_value "$MONGO_APP_DB_NAME")
 MONGO_APP_USER=$(quote_env_value "$MONGO_APP_USER")
 MONGO_APP_PASSWORD=$(quote_env_value "$MONGO_APP_PASSWORD")
-MONGO_KEYFILE=$(quote_env_value "$MONGO_KEYFILE")
 DATABASE_URL=$(quote_env_value "$DATABASE_URL")
 NEXT_PUBLIC_SERVER_URL=$(quote_env_value "$NEXT_PUBLIC_SERVER_URL")
 NEXT_PUBLIC_FRONTEND_URL=$(quote_env_value "$NEXT_PUBLIC_FRONTEND_URL")
@@ -687,52 +688,9 @@ cat > "$MONGO_INIT_FILE" <<'EOF'
 const appDbName = process.env.MONGO_APP_DB_NAME
 const appUser = process.env.MONGO_APP_USER
 const appPassword = process.env.MONGO_APP_PASSWORD
-const rootHost = process.env.MONGO_REPLICA_HOST || 'mongo:27017'
 
 if (!appDbName || !appUser || !appPassword) {
   throw new Error('Missing MongoDB bootstrap variables.')
-}
-
-const adminDb = db.getSiblingDB('admin')
-
-let replicaReady = false
-try {
-  const status = adminDb.runCommand({ replSetGetStatus: 1 })
-  replicaReady = status.ok === 1
-} catch {
-  replicaReady = false
-}
-
-if (!replicaReady) {
-  try {
-    rs.initiate({
-      _id: 'rs0',
-      members: [{ _id: 0, host: rootHost }],
-    })
-  } catch (error) {
-    if (!String(error).includes('already initialized')) {
-      throw error
-    }
-  }
-}
-
-let writablePrimary = false
-for (let attempt = 0; attempt < 60; attempt += 1) {
-  try {
-    const hello = adminDb.runCommand({ hello: 1 })
-    if (hello.isWritablePrimary === true) {
-      writablePrimary = true
-      break
-    }
-  } catch {
-    // Retry until the replica set stabilizes.
-  }
-
-  sleep(1000)
-}
-
-if (!writablePrimary) {
-  throw new Error('MongoDB replica set never became writable.')
 }
 
 const appDb = db.getSiblingDB(appDbName)
@@ -972,7 +930,7 @@ for (const fileName of collections) {
 EOF
   MONGO_SEED_SERVICE_BLOCK=$(cat <<EOF
   mongo-seed:
-    image: mongo:8.0
+    image: ${MONGO_IMAGE_TAG}
     depends_on:
       mongo-init:
         condition: service_completed_successfully
@@ -987,7 +945,7 @@ EOF
       - sh
       - -lc
       - |
-        mongosh "mongodb://\${MONGO_APP_USER}:\${MONGO_APP_PASSWORD}@mongo:27017/\${MONGO_APP_DB_NAME}?authSource=\${MONGO_APP_DB_NAME}&replicaSet=rs0" --quiet /mongo-seed.js
+        mongosh "mongodb://\${MONGO_APP_USER}:\${MONGO_APP_PASSWORD}@mongo:27017/\${MONGO_APP_DB_NAME}?authSource=\${MONGO_APP_DB_NAME}" --quiet /mongo-seed.js
     restart: "no"
 
 EOF
@@ -996,33 +954,11 @@ fi
 
 cat > "$COMPOSE_FILE" <<EOF
 services:
-  mongo-keyfile-init:
-    image: mongo:8.0
-    environment:
-      MONGO_KEYFILE: \${MONGO_KEYFILE}
-    volumes:
-      - mongo-keyfile:/mongo-keyfile
-    command:
-      - sh
-      - -lc
-      - |
-        umask 177
-        printf '%s' "\$MONGO_KEYFILE" > /mongo-keyfile/mongo-keyfile
-        chown 999:999 /mongo-keyfile/mongo-keyfile
-    restart: "no"
-
   mongo:
-    image: mongo:8.0
-    depends_on:
-      mongo-keyfile-init:
-        condition: service_completed_successfully
+    image: ${MONGO_IMAGE_TAG}
     command:
       - mongod
-      - --replSet
-      - rs0
       - --bind_ip_all
-      - --keyFile
-      - /etc/mongo-keyfile/mongo-keyfile
     environment:
       MONGO_INITDB_ROOT_USERNAME: \${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: \${MONGO_INITDB_ROOT_PASSWORD}
@@ -1037,11 +973,10 @@ services:
       retries: 30
     volumes:
       - mongo-data:/data/db
-      - mongo-keyfile:/etc/mongo-keyfile:ro
     restart: unless-stopped
 
   mongo-init:
-    image: mongo:8.0
+    image: ${MONGO_IMAGE_TAG}
     depends_on:
       mongo:
         condition: service_healthy
@@ -1051,7 +986,6 @@ services:
       MONGO_APP_DB_NAME: \${MONGO_APP_DB_NAME}
       MONGO_APP_USER: \${MONGO_APP_USER}
       MONGO_APP_PASSWORD: \${MONGO_APP_PASSWORD}
-      MONGO_REPLICA_HOST: mongo:27017
     volumes:
       - ./mongo-init.js:/mongo-init.js:ro
     command:
@@ -1143,7 +1077,6 @@ ${APP_DEPENDS_ON_BLOCK}
 
 volumes:
   mongo-data:
-  mongo-keyfile:
 EOF
 
 echo

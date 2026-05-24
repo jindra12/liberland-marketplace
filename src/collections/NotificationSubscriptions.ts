@@ -9,6 +9,7 @@ import {
   canDeleteNotificationSubscriptions,
   canReadNotificationSubscriptions,
 } from '@/access/notificationSubscriptions'
+import { createdByField } from '@/fields/createdByField'
 import type { NotificationSubscription } from '@/payload-types'
 import {
   NEWSLETTER_SUBSCRIBERS_SLUG,
@@ -121,16 +122,7 @@ export const NotificationSubscriptions: CollectionConfig = {
         readOnly: true,
       },
     },
-    {
-      name: 'createdBy',
-      type: 'relationship',
-      relationTo: 'users',
-      maxDepth: 0,
-      admin: {
-        hidden: true,
-        readOnly: true,
-      },
-    },
+    createdByField,
     {
       name: 'email',
       type: 'email',

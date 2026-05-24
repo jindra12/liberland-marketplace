@@ -1,6 +1,7 @@
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateContent'
 import { completenessScoreField } from '@/fields/completenessScoreField'
+import { createdByField } from '@/fields/createdByField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
@@ -82,6 +83,7 @@ export const Startups: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    createdByField,
     serverURLField(),
     { name: 'title', type: 'text', required: true },
     {

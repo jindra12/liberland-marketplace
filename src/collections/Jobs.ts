@@ -2,6 +2,7 @@ import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateCo
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
+import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
@@ -74,6 +75,7 @@ export const Jobs: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    createdByField,
     serverURLField(),
     { name: 'title', type: 'text', required: true },
 

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { createdByField } from '@/fields/createdByField'
 import { NEWSLETTER_SUBSCRIBERS_SLUG } from '@/newsletter/constants'
 
 export const Subscribers: CollectionConfig = {
@@ -14,16 +15,7 @@ export const Subscribers: CollectionConfig = {
     update: () => false,
   },
   fields: [
-    {
-      name: 'createdBy',
-      type: 'relationship',
-      relationTo: 'users',
-      maxDepth: 0,
-      admin: {
-        hidden: true,
-        readOnly: true,
-      },
-    },
+    createdByField,
     {
       name: 'email',
       type: 'email',

@@ -4,6 +4,7 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
+import { createdByField } from '@/fields/createdByField'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { markdownField } from '@/fields/markdownField'
@@ -68,6 +69,7 @@ export const Posts: CollectionConfig<'posts'> = {
     },
   },
   fields: [
+    createdByField,
     {
       name: 'title',
       type: 'text',

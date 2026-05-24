@@ -1,4 +1,5 @@
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { markdownField } from '@/fields/markdownField'
@@ -67,7 +68,7 @@ const hasUnlimitedInventory = (siblingData: unknown): boolean =>
 const unlimitedInventoryField: CheckboxField = {
   name: unlimitedInventoryFieldName,
   type: 'checkbox',
-  defaultValue: false,
+  defaultValue: true,
   label: 'Unlimited',
   admin: {
     width: '50%',
@@ -76,17 +77,7 @@ const unlimitedInventoryField: CheckboxField = {
 
 export const productFields: Field[] = [
   serverURLField(),
-  {
-    name: 'createdBy',
-    type: 'relationship',
-    relationTo: 'users',
-    required: true,
-    maxDepth: 0,
-    admin: {
-      hidden: true,
-      readOnly: true,
-    },
-  },
+  createdByField,
   {
     name: 'name',
     type: 'text',

@@ -1,6 +1,7 @@
 import type { ClientUser, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
 import { adminOnly, isAdminUser } from '@/access/admin'
+import { createdByField } from '@/fields/createdByField'
 import { lazySendInformationRequestCreatedNotifications } from '@/hooks/lazyCollectionHooks'
 const ownOrAdmin = ({ req: { user } }: { req: { user?: ClientUser | null } }) => {
   if (isAdminUser(user)) {
@@ -48,6 +49,7 @@ export const InformationRequests: CollectionConfig = {
     beforeValidate: [attachUser],
   },
   fields: [
+    createdByField,
     {
       name: 'user',
       type: 'relationship',

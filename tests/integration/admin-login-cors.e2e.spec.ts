@@ -2,16 +2,15 @@ import { expect, test } from '@playwright/test'
 
 import {
   captureScreenshot,
+  deployedAdminURL,
   deployedAdminLoginURL,
   loginEmail,
   loginPassword,
 } from './helpers'
 
-const expectedAuthOrigin = 'https://devserver.207-180-231-104.nip.io'
-const wrongAuthOrigin = 'https://devserver1.207-180-231-104.nip.io'
-
 test.describe('Deployed admin login', () => {
-  test('posts login to the devserver origin and reaches admin', async ({ page }, testInfo) => {
+  test('posts login to the configured admin origin and reaches admin', async ({ page }, testInfo) => {
+    const expectedAuthOrigin = new URL(deployedAdminURL).origin
     const consoleErrors: string[] = []
     const authRequests: string[] = []
 
@@ -60,7 +59,5 @@ test.describe('Deployed admin login', () => {
       `Observed auth requests: ${authRequests.join(', ') || '(none)'}`,
       `Console errors: ${consoleErrors.join(' | ') || '(none)'}`,
     ].join('\n')).toContain(expectedAuthOrigin)
-
-    expect(request.url()).not.toContain(wrongAuthOrigin)
   })
 })

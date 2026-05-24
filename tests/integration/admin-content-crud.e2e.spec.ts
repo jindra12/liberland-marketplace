@@ -7,7 +7,10 @@ import {
   fillRelationshipField,
   fillSelectField,
   fillTextField,
+  getDocumentActionButton,
   loginToAdmin,
+  logFieldValues,
+  logValidationIssues,
   openCollectionCreate,
   openCollectionDocument,
   openCollectionList,
@@ -24,7 +27,6 @@ const createDocumentViaUI = async (
 ): Promise<string> => {
   const createPage = await page.context().newPage()
   const browserErrors: string[] = []
-  const saveButton = createPage.getByRole('button', { name: /save/i }).first()
 
   createPage.on('console', (message) => {
     if (message.type() === 'error') {
@@ -42,10 +44,13 @@ const createDocumentViaUI = async (
     await createPage.waitForLoadState('networkidle').catch(() => {})
     await captureScreenshot(createPage, testInfo, `${screenshotPrefix}-create-open`)
     await fillForm(createPage)
+    await captureScreenshot(createPage, testInfo, `${screenshotPrefix}-before-save`)
+    await logFieldValues(createPage, ['company', 'createdBy', 'description', 'inventory'])
+    await logValidationIssues(createPage)
+    const saveButton = await getDocumentActionButton(createPage)
     await expect(saveButton).toBeEnabled({
       timeout: 60000,
     })
-    await captureScreenshot(createPage, testInfo, `${screenshotPrefix}-before-save`)
     const id = await saveNewCollectionDocument(createPage, collection).catch((error: Error) => {
       throw new Error(
         `${error.message}\nBrowser errors:\n${browserErrors.join('\n') || '(none)'}`,

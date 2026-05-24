@@ -5,7 +5,9 @@
     },
     "accountId": "eb4a56a38dd5c05623069ca9",
     "providerId": "credential",
-    "createdBy": "eb4a56a38dd5c05623069ca9",
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
     "user": {
       "$oid": "eb4a56a38dd5c05623069ca9"
     },

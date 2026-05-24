@@ -1,13 +1,18 @@
-[{
-	"_id": {
-		"$oid": "69fc00000000000000000001"
-	},
-	"email": "test-subscriber@example.com",
-	"isActive": true,
-	"updatedAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	},
-	"createdAt": {
-		"$date": "2026-05-03T00:00:00.000Z"
-	}
-}]
+[
+  {
+    "_id": {
+      "$oid": "69fc00000000000000000001"
+    },
+    "email": "test-subscriber@example.com",
+    "isActive": true,
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    }
+  }
+]

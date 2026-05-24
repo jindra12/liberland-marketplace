@@ -1,5 +1,6 @@
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { authenticatedCanCreateCompany } from '@/access/authenticatedCanCreateCompany'
+import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
@@ -75,6 +76,7 @@ export const Companies: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    createdByField,
     serverURLField(),
     {
       name: 'isPrivate',

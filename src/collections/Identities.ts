@@ -1,5 +1,6 @@
 import { anyone } from '@/access/anyone'
 import { completenessScoreField } from '@/fields/completenessScoreField'
+import { createdByField } from '@/fields/createdByField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
@@ -54,6 +55,7 @@ export const Identities: CollectionConfig = {
     afterChange: [lazySendItemUpdateNotifications('identities')],
   },
   fields: [
+    createdByField,
     serverURLField(),
     {
       name: 'id',

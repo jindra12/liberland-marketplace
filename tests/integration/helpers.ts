@@ -2,15 +2,6 @@ import path from 'node:path'
 
 import { expect, type Locator, type Page, type TestInfo } from '@playwright/test'
 
-type CreatedDocumentResponse = {
-  doc?: {
-    _id?: string
-    id?: string
-  }
-  _id?: string
-  id?: string
-}
-
 const defaultAdminURL = 'https://devserver.207-180-231-104.nip.io/admin'
 const adminURL = process.env.PLAYWRIGHT_ADMIN_URL ?? defaultAdminURL
 const adminOrigin = new URL(adminURL).origin
@@ -38,15 +29,93 @@ export const captureScreenshot = async (
   name: string,
 ): Promise<void> => {
   const screenshotPath = testInfo.outputPath(`${name}.png`)
-  await page.screenshot({ path: screenshotPath, fullPage: true })
-  await testInfo.attach(name, {
-    contentType: 'image/png',
-    path: screenshotPath,
-  })
+  try {
+    await page.screenshot({ path: screenshotPath, fullPage: true, timeout: 15000 })
+    await testInfo.attach(name, {
+      contentType: 'image/png',
+      path: screenshotPath,
+    })
+  } catch (error) {
+    console.error(`Screenshot "${name}" failed:`, error)
+  }
+}
+
+export const logValidationIssues = async (page: Page): Promise<void> => {
+  const issueBadge = page.getByText(/\bIssue(s)?\b/i).first()
+  const issueBadgeCount = await issueBadge.count().catch(() => 0)
+
+  if (issueBadgeCount > 0) {
+    console.log('Validation issue badge text:', await issueBadge.textContent().catch(() => null))
+  }
+
+  const invalidFields = page.locator('[aria-invalid="true"]')
+  const invalidFieldCount = await invalidFields.count()
+  const invalidFieldSummaries = await Promise.all(
+    Array.from({ length: invalidFieldCount }, async (_, index) => {
+      const field = invalidFields.nth(index)
+      const label =
+        (await field.getAttribute('aria-label').catch(() => null)) ??
+        (await field.getAttribute('name').catch(() => null)) ??
+        (await field.getAttribute('id').catch(() => null))
+
+      return {
+        label,
+        value: await field.inputValue().catch(() => field.textContent().catch(() => null)),
+      }
+    }),
+  )
+
+  console.log('Invalid field summaries:', JSON.stringify(invalidFieldSummaries, null, 2))
+}
+
+export const logFieldValues = async (
+  page: Page,
+  fieldNames: string[],
+): Promise<void> => {
+  const summaries = await Promise.all(
+    fieldNames.map(async (fieldName) => {
+      const field = page.locator(`[name="${fieldName}"]`).first()
+      const count = await field.count()
+
+      if (count === 0) {
+        return { fieldName, present: false, value: null }
+      }
+
+      const tagName = await field.evaluate((element) => element.tagName.toLowerCase())
+      const value =
+        tagName === 'input' || tagName === 'textarea' || tagName === 'select'
+          ? await field.inputValue().catch(() => null)
+          : await field.textContent().catch(() => null)
+
+      return { fieldName, present: true, tagName, value }
+    }),
+  )
+
+  console.log('Field value summaries:', JSON.stringify(summaries, null, 2))
+}
+
+export const getDocumentActionButton = async (page: Page): Promise<Locator> => {
+  const buttonCandidates = [
+    page.getByRole('button', { name: /^Save Draft$/i }),
+    page.getByRole('button', { name: /^Save$/i }),
+    page.getByRole('button', { name: /^Publish$/i }),
+  ]
+
+  const buttonMatches = await Promise.all(
+    buttonCandidates.map(async (candidate) => ((await candidate.count()) > 0 ? candidate.first() : null)),
+  )
+  const button = buttonMatches.find((candidate): candidate is Locator => candidate !== null)
+
+  if (!button) {
+    throw new Error('Document action button not found.')
+  }
+
+  return button
 }
 
 export const loginToAdmin = async (page: Page, testInfo: TestInfo): Promise<string> => {
-  await page.goto(deployedAdminLoginURL, { waitUntil: 'domcontentloaded' })
+  await page.goto(deployedAdminLoginURL, { waitUntil: 'commit' })
+  await page.waitForLoadState('networkidle').catch(() => {})
   await captureScreenshot(page, testInfo, 'admin-login-form')
 
   const loginRequestPromise = page.waitForResponse((response) => {
@@ -56,8 +125,11 @@ export const loginToAdmin = async (page: Page, testInfo: TestInfo): Promise<stri
     )
   })
 
-  await page.locator('input').first().fill(loginEmail)
-  await page.locator('input').nth(1).fill(loginPassword)
+  const emailField = page.locator('input').first()
+  const passwordField = page.locator('input').nth(1)
+
+  await emailField.fill(loginEmail)
+  await passwordField.fill(loginPassword)
 
   await page.getByRole('button', { name: /^login$/i }).click()
 
@@ -66,7 +138,7 @@ export const loginToAdmin = async (page: Page, testInfo: TestInfo): Promise<stri
     throw new Error(`Admin login failed (${loginResponse.status()}).`)
   }
 
-  await page.goto(deployedAdminURL, { waitUntil: 'domcontentloaded' })
+  await page.waitForLoadState('domcontentloaded').catch(() => {})
   await captureScreenshot(page, testInfo, 'admin-dashboard')
 
   return deployedAdminUserID
@@ -74,7 +146,7 @@ export const loginToAdmin = async (page: Page, testInfo: TestInfo): Promise<stri
 
 export const openCollectionCreate = async (page: Page, collection: string): Promise<void> => {
   await page.goto(toAdminUrl(`/admin/collections/${collection}/create`), {
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'commit',
   })
 }
 
@@ -87,15 +159,13 @@ export const fillRelationshipField = async (
   label: string,
   value: string,
 ): Promise<void> => {
+  const fieldContainer = page
+    .locator('label')
+    .filter({ hasText: new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s*\\*)?$`) })
+    .locator('xpath=ancestor::div[contains(@class,"field")][1]')
   const fieldCandidates: Locator[] = [
     page.getByRole('combobox', { name: label }),
-    page
-      .locator('label')
-      .filter({ hasText: new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s*\\*)?$`) })
-      .locator(
-        'xpath=ancestor::div[contains(@class,"field")][1]//div[contains(@class,"relationship__wrap")]//input',
-      )
-      .first(),
+    fieldContainer.locator('xpath=.//div[contains(@class,"relationship__wrap")]//input').first(),
   ]
   const fieldMatches = await Promise.all(
     fieldCandidates.map(async (candidate) => ((await candidate.count()) > 0 ? candidate : null)),
@@ -109,13 +179,14 @@ export const fillRelationshipField = async (
   await field.waitFor({ state: 'visible' })
   await field.click()
 
-  if (label === 'Tribe') {
-    await page.getByRole('option').first().click()
-    return
-  }
+  const matchingOption = page.getByRole('option', { name: value }).first()
+  const firstOption = page.getByRole('option').first()
+  const option = label === 'Tribe' ? firstOption : matchingOption
 
-  await page.keyboard.type(value)
-  await page.getByRole('option', { name: value }).first().click()
+  await field.fill(value)
+  await expect(option).toBeVisible()
+  await option.click()
+  await expect(fieldContainer.getByText(value, { exact: true })).toBeVisible()
 }
 
 export const fillSelectField = async (
@@ -148,37 +219,19 @@ export const saveNewCollectionDocument = async (
   page: Page,
   collection: string,
 ): Promise<string> => {
-  const saveButton = page.getByRole('button', { name: /save/i }).first()
-  const nextURL = new RegExp(`/admin/collections/${collection}/[^/]+$`)
-  const responsePromise = page.waitForResponse((response) => {
-    return (
-      (response.request().method() === 'POST' || response.request().method() === 'PATCH') &&
-      response.url().includes(`/api/${collection}`)
-    )
-  })
-  const navigationPromise = page.waitForURL(nextURL, { timeout: 60000 }).catch(() => {})
+  const saveButton = await getDocumentActionButton(page)
+  const nextURL = new RegExp(`/admin/collections/${collection}/(?!create$)[^/]+$`)
 
   await saveButton.click()
 
-  const response = await responsePromise
-  const responseText = await response.text()
-  const request = response.request()
-  const requestPostData = request.postData() ?? '(no request body)'
-
-  if (!response.ok()) {
-    throw new Error(
-      `Create ${collection} failed (${response.status()}): ${responseText}\nRequest body:\n${requestPostData}`,
-    )
-  }
-
-  await navigationPromise
+  await page.waitForURL(nextURL, { timeout: 60000 })
   await page.waitForLoadState('networkidle').catch(() => {})
 
-  const body = JSON.parse(responseText) as CreatedDocumentResponse
-  const id = body.doc?._id ?? body.doc?.id ?? body._id ?? body.id
+  const pathname = new URL(page.url()).pathname
+  const id = pathname.split('/').filter(Boolean).pop()
 
   if (!id || id === 'create') {
-    throw new Error(`Missing created document ID for ${collection}. Response: ${responseText}`)
+    throw new Error(`Missing created document ID for ${collection}. URL: ${page.url()}`)
   }
 
   return id
@@ -217,13 +270,13 @@ export const openCollectionDocument = async (
   id: string,
 ): Promise<void> => {
   await page.goto(toAdminUrl(`/admin/collections/${collection}/${id}`), {
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'commit',
   })
 }
 
 export const openCollectionList = async (page: Page, collection: string): Promise<void> => {
   await page.goto(toAdminUrl(`/admin/collections/${collection}`), {
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'commit',
   })
 }
 
@@ -240,14 +293,9 @@ export const saveCollectionDocument = async (
     )
   })
 
-  const saveDraftButton = page.getByRole('button', { name: 'Save Draft' })
+  const saveButton = await getDocumentActionButton(page)
 
-  if (await saveDraftButton.count()) {
-    await saveDraftButton.click()
-  } else {
-    await page.getByRole('button', { name: 'Save' }).click()
-  }
-
+  await saveButton.click()
   await responsePromise
 }
 

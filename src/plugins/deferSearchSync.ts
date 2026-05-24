@@ -197,7 +197,7 @@ const scheduleSearchCreateOrUpdate = (args: {
   req: Parameters<CollectionAfterChangeHook>[0]['req']
 }): void => {
   setTimeout(() => {
-    ;(async () => {
+    (async () => {
       try {
         await syncSearchIndexForCreateOrUpdate({
           collectionSlug: args.collectionSlug,
@@ -221,7 +221,7 @@ const scheduleSearchDelete = (args: {
   req: Parameters<CollectionAfterDeleteHook>[0]['req']
 }): void => {
   setTimeout(() => {
-    ;(async () => {
+    (async () => {
       try {
         await syncSearchIndexForDelete({
           collectionSlug: args.collectionSlug,
@@ -240,28 +240,28 @@ const scheduleSearchDelete = (args: {
 
 const makeAfterChangeHook =
   (collectionSlug: SearchIndexedCollectionSlug): CollectionAfterChangeHook =>
-  async ({ doc, operation, req }) => {
-    scheduleSearchCreateOrUpdate({
-      collectionSlug,
-      doc,
-      operation,
-      req,
-    })
+    async ({ doc, operation, req }) => {
+      scheduleSearchCreateOrUpdate({
+        collectionSlug,
+        doc,
+        operation,
+        req,
+      })
 
-    return doc
-  }
+      return doc
+    }
 
 const makeAfterDeleteHook =
   (collectionSlug: SearchIndexedCollectionSlug): CollectionAfterDeleteHook =>
-  async ({ doc, req }) => {
-    scheduleSearchDelete({
-      collectionSlug,
-      doc,
-      req,
-    })
+    async ({ doc, req }) => {
+      scheduleSearchDelete({
+        collectionSlug,
+        doc,
+        req,
+      })
 
-    return doc
-  }
+      return doc
+    }
 
 export const deferSearchSyncPlugin: Plugin = (config) => ({
   ...config,

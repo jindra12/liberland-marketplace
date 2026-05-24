@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { createdByField } from '@/fields/createdByField'
 import { lazySendReportCreatedNotifications } from '@/hooks/lazyCollectionHooks'
 import { adminOnly, adminOnlyFieldAccess, isAdminUser } from '@/access/admin'
 
@@ -34,6 +35,7 @@ export const Reports: CollectionConfig = {
     },
   ],
   fields: [
+    createdByField,
     {
       name: 'status',
       type: 'select',
