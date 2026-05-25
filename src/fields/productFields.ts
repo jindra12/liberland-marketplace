@@ -69,7 +69,7 @@ const unlimitedInventoryField: CheckboxField = {
   name: unlimitedInventoryFieldName,
   type: 'checkbox',
   defaultValue: true,
-  label: 'Unlimited',
+  label: 'Unlimited inventory',
   admin: {
     width: '50%',
   },
@@ -88,13 +88,14 @@ export const productFields: Field[] = [
     name: 'company',
     type: 'relationship',
     relationTo: 'companies',
-    required: true,
+    required: false,
     filterOptions: onlyOwnDocsOrAdminFilter,
   },
   {
     name: 'companyIdentityId',
     type: 'text',
     index: true,
+    required: false,
     admin: {
       hidden: true,
       readOnly: true,
@@ -172,6 +173,15 @@ export const mergeProductCollectionFields = (defaultFields: Field[]): Field[] =>
   const fieldsWithUnlimitedInventory: Field[] = []
 
   defaultFields.forEach((field) => {
+    if (isNamedField(field) && field.name === 'enableVariants') {
+      field.admin = {
+        ...field.admin,
+        hidden: true,
+      }
+      fieldsWithUnlimitedInventory.push(field)
+      return
+    }
+
     if (!isInventoryField(field)) {
       fieldsWithUnlimitedInventory.push(field)
       return
