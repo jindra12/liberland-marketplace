@@ -1,20 +1,17 @@
 'use client'
 
-import { useLazyLoad } from '@/components/hooks'
+import React, { Suspense } from 'react'
 
-type OrderInventoryButtonModule = typeof import('./OrderInventoryButtonContent')
+const OrderInventoryButtonContent = React.lazy(
+  async () => await import('./OrderInventoryButtonContent'),
+)
 
 const OrderInventoryButton = () => {
-  const Component = useLazyLoad<OrderInventoryButtonModule['default']>(
-    async () => (await import('./OrderInventoryButtonContent')).default,
-    'Failed to load order inventory button.',
+  return (
+    <Suspense fallback={null}>
+      <OrderInventoryButtonContent />
+    </Suspense>
   )
-
-  if (!Component) {
-    return null
-  }
-
-  return <Component />
 }
 
 export default OrderInventoryButton

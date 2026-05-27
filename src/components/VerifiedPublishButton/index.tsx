@@ -1,22 +1,21 @@
 'use client'
 
-import { useLazyLoad } from '@/components/hooks'
+import React, { Suspense } from 'react'
 
-type VerifiedPublishButtonModule = typeof import('./VerifiedPublishButtonContent')
+const VerifiedPublishButtonContent = React.lazy(
+  async () => await import('./VerifiedPublishButtonContent'),
+)
 
 export default function VerifiedPublishButton() {
-  const Component = useLazyLoad<VerifiedPublishButtonModule['default']>(
-    async () => (await import('./VerifiedPublishButtonContent')).default,
-    'Failed to load verified publish button.',
+  return (
+    <Suspense
+      fallback={
+        <button type="button" disabled className="btn btn--style-primary btn--size-medium">
+          Publish
+        </button>
+      }
+    >
+      <VerifiedPublishButtonContent />
+    </Suspense>
   )
-
-  if (!Component) {
-    return (
-      <button type="button" disabled className="btn btn--style-primary btn--size-medium">
-        Publish
-      </button>
-    )
-  }
-
-  return <Component />
 }

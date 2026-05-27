@@ -1,20 +1,15 @@
 'use client'
 
-import { useLazyLoad } from '@/components/hooks'
+import React, { Suspense } from 'react'
 
-type BanUserButtonModule = typeof import('./BanUserButtonContent')
+const BanUserButtonContent = React.lazy(async () => await import('./BanUserButtonContent'))
 
 const BanUserButton = () => {
-  const Component = useLazyLoad<BanUserButtonModule['default']>(
-    async () => (await import('./BanUserButtonContent')).default,
-    'Failed to load ban user button.',
+  return (
+    <Suspense fallback={null}>
+      <BanUserButtonContent />
+    </Suspense>
   )
-
-  if (!Component) {
-    return null
-  }
-
-  return <Component />
 }
 
 export default BanUserButton

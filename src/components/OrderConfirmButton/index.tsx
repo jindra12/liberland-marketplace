@@ -1,18 +1,15 @@
 'use client'
 
-import { useLazyLoad } from '@/components/hooks'
+import React, { Suspense } from 'react'
 
-type OrderConfirmButtonModule = typeof import('./OrderConfirmButtonContent')
+const OrderConfirmButtonContent = React.lazy(
+  async () => await import('./OrderConfirmButtonContent'),
+)
 
 export default function OrderConfirmButton() {
-  const Component = useLazyLoad<OrderConfirmButtonModule['default']>(
-    async () => (await import('./OrderConfirmButtonContent')).default,
-    'Failed to load order confirm button.',
+  return (
+    <Suspense fallback={null}>
+      <OrderConfirmButtonContent />
+    </Suspense>
   )
-
-  if (!Component) {
-    return null
-  }
-
-  return <Component />
 }

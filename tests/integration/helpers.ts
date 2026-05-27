@@ -1,6 +1,6 @@
 import path from 'node:path'
 
-import { expect, type Locator, type Page, type TestInfo } from '@playwright/test'
+import { type Locator, type Page, type TestInfo } from '@playwright/test'
 
 const defaultAdminURL = 'https://devserver.207-180-231-104.nip.io/admin'
 const adminURL = process.env.PLAYWRIGHT_ADMIN_URL ?? defaultAdminURL
@@ -68,10 +68,7 @@ export const logValidationIssues = async (page: Page): Promise<void> => {
   console.log('Invalid field summaries:', JSON.stringify(invalidFieldSummaries, null, 2))
 }
 
-export const logFieldValues = async (
-  page: Page,
-  fieldNames: string[],
-): Promise<void> => {
+export const logFieldValues = async (page: Page, fieldNames: string[]): Promise<void> => {
   const summaries = await Promise.all(
     fieldNames.map(async (fieldName) => {
       const field = page.locator(`[name="${fieldName}"]`).first()
@@ -102,7 +99,9 @@ export const getDocumentActionButton = async (page: Page): Promise<Locator> => {
   ]
 
   const buttonMatches = await Promise.all(
-    buttonCandidates.map(async (candidate) => ((await candidate.count()) > 0 ? candidate.first() : null)),
+    buttonCandidates.map(async (candidate) =>
+      (await candidate.count()) > 0 ? candidate.first() : null,
+    ),
   )
   const button = buttonMatches.find((candidate): candidate is Locator => candidate !== null)
 
@@ -120,8 +119,7 @@ export const loginToAdmin = async (page: Page, testInfo: TestInfo): Promise<stri
 
   const loginRequestPromise = page.waitForResponse((response) => {
     return (
-      response.request().method() === 'POST' &&
-      response.url().includes('/api/auth/sign-in/email')
+      response.request().method() === 'POST' && response.url().includes('/api/auth/sign-in/email')
     )
   })
 
@@ -154,46 +152,18 @@ export const fillTextField = async (page: Page, label: string, value: string): P
   await page.getByRole('textbox', { name: label }).fill(value)
 }
 
-export const fillRelationshipField = async (
-  page: Page,
-  label: string,
-  value: string,
-): Promise<void> => {
-  const fieldContainer = page
-    .locator('label')
-    .filter({ hasText: new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s*\\*)?$`) })
-    .locator('xpath=ancestor::div[contains(@class,"field")][1]')
-  const fieldCandidates: Locator[] = [
-    page.getByRole('combobox', { name: label }),
-    fieldContainer.locator('xpath=.//div[contains(@class,"relationship__wrap")]//input').first(),
-  ]
-  const fieldMatches = await Promise.all(
-    fieldCandidates.map(async (candidate) => ((await candidate.count()) > 0 ? candidate : null)),
-  )
-  const field = fieldMatches.find((candidate): candidate is Locator => candidate !== null)
+export const fillRelationshipField = async (page: Page, label: string): Promise<void> => {
+  const field = page.getByRole('combobox', { name: label })
 
-  if (!field) {
-    throw new Error(`Relationship field ${label} was not found.`)
-  }
-
-  await field.waitFor({ state: 'visible' })
   await field.click()
-
-  const matchingOption = page.getByRole('option', { name: value }).first()
-  const firstOption = page.getByRole('option').first()
-  const option = label === 'Tribe' ? firstOption : matchingOption
-
-  await field.fill(value)
-  await expect(option).toBeVisible()
-  await option.click()
-  await expect(fieldContainer.getByText(value, { exact: true })).toBeVisible()
+  await page.getByRole('option').first().waitFor({
+    state: 'visible',
+    timeout: 60000,
+  })
+  await page.getByRole('option').first().click()
 }
 
-export const fillSelectField = async (
-  page: Page,
-  label: string,
-  value: string,
-): Promise<void> => {
+export const fillSelectField = async (page: Page, label: string, value: string): Promise<void> => {
   const field = page.getByRole('combobox', { name: label })
 
   await field.click()

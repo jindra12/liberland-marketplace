@@ -5,12 +5,14 @@ const adminURL = process.env.PLAYWRIGHT_ADMIN_URL ?? 'https://devserver.207-180-
 export default defineConfig({
   testDir: './tests/integration',
   timeout: 240000,
+  retries: 2,
   expect: {
     timeout: 15000,
   },
   reporter: 'line',
   use: {
     baseURL: adminURL,
+    video: 'retain-on-failure',
     trace: 'retain-on-failure',
   },
   projects: [

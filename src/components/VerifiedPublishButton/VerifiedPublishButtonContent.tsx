@@ -20,6 +20,18 @@ const VerifiedPublishButtonContent = () => {
   })
 
   const isCoolingDown = countdown.isRunning
+  console.error('[verified-publish-debug]', {
+    user: user
+      ? {
+          id: user.id,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          role: user.role,
+        }
+      : null,
+    isAdmin: user?.role?.includes('admin') || false,
+    isEmailVerified: user?.emailVerified || false,
+  })
 
   const handleResend = useCallback(async () => {
     if (!user?.email || sending) return
@@ -87,4 +99,3 @@ const VerifiedPublishButtonContent = () => {
 };
 
 export default VerifiedPublishButtonContent;
-

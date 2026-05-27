@@ -32,7 +32,7 @@
       "$date": "2026-02-22T12:25:14.831Z"
     },
     "createdBy": {
-      "$oid": "699a52f1e3cc9546fc95d9b4"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Vertex Obrt",
     "email": "vertexobrt@gmail.com",
@@ -59,7 +59,7 @@
       "$date": "2026-03-03T20:34:58.091Z"
     },
     "createdBy": {
-      "$oid": "699b11e5e3cc9546fc95e811"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "LL Solutions & Consulting",
     "email": "infollsol@proton.me",
@@ -86,7 +86,7 @@
       "$date": "2026-02-22T21:47:22.158Z"
     },
     "createdBy": {
-      "$oid": "699b796ae3cc9546fc95ef7d"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -108,7 +108,7 @@
       "$date": "2026-02-24T13:04:18.05Z"
     },
     "createdBy": {
-      "$oid": "699d9e9aabd211e082f42ea0"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberstake",
     "email": "liberstake@gmail.com",
@@ -135,7 +135,7 @@
       "$date": "2026-02-25T23:18:24.016Z"
     },
     "createdBy": {
-      "$oid": "699b796ae3cc9546fc95ef7d"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Mironika LLC",
     "phone": "+16892982789",
@@ -189,7 +189,7 @@
       "$date": "2026-03-04T21:48:28.436Z"
     },
     "createdBy": {
-      "$oid": "69a8a8ac4882761f5f68ea48"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -212,7 +212,7 @@
       "$date": "2026-03-04T21:52:48.95Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -235,7 +235,7 @@
       "$date": "2026-03-04T22:01:14.689Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "ZChat Privacy Technologies",
     "website": "https://zsend.xyz",
@@ -262,7 +262,7 @@
       "$date": "2026-03-04T22:01:14.792Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Boostnetic s.r.o",
     "website": "https://boostnetic.xyz/",
@@ -286,7 +286,7 @@
       "$date": "2026-03-04T22:01:16.395Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Shanghai United International (HK) Limited",
     "website": "https://sutcoltd.com/",
@@ -314,7 +314,7 @@
       "$date": "2026-03-04T22:01:16.679Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Luci Digital Tech Services Corp.",
     "website": "https://lucidigital.net/",
@@ -339,7 +339,7 @@
       "$date": "2026-03-04T22:01:17.42Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "DKMZONE-1 GLOBAL BLOCKCHAINS & FASHION TECH",
     "website": "https://www.dkmzone-global.com",
@@ -367,7 +367,7 @@
       "$date": "2026-03-04T22:01:17.886Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Danubius Digital",
     "website": "https://www.danubiusdigital.com",
@@ -393,7 +393,7 @@
       "$date": "2026-03-04T22:01:26.123Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberland Treasures",
     "website": "https://www.liberlandtreasures.com",
@@ -420,7 +420,7 @@
       "$date": "2026-03-04T22:01:26.212Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberland Software Foundation (LiberSoft)",
     "website": "https://libersoft.org",
@@ -443,7 +443,7 @@
       "$date": "2026-03-04T22:01:26.715Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Eye Markets International (Eulen)",
     "website": "https://eulen.app/",
@@ -470,7 +470,7 @@
       "$date": "2026-03-04T22:01:27.753Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Common Sense Education Asia",
     "website": "https://www.commonsense-edu.org",
@@ -498,7 +498,7 @@
       "$date": "2026-03-04T22:01:28.161Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Qi Yoga Life Inc",
     "website": "https://www.qiyogalife.com",
@@ -524,7 +524,7 @@
       "$date": "2026-03-04T22:01:29.472Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "IPPON FinTech",
     "website": "https://ipponfintech.com/",
@@ -550,7 +550,7 @@
       "$date": "2026-03-04T22:01:31.096Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Furious Nerd Productions",
     "website": "https://nerdragenews.com/",
@@ -578,7 +578,7 @@
       "$date": "2026-03-04T22:01:31.178Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Paradise Circus Inc. (@fuck.it)",
     "website": "https://fuck.it",
@@ -602,7 +602,7 @@
       "$date": "2026-03-04T22:06:11.904Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "ZChat Privacy Technologies",
     "website": "https://zsend.xyz",
@@ -629,7 +629,7 @@
       "$date": "2026-03-04T22:06:13.104Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Boostnetic s.r.o",
     "website": "https://boostnetic.xyz/",
@@ -653,7 +653,7 @@
       "$date": "2026-03-04T22:06:15.159Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Shanghai United International (HK) Limited",
     "website": "https://sutcoltd.com/",
@@ -681,7 +681,7 @@
       "$date": "2026-03-04T22:06:15.947Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Luci Digital Tech Services Corp.",
     "website": "https://lucidigital.net/",
@@ -706,7 +706,7 @@
       "$date": "2026-03-04T22:06:17.081Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "DKMZONE-1 GLOBAL BLOCKCHAINS & FASHION TECH",
     "website": "https://www.dkmzone-global.com",
@@ -734,7 +734,7 @@
       "$date": "2026-03-04T22:06:21.476Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Danubius Digital",
     "website": "https://www.danubiusdigital.com",
@@ -760,7 +760,7 @@
       "$date": "2026-03-04T22:06:29.548Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberland Treasures",
     "website": "https://www.liberlandtreasures.com",
@@ -787,7 +787,7 @@
       "$date": "2026-03-04T22:06:40.953Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberland Software Foundation (LiberSoft)",
     "website": "https://libersoft.org",
@@ -810,7 +810,7 @@
       "$date": "2026-03-04T22:06:41.813Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Eye Markets International (Eulen)",
     "website": "https://eulen.app/",
@@ -837,7 +837,7 @@
       "$date": "2026-03-04T22:06:44.789Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Common Sense Education Asia",
     "website": "https://www.commonsense-edu.org",
@@ -865,7 +865,7 @@
       "$date": "2026-03-04T22:06:49.537Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Qi Yoga Life Inc",
     "website": "https://www.qiyogalife.com",
@@ -891,7 +891,7 @@
       "$date": "2026-03-04T22:06:51.45Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "IPPON FinTech",
     "website": "https://ipponfintech.com/",
@@ -917,7 +917,7 @@
       "$date": "2026-03-04T22:07:01.157Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Furious Nerd Productions",
     "website": "https://nerdragenews.com/",
@@ -945,7 +945,7 @@
       "$date": "2026-03-04T22:07:01.766Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Paradise Circus Inc. (@fuck.it)",
     "website": "https://fuck.it",
@@ -969,7 +969,7 @@
       "$date": "2026-03-04T22:07:03.257Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "LSU Corp.",
     "website": "https://liberland.team",
@@ -996,7 +996,7 @@
       "$date": "2026-03-04T22:07:03.356Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Sponsian Studios",
     "website": "https://sponsian.org",
@@ -1019,7 +1019,7 @@
       "$date": "2026-03-04T22:07:05.37Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "LIBERSOLAR Ltd.",
     "website": "https://market.ll.land/store/place4camping",
@@ -1047,7 +1047,7 @@
       "$date": "2026-03-04T22:07:13.883Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberpulco 2026",
     "website": "http://liberpulco.com/",
@@ -1074,7 +1074,7 @@
       "$date": "2026-03-04T22:07:16.631Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Tom Yum Swap",
     "website": "https://tomyum.xyz",
@@ -1097,7 +1097,7 @@
       "$date": "2026-03-04T22:07:16.861Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "LL Solutions & Consulting",
     "website": "https://llsol.carrd.co/",
@@ -1121,7 +1121,7 @@
       "$date": "2026-03-04T22:07:17.254Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "MeetRush",
     "website": "https://meetrush.com",
@@ -1147,7 +1147,7 @@
       "$date": "2026-03-04T22:07:49.551Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "GARM Clinic",
     "website": "https://garmclinic.com",
@@ -1175,7 +1175,7 @@
       "$date": "2026-03-04T22:07:50.507Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Unlimited Bio",
     "website": "https://unlimited.bio",
@@ -1202,7 +1202,7 @@
       "$date": "2026-03-04T22:07:51.188Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Infinita City",
     "website": "https://www.infinita.city",
@@ -1228,7 +1228,7 @@
       "$date": "2026-03-04T22:07:57.162Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Nomad Layer",
     "website": "https://nomadlayer.com",
@@ -1255,7 +1255,7 @@
       "$date": "2026-03-04T22:07:57.876Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Blink Wallet",
     "website": "https://blink.sv",
@@ -1283,7 +1283,7 @@
       "$date": "2026-03-04T22:07:59.752Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Boltz",
     "website": "https://boltz.exchange",
@@ -1309,7 +1309,7 @@
       "$date": "2026-03-04T22:08:00.331Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Moon (Pay with Moon)",
     "website": "https://paywithmoon.com",
@@ -1336,7 +1336,7 @@
       "$date": "2026-03-04T22:08:00.852Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "The Network Bank",
     "website": "https://www.thenetworkbank.com",
@@ -1363,7 +1363,7 @@
       "$date": "2026-03-04T22:08:01.496Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Trustless Work",
     "website": "https://www.trustlesswork.com",
@@ -1389,7 +1389,7 @@
       "$date": "2026-03-04T22:08:03.798Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Bay Islands Trust",
     "website": "https://bayislandstrust.net",
@@ -1417,7 +1417,7 @@
       "$date": "2026-03-04T22:08:04.651Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "AmityAge",
     "website": "https://www.amityage.com",
@@ -1445,7 +1445,7 @@
       "$date": "2026-03-04T22:08:05.749Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "BIFAT Center",
     "website": "https://bifat.life",
@@ -1473,7 +1473,7 @@
       "$date": "2026-03-04T22:08:06.881Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Circular Factory",
     "website": "https://www.thecircularfactory.com",
@@ -1499,7 +1499,7 @@
       "$date": "2026-03-04T22:08:07.541Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Odisea Labs",
     "website": "https://www.odisea.xyz",
@@ -1526,7 +1526,7 @@
       "$date": "2026-03-04T22:08:07.941Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Ixian Services",
     "website": "https://www.ixian.tech",
@@ -1552,7 +1552,7 @@
       "$date": "2026-03-04T22:08:10.393Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "ProspIn",
     "website": "https://www.prospin.io",
@@ -1579,7 +1579,7 @@
       "$date": "2026-03-04T22:08:12.25Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "INERTIA Advisory Group",
     "website": "https://spi-inertia.com",
@@ -1607,7 +1607,7 @@
       "$date": "2026-03-04T22:08:13.23Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Relay Human Cloud",
     "website": "https://www.relayhumancloud.com",
@@ -1635,7 +1635,7 @@
       "$date": "2026-03-04T22:08:15.231Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Próspera Arbitration Center (PAC)",
     "website": "https://pac.hn",
@@ -1663,7 +1663,7 @@
       "$date": "2026-03-04T22:08:15.92Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Seso Global",
     "website": "https://app.seso.global/home",
@@ -1688,7 +1688,7 @@
       "$date": "2026-03-04T22:08:17.274Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "SUAZO LEX",
     "website": "https://www.suazolex.com",
@@ -1715,7 +1715,7 @@
       "$date": "2026-03-04T22:08:18.343Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Las Verandas Hotel & Villas",
     "website": "https://www.lasverandasroatan.com",
@@ -1743,7 +1743,7 @@
       "$date": "2026-03-04T22:08:20.113Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Pristine Bay Beach Club",
     "website": "https://www.pristinebay.com",
@@ -1770,7 +1770,7 @@
       "$date": "2026-03-04T22:08:21.82Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Duna Residences",
     "website": "https://www.dunaresidences.com",
@@ -1798,7 +1798,7 @@
       "$date": "2026-03-04T22:08:26.163Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Spirit Origin Coffee",
     "website": "https://spiritorigincoffee.com",
@@ -1825,7 +1825,7 @@
       "$date": "2026-03-04T22:08:28.018Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "The Scuba Shop",
     "website": "https://scuba.shop",
@@ -1853,7 +1853,7 @@
       "$date": "2026-03-04T22:08:31.578Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Atlantis Rent a Car",
     "website": "https://atlantisroatan.com",
@@ -1880,7 +1880,7 @@
       "$date": "2026-03-04T22:08:33.053Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Pristine Academy",
     "website": "https://pristineacademy.co",
@@ -1908,7 +1908,7 @@
       "$date": "2026-03-04T22:08:33.734Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Prospera Havens",
     "website": "https://prosperahavens.space",
@@ -1936,7 +1936,7 @@
       "$date": "2026-03-04T22:08:35.486Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Roatan Tourism Bureau",
     "website": "https://roatantourismbureau.com",
@@ -1962,7 +1962,7 @@
       "$date": "2026-03-04T22:08:35.984Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Próspera Insurance Company",
     "website": "https://eprospera.com",
@@ -1989,7 +1989,7 @@
       "$date": "2026-03-04T22:08:38.21Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Muse Bio",
     "website": "https://www.mycells.bio",
@@ -2016,7 +2016,7 @@
       "$date": "2026-03-04T22:08:38.33Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Duality",
     "website": "https://glebrazgar.github.io/Duality",
@@ -2041,7 +2041,7 @@
       "$date": "2026-03-04T22:08:39.631Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Symbiont Labs",
     "website": "https://symbiontlabs.io",
@@ -2068,7 +2068,7 @@
       "$date": "2026-03-04T22:08:39.736Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Fracta",
     "website": "https://www.fracta.city",
@@ -2091,7 +2091,7 @@
       "$date": "2026-03-04T22:08:39.849Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "BitBooks",
     "website": "https://bitbooks.com",
@@ -2114,7 +2114,7 @@
       "$date": "2026-03-04T22:08:43.228Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Golden Order Diplomats",
     "website": "https://www.goldenorderdiplomats.com",
@@ -2140,7 +2140,7 @@
       "$date": "2026-03-04T22:08:43.362Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "PureServers",
     "website": "https://pureservers.org",
@@ -2165,7 +2165,7 @@
       "$date": "2026-03-04T22:08:43.871Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Westy",
     "website": "https://www.westy.com.br",
@@ -2189,7 +2189,7 @@
       "$date": "2026-03-04T22:08:44.454Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "raker LLC",
     "website": "https://www.rakerwork.com",
@@ -2216,7 +2216,7 @@
       "$date": "2026-03-04T22:08:45.534Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Appetite LLC",
     "website": "https://appetite.studio",
@@ -2243,7 +2243,7 @@
       "$date": "2026-03-04T22:08:46.467Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Terminus",
     "website": "https://terminus.town",
@@ -2271,7 +2271,7 @@
       "$date": "2026-03-04T22:08:46.58Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "NOMAD",
     "website": "https://nomad.homes",
@@ -2295,7 +2295,7 @@
       "$date": "2026-03-04T22:08:46.704Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Darien Village",
     "website": "https://darienvillage.com",
@@ -2318,7 +2318,7 @@
       "$date": "2026-03-04T22:08:46.84Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Pete's Place",
     "description": "2-story golf-themed dining and entertainment venue at Pristine Bay with aqua driving range overlooking the Caribbean. Part of Pristine Bay resort.\n\n*Catalogued from prospera.co/en/marketplace by Claude*",
@@ -2340,7 +2340,7 @@
       "$date": "2026-03-04T22:08:46.95Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Pristine Water Sports",
     "description": "Ocean adventure company at Pristine Bay. Guided snorkeling tours, fishing trips, sunset cruises, Cayos Cochinos day trips, nurse shark encounters, mangrove exploration, kayaking.\n\n*Catalogued from prospera.co/en/marketplace by Claude*",
@@ -2362,7 +2362,7 @@
       "$date": "2026-03-04T22:18:44.383Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Skyhawk Aviation",
     "website": "https://skyhawk.hu",
@@ -2390,7 +2390,7 @@
       "$date": "2026-03-04T22:18:46.853Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Priority Pass",
     "website": "https://www.prioritypass.com",
@@ -2415,7 +2415,7 @@
       "$date": "2026-03-04T22:19:02.382Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Cryptospace Cards",
     "website": "https://cards.cryptospace.com",
@@ -2442,7 +2442,7 @@
       "$date": "2026-03-04T22:19:02.998Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Neti (Neti Sp. z o.o.)",
     "website": "https://neti-soft.com",
@@ -2470,7 +2470,7 @@
       "$date": "2026-03-04T22:19:03.844Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Tomorrow Bio",
     "website": "https://www.tomorrow.bio",
@@ -2497,7 +2497,7 @@
       "$date": "2026-03-04T22:19:05.953Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Alcor Life Extension Foundation",
     "website": "https://www.alcor.org",
@@ -2522,7 +2522,7 @@
       "$date": "2026-03-04T22:19:07.477Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Cryonics Institute",
     "website": "https://cryonics.org",
@@ -2550,7 +2550,7 @@
       "$date": "2026-03-04T22:19:08.306Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Blueprint by Bryan Johnson",
     "website": "https://blueprint.bryanjohnson.com",
@@ -2577,7 +2577,7 @@
       "$date": "2026-03-04T22:19:09.049Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "SENS Research Foundation / Lifespan Research Institute",
     "website": "https://lifespan.io",
@@ -2601,7 +2601,7 @@
       "$date": "2026-03-04T22:19:12.323Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Longevity Escape Velocity (LEV) Foundation",
     "website": "https://www.levf.org",
@@ -2628,7 +2628,7 @@
       "$date": "2026-03-04T22:19:13.72Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "RAADfest (Revolution Against Aging and Death)",
     "website": "https://www.raadfest.com",
@@ -2655,7 +2655,7 @@
       "$date": "2026-03-04T22:19:16.175Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Coalition for Radical Life Extension",
     "website": "https://www.rlecoalition.com",
@@ -2682,7 +2682,7 @@
       "$date": "2026-03-04T22:19:16.945Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Altos Labs",
     "website": "https://www.altoslabs.com",
@@ -2709,7 +2709,7 @@
       "$date": "2026-03-04T22:19:18.809Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Retro Biosciences",
     "website": "https://retro.bio",
@@ -2736,7 +2736,7 @@
       "$date": "2026-03-04T22:19:19.251Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Fountain Life",
     "website": "https://www.fountainlife.com",
@@ -2760,7 +2760,7 @@
       "$date": "2026-03-04T22:19:20.505Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Calico Life Sciences",
     "website": "https://www.calicolabs.com",
@@ -2787,7 +2787,7 @@
       "$date": "2026-03-04T22:19:23.263Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Loyal (for Dogs)",
     "website": "https://loyal.com",
@@ -2814,7 +2814,7 @@
       "$date": "2026-03-04T22:19:23.944Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Vitalia",
     "website": "https://www.vitalia.city",
@@ -2838,7 +2838,7 @@
       "$date": "2026-03-04T22:19:24.568Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Insilico Medicine",
     "website": "https://insilico.com",
@@ -2865,7 +2865,7 @@
       "$date": "2026-03-04T22:19:25.414Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Life Biosciences",
     "website": "https://www.lifebiosciences.com",
@@ -2892,7 +2892,7 @@
       "$date": "2026-03-04T22:19:25.873Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Cambrian Bio",
     "website": "https://www.cambrianbio.com",
@@ -2916,7 +2916,7 @@
       "$date": "2026-03-04T22:19:26.819Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Elevian",
     "website": "https://www.elevian.com",
@@ -2943,7 +2943,7 @@
       "$date": "2026-03-04T22:19:28.02Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "BioViva Sciences",
     "website": "https://bioviva-science.com",
@@ -2970,7 +2970,7 @@
       "$date": "2026-03-04T22:19:29.327Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Gordian Biotechnology",
     "website": "https://www.gordian.bio",
@@ -2997,7 +2997,7 @@
       "$date": "2026-03-04T22:19:30.417Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Repair Biotechnologies",
     "website": "https://www.repairbiotechnologies.com",
@@ -3024,7 +3024,7 @@
       "$date": "2026-03-04T22:19:31.19Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "KrioRus",
     "website": "https://kriorus.ru/en",
@@ -3051,7 +3051,7 @@
       "$date": "2026-03-04T22:19:31.285Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Southern Cryonics",
     "website": "https://southerncryonics.com",
@@ -3075,7 +3075,7 @@
       "$date": "2026-03-04T22:19:32.462Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Hevolution Foundation",
     "website": "https://hevolution.com",
@@ -3102,7 +3102,7 @@
       "$date": "2026-03-04T22:19:32.587Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Human Longevity Inc. (HLI)",
     "website": "https://www.humanlongevity.com",
@@ -3126,7 +3126,7 @@
       "$date": "2026-03-04T22:19:32.7Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "The Longevity Fund / age1",
     "website": "https://age1.com",
@@ -3150,7 +3150,7 @@
       "$date": "2026-03-04T22:19:32.813Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Life Extension",
     "website": "https://www.lifeextension.com",
@@ -3174,7 +3174,7 @@
       "$date": "2026-03-04T22:19:33.548Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "NOVOS",
     "website": "https://novoslabs.com",
@@ -3201,7 +3201,7 @@
       "$date": "2026-03-04T22:19:33.665Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Turn Biotechnologies",
     "website": "https://www.turn.bio",
@@ -3225,7 +3225,7 @@
       "$date": "2026-03-04T22:19:33.767Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Church of Perpetual Life",
     "website": "https://churchofperpetuallife.org",
@@ -3249,7 +3249,7 @@
       "$date": "2026-03-04T22:19:33.874Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Juvenescence",
     "website": "https://juvlabs.com",
@@ -3273,7 +3273,7 @@
       "$date": "2026-03-25T11:53:25.539Z"
     },
     "createdBy": {
-      "$oid": "69c3ccb57f027bfda1c1b1a7"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -3297,7 +3297,7 @@
       "$date": "2026-03-25T11:54:56.337Z"
     },
     "createdBy": {
-      "$oid": "69c3cd107f027bfda1c1b42b"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "vertex.o.brt@gmail.com",
     "email": "vertex.o.brt@gmail.com",
@@ -3321,7 +3321,7 @@
       "$date": "2026-03-25T20:12:14.759Z"
     },
     "createdBy": {
-      "$oid": "69c4419e7f027bfda1c1fd73"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberstake",
     "email": "huknofamla@necub.com",
@@ -3345,7 +3345,7 @@
       "$date": "2026-03-25T22:59:13.153Z"
     },
     "createdBy": {
-      "$oid": "69c468c11f3f15d84d89be63"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberstake 2",
     "email": "nodragopsi@necub.com",
@@ -3369,7 +3369,7 @@
       "$date": "2026-03-26T15:56:19.773Z"
     },
     "createdBy": {
-      "$oid": "69c557231f3f15d84d89ce5c"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "v.e.r.texobrt@gmail.com",
     "email": "v.e.r.texobrt@gmail.com",
@@ -3393,7 +3393,7 @@
       "$date": "2026-03-28T12:46:37.001Z"
     },
     "createdBy": {
-      "$oid": "69c7cdac1f3f15d84d8a1f17"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -3417,7 +3417,7 @@
       "$date": "2026-03-28T21:45:34.787Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Skychatters",
     "website": "https://skychatters.com",
@@ -3445,7 +3445,7 @@
       "$date": "2026-03-28T21:45:37.102Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "AtlasDays",
     "website": "https://atlasdays.app",
@@ -3472,7 +3472,7 @@
       "$date": "2026-03-28T21:45:39.697Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberland Press",
     "website": "https://liberlandpress.com",
@@ -3499,7 +3499,7 @@
       "$date": "2026-03-28T21:45:41.797Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberverse",
     "website": "https://world.liberland.org",
@@ -3526,7 +3526,7 @@
       "$date": "2026-03-28T21:45:44.471Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberland Group",
     "website": "https://market.ll.land/store/liberland-group/",
@@ -3555,7 +3555,7 @@
       "$date": "2026-03-28T21:45:49.474Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Liberland Settlement Association",
     "website": "https://liberland.org",
@@ -3582,7 +3582,7 @@
       "$date": "2026-03-28T21:45:52.81Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Archistroj",
     "website": "https://archistroj.cz",
@@ -3611,7 +3611,7 @@
       "$date": "2026-03-28T21:45:55.697Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Danube Pearls",
     "website": "https://market.ll.land/store/danube-pearls/",
@@ -3640,7 +3640,7 @@
       "$date": "2026-03-28T21:45:58.02Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Foreign Affairs Books",
     "website": "https://market.ll.land/store/foreignaffairsbooks/",
@@ -3667,7 +3667,7 @@
       "$date": "2026-03-28T21:46:00.672Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Raaz Digital",
     "website": "https://market.ll.land/store/raaz-digital/",
@@ -3696,7 +3696,7 @@
       "$date": "2026-03-28T21:46:03.97Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "finom Metall Kft.",
     "website": "https://market.ll.land/store/finom-metall/",
@@ -3724,7 +3724,7 @@
       "$date": "2026-03-28T21:46:06.343Z"
     },
     "createdBy": {
-      "$oid": "69a8a9b04882761f5f68ec7e"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Ethos",
     "website": "https://market.ll.land/store/ethos/",
@@ -3753,7 +3753,7 @@
       "$date": "2026-03-29T14:21:49.705Z"
     },
     "createdBy": {
-      "$oid": "69c9357d1f3f15d84d8a3cbe"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -3777,7 +3777,7 @@
       "$date": "2026-03-31T07:10:36.616Z"
     },
     "createdBy": {
-      "$oid": "69cb736c1f3f15d84d8a5a59"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -3801,7 +3801,7 @@
       "$date": "2026-03-31T10:47:31.108Z"
     },
     "createdBy": {
-      "$oid": "69cba6431f3f15d84d8a5d0d"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "identity": {
       "$oid": "699af07de3cc9546fc95dd12"
@@ -3825,7 +3825,7 @@
       "$date": "2026-04-08T06:47:21.032Z"
     },
     "createdBy": {
-      "$oid": "69d5f9f91f3f15d84d8aac92"
+      "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Arman",
     "email": "tangianarman@yahoo.com",

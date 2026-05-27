@@ -1,20 +1,15 @@
 'use client'
 
-import { useLazyLoad } from '@/components/hooks'
+import React, { Suspense } from 'react'
 
-type AIRepostButtonModule = typeof import('./AIRepostButtonContent')
+const AIRepostButtonContent = React.lazy(async () => await import('./AIRepostButtonContent'))
 
 const AIRepostButton = () => {
-  const Component = useLazyLoad<AIRepostButtonModule['default']>(
-    async () => (await import('./AIRepostButtonContent')).default,
-    'Failed to load AI repost button.',
+  return (
+    <Suspense fallback={null}>
+      <AIRepostButtonContent />
+    </Suspense>
   )
-
-  if (!Component) {
-    return null
-  }
-
-  return <Component />
 }
 
 export default AIRepostButton

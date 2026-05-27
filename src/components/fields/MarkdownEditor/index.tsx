@@ -13,9 +13,11 @@ import {
   withCondition,
 } from '@payloadcms/ui'
 import type { TextareaFieldClientComponent } from 'payload'
-import { useLazyLoad } from '@/components/hooks'
+import React from 'react'
 
 import './index.scss'
+
+const MarkdownEditor = React.lazy(async () => await import('./MarkdownEditorContent'))
 
 const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   field: {
@@ -27,10 +29,6 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   path: pathFromProps,
   readOnly,
 }) => {
-  const markdownEditorModule = useLazyLoad(
-    () => import('@uiw/react-md-editor/nohighlight'),
-    'Failed to load markdown editor module.',
-  )
   const {
     customComponents: { AfterInput, BeforeInput, Description, Error, Label } = {},
     disabled,
@@ -51,8 +49,17 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   const classes = [fieldBaseClass, 'markdown-editor-field', className, showError && 'error', isReadOnly && 'read-only']
     .filter(Boolean)
     .join(' ')
-
-  const MDEditor = markdownEditorModule?.default
+  const fallback = (
+    <textarea
+      className="markdown-editor-field__fallback"
+      disabled={isReadOnly}
+      id={inputId}
+      name={path}
+      onChange={(event) => setValue(event.target.value)}
+      placeholder={typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined}
+      value={markdownValue}
+    />
+  )
 
   return (
     <div className={classes}>
@@ -66,61 +73,26 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
         {BeforeInput}
 
         <div className="markdown-editor-field__editor">
-          {markdownEditorModule && MDEditor ? (
-            <MDEditor
-              commands={[
-                markdownEditorModule.commands.title,
-                markdownEditorModule.commands.bold,
-                markdownEditorModule.commands.italic,
-                markdownEditorModule.commands.strikethrough,
-                markdownEditorModule.commands.divider,
-                markdownEditorModule.commands.link,
-                markdownEditorModule.commands.quote,
-                markdownEditorModule.commands.code,
-                markdownEditorModule.commands.codeBlock,
-                markdownEditorModule.commands.divider,
-                markdownEditorModule.commands.unorderedListCommand,
-                markdownEditorModule.commands.orderedListCommand,
-                markdownEditorModule.commands.checkedListCommand,
-              ]}
-              data-color-mode={theme}
-              extraCommands={[
-                markdownEditorModule.commands.codeEdit,
-                markdownEditorModule.commands.codeLive,
-                markdownEditorModule.commands.codePreview,
-                markdownEditorModule.commands.fullscreen,
-              ]}
-              height={360}
-              hideToolbar={isReadOnly}
-              onChange={(nextValue) => setValue(nextValue ?? '')}
-              preview="live"
-              previewOptions={{ skipHtml: true }}
-              textareaProps={{
-                disabled: isReadOnly,
-                id: inputId,
-                name: path,
-                placeholder: typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined,
-              }}
-              value={markdownValue}
-              visibleDragbar={!isReadOnly}
-            />
-          ) : (
-            <textarea
-              className="markdown-editor-field__fallback"
-              disabled={isReadOnly}
-              id={inputId}
-              name={path}
-              onChange={(event) => setValue(event.target.value)}
+          <React.Suspense fallback={fallback}>
+            <MarkdownEditor
+              inputId={inputId}
+              isReadOnly={isReadOnly}
+              markdownValue={markdownValue}
               placeholder={
                 typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined
               }
-              value={markdownValue}
+              setValue={setValue}
+              path={path}
+              theme={theme}
             />
-          )}
+          </React.Suspense>
         </div>
 
         {AfterInput}
-        <RenderCustomComponent CustomComponent={Description} Fallback={<FieldDescription description={description} path={path} />} />
+        <RenderCustomComponent
+          CustomComponent={Description}
+          Fallback={<FieldDescription description={description} path={path} />}
+        />
       </div>
     </div>
   )
