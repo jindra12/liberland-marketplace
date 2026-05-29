@@ -59,10 +59,14 @@ export const Identities: CollectionConfig = {
     serverURLField(),
     {
       name: 'id',
+      label: 'Tribe ID',
       type: 'text',
       required: true,
       unique: true,
       index: true,
+      admin: {
+        description: 'Use this ID when sharing a tribe from another nSwap server.',
+      },
     },
     { name: 'name', type: 'text', required: true },
     { name: 'website', type: 'text' },

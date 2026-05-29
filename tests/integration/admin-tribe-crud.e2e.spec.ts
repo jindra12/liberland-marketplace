@@ -20,13 +20,6 @@ test.describe('Admin tribe CRUD', () => {
       page,
       'identities',
       async (createPage) => {
-        await fillTextField(
-          createPage,
-          'ID',
-          createUniqueLabel('Playwright tribe id')
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-'),
-        )
         await fillTextField(createPage, 'Name', identityName)
       },
       testInfo,

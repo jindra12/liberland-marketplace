@@ -16,14 +16,12 @@ test.describe('Admin user CRUD', () => {
 
     const userName = createUniqueLabel('Playwright user')
     const userEmail = `${userName.toLowerCase().replace(/[^a-z0-9]+/g, '.')}@example.com`
-    const userPassword = 'test-password-123'
     const userID = await createDocumentViaUI(
       page,
       'users',
       async (createPage) => {
         await fillTextField(createPage, 'Email', userEmail)
         await fillTextField(createPage, 'Name', userName)
-        await fillTextField(createPage, 'Password', userPassword)
       },
       testInfo,
       'user',
@@ -31,6 +29,7 @@ test.describe('Admin user CRUD', () => {
     )
 
     await openCollectionDocument(page, 'users', userID)
+    await page.locator('.doc-controls__popup .popup-button').click()
     const banResponse = page.waitForResponse((response) => {
       return (
         response.request().method() === 'PATCH' &&

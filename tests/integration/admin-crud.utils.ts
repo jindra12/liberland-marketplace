@@ -2,6 +2,7 @@ import { expect, type Page, type TestInfo } from '@playwright/test'
 
 import {
   captureScreenshot,
+  captureHtmlSnapshot,
   createUniqueLabel,
   fillRelationshipField,
   fillTextField,
@@ -52,6 +53,7 @@ export const createDocumentViaUI = async (
     await captureScreenshot(createPage, testInfo, `${screenshotPrefix}-created`)
     return id
   } catch (error) {
+    await captureHtmlSnapshot(createPage, testInfo, `${screenshotPrefix}-failed`).catch(() => {})
     if (error instanceof Error) {
       throw new Error(`${error.message}\nBrowser errors:\n${browserErrors.join('\n') || '(none)'}`)
     }

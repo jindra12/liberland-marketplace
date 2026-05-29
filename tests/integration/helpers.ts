@@ -1,6 +1,7 @@
 import path from 'node:path'
+import fs from 'node:fs/promises'
 
-import { type Locator, type Page, type TestInfo } from '@playwright/test'
+import { expect, type Locator, type Page, type TestInfo } from '@playwright/test'
 
 const defaultAdminURL = 'https://devserver.207-180-231-104.nip.io/admin'
 const adminURL = process.env.PLAYWRIGHT_ADMIN_URL ?? defaultAdminURL
@@ -37,6 +38,24 @@ export const captureScreenshot = async (
     })
   } catch (error) {
     console.error(`Screenshot "${name}" failed:`, error)
+  }
+}
+
+export const captureHtmlSnapshot = async (
+  page: Page,
+  testInfo: TestInfo,
+  name: string,
+): Promise<void> => {
+  const htmlPath = testInfo.outputPath(`${name}.html`)
+
+  try {
+    await fs.writeFile(htmlPath, await page.content(), 'utf8')
+    await testInfo.attach(name, {
+      contentType: 'text/html',
+      path: htmlPath,
+    })
+  } catch (error) {
+    console.error(`HTML snapshot "${name}" failed:`, error)
   }
 }
 
@@ -95,6 +114,8 @@ export const getDocumentActionButton = async (page: Page): Promise<Locator> => {
   const buttonCandidates = [
     page.getByRole('button', { name: /^Save Draft$/i }),
     page.getByRole('button', { name: /^Save$/i }),
+    page.getByRole('button', { name: /^Save changes$/i }),
+    page.getByRole('button', { name: /^Publish changes$/i }),
     page.getByRole('button', { name: /^Publish$/i }),
   ]
 
@@ -149,18 +170,52 @@ export const openCollectionCreate = async (page: Page, collection: string): Prom
 }
 
 export const fillTextField = async (page: Page, label: string, value: string): Promise<void> => {
-  await page.getByRole('textbox', { name: label }).fill(value)
+  const fieldContainer = page
+    .locator('label')
+    .filter({
+      hasText: new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s*\\*)?$`),
+    })
+    .locator('xpath=ancestor::div[contains(@class,"field")][1]')
+
+  const textbox = fieldContainer.getByRole('textbox').first()
+  if (await textbox.count()) {
+    await textbox.fill(value)
+    return
+  }
+
+  const spinbutton = fieldContainer.getByRole('spinbutton').first()
+  if (await spinbutton.count()) {
+    await spinbutton.fill(value)
+    return
+  }
+
+  throw new Error(`Text field ${label} was not found.`)
 }
 
 export const fillRelationshipField = async (page: Page, label: string): Promise<void> => {
-  const field = page.getByRole('combobox', { name: label })
+  const fieldContainer = page
+    .locator('label')
+    .filter({
+      hasText: new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s*\\*)?$`),
+    })
+    .locator('xpath=ancestor::div[contains(@class,"field")][1]')
+  const field = fieldContainer.locator('input[role="combobox"]').first()
+  const option = page.locator('[role="option"], [role="menuitem"]').first()
 
+  await expect(field).toBeVisible({
+    timeout: 60000,
+  })
+  await field.scrollIntoViewIfNeeded().catch(() => {})
   await field.click()
-  await page.getByRole('option').first().waitFor({
+  await field.press('ArrowDown')
+  await expect(field).toHaveAttribute('aria-expanded', 'true', {
+    timeout: 60000,
+  })
+  await option.waitFor({
     state: 'visible',
     timeout: 60000,
   })
-  await page.getByRole('option').first().click()
+  await field.press('Enter')
 }
 
 export const fillSelectField = async (page: Page, label: string, value: string): Promise<void> => {
@@ -208,28 +263,32 @@ export const saveNewCollectionDocument = async (
 }
 
 export const deleteDocument = async (page: Page, collection: string, id: string): Promise<void> => {
-  const deleteButtons = page.getByRole('button', { name: /^delete$/i })
-  const deleteButtonCount = await deleteButtons.count()
+  const deleteButton = page.locator('#action-delete')
+  const popupTrigger = page.locator('.doc-controls__popup .popup-button')
+  const confirmDeleteButton = page.locator('#confirm-action')
 
-  if (!deleteButtonCount) {
+  if (!(await deleteButton.count())) {
     throw new Error(`Delete button not found for ${collection}/${id}.`)
   }
 
-  const deleteButton = deleteButtons.first()
-  const dialog = page.getByRole('dialog')
+  await popupTrigger.click().catch(() => {})
   page.once('dialog', async (browserDialog) => {
     await browserDialog.accept()
   })
 
+  await expect(deleteButton).toBeVisible({
+    timeout: 60000,
+  })
   await deleteButton.click()
 
-  if (await dialog.count()) {
-    const confirmDeleteButton = dialog.getByRole('button', { name: /^delete$/i })
+  await expect(confirmDeleteButton).toBeVisible({
+    timeout: 60000,
+  })
+  await confirmDeleteButton.click()
 
-    if (await confirmDeleteButton.count()) {
-      await confirmDeleteButton.first().click()
-    }
-  }
+  await page.waitForURL(toAdminUrl(`/admin/collections/${collection}`), {
+    timeout: 60000,
+  })
 
   await page.waitForLoadState('domcontentloaded').catch(() => {})
 }

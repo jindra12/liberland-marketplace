@@ -4,7 +4,6 @@ import {
   createUniqueLabel,
   deleteDocument,
   fillRelationshipField,
-  fillSelectField,
   fillTextField,
   loginToAdmin,
   openCollectionDocument,
@@ -23,10 +22,9 @@ test.describe('Admin job CRUD', () => {
       'jobs',
       async (createPage) => {
         await fillTextField(createPage, 'Title', jobTitle)
-        await fillRelationshipField(createPage, 'company')
+        await fillRelationshipField(createPage, 'Company')
         await fillTextField(createPage, 'Location', 'Remote')
         await fillTextField(createPage, 'Positions', '1')
-        await fillSelectField(createPage, 'Employment Type', 'Contract')
         await fillTextField(createPage, 'Description', 'Job created by Playwright.')
       },
       testInfo,

@@ -4,7 +4,6 @@ import {
   createUniqueLabel,
   deleteDocument,
   fillRelationshipField,
-  fillSelectField,
   fillTextField,
   loginToAdmin,
   openCollectionDocument,
@@ -26,7 +25,6 @@ test.describe('Admin venture CRUD', () => {
         await fillRelationshipField(createPage, 'Company')
         await fillTextField(createPage, 'Description', 'Startup created by Playwright.')
         await fillRelationshipField(createPage, 'Tribe')
-        await fillSelectField(createPage, 'Stage', 'Idea')
       },
       testInfo,
       'startup',
