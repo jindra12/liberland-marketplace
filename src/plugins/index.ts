@@ -129,6 +129,22 @@ export const plugins: Plugin[] = [
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
       allowedFields: ['name', 'identity'],
+      collectionOverrides: ({ collection }) => ({
+        ...collection,
+        admin: {
+          ...collection.admin,
+          components: {
+            ...collection.admin?.components,
+            edit: {
+              ...collection.admin?.components?.edit,
+              beforeDocumentControls: [
+                ...(collection.admin?.components?.edit?.beforeDocumentControls ?? []),
+                '@/components/BanUserButton',
+              ],
+            },
+          },
+        },
+      }),
     },
   }),
   protectUserFields,

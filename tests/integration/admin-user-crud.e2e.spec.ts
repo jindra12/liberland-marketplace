@@ -29,7 +29,6 @@ test.describe('Admin user CRUD', () => {
     )
 
     await openCollectionDocument(page, 'users', userID)
-    await page.locator('.doc-controls__popup .popup-button').click()
     const banResponse = page.waitForResponse((response) => {
       return (
         response.request().method() === 'PATCH' &&

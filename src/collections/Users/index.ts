@@ -23,11 +23,6 @@ export const Users: CollectionConfig = {
     defaultColumns: ['name', 'email'],
     useAsTitle: 'name',
     hidden: ({ user }) => !isAdminUser(user),
-    components: {
-      edit: {
-        beforeDocumentControls: ['@/components/BanUserButton'],
-      },
-    },
   },
   hooks: {
     afterChange: [createDefaultCompany, createDefaultBotUser],
