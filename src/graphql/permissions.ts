@@ -1,6 +1,5 @@
 import type { GraphQLExtension, PayloadRequest } from 'payload'
 
-import { canCreateContent } from '@/utilities/contentCreation'
 import { getServerSideURL } from '@/utilities/getURL'
 
 export const permissionsGraphQLQueries: GraphQLExtension = (graphQL) => {
@@ -20,7 +19,7 @@ export const permissionsGraphQLQueries: GraphQLExtension = (graphQL) => {
     permissions: {
       resolve: (_source: unknown, _args: unknown, context: { req: PayloadRequest }) => [
         {
-          canCreateContentAsNonAdmin: canCreateContent(context.req.user),
+          canCreateContentAsNonAdmin: Boolean(context.req.user),
           serverUrl: getServerSideURL(),
         },
       ],

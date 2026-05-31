@@ -51,13 +51,13 @@ const getParentNotificationDocument = async ({
   req: PayloadRequest
 }): Promise<ParentNotificationDoc | null> => {
   try {
-    return await req.payload.findByID({
+    return (await req.payload.findByID({
       collection: parentCollection,
       depth: 0,
       id: parentID,
       overrideAccess: true,
       req,
-    })
+    })) as unknown as ParentNotificationDoc
   } catch {
     return null
   }

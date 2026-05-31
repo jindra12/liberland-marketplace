@@ -17,6 +17,8 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export const dynamic = 'force-dynamic'
 
+type RelatedPostReference = NonNullable<PostType['relatedPosts']>[number]
+
 type Args = {
   params: Promise<{
     slug?: string
@@ -52,7 +54,7 @@ export default async function Post({ params: paramsPromise }: Args) {
           {post.relatedPosts && post.relatedPosts.length > 0 && (
             <RelatedPosts
               className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.flatMap((relatedPost) => {
+              docs={post.relatedPosts.flatMap((relatedPost: RelatedPostReference) => {
                 if (relatedPost.relationTo !== 'posts') return []
                 if (typeof relatedPost.value !== 'object' || relatedPost.value === null) return []
                 return [relatedPost.value]
@@ -71,10 +73,10 @@ export const generateMetadata = async ({ params: paramsPromise }: Args): Promise
   const decodedSlug = decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug: decodedSlug })
 
-  return generateMeta({ doc: post })
+  return generateMeta({ doc: post as PostType | null })
 }
 
-const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPostBySlug = cache(async ({ slug }: { slug: string }): Promise<PostType | null> => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -92,5 +94,5 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     },
   })
 
-  return result.docs?.[0] || null
+  return (result.docs?.[0] as PostType | undefined) || null
 })

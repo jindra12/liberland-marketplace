@@ -1,4 +1,4 @@
-import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { publicCompanyFilter } from '@/access/publicCompanyFilter'
 import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
@@ -15,13 +15,7 @@ import type {
   NumberFieldSingleValidation,
 } from 'payload'
 
-const readonlyCryptoPriceField = ({
-  label,
-  name,
-}: {
-  label: string
-  name: string
-}): Field => ({
+const readonlyCryptoPriceField = ({ label, name }: { label: string; name: string }): Field => ({
   name,
   type: 'text',
   virtual: true,
@@ -57,7 +51,10 @@ const isNamedField = (field: Field): field is Field & { name: string } =>
 const isInventoryField = (
   field: Field,
 ): field is NumberField & { hasMany?: false | undefined; validate?: NumberFieldSingleValidation } =>
-  isNamedField(field) && field.name === 'inventory' && field.type === 'number' && field.hasMany !== true
+  isNamedField(field) &&
+  field.name === 'inventory' &&
+  field.type === 'number' &&
+  field.hasMany !== true
 
 const hasUnlimitedInventory = (siblingData: unknown): boolean =>
   typeof siblingData === 'object' &&
@@ -89,7 +86,7 @@ export const productFields: Field[] = [
     type: 'relationship',
     relationTo: 'companies',
     required: false,
-    filterOptions: onlyOwnDocsOrAdminFilter,
+    filterOptions: publicCompanyFilter,
   },
   {
     name: 'companyIdentityId',

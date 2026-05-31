@@ -90,6 +90,8 @@ export interface Config {
     'comment-likes': CommentLike;
     startups: Startup;
     syndications: Syndication;
+    reports: Report;
+    'information-requests': InformationRequest;
     subscribers: Subscriber;
     'notification-subscriptions': NotificationSubscription;
     comments: Comment;
@@ -152,6 +154,8 @@ export interface Config {
     'comment-likes': CommentLikesSelect<false> | CommentLikesSelect<true>;
     startups: StartupsSelect<false> | StartupsSelect<true>;
     syndications: SyndicationsSelect<false> | SyndicationsSelect<true>;
+    reports: ReportsSelect<false> | ReportsSelect<true>;
+    'information-requests': InformationRequestsSelect<false> | InformationRequestsSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'notification-subscriptions': NotificationSubscriptionsSelect<false> | NotificationSubscriptionsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
@@ -247,7 +251,10 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  banned?: boolean | null;
   phone?: string | null;
+  bot?: boolean | null;
+  reportedLinks?: string[] | null;
   shippingAddress?: {
     title?: string | null;
     firstName?: string | null;
@@ -265,13 +272,13 @@ export interface User {
    * Wallets available for this user across supported chains.
    */
   wallets?:
-    | {
-        chain: 'ethereum' | 'solana' | 'tron';
-        provider: string;
-        address: string;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    chain: 'ethereum' | 'solana' | 'tron';
+    provider: string;
+    address: string;
+    id?: string | null;
+  }[]
+  | null;
   /**
    * Users chosen display name
    */
@@ -539,7 +546,7 @@ export interface AdminInvitation {
  */
 export interface Page {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
@@ -559,29 +566,29 @@ export interface Page {
       [k: string]: unknown;
     } | null;
     links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: string | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: string | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
+    | {
+      link: {
+        type?: ('reference' | 'custom') | null;
+        newTab?: boolean | null;
+        reference?:
+        | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+        | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+        url?: string | null;
+        label: string;
+        /**
+         * Choose how the link should be rendered.
+         */
+        appearance?: ('default' | 'outline') | null;
+      };
+      id?: string | null;
+    }[]
+    | null;
     media?: (string | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
@@ -609,8 +616,9 @@ export interface Page {
  */
 export interface Post {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   title: string;
+  repost?: string | null;
   company: string | Company;
   heroImage?: (string | null) | Media;
   /**
@@ -618,33 +626,33 @@ export interface Post {
    */
   content: string;
   relatedPosts?:
-    | (
-        | {
-            relationTo: 'companies';
-            value: string | Company;
-          }
-        | {
-            relationTo: 'jobs';
-            value: string | Job;
-          }
-        | {
-            relationTo: 'posts';
-            value: string | Post;
-          }
-        | {
-            relationTo: 'products';
-            value: string | Product;
-          }
-        | {
-            relationTo: 'identities';
-            value: string | Identity;
-          }
-        | {
-            relationTo: 'startups';
-            value: string | Startup;
-          }
-      )[]
-    | null;
+  | (
+    | {
+      relationTo: 'companies';
+      value: string | Company;
+    }
+    | {
+      relationTo: 'jobs';
+      value: string | Job;
+    }
+    | {
+      relationTo: 'posts';
+      value: string | Post;
+    }
+    | {
+      relationTo: 'products';
+      value: string | Product;
+    }
+    | {
+      relationTo: 'identities';
+      value: string | Identity;
+    }
+    | {
+      relationTo: 'startups';
+      value: string | Startup;
+    }
+  )[]
+  | null;
   categories?: (string | Category)[] | null;
   meta?: {
     title?: string | null;
@@ -658,11 +666,11 @@ export interface Post {
   authors?: (string | User)[] | null;
   completenessScore?: number | null;
   populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
+  | {
+    id?: string | null;
+    name?: string | null;
+  }[]
+  | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -683,11 +691,17 @@ export interface Post {
  */
 export interface Company {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   /**
    * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
+  /**
+   * Keep this enabled to restrict the company from being used in jobs, products, and ventures.
+   */
+  isPrivate?: boolean | null;
+  noAutoPost?: boolean | null;
+  verification?: ('trader' | 'private-seller' | 'unverified') | null;
   name: string;
   website?: string | null;
   phone?: string | null;
@@ -724,7 +738,7 @@ export interface Company {
  */
 export interface Media {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   alt?: string | null;
   caption?: {
     root: {
@@ -823,13 +837,13 @@ export interface FolderInterface {
   documentsAndFolders?: {
     docs?: (
       | {
-          relationTo?: 'payload-folders';
-          value: string | FolderInterface;
-        }
+        relationTo?: 'payload-folders';
+        value: string | FolderInterface;
+      }
       | {
-          relationTo?: 'media';
-          value: string | Media;
-        }
+        relationTo?: 'media';
+        value: string | Media;
+      }
     )[];
     hasNextPage?: boolean;
     totalDocs?: number;
@@ -843,12 +857,15 @@ export interface FolderInterface {
  * via the `definition` "identities".
  */
 export interface Identity {
-  id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   /**
    * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
+  /**
+   * Use this ID when sharing a tribe from another nSwap server.
+   */
+  id: string;
   name: string;
   website?: string | null;
   image?: (string | null) | Media;
@@ -873,7 +890,7 @@ export interface Identity {
  */
 export interface Job {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   /**
    * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
@@ -935,8 +952,9 @@ export interface Product {
    * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
   serverURL?: string | null;
+  createdBy?: (string | null) | User;
   name: string;
-  company: string | Company;
+  company?: (string | null) | Company;
   companyIdentityId?: string | null;
   url?: string | null;
   orderable?: boolean | null;
@@ -956,12 +974,12 @@ export interface Product {
    */
   description?: string | null;
   properties?:
-    | {
-        key: string;
-        value?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    key: string;
+    value?: string | null;
+    id?: string | null;
+  }[]
+  | null;
   purchaseCount?: number | null;
   isSubscribed?: boolean | null;
   completenessScore?: number | null;
@@ -1035,7 +1053,7 @@ export interface Variant {
  */
 export interface Startup {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   /**
    * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
    */
@@ -1053,11 +1071,11 @@ export interface Startup {
     currency?: ('USD' | 'EUR' | 'GBP' | 'SGD' | 'HNL' | 'BTC' | 'ETH' | 'USDC' | 'XMR' | 'LLD' | 'LLM') | null;
   };
   lookingFor?:
-    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
-    | null;
+  | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
+  | null;
   alreadyHave?:
-    | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
-    | null;
+  | ('funding' | 'founders' | 'team' | 'traction' | 'distribution' | 'production' | 'idea' | 'product')[]
+  | null;
   stage: 'idea' | 'early' | 'mvp' | 'established' | 'scaling';
   involvedUsers?: (string | User)[] | null;
   isSubscribed?: boolean | null;
@@ -1077,7 +1095,7 @@ export interface Startup {
  */
 export interface Category {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   title: string;
   image?: (string | null) | Media;
   /**
@@ -1087,13 +1105,13 @@ export interface Category {
   slug: string;
   parent?: (string | null) | Category;
   breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    doc?: (string | null) | Category;
+    url?: string | null;
+    label?: string | null;
+    id?: string | null;
+  }[]
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1118,29 +1136,29 @@ export interface CallToActionBlock {
     [k: string]: unknown;
   } | null;
   links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+      | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+      | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null);
+      url?: string | null;
+      label: string;
+      /**
+       * Choose how the link should be rendered.
+       */
+      appearance?: ('default' | 'outline') | null;
+    };
+    id?: string | null;
+  }[]
+  | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -1151,46 +1169,46 @@ export interface CallToActionBlock {
  */
 export interface ContentBlock {
   columns?:
-    | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
+  | {
+    size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
           [k: string]: unknown;
-        } | null;
-        enableLink?: boolean | null;
-        link?: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    enableLink?: boolean | null;
+    link?: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+      | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+      | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null);
+      url?: string | null;
+      label: string;
+      /**
+       * Choose how the link should be rendered.
+       */
+      appearance?: ('default' | 'outline') | null;
+    };
+    id?: string | null;
+  }[]
+  | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
@@ -1230,11 +1248,11 @@ export interface ArchiveBlock {
   categories?: (string | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
-    | {
-        relationTo: 'posts';
-        value: string | Post;
-      }[]
-    | null;
+  | {
+    relationTo: 'posts';
+    value: string | Post;
+  }[]
+  | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
@@ -1273,114 +1291,114 @@ export interface Form {
   id: string;
   title: string;
   fields?:
-    | (
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            defaultValue?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'checkbox';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'country';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'email';
-          }
-        | {
-            message?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'message';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'number';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            placeholder?: string | null;
-            options?:
-              | {
-                  label: string;
-                  value: string;
-                  id?: string | null;
-                }[]
-              | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'select';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'state';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'text';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textarea';
-          }
-      )[]
-    | null;
+  | (
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      required?: boolean | null;
+      defaultValue?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'checkbox';
+    }
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      required?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'country';
+    }
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      required?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'email';
+    }
+    | {
+      message?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'message';
+    }
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      defaultValue?: number | null;
+      required?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'number';
+    }
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      defaultValue?: string | null;
+      placeholder?: string | null;
+      options?:
+      | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+      | null;
+      required?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'select';
+    }
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      required?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'state';
+    }
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      defaultValue?: string | null;
+      required?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'text';
+    }
+    | {
+      name: string;
+      label?: string | null;
+      width?: number | null;
+      defaultValue?: string | null;
+      required?: boolean | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'textarea';
+    }
+  )[]
+  | null;
   submitButtonLabel?: string | null;
   /**
    * Choose whether to display an on-page message or redirect to a different page after they submit the form.
@@ -1408,34 +1426,34 @@ export interface Form {
    * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
    */
   emails?:
-    | {
-        emailTo?: string | null;
-        cc?: string | null;
-        bcc?: string | null;
-        replyTo?: string | null;
-        emailFrom?: string | null;
-        subject: string;
-        /**
-         * Enter the message that should be sent in this email.
-         */
-        message?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
+  | {
+    emailTo?: string | null;
+    cc?: string | null;
+    bcc?: string | null;
+    replyTo?: string | null;
+    emailFrom?: string | null;
+    subject: string;
+    /**
+     * Enter the message that should be sent in this email.
+     */
+    message?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
           [k: string]: unknown;
-        } | null;
-        id?: string | null;
-      }[]
-    | null;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    id?: string | null;
+  }[]
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1445,8 +1463,8 @@ export interface Form {
  */
 export interface CommentLike {
   id: string;
-  createdBy: string | User;
-  userId: string;
+  createdBy?: (string | null) | User;
+  userId: string | User;
   targetID: string;
   updatedAt: string;
   createdAt: string;
@@ -1457,9 +1475,11 @@ export interface CommentLike {
  */
 export interface Syndication {
   id: string;
-  createdBy: string | User;
+  createdBy?: (string | null) | User;
   name: string;
   url: string;
+  autoEnable?: boolean | null;
+  nsfw?: boolean | null;
   /**
    * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
    */
@@ -1467,6 +1487,32 @@ export interface Syndication {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reports".
+ */
+export interface Report {
+  id: string;
+  createdBy?: (string | null) | User;
+  status?: ('waiting' | 'resolved' | 'ignored') | null;
+  userId: string | User;
+  contentLink: string;
+  reason: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "information-requests".
+ */
+export interface InformationRequest {
+  id: string;
+  createdBy?: (string | null) | User;
+  user: string | User;
+  reason: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1505,33 +1551,34 @@ export interface Comment {
    * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
    */
   content: string;
+  company: string | Company;
   replyPost:
-    | {
-        relationTo: 'jobs';
-        value: string | Job;
-      }
-    | {
-        relationTo: 'companies';
-        value: string | Company;
-      }
-    | {
-        relationTo: 'posts';
-        value: string | Post;
-      }
-    | {
-        relationTo: 'products';
-        value: string | Product;
-      }
-    | {
-        relationTo: 'identities';
-        value: string | Identity;
-      }
-    | {
-        relationTo: 'startups';
-        value: string | Startup;
+  | {
+    relationTo: 'jobs';
+    value: string | Job;
+  }
+  | {
+    relationTo: 'companies';
+    value: string | Company;
+  }
+  | {
+    relationTo: 'posts';
+    value: string | Post;
+  }
+  | {
+    relationTo: 'products';
+    value: string | Product;
+  }
+  | {
+    relationTo: 'identities';
+    value: string | Identity;
+  }
+  | {
+    relationTo: 'startups';
+    value: string | Startup;
   };
   replyComment?: (string | null) | Comment;
-  anonymousHash?: string | null;
+  replyCount?: number | null;
   serverUrl?: string | null;
   replyPostRelationTo?: string | null;
   replyPostValue?: string | null;
@@ -1548,7 +1595,8 @@ export interface Comment {
  */
 export interface CompanyLike {
   id: string;
-  userId: string;
+  createdBy?: (string | null) | User;
+  userId: string | User;
   targetID: string;
   updatedAt: string;
   createdAt: string;
@@ -1559,7 +1607,8 @@ export interface CompanyLike {
  */
 export interface IdentityLike {
   id: string;
-  userId: string;
+  createdBy?: (string | null) | User;
+  userId: string | User;
   targetID: string;
   updatedAt: string;
   createdAt: string;
@@ -1570,7 +1619,8 @@ export interface IdentityLike {
  */
 export interface VentureLike {
   id: string;
-  userId: string;
+  createdBy?: (string | null) | User;
+  userId: string | User;
   targetID: string;
   updatedAt: string;
   createdAt: string;
@@ -1581,7 +1631,8 @@ export interface VentureLike {
  */
 export interface JobLike {
   id: string;
-  userId: string;
+  createdBy?: (string | null) | User;
+  userId: string | User;
   targetID: string;
   updatedAt: string;
   createdAt: string;
@@ -1592,7 +1643,8 @@ export interface JobLike {
  */
 export interface ProductLike {
   id: string;
-  userId: string;
+  createdBy?: (string | null) | User;
+  userId: string | User;
   targetID: string;
   updatedAt: string;
   createdAt: string;
@@ -1603,7 +1655,8 @@ export interface ProductLike {
  */
 export interface PostLike {
   id: string;
-  userId: string;
+  createdBy?: (string | null) | User;
+  userId: string | User;
   targetID: string;
   updatedAt: string;
   createdAt: string;
@@ -1625,46 +1678,46 @@ export interface Address {
   state?: string | null;
   postalCode?: string | null;
   country:
-    | 'US'
-    | 'GB'
-    | 'CA'
-    | 'AU'
-    | 'AT'
-    | 'BE'
-    | 'BR'
-    | 'BG'
-    | 'CY'
-    | 'CZ'
-    | 'DK'
-    | 'EE'
-    | 'FI'
-    | 'FR'
-    | 'DE'
-    | 'GR'
-    | 'HK'
-    | 'HU'
-    | 'IN'
-    | 'IE'
-    | 'IT'
-    | 'JP'
-    | 'LV'
-    | 'LT'
-    | 'LU'
-    | 'MY'
-    | 'MT'
-    | 'MX'
-    | 'NL'
-    | 'NZ'
-    | 'NO'
-    | 'PL'
-    | 'PT'
-    | 'RO'
-    | 'SG'
-    | 'SK'
-    | 'SI'
-    | 'ES'
-    | 'SE'
-    | 'CH';
+  | 'US'
+  | 'GB'
+  | 'CA'
+  | 'AU'
+  | 'AT'
+  | 'BE'
+  | 'BR'
+  | 'BG'
+  | 'CY'
+  | 'CZ'
+  | 'DK'
+  | 'EE'
+  | 'FI'
+  | 'FR'
+  | 'DE'
+  | 'GR'
+  | 'HK'
+  | 'HU'
+  | 'IN'
+  | 'IE'
+  | 'IT'
+  | 'JP'
+  | 'LV'
+  | 'LT'
+  | 'LU'
+  | 'MY'
+  | 'MT'
+  | 'MX'
+  | 'NL'
+  | 'NZ'
+  | 'NO'
+  | 'PL'
+  | 'PT'
+  | 'RO'
+  | 'SG'
+  | 'SK'
+  | 'SI'
+  | 'ES'
+  | 'SE'
+  | 'CH';
   phone?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1676,13 +1729,13 @@ export interface Address {
 export interface Cart {
   id: string;
   items?:
-    | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    product?: (string | null) | Product;
+    variant?: (string | null) | Variant;
+    quantity: number;
+    id?: string | null;
+  }[]
+  | null;
   secret?: string | null;
   customer?: (string | null) | User;
   purchasedAt?: string | null;
@@ -1699,13 +1752,13 @@ export interface Cart {
 export interface Order {
   id: string;
   items?:
-    | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    product?: (string | null) | Product;
+    variant?: (string | null) | Variant;
+    quantity: number;
+    id?: string | null;
+  }[]
+  | null;
   shippingAddress?: {
     title?: string | null;
     firstName?: string | null;
@@ -1727,23 +1780,23 @@ export interface Order {
   currency?: 'USD' | null;
   payerAddress?: string | null;
   cryptoPrices?:
-    | {
-        chain: 'ethereum' | 'solana' | 'tron';
-        stablePerNative: number;
-        nativePerStable: string;
-        expectedNativeAmount?: string | null;
-        fetchedAt: string;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    chain: 'ethereum' | 'solana' | 'tron';
+    stablePerNative: number;
+    nativePerStable: string;
+    expectedNativeAmount?: string | null;
+    fetchedAt: string;
+    id?: string | null;
+  }[]
+  | null;
   transactionHashes?:
-    | {
-        product: string | Product;
-        chain: 'ethereum' | 'solana' | 'tron';
-        transactionHash: string;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    product: string | Product;
+    chain: 'ethereum' | 'solana' | 'tron';
+    transactionHash: string;
+    id?: string | null;
+  }[]
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1754,13 +1807,13 @@ export interface Order {
 export interface Transaction {
   id: string;
   items?:
-    | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    product?: (string | null) | Product;
+    variant?: (string | null) | Variant;
+    quantity: number;
+    id?: string | null;
+  }[]
+  | null;
   paymentMethod?: 'crypto' | null;
   crypto?: {
     paymentRef?: string | null;
@@ -1802,14 +1855,14 @@ export interface Redirect {
   to?: {
     type?: ('reference' | 'custom') | null;
     reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
+    | ({
+      relationTo: 'pages';
+      value: string | Page;
+    } | null)
+    | ({
+      relationTo: 'posts';
+      value: string | Post;
+    } | null);
     url?: string | null;
   };
   updatedAt: string;
@@ -1823,12 +1876,12 @@ export interface FormSubmission {
   id: string;
   form: string | Form;
   submissionData?:
-    | {
-        field: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    field: string;
+    value: string;
+    id?: string | null;
+  }[]
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1843,30 +1896,30 @@ export interface Search {
   title?: string | null;
   priority?: number | null;
   doc:
-    | {
-        relationTo: 'jobs';
-        value: string | Job;
-      }
-    | {
-        relationTo: 'companies';
-        value: string | Company;
-      }
-    | {
-        relationTo: 'identities';
-        value: string | Identity;
-      }
-    | {
-        relationTo: 'products';
-        value: string | Product;
-      }
-    | {
-        relationTo: 'startups';
-        value: string | Startup;
-      }
-    | {
-        relationTo: 'posts';
-        value: string | Post;
-      };
+  | {
+    relationTo: 'jobs';
+    value: string | Job;
+  }
+  | {
+    relationTo: 'companies';
+    value: string | Company;
+  }
+  | {
+    relationTo: 'identities';
+    value: string | Identity;
+  }
+  | {
+    relationTo: 'products';
+    value: string | Product;
+  }
+  | {
+    relationTo: 'startups';
+    value: string | Startup;
+  }
+  | {
+    relationTo: 'posts';
+    value: string | Post;
+  };
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -1874,13 +1927,13 @@ export interface Search {
     image?: (string | null) | Media;
   };
   categories?:
-    | {
-        relationTo?: string | null;
-        categoryID?: string | null;
-        title?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    relationTo?: string | null;
+    categoryID?: string | null;
+    title?: string | null;
+    id?: string | null;
+  }[]
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1892,14 +1945,14 @@ export interface PayloadKv {
   id: string;
   key: string;
   data:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1911,23 +1964,23 @@ export interface PayloadJob {
    * Input data provided to the job
    */
   input?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
   taskStatus?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
   completedAt?: string | null;
   totalTried?: number | null;
   /**
@@ -1938,54 +1991,54 @@ export interface PayloadJob {
    * If hasError is true, this is the error that caused it
    */
   error?:
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
+  /**
+   * Task execution log
+   */
+  log?:
+  | {
+    executedAt: string;
+    completedAt: string;
+    taskSlug: 'inline' | 'schedulePublish';
+    taskID: string;
+    input?:
     | {
-        [k: string]: unknown;
-      }
+      [k: string]: unknown;
+    }
     | unknown[]
     | string
     | number
     | boolean
     | null;
-  /**
-   * Task execution log
-   */
-  log?:
+    output?:
     | {
-        executedAt: string;
-        completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish';
-        taskID: string;
-        input?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        output?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        state: 'failed' | 'succeeded';
-        error?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-      }[]
+      [k: string]: unknown;
+    }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
+    state: 'failed' | 'succeeded';
+    error?:
+    | {
+      [k: string]: unknown;
+    }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+    id?: string | null;
+  }[]
+  | null;
   taskSlug?: ('inline' | 'schedulePublish') | null;
   queue?: string | null;
   waitUntil?: string | null;
@@ -2000,166 +2053,174 @@ export interface PayloadJob {
 export interface PayloadLockedDocument {
   id: string;
   document?:
-    | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
-        relationTo: 'sessions';
-        value: string | Session;
-      } | null)
-    | ({
-        relationTo: 'accounts';
-        value: string | Account;
-      } | null)
-    | ({
-        relationTo: 'verifications';
-        value: string | Verification;
-      } | null)
-    | ({
-        relationTo: 'oauthApplications';
-        value: string | OauthApplication;
-      } | null)
-    | ({
-        relationTo: 'oauthAccessTokens';
-        value: string | OauthAccessToken;
-      } | null)
-    | ({
-        relationTo: 'oauthConsents';
-        value: string | OauthConsent;
-      } | null)
-    | ({
-        relationTo: 'admin-invitations';
-        value: string | AdminInvitation;
-      } | null)
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'posts';
-        value: string | Post;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null)
-    | ({
-        relationTo: 'categories';
-        value: string | Category;
-      } | null)
-    | ({
-        relationTo: 'identities';
-        value: string | Identity;
-      } | null)
-    | ({
-        relationTo: 'companies';
-        value: string | Company;
-      } | null)
-    | ({
-        relationTo: 'jobs';
-        value: string | Job;
-      } | null)
-    | ({
-        relationTo: 'comment-likes';
-        value: string | CommentLike;
-      } | null)
-    | ({
-        relationTo: 'startups';
-        value: string | Startup;
-      } | null)
-    | ({
-        relationTo: 'syndications';
-        value: string | Syndication;
-      } | null)
-    | ({
-        relationTo: 'subscribers';
-        value: string | Subscriber;
-      } | null)
-    | ({
-        relationTo: 'notification-subscriptions';
-        value: string | NotificationSubscription;
-      } | null)
-    | ({
-        relationTo: 'comments';
-        value: string | Comment;
-      } | null)
-    | ({
-        relationTo: 'company-likes';
-        value: string | CompanyLike;
-      } | null)
-    | ({
-        relationTo: 'identity-likes';
-        value: string | IdentityLike;
-      } | null)
-    | ({
-        relationTo: 'venture-likes';
-        value: string | VentureLike;
-      } | null)
-    | ({
-        relationTo: 'job-likes';
-        value: string | JobLike;
-      } | null)
-    | ({
-        relationTo: 'product-likes';
-        value: string | ProductLike;
-      } | null)
-    | ({
-        relationTo: 'post-likes';
-        value: string | PostLike;
-      } | null)
-    | ({
-        relationTo: 'addresses';
-        value: string | Address;
-      } | null)
-    | ({
-        relationTo: 'variants';
-        value: string | Variant;
-      } | null)
-    | ({
-        relationTo: 'variantTypes';
-        value: string | VariantType;
-      } | null)
-    | ({
-        relationTo: 'variantOptions';
-        value: string | VariantOption;
-      } | null)
-    | ({
-        relationTo: 'products';
-        value: string | Product;
-      } | null)
-    | ({
-        relationTo: 'carts';
-        value: string | Cart;
-      } | null)
-    | ({
-        relationTo: 'orders';
-        value: string | Order;
-      } | null)
-    | ({
-        relationTo: 'transactions';
-        value: string | Transaction;
-      } | null)
-    | ({
-        relationTo: 'redirects';
-        value: string | Redirect;
-      } | null)
-    | ({
-        relationTo: 'forms';
-        value: string | Form;
-      } | null)
-    | ({
-        relationTo: 'form-submissions';
-        value: string | FormSubmission;
-      } | null)
-    | ({
-        relationTo: 'search';
-        value: string | Search;
-      } | null)
-    | ({
-        relationTo: 'payload-folders';
-        value: string | FolderInterface;
-      } | null);
+  | ({
+    relationTo: 'users';
+    value: string | User;
+  } | null)
+  | ({
+    relationTo: 'sessions';
+    value: string | Session;
+  } | null)
+  | ({
+    relationTo: 'accounts';
+    value: string | Account;
+  } | null)
+  | ({
+    relationTo: 'verifications';
+    value: string | Verification;
+  } | null)
+  | ({
+    relationTo: 'oauthApplications';
+    value: string | OauthApplication;
+  } | null)
+  | ({
+    relationTo: 'oauthAccessTokens';
+    value: string | OauthAccessToken;
+  } | null)
+  | ({
+    relationTo: 'oauthConsents';
+    value: string | OauthConsent;
+  } | null)
+  | ({
+    relationTo: 'admin-invitations';
+    value: string | AdminInvitation;
+  } | null)
+  | ({
+    relationTo: 'pages';
+    value: string | Page;
+  } | null)
+  | ({
+    relationTo: 'posts';
+    value: string | Post;
+  } | null)
+  | ({
+    relationTo: 'media';
+    value: string | Media;
+  } | null)
+  | ({
+    relationTo: 'categories';
+    value: string | Category;
+  } | null)
+  | ({
+    relationTo: 'identities';
+    value: string | Identity;
+  } | null)
+  | ({
+    relationTo: 'companies';
+    value: string | Company;
+  } | null)
+  | ({
+    relationTo: 'jobs';
+    value: string | Job;
+  } | null)
+  | ({
+    relationTo: 'comment-likes';
+    value: string | CommentLike;
+  } | null)
+  | ({
+    relationTo: 'startups';
+    value: string | Startup;
+  } | null)
+  | ({
+    relationTo: 'syndications';
+    value: string | Syndication;
+  } | null)
+  | ({
+    relationTo: 'reports';
+    value: string | Report;
+  } | null)
+  | ({
+    relationTo: 'information-requests';
+    value: string | InformationRequest;
+  } | null)
+  | ({
+    relationTo: 'subscribers';
+    value: string | Subscriber;
+  } | null)
+  | ({
+    relationTo: 'notification-subscriptions';
+    value: string | NotificationSubscription;
+  } | null)
+  | ({
+    relationTo: 'comments';
+    value: string | Comment;
+  } | null)
+  | ({
+    relationTo: 'company-likes';
+    value: string | CompanyLike;
+  } | null)
+  | ({
+    relationTo: 'identity-likes';
+    value: string | IdentityLike;
+  } | null)
+  | ({
+    relationTo: 'venture-likes';
+    value: string | VentureLike;
+  } | null)
+  | ({
+    relationTo: 'job-likes';
+    value: string | JobLike;
+  } | null)
+  | ({
+    relationTo: 'product-likes';
+    value: string | ProductLike;
+  } | null)
+  | ({
+    relationTo: 'post-likes';
+    value: string | PostLike;
+  } | null)
+  | ({
+    relationTo: 'addresses';
+    value: string | Address;
+  } | null)
+  | ({
+    relationTo: 'variants';
+    value: string | Variant;
+  } | null)
+  | ({
+    relationTo: 'variantTypes';
+    value: string | VariantType;
+  } | null)
+  | ({
+    relationTo: 'variantOptions';
+    value: string | VariantOption;
+  } | null)
+  | ({
+    relationTo: 'products';
+    value: string | Product;
+  } | null)
+  | ({
+    relationTo: 'carts';
+    value: string | Cart;
+  } | null)
+  | ({
+    relationTo: 'orders';
+    value: string | Order;
+  } | null)
+  | ({
+    relationTo: 'transactions';
+    value: string | Transaction;
+  } | null)
+  | ({
+    relationTo: 'redirects';
+    value: string | Redirect;
+  } | null)
+  | ({
+    relationTo: 'forms';
+    value: string | Form;
+  } | null)
+  | ({
+    relationTo: 'form-submissions';
+    value: string | FormSubmission;
+  } | null)
+  | ({
+    relationTo: 'search';
+    value: string | Search;
+  } | null)
+  | ({
+    relationTo: 'payload-folders';
+    value: string | FolderInterface;
+  } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -2180,14 +2241,14 @@ export interface PayloadPreference {
   };
   key?: string | null;
   value?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2207,30 +2268,33 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  banned?: T;
   phone?: T;
+  bot?: T;
+  reportedLinks?: T;
   shippingAddress?:
-    | T
-    | {
-        title?: T;
-        firstName?: T;
-        lastName?: T;
-        company?: T;
-        addressLine1?: T;
-        addressLine2?: T;
-        city?: T;
-        state?: T;
-        postalCode?: T;
-        country?: T;
-        phone?: T;
-      };
+  | T
+  | {
+    title?: T;
+    firstName?: T;
+    lastName?: T;
+    company?: T;
+    addressLine1?: T;
+    addressLine2?: T;
+    city?: T;
+    state?: T;
+    postalCode?: T;
+    country?: T;
+    phone?: T;
+  };
   wallets?:
-    | T
-    | {
-        chain?: T;
-        provider?: T;
-        address?: T;
-        id?: T;
-      };
+  | T
+  | {
+    chain?: T;
+    provider?: T;
+    address?: T;
+    id?: T;
+  };
   name?: T;
   email?: T;
   emailVerified?: T;
@@ -2347,43 +2411,43 @@ export interface PagesSelect<T extends boolean = true> {
   createdBy?: T;
   title?: T;
   hero?:
+  | T
+  | {
+    type?: T;
+    richText?: T;
+    links?:
     | T
     | {
+      link?:
+      | T
+      | {
         type?: T;
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              id?: T;
-            };
-        media?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
       };
+      id?: T;
+    };
+    media?: T;
+  };
   layout?:
-    | T
-    | {
-        cta?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-        archive?: T | ArchiveBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-      };
+  | T
+  | {
+    cta?: T | CallToActionBlockSelect<T>;
+    content?: T | ContentBlockSelect<T>;
+    mediaBlock?: T | MediaBlockSelect<T>;
+    archive?: T | ArchiveBlockSelect<T>;
+    formBlock?: T | FormBlockSelect<T>;
+  };
   meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
+  | T
+  | {
+    title?: T;
+    image?: T;
+    description?: T;
+  };
   publishedAt?: T;
   generateSlug?: T;
   slug?: T;
@@ -2398,20 +2462,20 @@ export interface PagesSelect<T extends boolean = true> {
 export interface CallToActionBlockSelect<T extends boolean = true> {
   richText?: T;
   links?:
+  | T
+  | {
+    link?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
-        id?: T;
-      };
+      type?: T;
+      newTab?: T;
+      reference?: T;
+      url?: T;
+      label?: T;
+      appearance?: T;
+    };
+    id?: T;
+  };
   id?: T;
   blockName?: T;
 }
@@ -2421,23 +2485,23 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
  */
 export interface ContentBlockSelect<T extends boolean = true> {
   columns?:
+  | T
+  | {
+    size?: T;
+    richText?: T;
+    enableLink?: T;
+    link?:
     | T
     | {
-        size?: T;
-        richText?: T;
-        enableLink?: T;
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
-        id?: T;
-      };
+      type?: T;
+      newTab?: T;
+      reference?: T;
+      url?: T;
+      label?: T;
+      appearance?: T;
+    };
+    id?: T;
+  };
   id?: T;
   blockName?: T;
 }
@@ -2482,27 +2546,28 @@ export interface FormBlockSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   createdBy?: T;
   title?: T;
+  repost?: T;
   company?: T;
   heroImage?: T;
   content?: T;
   relatedPosts?: T;
   categories?: T;
   meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
+  | T
+  | {
+    title?: T;
+    image?: T;
+    description?: T;
+  };
   publishedAt?: T;
   authors?: T;
   completenessScore?: T;
   populatedAuthors?:
-    | T
-    | {
-        id?: T;
-        name?: T;
-      };
+  | T
+  | {
+    id?: T;
+    name?: T;
+  };
   generateSlug?: T;
   slug?: T;
   likeCount?: T;
@@ -2535,79 +2600,79 @@ export interface MediaSelect<T extends boolean = true> {
   focalX?: T;
   focalY?: T;
   sizes?:
+  | T
+  | {
+    thumbnail?:
     | T
     | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        square?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        small?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        medium?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        large?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        xlarge?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        og?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    square?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    small?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    medium?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    large?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    xlarge?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    og?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2621,13 +2686,13 @@ export interface CategoriesSelect<T extends boolean = true> {
   slug?: T;
   parent?: T;
   breadcrumbs?:
-    | T
-    | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
+  | T
+  | {
+    doc?: T;
+    url?: T;
+    label?: T;
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2638,6 +2703,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface IdentitiesSelect<T extends boolean = true> {
   createdBy?: T;
   serverURL?: T;
+  id?: T;
   name?: T;
   website?: T;
   image?: T;
@@ -2660,16 +2726,19 @@ export interface IdentitiesSelect<T extends boolean = true> {
 export interface CompaniesSelect<T extends boolean = true> {
   createdBy?: T;
   serverURL?: T;
+  isPrivate?: T;
+  noAutoPost?: T;
+  verification?: T;
   name?: T;
   website?: T;
   phone?: T;
   email?: T;
   cryptoAddresses?:
-    | T
-    | {
-        chain?: T;
-        address?: T;
-      };
+  | T
+  | {
+    chain?: T;
+    address?: T;
+  };
   image?: T;
   description?: T;
   identity?: T;
@@ -2701,18 +2770,18 @@ export interface JobsSelect<T extends boolean = true> {
   positions?: T;
   employmentType?: T;
   salaryRange?:
-    | T
-    | {
-        min?: T;
-        max?: T;
-        currency?: T;
-      };
+  | T
+  | {
+    min?: T;
+    max?: T;
+    currency?: T;
+  };
   bounty?:
-    | T
-    | {
-        amount?: T;
-        currency?: T;
-      };
+  | T
+  | {
+    amount?: T;
+    currency?: T;
+  };
   postedAt?: T;
   image?: T;
   allowedIdentities?: T;
@@ -2754,11 +2823,11 @@ export interface StartupsSelect<T extends boolean = true> {
   image?: T;
   identity?: T;
   fundsNeeded?:
-    | T
-    | {
-        amount?: T;
-        currency?: T;
-      };
+  | T
+  | {
+    amount?: T;
+    currency?: T;
+  };
   lookingFor?: T;
   alreadyHave?: T;
   stage?: T;
@@ -2782,10 +2851,36 @@ export interface SyndicationsSelect<T extends boolean = true> {
   createdBy?: T;
   name?: T;
   url?: T;
+  autoEnable?: T;
+  nsfw?: T;
   description?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reports_select".
+ */
+export interface ReportsSelect<T extends boolean = true> {
+  createdBy?: T;
+  status?: T;
+  userId?: T;
+  contentLink?: T;
+  reason?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "information-requests_select".
+ */
+export interface InformationRequestsSelect<T extends boolean = true> {
+  createdBy?: T;
+  user?: T;
+  reason?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2819,9 +2914,10 @@ export interface NotificationSubscriptionsSelect<T extends boolean = true> {
 export interface CommentsSelect<T extends boolean = true> {
   createdBy?: T;
   content?: T;
+  company?: T;
   replyPost?: T;
   replyComment?: T;
-  anonymousHash?: T;
+  replyCount?: T;
   serverUrl?: T;
   replyPostRelationTo?: T;
   replyPostValue?: T;
@@ -2837,6 +2933,7 @@ export interface CommentsSelect<T extends boolean = true> {
  * via the `definition` "company-likes_select".
  */
 export interface CompanyLikesSelect<T extends boolean = true> {
+  createdBy?: T;
   userId?: T;
   targetID?: T;
   updatedAt?: T;
@@ -2847,6 +2944,7 @@ export interface CompanyLikesSelect<T extends boolean = true> {
  * via the `definition` "identity-likes_select".
  */
 export interface IdentityLikesSelect<T extends boolean = true> {
+  createdBy?: T;
   userId?: T;
   targetID?: T;
   updatedAt?: T;
@@ -2857,6 +2955,7 @@ export interface IdentityLikesSelect<T extends boolean = true> {
  * via the `definition` "venture-likes_select".
  */
 export interface VentureLikesSelect<T extends boolean = true> {
+  createdBy?: T;
   userId?: T;
   targetID?: T;
   updatedAt?: T;
@@ -2867,6 +2966,7 @@ export interface VentureLikesSelect<T extends boolean = true> {
  * via the `definition` "job-likes_select".
  */
 export interface JobLikesSelect<T extends boolean = true> {
+  createdBy?: T;
   userId?: T;
   targetID?: T;
   updatedAt?: T;
@@ -2877,6 +2977,7 @@ export interface JobLikesSelect<T extends boolean = true> {
  * via the `definition` "product-likes_select".
  */
 export interface ProductLikesSelect<T extends boolean = true> {
+  createdBy?: T;
   userId?: T;
   targetID?: T;
   updatedAt?: T;
@@ -2887,6 +2988,7 @@ export interface ProductLikesSelect<T extends boolean = true> {
  * via the `definition` "post-likes_select".
  */
 export interface PostLikesSelect<T extends boolean = true> {
+  createdBy?: T;
   userId?: T;
   targetID?: T;
   updatedAt?: T;
@@ -2966,6 +3068,7 @@ export interface ProductsSelect<T extends boolean = true> {
   priceInUSDEnabled?: T;
   priceInUSD?: T;
   serverURL?: T;
+  createdBy?: T;
   name?: T;
   company?: T;
   companyIdentityId?: T;
@@ -2975,20 +3078,20 @@ export interface ProductsSelect<T extends boolean = true> {
   priceInSOL?: T;
   priceInTRX?: T;
   cryptoAddresses?:
-    | T
-    | {
-        chain?: T;
-        address?: T;
-      };
+  | T
+  | {
+    chain?: T;
+    address?: T;
+  };
   image?: T;
   description?: T;
   properties?:
-    | T
-    | {
-        key?: T;
-        value?: T;
-        id?: T;
-      };
+  | T
+  | {
+    key?: T;
+    value?: T;
+    id?: T;
+  };
   purchaseCount?: T;
   isSubscribed?: T;
   completenessScore?: T;
@@ -3008,13 +3111,13 @@ export interface ProductsSelect<T extends boolean = true> {
  */
 export interface CartsSelect<T extends boolean = true> {
   items?:
-    | T
-    | {
-        product?: T;
-        variant?: T;
-        quantity?: T;
-        id?: T;
-      };
+  | T
+  | {
+    product?: T;
+    variant?: T;
+    quantity?: T;
+    id?: T;
+  };
   secret?: T;
   customer?: T;
   purchasedAt?: T;
@@ -3030,28 +3133,28 @@ export interface CartsSelect<T extends boolean = true> {
  */
 export interface OrdersSelect<T extends boolean = true> {
   items?:
-    | T
-    | {
-        product?: T;
-        variant?: T;
-        quantity?: T;
-        id?: T;
-      };
+  | T
+  | {
+    product?: T;
+    variant?: T;
+    quantity?: T;
+    id?: T;
+  };
   shippingAddress?:
-    | T
-    | {
-        title?: T;
-        firstName?: T;
-        lastName?: T;
-        company?: T;
-        addressLine1?: T;
-        addressLine2?: T;
-        city?: T;
-        state?: T;
-        postalCode?: T;
-        country?: T;
-        phone?: T;
-      };
+  | T
+  | {
+    title?: T;
+    firstName?: T;
+    lastName?: T;
+    company?: T;
+    addressLine1?: T;
+    addressLine2?: T;
+    city?: T;
+    state?: T;
+    postalCode?: T;
+    country?: T;
+    phone?: T;
+  };
   customer?: T;
   customerEmail?: T;
   transactions?: T;
@@ -3060,23 +3163,23 @@ export interface OrdersSelect<T extends boolean = true> {
   currency?: T;
   payerAddress?: T;
   cryptoPrices?:
-    | T
-    | {
-        chain?: T;
-        stablePerNative?: T;
-        nativePerStable?: T;
-        expectedNativeAmount?: T;
-        fetchedAt?: T;
-        id?: T;
-      };
+  | T
+  | {
+    chain?: T;
+    stablePerNative?: T;
+    nativePerStable?: T;
+    expectedNativeAmount?: T;
+    fetchedAt?: T;
+    id?: T;
+  };
   transactionHashes?:
-    | T
-    | {
-        product?: T;
-        chain?: T;
-        transactionHash?: T;
-        id?: T;
-      };
+  | T
+  | {
+    product?: T;
+    chain?: T;
+    transactionHash?: T;
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3086,35 +3189,35 @@ export interface OrdersSelect<T extends boolean = true> {
  */
 export interface TransactionsSelect<T extends boolean = true> {
   items?:
-    | T
-    | {
-        product?: T;
-        variant?: T;
-        quantity?: T;
-        id?: T;
-      };
+  | T
+  | {
+    product?: T;
+    variant?: T;
+    quantity?: T;
+    id?: T;
+  };
   paymentMethod?: T;
   crypto?:
-    | T
-    | {
-        paymentRef?: T;
-        txHash?: T;
-      };
+  | T
+  | {
+    paymentRef?: T;
+    txHash?: T;
+  };
   billingAddress?:
-    | T
-    | {
-        title?: T;
-        firstName?: T;
-        lastName?: T;
-        company?: T;
-        addressLine1?: T;
-        addressLine2?: T;
-        city?: T;
-        state?: T;
-        postalCode?: T;
-        country?: T;
-        phone?: T;
-      };
+  | T
+  | {
+    title?: T;
+    firstName?: T;
+    lastName?: T;
+    company?: T;
+    addressLine1?: T;
+    addressLine2?: T;
+    city?: T;
+    state?: T;
+    postalCode?: T;
+    country?: T;
+    phone?: T;
+  };
   status?: T;
   customer?: T;
   customerEmail?: T;
@@ -3132,12 +3235,12 @@ export interface TransactionsSelect<T extends boolean = true> {
 export interface RedirectsSelect<T extends boolean = true> {
   from?: T;
   to?:
-    | T
-    | {
-        type?: T;
-        reference?: T;
-        url?: T;
-      };
+  | T
+  | {
+    type?: T;
+    reference?: T;
+    url?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3148,129 +3251,129 @@ export interface RedirectsSelect<T extends boolean = true> {
 export interface FormsSelect<T extends boolean = true> {
   title?: T;
   fields?:
+  | T
+  | {
+    checkbox?:
     | T
     | {
-        checkbox?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              defaultValue?: T;
-              id?: T;
-              blockName?: T;
-            };
-        country?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
-        email?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
-        message?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        number?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              defaultValue?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
-        select?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              defaultValue?: T;
-              placeholder?: T;
-              options?:
-                | T
-                | {
-                    label?: T;
-                    value?: T;
-                    id?: T;
-                  };
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
-        state?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
-        text?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              defaultValue?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textarea?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              defaultValue?: T;
-              required?: T;
-              id?: T;
-              blockName?: T;
-            };
+      name?: T;
+      label?: T;
+      width?: T;
+      required?: T;
+      defaultValue?: T;
+      id?: T;
+      blockName?: T;
+    };
+    country?:
+    | T
+    | {
+      name?: T;
+      label?: T;
+      width?: T;
+      required?: T;
+      id?: T;
+      blockName?: T;
+    };
+    email?:
+    | T
+    | {
+      name?: T;
+      label?: T;
+      width?: T;
+      required?: T;
+      id?: T;
+      blockName?: T;
+    };
+    message?:
+    | T
+    | {
+      message?: T;
+      id?: T;
+      blockName?: T;
+    };
+    number?:
+    | T
+    | {
+      name?: T;
+      label?: T;
+      width?: T;
+      defaultValue?: T;
+      required?: T;
+      id?: T;
+      blockName?: T;
+    };
+    select?:
+    | T
+    | {
+      name?: T;
+      label?: T;
+      width?: T;
+      defaultValue?: T;
+      placeholder?: T;
+      options?:
+      | T
+      | {
+        label?: T;
+        value?: T;
+        id?: T;
       };
+      required?: T;
+      id?: T;
+      blockName?: T;
+    };
+    state?:
+    | T
+    | {
+      name?: T;
+      label?: T;
+      width?: T;
+      required?: T;
+      id?: T;
+      blockName?: T;
+    };
+    text?:
+    | T
+    | {
+      name?: T;
+      label?: T;
+      width?: T;
+      defaultValue?: T;
+      required?: T;
+      id?: T;
+      blockName?: T;
+    };
+    textarea?:
+    | T
+    | {
+      name?: T;
+      label?: T;
+      width?: T;
+      defaultValue?: T;
+      required?: T;
+      id?: T;
+      blockName?: T;
+    };
+  };
   submitButtonLabel?: T;
   confirmationType?: T;
   confirmationMessage?: T;
   redirect?:
-    | T
-    | {
-        url?: T;
-      };
+  | T
+  | {
+    url?: T;
+  };
   emails?:
-    | T
-    | {
-        emailTo?: T;
-        cc?: T;
-        bcc?: T;
-        replyTo?: T;
-        emailFrom?: T;
-        subject?: T;
-        message?: T;
-        id?: T;
-      };
+  | T
+  | {
+    emailTo?: T;
+    cc?: T;
+    bcc?: T;
+    replyTo?: T;
+    emailFrom?: T;
+    subject?: T;
+    message?: T;
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3281,12 +3384,12 @@ export interface FormsSelect<T extends boolean = true> {
 export interface FormSubmissionsSelect<T extends boolean = true> {
   form?: T;
   submissionData?:
-    | T
-    | {
-        field?: T;
-        value?: T;
-        id?: T;
-      };
+  | T
+  | {
+    field?: T;
+    value?: T;
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3300,20 +3403,20 @@ export interface SearchSelect<T extends boolean = true> {
   doc?: T;
   slug?: T;
   meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
+  | T
+  | {
+    title?: T;
+    description?: T;
+    image?: T;
+  };
   categories?:
-    | T
-    | {
-        relationTo?: T;
-        categoryID?: T;
-        title?: T;
-        id?: T;
-      };
+  | T
+  | {
+    relationTo?: T;
+    categoryID?: T;
+    title?: T;
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3337,18 +3440,18 @@ export interface PayloadJobsSelect<T extends boolean = true> {
   hasError?: T;
   error?: T;
   log?:
-    | T
-    | {
-        executedAt?: T;
-        completedAt?: T;
-        taskSlug?: T;
-        taskID?: T;
-        input?: T;
-        output?: T;
-        state?: T;
-        error?: T;
-        id?: T;
-      };
+  | T
+  | {
+    executedAt?: T;
+    completedAt?: T;
+    taskSlug?: T;
+    taskID?: T;
+    input?: T;
+    output?: T;
+    state?: T;
+    error?: T;
+    id?: T;
+  };
   taskSlug?: T;
   queue?: T;
   waitUntil?: T;
@@ -3407,25 +3510,25 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Header {
   id: string;
   navItems?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+      | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+      | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null);
+      url?: string | null;
+      label: string;
+    };
+    id?: string | null;
+  }[]
+  | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3436,25 +3539,25 @@ export interface Header {
 export interface Footer {
   id: string;
   navItems?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+      | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+      | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null);
+      url?: string | null;
+      label: string;
+    };
+    id?: string | null;
+  }[]
+  | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3464,19 +3567,19 @@ export interface Footer {
  */
 export interface HeaderSelect<T extends boolean = true> {
   navItems?:
+  | T
+  | {
+    link?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
+      type?: T;
+      newTab?: T;
+      reference?: T;
+      url?: T;
+      label?: T;
+    };
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -3487,19 +3590,19 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface FooterSelect<T extends boolean = true> {
   navItems?:
+  | T
+  | {
+    link?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
+      type?: T;
+      newTab?: T;
+      reference?: T;
+      url?: T;
+      label?: T;
+    };
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -3513,14 +3616,14 @@ export interface TaskSchedulePublish {
     type?: ('publish' | 'unpublish') | null;
     locale?: string | null;
     doc?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
+    | ({
+      relationTo: 'pages';
+      value: string | Page;
+    } | null)
+    | ({
+      relationTo: 'posts';
+      value: string | Post;
+    } | null);
     global?: string | null;
     user?: (string | null) | User;
   };
@@ -3532,9 +3635,4 @@ export interface TaskSchedulePublish {
  */
 export interface Auth {
   [k: string]: unknown;
-}
-
-
-declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
 }

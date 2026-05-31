@@ -15,7 +15,7 @@ export const populateAuthors: CollectionAfterReadHook = async ({ doc, req: { pay
           id: typeof author === 'object' ? author?.id : author,
           collection: 'users',
           depth: 0,
-        })
+        }) as User
 
         if (authorDoc) {
           authorDocs.push(authorDoc)

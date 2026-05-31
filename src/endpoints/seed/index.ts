@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
 
+import type { Form } from '@/payload-types'
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
@@ -110,11 +111,11 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding contact form...`)
 
-  const contactForm = await payload.create({
+  const contactForm = (await payload.create({
     collection: 'forms',
     depth: 0,
     data: contactFormData,
-  })
+  })) as Form
 
   payload.logger.info(`— Seeding pages...`)
 

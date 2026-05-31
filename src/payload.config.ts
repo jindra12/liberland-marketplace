@@ -28,6 +28,7 @@ import { NotificationSubscriptions } from './collections/NotificationSubscriptio
 import { Subscribers } from './collections/Subscribers'
 import { analyticsGraphQLMutations } from './graphql/analytics'
 import { permissionsGraphQLQueries } from './graphql/permissions'
+import { shareGraphQLMutations } from './graphql/share'
 import { startupGraphQLMutations } from './graphql/startups'
 import { userGraphQLMutations, userGraphQLQueries } from './graphql/users'
 import { Reports } from './collections/Reports'
@@ -125,7 +126,11 @@ export default buildConfig({
       client.removeAllListeners('commandSucceeded')
       client.removeAllListeners('commandFailed')
       client.on('commandStarted', (event) => {
-        if (event.commandName === 'insert' || event.commandName === 'update' || event.commandName === 'find') {
+        if (
+          event.commandName === 'insert' ||
+          event.commandName === 'update' ||
+          event.commandName === 'find'
+        ) {
           console.log('[mongo] commandStarted', {
             commandName: event.commandName,
             databaseName: event.databaseName,
@@ -134,7 +139,11 @@ export default buildConfig({
         }
       })
       client.on('commandSucceeded', (event) => {
-        if (event.commandName === 'insert' || event.commandName === 'update' || event.commandName === 'find') {
+        if (
+          event.commandName === 'insert' ||
+          event.commandName === 'update' ||
+          event.commandName === 'find'
+        ) {
           console.log('[mongo] commandSucceeded', {
             commandName: event.commandName,
             duration: event.duration,
@@ -253,6 +262,7 @@ export default buildConfig({
     disablePlaygroundInProduction: false,
     mutations: (graphQL, context) => ({
       ...analyticsGraphQLMutations(graphQL, context),
+      ...shareGraphQLMutations(graphQL, context),
       ...startupGraphQLMutations(graphQL, context),
       ...userGraphQLMutations(graphQL, context),
     }),

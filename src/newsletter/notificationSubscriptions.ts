@@ -109,7 +109,7 @@ export const findLinkedUserByEmail = async ({
     },
   })
 
-  return result.docs[0] ?? null
+  return (result.docs[0] ?? null) as User | null
 }
 
 const findSubscriberByEmail = async ({
@@ -132,7 +132,7 @@ const findSubscriberByEmail = async ({
     },
   })
 
-  return result.docs[0] ?? null
+  return (result.docs[0] ?? null) as Subscriber | null
 }
 
 export const ensureNotificationSubscriber = async ({
@@ -155,7 +155,7 @@ export const ensureNotificationSubscriber = async ({
       draft: false,
       overrideAccess: true,
       req,
-    })
+    }) as Promise<Subscriber>
   }
 
   if (!existingSubscriber.isActive) {
@@ -167,7 +167,7 @@ export const ensureNotificationSubscriber = async ({
       },
       overrideAccess: true,
       req,
-    })
+    }) as Promise<Subscriber>
   }
 
   return existingSubscriber
@@ -181,13 +181,13 @@ export const getNotificationSubscriptionByID = async ({
   req: PayloadRequest
 }): Promise<NotificationSubscription | null> => {
   try {
-    return await req.payload.findByID({
+    return (await req.payload.findByID({
       collection: NOTIFICATION_SUBSCRIPTIONS_SLUG,
       depth: 0,
       id,
       overrideAccess: true,
       req,
-    })
+    })) as unknown as NotificationSubscription
   } catch {
     return null
   }

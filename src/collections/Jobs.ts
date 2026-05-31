@@ -1,5 +1,6 @@
-import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateContent'
-import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { authenticated } from '@/access/authenticated'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { createdByField } from '@/fields/createdByField'
@@ -9,6 +10,7 @@ import { notificationSubscriberCountField } from '@/fields/notificationSubscribe
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
+import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import {
@@ -18,6 +20,7 @@ import {
   lazyUpdateIdentityItemCountAfterDelete,
 } from '@/hooks/lazyCollectionHooks'
 import { getCurrencies } from '@/utilities/getCurrencies'
+import { publicCompanyFilter } from '@/access/publicCompanyFilter'
 import type { CollectionConfig } from 'payload'
 
 export const Jobs: CollectionConfig = {
@@ -25,6 +28,7 @@ export const Jobs: CollectionConfig = {
   defaultSort: '-contentRankScore',
   hooks: {
     beforeChange: [
+      requirePublicCompany,
       requireOwnCompany,
       syncCompanyIdentityId,
       computeContentRanking({
@@ -44,7 +48,7 @@ export const Jobs: CollectionConfig = {
       lazySendRelatedItemPublishedNotifications({
         childCollection: 'jobs',
         getParentID: (doc) =>
-          typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
+          typeof doc.company === 'string' ? doc.company : (doc.company?.id ?? null),
         parentCollection: 'companies',
       }),
       lazyUpdateIdentityItemCountAfterChange('companyIdentityId'),
@@ -69,7 +73,7 @@ export const Jobs: CollectionConfig = {
     drafts: true,
   },
   access: {
-    create: authenticatedCanCreateContent,
+    create: authenticated,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
@@ -85,7 +89,7 @@ export const Jobs: CollectionConfig = {
       type: 'relationship',
       relationTo: 'companies',
       required: true,
-      filterOptions: onlyOwnDocsOrAdminFilter,
+      filterOptions: publicCompanyFilter,
     },
     {
       name: 'companyIdentityId',
@@ -161,9 +165,9 @@ export const Jobs: CollectionConfig = {
       defaultValue: () => new Date().toISOString(),
     },
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
     },
     {
       name: 'allowedIdentities',

@@ -1,6 +1,7 @@
 import type { VerifyOrderPaymentResult } from '@/crypto'
 import type { ProductPaymentTarget } from '@/crypto/recipient'
 import type { Order } from '@/payload-types'
+import { toStringID } from '@/utilities/toStringID'
 import uniq from 'lodash/uniq.js'
 import type { GroupField, PayloadRequest } from 'payload'
 
@@ -200,15 +201,15 @@ export const cryptoAdapter = () => ({
       req,
     })
 
+    const transactionHashEntries = Array.isArray(order.transactionHashes) ? order.transactionHashes : []
+
     const paymentRef = buildPaymentRef({
       paymentTargets,
-      transactionHashEntries: order.transactionHashes || [],
+      transactionHashEntries,
     })
 
-    const transactionHashReference = uniq((order.transactionHashes || []).map((entry) => entry.transactionHash)).join(',')
-    const customerID =
-      (typeof order.customer === 'string' ? order.customer : order.customer?.id) ??
-      (typeof req.user === 'string' ? req.user : req.user?.id)
+    const transactionHashReference = uniq(transactionHashEntries.map((entry) => entry.transactionHash)).join(',')
+    const customerID = toStringID(order.customer) || toStringID(req.user)
 
     if (!customerID) {
       throw new Error('Missing customer id for transaction.')
@@ -216,8 +217,15 @@ export const cryptoAdapter = () => ({
 
     const amount = Number(order.amount)
     const currency = 'USD'
-    const firstTransaction = order.transactions?.[0]
+    const transactions = Array.isArray(order.transactions) ? order.transactions : []
+    const items: Order['items'] = Array.isArray(order.items) ? order.items : []
+    const firstTransaction = transactions[0]
     const inferredTransactionID = typeof firstTransaction === "string" ? firstTransaction : firstTransaction?.id;
+    const customerEmail = typeof order.customerEmail === 'string' ? order.customerEmail : null
+
+    if (!customerEmail) {
+      throw new Error('Missing customer email for transaction.')
+    }
 
     const verification = await verifyTransactionOccurred(payloadData.orderID)
     const verificationPassed = verification.ok
@@ -226,8 +234,8 @@ export const cryptoAdapter = () => ({
       amount,
       currency,
       customer: customerID,
-      customerEmail: order.customerEmail!,
-      items: order.items || [],
+      customerEmail,
+      items,
       orderID: payloadData.orderID,
       paymentRef,
       req,
@@ -243,7 +251,7 @@ export const cryptoAdapter = () => ({
         status: verificationPassed ? 'completed' : 'cancelled',
         transactions: appendTransactionToOrder({
           order,
-          transactionID: transaction.id,
+          transactionID: toStringID(transaction.id) ?? '',
         }),
       },
       context: {

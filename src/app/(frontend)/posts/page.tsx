@@ -1,6 +1,7 @@
 import type { Metadata } from 'next/types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import type { CardPostData } from '@/components/Card'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
@@ -45,7 +46,7 @@ export default async function Page() {
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      <CollectionArchive posts={posts.docs as unknown as CardPostData[]} />
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (

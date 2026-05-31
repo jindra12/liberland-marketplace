@@ -1,32 +1,19 @@
-import type {
-  CollectionAfterChangeHook,
-  CollectionAfterDeleteHook,
-  PayloadRequest,
-} from 'payload'
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, PayloadRequest } from 'payload'
+
+import { toStringID } from '@/utilities/toStringID'
 
 export type IdentityResolver = 'companyIdentityId' | 'identity'
 
-const toStringID = (value: unknown): string | null => {
-  if (typeof value === 'string') return value
-  if (typeof value === 'number') return String(value)
-  if (value && typeof value === 'object' && 'id' in value) {
-    const id = (value as { id: unknown }).id
-    if (typeof id === 'string') return id
-    if (typeof id === 'number') return String(id)
-  }
-  return null
-}
-
 type RawCollection = {
-  updateOne: (filter: { _id: string }, update: { $set: Record<string, unknown> }) => Promise<unknown>
+  updateOne: (
+    filter: { _id: string },
+    update: { $set: Record<string, unknown> },
+  ) => Promise<unknown>
 }
 
 type RawCollectionMap = Record<string, { collection?: RawCollection }>
 
-const recalculateItemCount = async (
-  req: PayloadRequest,
-  identityId: string,
-): Promise<void> => {
+const recalculateItemCount = async (req: PayloadRequest, identityId: string): Promise<void> => {
   const [jobCount, productCount, companyCount, startupCount] = await Promise.all([
     req.payload
       .count({

@@ -1,5 +1,7 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, PayloadRequest } from 'payload'
 
+import { toStringID } from '@/utilities/toStringID'
+
 type ReplyCountCollection = {
   updateOne: (filter: { _id: string }, update: { $inc: Record<string, number> }) => Promise<unknown>
 }
@@ -8,18 +10,6 @@ type ReplyCountCollectionMap = Record<string, { collection?: ReplyCountCollectio
 
 type CommentDoc = {
   replyComment?: unknown
-}
-
-const toStringID = (value: unknown): string | null => {
-  if (typeof value === 'string') return value
-  if (typeof value === 'number') return String(value)
-  if (value && typeof value === 'object' && 'id' in value) {
-    const id = (value as { id: unknown }).id
-    if (typeof id === 'string') return id
-    if (typeof id === 'number') return String(id)
-  }
-
-  return null
 }
 
 const getCommentsCollection = (req: PayloadRequest): ReplyCountCollection => {
@@ -102,7 +92,10 @@ export const updateCommentReplyCountAfterChange: CollectionAfterChangeHook = asy
   return doc
 }
 
-export const updateCommentReplyCountAfterDelete: CollectionAfterDeleteHook = async ({ doc, req }) => {
+export const updateCommentReplyCountAfterDelete: CollectionAfterDeleteHook = async ({
+  doc,
+  req,
+}) => {
   const replyCommentID = getReplyCommentID(doc as CommentDoc)
 
   if (replyCommentID) {

@@ -1,5 +1,5 @@
 import { computeContentRanking } from '@/hooks/computeContentRanking'
-import { authenticatedCanCreateCompany } from '@/access/authenticatedCanCreateCompany'
+import { authenticated } from '@/access/authenticated'
 import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
@@ -45,7 +45,7 @@ export const Companies: CollectionConfig = {
       lazySendRelatedItemPublishedNotifications({
         childCollection: 'companies',
         getParentID: (doc) =>
-          typeof doc.identity === 'string' ? doc.identity : doc.identity?.id ?? null,
+          typeof doc.identity === 'string' ? doc.identity : (doc.identity?.id ?? null),
         parentCollection: 'identities',
       }),
       lazyUpdateIdentityItemCountAfterChange('identity'),
@@ -70,7 +70,7 @@ export const Companies: CollectionConfig = {
     },
   },
   access: {
-    create: authenticatedCanCreateCompany,
+    create: authenticated,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
@@ -83,6 +83,10 @@ export const Companies: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       index: true,
+      admin: {
+        description:
+          'Keep this enabled to restrict the company from being used in jobs, products, and ventures.',
+      },
     },
     {
       name: 'noAutoPost',
@@ -116,9 +120,9 @@ export const Companies: CollectionConfig = {
     { name: 'email', type: 'email' },
     cryptoAddressesField(),
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
     },
     markdownField({
       name: 'description',

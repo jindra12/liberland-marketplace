@@ -20,7 +20,7 @@ export type ShareMetadata = {
 }
 
 export type ShareCompany = {
-  createdBy?: string | { id?: string } | null
+  createdBy?: string | { id?: string | number } | null
   id: string
   name: string
   noAutoPost?: boolean | null
@@ -28,30 +28,31 @@ export type ShareCompany = {
 
 export type ShareUser = {
   bot?: boolean | null
-  id: string
+  id: string | number
   role?: string[] | null
 }
 
 export type SharePayload = {
   find: (options: {
     collection: 'companies'
-    depth: 0
-    limit: 1
+    depth: number
+    limit: number
     overrideAccess: boolean
+    pagination?: boolean
     sort?: string
     user: ShareUser
     where?: Where
   }) => Promise<{
-    docs: ShareCompany[]
+    docs: Array<Record<string, unknown> & { id: string | number }>
     totalDocs: number
   }>
   findByID: (options: {
     collection: 'companies'
-    depth: 0
+    depth: number
     id: string
     overrideAccess: boolean
     user: ShareUser
-  }) => Promise<ShareCompany>
+  }) => Promise<(Record<string, unknown> & { id: string | number }) | null>
 }
 
 const getMetaValue = (
@@ -59,9 +60,7 @@ const getMetaValue = (
   selectors: string[],
   attributeName: 'content' | 'href' = 'content',
 ): string | null => {
-  const element = selectors
-    .map((selector) => $(selector).first())
-    .find((entry) => entry.length > 0)
+  const element = selectors.map((selector) => $(selector).first()).find((entry) => entry.length > 0)
 
   if (!element) {
     return null
@@ -94,7 +93,8 @@ const getLargestParagraph = ($: cheerio.CheerioAPI): string | null => {
   return (
     paragraphs
       .map((paragraph) => normalizeText($(paragraph).text()))
-      .reduce((largest, current) => (current.length > largest.length ? current : largest), '') || null
+      .reduce((largest, current) => (current.length > largest.length ? current : largest), '') ||
+    null
   )
 }
 
@@ -128,7 +128,7 @@ const getLargestImageURL = ($: cheerio.CheerioAPI, baseURL: URL): string | null 
 const detectSinglePageApp = ($: cheerio.CheerioAPI): boolean => {
   const appShellMarkers = $('#root, #app, #__next, [data-reactroot], [data-spa-root]')
 
-  return appShellMarkers.length > 0;
+  return appShellMarkers.length > 0
 }
 
 export const extractShareMetadataFromHTML = async ({
@@ -142,14 +142,20 @@ export const extractShareMetadataFromHTML = async ({
   const $ = cheerio.load(html)
 
   const headTitle =
-    getMetaValue($, ['meta[property="og:title"]', 'meta[name="twitter:title"]']) || $('title').first().text() || null
-  const headDescription = getMetaValue(
-    $,
-    ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]'],
-  )
+    getMetaValue($, ['meta[property="og:title"]', 'meta[name="twitter:title"]']) ||
+    $('title').first().text() ||
+    null
+  const headDescription = getMetaValue($, [
+    'meta[name="description"]',
+    'meta[property="og:description"]',
+    'meta[name="twitter:description"]',
+  ])
   const headImage = resolveURL(
-    getMetaValue($, ['meta[property="og:image"]', 'meta[name="twitter:image"]', 'link[rel="image_src"]'], 'content') ||
-    getMetaValue($, ['link[rel="image_src"]'], 'href'),
+    getMetaValue(
+      $,
+      ['meta[property="og:image"]', 'meta[name="twitter:image"]', 'link[rel="image_src"]'],
+      'content',
+    ) || getMetaValue($, ['link[rel="image_src"]'], 'href'),
     baseURL,
   )
   const isSinglePageApp = detectSinglePageApp($) || (!headTitle && !headDescription && !headImage)
@@ -177,23 +183,23 @@ export const resolveShareCompany = async ({
 
   if (user.role?.includes('admin') || Boolean(user.bot)) {
     if (companyId) {
-      return payload.findByID({
+      return (await payload.findByID({
         collection: 'companies',
         depth: 0,
         id: companyId,
         overrideAccess: false,
         user,
-      })
+      })) as ShareCompany
     }
 
-    const companyResult = await payload.find({
+    const companyResult = (await payload.find({
       collection: 'companies',
       depth: 0,
       limit: 1,
       overrideAccess: false,
       sort: 'createdAt',
       user,
-    })
+    })) as unknown as { docs: ShareCompany[]; totalDocs: number }
 
     const company = companyResult.docs[0]
 
@@ -212,18 +218,18 @@ export const resolveShareCompany = async ({
 
   const where: Where = companyId
     ? {
-      and: [
-        ownedCompanyWhere,
-        {
-          id: {
-            equals: companyId,
+        and: [
+          ownedCompanyWhere,
+          {
+            id: {
+              equals: companyId,
+            },
           },
-        },
-      ],
-    }
+        ],
+      }
     : ownedCompanyWhere
 
-  const companyResult = await payload.find({
+  const companyResult = (await payload.find({
     collection: 'companies',
     depth: 0,
     limit: 1,
@@ -231,7 +237,7 @@ export const resolveShareCompany = async ({
     sort: 'createdAt',
     user,
     where,
-  })
+  })) as unknown as { docs: ShareCompany[]; totalDocs: number }
 
   const company = companyResult.docs[0]
 

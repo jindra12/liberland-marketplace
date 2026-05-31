@@ -1,7 +1,9 @@
 import { computeContentRanking } from '@/hooks/computeContentRanking'
-import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateContent'
+import { authenticated } from '@/access/authenticated'
+import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { createdByField } from '@/fields/createdByField'
+import { publicCompanyFilter } from '@/access/publicCompanyFilter'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
@@ -16,7 +18,8 @@ import {
   lazyUpdateIdentityItemCountAfterDelete,
 } from '@/hooks/lazyCollectionHooks'
 import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
-import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
@@ -40,6 +43,7 @@ export const Startups: CollectionConfig = {
   defaultSort: '-contentRankScore',
   hooks: {
     beforeChange: [
+      requirePublicCompany,
       requireOwnCompany,
       computeContentRanking({
         fieldPaths: ['description', 'image', 'fundsNeeded.amount', 'lookingFor', 'alreadyHave'],
@@ -52,7 +56,7 @@ export const Startups: CollectionConfig = {
       lazySendRelatedItemPublishedNotifications({
         childCollection: 'startups',
         getParentID: (doc) =>
-          typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
+          typeof doc.company === 'string' ? doc.company : (doc.company?.id ?? null),
         parentCollection: 'companies',
       }),
       lazyUpdateIdentityItemCountAfterChange('identity'),
@@ -77,7 +81,7 @@ export const Startups: CollectionConfig = {
     },
   },
   access: {
-    create: authenticatedCanCreateContent,
+    create: authenticated,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
@@ -91,10 +95,7 @@ export const Startups: CollectionConfig = {
       type: 'relationship',
       relationTo: 'companies',
       required: true,
-      filterOptions: ({ user }) => {
-        if (!user) return true // Local API calls (internal operations)
-        return onlyOwnDocsOrAdminFilter({ user })
-      },
+      filterOptions: publicCompanyFilter,
     },
     markdownField({
       name: 'description',

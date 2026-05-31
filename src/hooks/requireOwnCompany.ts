@@ -1,8 +1,7 @@
 import { APIError, type CollectionBeforeChangeHook } from 'payload'
 
 import type { AccessUser } from '@/access/types'
-
-type MaybeID = null | number | string | { id?: unknown }
+import { toStringID, type MaybeID } from '@/utilities/toStringID'
 
 type MaybeOwnerDoc = {
   authors?: unknown
@@ -11,20 +10,6 @@ type MaybeOwnerDoc = {
 
 type BotAccessUser = Exclude<AccessUser, null | undefined> & {
   bot?: boolean | null
-}
-
-const toStringID = (value: MaybeID): null | string => {
-  if (typeof value === 'string') return value
-  if (typeof value === 'number') return String(value)
-
-  if (value && typeof value === 'object') {
-    const nestedID = value.id
-
-    if (typeof nestedID === 'string') return nestedID
-    if (typeof nestedID === 'number') return String(nestedID)
-  }
-
-  return null
 }
 
 const getOwnerID = (doc?: MaybeOwnerDoc | null): null | string => {
@@ -63,7 +48,16 @@ const canBotBypassOwnership = async ({
     req,
   })
 
-  return Reflect.get(company, 'noAutoPost') !== true
+  if (
+    typeof company === 'object' &&
+    company !== null &&
+    'noAutoPost' in company &&
+    company.noAutoPost === true
+  ) {
+    return false
+  }
+
+  return true
 }
 
 export const requireOwnCompany: CollectionBeforeChangeHook = async ({
@@ -98,7 +92,8 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
   }
 
   const ownerSource = data && ('authors' in data || 'createdBy' in data) ? data : originalDoc
-  const ownerID = getOwnerID(ownerSource) ?? (operation === 'create' ? toStringID(req.user?.id as MaybeID) : null)
+  const ownerID =
+    getOwnerID(ownerSource) ?? (operation === 'create' ? toStringID(req.user?.id as MaybeID) : null)
 
   if (!ownerID) {
     throw new APIError('You can only attach records to companies you own.', 403)
@@ -111,10 +106,7 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
     overrideAccess: true,
     req,
     where: {
-      and: [
-        { id: { equals: companyID } },
-        { createdBy: { equals: ownerID } },
-      ],
+      and: [{ id: { equals: companyID } }, { createdBy: { equals: ownerID } }],
     },
   })
 

@@ -18,11 +18,11 @@ const toDocID = (value: unknown): string =>
 export const getOrderById = async (orderId: string): Promise<Order> => {
   const payload = await getPayloadInstance()
 
-  return payload.findByID({
+  return (await payload.findByID({
     collection: 'orders',
     id: orderId,
     depth: 0,
-  })
+  })) as unknown as Order
 }
 
 export const getOrderTransactionHashEntries = (order: Order): OrderTransactionHashEntry[] => {

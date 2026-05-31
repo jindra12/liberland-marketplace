@@ -1,10 +1,6 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
-export const createDefaultCompany: CollectionAfterChangeHook = async ({
-  operation,
-  doc,
-  req,
-}) => {
+export const createDefaultCompany: CollectionAfterChangeHook = async ({ operation, doc, req }) => {
   if (operation !== 'create') return doc
   const identity = doc.identity
   if (!identity) return doc

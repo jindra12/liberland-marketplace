@@ -1,6 +1,5 @@
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
 import { authenticated } from '@/access/authenticated'
-import { authenticatedCanCreateContent } from '@/access/authenticatedCanCreateContent'
 import { addressFields } from '@/fields/addressFields'
 import { anyone } from '@/access/anyone'
 import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
@@ -21,6 +20,7 @@ import {
   lazyUpdateProductPurchaseCountAfterOrderValidation,
 } from '@/hooks/lazyCollectionHooks'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
+import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
@@ -117,7 +117,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
       defaultSort: '-contentRankScore',
       access: {
         ...defaultCollection.access,
-        create: authenticatedCanCreateContent,
+        create: authenticated,
         read: anyone,
         update: onlyOwnProductsOrAdmin,
         delete: onlyOwnProductsOrAdmin,
@@ -149,6 +149,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
         ...defaultCollection.hooks,
         afterRead: [...(defaultCollection.hooks?.afterRead ?? []), lazyPopulateProductCryptoPrices],
         beforeChange: [
+          requirePublicCompany,
           requireOwnCompany,
           syncCompanyIdentityId,
           ({ data }) => normalizeProductInventoryData(data),
@@ -164,7 +165,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
           lazySendRelatedItemPublishedNotifications({
             childCollection: 'products',
             getParentID: (doc) =>
-              typeof doc.company === 'string' ? doc.company : doc.company?.id ?? null,
+              typeof doc.company === 'string' ? doc.company : (doc.company?.id ?? null),
             parentCollection: 'companies',
           }),
           lazyUpdateIdentityItemCountAfterChange('companyIdentityId'),
@@ -198,7 +199,9 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
           },
         },
       },
-      fields: replaceEcommerceAdminComponentPaths(mergeFields(defaultCollection.fields, orderFields)),
+      fields: replaceEcommerceAdminComponentPaths(
+        mergeFields(defaultCollection.fields, orderFields),
+      ),
       hooks: {
         ...defaultCollection.hooks,
         beforeChange: [

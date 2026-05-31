@@ -27,22 +27,24 @@ const mockPayload = {
 
     return { user: null }
   }),
-  create: vi.fn(async ({ collection, data }: { collection: string; data: Record<string, unknown> }) => {
-    if (collection === 'media') {
-      return {
-        id: 'media-1',
+  create: vi.fn(
+    async ({ collection, data }: { collection: string; data: Record<string, unknown> }) => {
+      if (collection === 'media') {
+        return {
+          id: 'media-1',
+        }
       }
-    }
 
-    if (collection === 'posts') {
-      return {
-        id: 'post-1',
-        ...data,
+      if (collection === 'posts') {
+        return {
+          id: 'post-1',
+          ...data,
+        }
       }
-    }
 
-    throw new Error(`Unexpected collection: ${collection}`)
-  }),
+      throw new Error(`Unexpected collection: ${collection}`)
+    },
+  ),
   find: vi.fn(async () => ({
     docs: [
       {
@@ -98,12 +100,14 @@ describe('share API', () => {
     const pageURL = 'https://source.example.com/articles/hello-world'
     const imageURL = 'https://source.example.com/assets/hero.jpg'
 
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input: RequestInfo | URL) => {
-      const resolvedURL = typeof input === 'string' ? input : input.toString()
+    const fetchSpy = vi
+      .spyOn(globalThis, 'fetch')
+      .mockImplementation(async (input: RequestInfo | URL) => {
+        const resolvedURL = typeof input === 'string' ? input : input.toString()
 
-      if (resolvedURL === pageURL) {
-        return new Response(
-          `
+        if (resolvedURL === pageURL) {
+          return new Response(
+            `
             <html>
               <head>
                 <title>Head title</title>
@@ -118,34 +122,37 @@ describe('share API', () => {
               </body>
             </html>
           `,
-          {
-            headers: {
-              'content-type': 'text/html; charset=utf-8',
+            {
+              headers: {
+                'content-type': 'text/html; charset=utf-8',
+              },
             },
-          },
-        )
-      }
+          )
+        }
 
-      if (resolvedURL === imageURL) {
-        return new Response(Uint8Array.from([0xff, 0xd8, 0xff, 0xd9]), {
-          headers: {
-            'content-type': 'image/jpeg',
-          },
-        })
-      }
+        if (resolvedURL === imageURL) {
+          return new Response(Uint8Array.from([0xff, 0xd8, 0xff, 0xd9]), {
+            headers: {
+              'content-type': 'image/jpeg',
+            },
+          })
+        }
 
-      throw new Error(`Unexpected fetch URL: ${resolvedURL}`)
-    })
+        throw new Error(`Unexpected fetch URL: ${resolvedURL}`)
+      })
 
     let response: Response | null = null
 
     try {
       response = await shareGet(
-        new Request(`${serverURL}/api/share?link=${encodeURIComponent(pageURL)}&companyId=company-1`, {
-          headers: {
-            authorization: 'Bearer valid-token',
+        new Request(
+          `${serverURL}/api/share?link=${encodeURIComponent(pageURL)}&companyId=company-1`,
+          {
+            headers: {
+              authorization: 'Bearer valid-token',
+            },
           },
-        }),
+        ),
       )
     } finally {
       fetchSpy.mockRestore()
@@ -211,6 +218,99 @@ describe('share API', () => {
     )
   })
 
+  it('uses the description query param when present', async () => {
+    if (!shareGet) {
+      throw new Error('Share route is not available.')
+    }
+
+    const pageURL = 'https://source.example.com/articles/hello-world'
+    const imageURL = 'https://source.example.com/assets/hero.jpg'
+    const overriddenDescription = 'Manual share description'
+
+    const fetchSpy = vi
+      .spyOn(globalThis, 'fetch')
+      .mockImplementation(async (input: RequestInfo | URL) => {
+        const resolvedURL = typeof input === 'string' ? input : input.toString()
+
+        if (resolvedURL === pageURL) {
+          return new Response(
+            `
+            <html>
+              <head>
+                <title>Head title</title>
+                <meta name="description" content="Head description">
+                <meta property="og:image" content="${imageURL}">
+              </head>
+              <body>
+                <h1>Fallback title</h1>
+                <p>Fallback paragraph.</p>
+              </body>
+            </html>
+          `,
+            {
+              headers: {
+                'content-type': 'text/html; charset=utf-8',
+              },
+            },
+          )
+        }
+
+        if (resolvedURL === imageURL) {
+          return new Response(Uint8Array.from([0xff, 0xd8, 0xff, 0xd9]), {
+            headers: {
+              'content-type': 'image/jpeg',
+            },
+          })
+        }
+
+        throw new Error(`Unexpected fetch URL: ${resolvedURL}`)
+      })
+
+    let response: Response | null = null
+
+    try {
+      response = await shareGet(
+        new Request(
+          `${serverURL}/api/share?link=${encodeURIComponent(pageURL)}&companyId=company-1&description=${encodeURIComponent(overriddenDescription)}`,
+          {
+            headers: {
+              authorization: 'Bearer valid-token',
+            },
+          },
+        ),
+      )
+    } finally {
+      fetchSpy.mockRestore()
+    }
+
+    if (!response) {
+      throw new Error('Share route did not return a response.')
+    }
+
+    const body = (await response.json()) as {
+      post?: {
+        content?: string
+        meta?: {
+          description?: string
+        }
+      }
+      source?: {
+        description?: string
+      }
+    }
+
+    expect(response.status).toBe(200)
+    expect(body.source).toMatchObject({
+      description: overriddenDescription,
+    })
+    expect(body.post).toMatchObject({
+      content: expect.stringContaining(overriddenDescription),
+      meta: {
+        description: overriddenDescription,
+      },
+    })
+  })
+
   it('blocks automated posting when the company opts out', async () => {
     if (!shareGet) {
       throw new Error('Share route is not available.')
@@ -248,12 +348,14 @@ describe('share API', () => {
       throw new Error('Share route is not available.')
     }
 
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input: RequestInfo | URL) => {
-      const resolvedURL = typeof input === 'string' ? input : input.toString()
+    const fetchSpy = vi
+      .spyOn(globalThis, 'fetch')
+      .mockImplementation(async (input: RequestInfo | URL) => {
+        const resolvedURL = typeof input === 'string' ? input : input.toString()
 
-      if (resolvedURL === 'https://source.example.com/articles/hello-world') {
-        return new Response(
-          `
+        if (resolvedURL === 'https://source.example.com/articles/hello-world') {
+          return new Response(
+            `
             <html>
               <head>
                 <title>Head title</title>
@@ -266,24 +368,24 @@ describe('share API', () => {
               </body>
             </html>
           `,
-          {
-            headers: {
-              'content-type': 'text/html; charset=utf-8',
+            {
+              headers: {
+                'content-type': 'text/html; charset=utf-8',
+              },
             },
-          },
-        )
-      }
+          )
+        }
 
-      if (resolvedURL === 'https://source.example.com/assets/hero.jpg') {
-        return new Response(Uint8Array.from([0xff, 0xd8, 0xff, 0xd9]), {
-          headers: {
-            'content-type': 'image/jpeg',
-          },
-        })
-      }
+        if (resolvedURL === 'https://source.example.com/assets/hero.jpg') {
+          return new Response(Uint8Array.from([0xff, 0xd8, 0xff, 0xd9]), {
+            headers: {
+              'content-type': 'image/jpeg',
+            },
+          })
+        }
 
-      throw new Error(`Unexpected fetch URL: ${resolvedURL}`)
-    })
+        throw new Error(`Unexpected fetch URL: ${resolvedURL}`)
+      })
 
     let response: Response | null = null
 

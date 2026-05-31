@@ -1,6 +1,7 @@
 import type { PayloadRequest } from 'payload'
 
 import { LIKEABLE_COLLECTIONS, type LikeableCollectionSlug } from './constants'
+import { toStringID } from '@/utilities/toStringID'
 
 type LikeRequestContext = {
   likedTargetIDsByCollection?: Record<string, Promise<Set<string>>>
@@ -64,17 +65,7 @@ export const getLikeActorKey = (req: PayloadRequest): string | null => {
 }
 
 export const getLikeTargetID = (value: unknown): string | null => {
-  if (typeof value === 'string') return value
-  if (typeof value === 'number') return String(value)
-
-  if (value && typeof value === 'object') {
-    const nestedID = (value as { id?: number | string }).id
-
-    if (typeof nestedID === 'string') return nestedID
-    if (typeof nestedID === 'number') return String(nestedID)
-  }
-
-  return null
+  return toStringID(value)
 }
 
 export const getLikeDocumentID = (value: LikeDocumentIDLike): string | null => {
