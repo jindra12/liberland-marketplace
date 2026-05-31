@@ -42,17 +42,14 @@ export type SharePayload = {
     sort?: string
     user: ShareUser
     where?: Where
-  }) => Promise<{
-    docs: Array<Record<string, unknown> & { id: string | number }>
-    totalDocs: number
-  }>
+  }) => Promise<unknown>
   findByID: (options: {
     collection: 'companies'
     depth: number
     id: string
     overrideAccess: boolean
     user: ShareUser
-  }) => Promise<(Record<string, unknown> & { id: string | number }) | null>
+  }) => Promise<unknown>
 }
 
 const getMetaValue = (

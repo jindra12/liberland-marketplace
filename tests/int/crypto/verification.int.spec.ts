@@ -154,7 +154,9 @@ describe('crypto/verification aggregation integration', () => {
     const secondCall = vi.mocked(verifyEthereumNativeTransfer).mock.calls[1][0]
 
     expect(firstCall.expectedAmount).toBe('0.1')
+    expect(firstCall.orderId).toBe(ORDER_ID)
     expect(secondCall.expectedAmount).toBe('0.08')
+    expect(secondCall.orderId).toBe(ORDER_ID)
 
     // Result carries grouped product IDs for traceability.
     const grouped = result.results.filter((entry) => entry.transactionHash === '0xhash-shared')
@@ -182,7 +184,11 @@ describe('crypto/verification aggregation integration', () => {
     const result = await verifyTransactionOccurred(ORDER_ID)
 
     expect(result.ok).toBe(false)
-    expect(result.results.some((entry) => String(entry.error).includes('mapped to multiple transaction hash entries'))).toBe(true)
+    expect(
+      result.results.some((entry) =>
+        String(entry.error).includes('mapped to multiple transaction hash entries'),
+      ),
+    ).toBe(true)
 
     // First entry still reaches verifier; second is rejected at assignment validation.
     expect(vi.mocked(verifyEthereumNativeTransfer)).toHaveBeenCalledTimes(1)
@@ -217,6 +223,10 @@ describe('crypto/verification aggregation integration', () => {
     const result = await verifyTransactionOccurred(ORDER_ID)
 
     expect(result.ok).toBe(false)
-    expect(result.results.some((entry) => String(entry.error).includes('Missing transaction hash entry for product p2'))).toBe(true)
+    expect(
+      result.results.some((entry) =>
+        String(entry.error).includes('Missing transaction hash entry for product p2'),
+      ),
+    ).toBe(true)
   })
 })

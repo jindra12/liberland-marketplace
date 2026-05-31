@@ -1,8 +1,18 @@
 import BigNumber from 'bignumber.js'
 import { quantizeNativeAmount } from '../nativeAmount'
-import { getOrderById, getOrderCreatedAtMs, getOrderCryptoPriceEntries, getOrderTransactionHashEntries } from '../order'
+import {
+  getOrderById,
+  getOrderCreatedAtMs,
+  getOrderCryptoPriceEntries,
+  getOrderTransactionHashEntries,
+} from '../order'
 import { getPayloadInstance } from '../payload'
-import type { OrderCryptoPrice, SupportedChain, VerifyOrderPaymentResult, VerifyTransactionResult } from '../types'
+import type {
+  OrderCryptoPrice,
+  SupportedChain,
+  VerifyOrderPaymentResult,
+  VerifyTransactionResult,
+} from '../types'
 
 type VerificationGroup = {
   chain: SupportedChain
@@ -13,7 +23,9 @@ type VerificationGroup = {
   transactionHash: string
 }
 
-const toPriceMap = (prices: OrderCryptoPrice[]): Record<SupportedChain, OrderCryptoPrice | undefined> => {
+const toPriceMap = (
+  prices: OrderCryptoPrice[],
+): Record<SupportedChain, OrderCryptoPrice | undefined> => {
   return {
     ethereum: prices.find((price) => price.chain === 'ethereum'),
     solana: prices.find((price) => price.chain === 'solana'),
@@ -80,7 +92,7 @@ const verifyGroup = async ({
       chain: 'ethereum',
       expectedAmount: expectedNativeAmount,
       minTimestampMs,
-      orderIdToExclude: orderID,
+      orderId: orderID,
       recipientAddress: group.recipientAddress,
       transactionHash: group.transactionHash,
     })
@@ -103,13 +115,15 @@ const verifyGroup = async ({
     chain: 'tron',
     expectedAmount: expectedNativeAmount,
     minTimestampMs,
-    orderIdToExclude: orderID,
+    orderId: orderID,
     recipientAddress: group.recipientAddress,
     transactionHash: group.transactionHash,
   })
 }
 
-export const verifyTransactionOccurred = async (orderId: string): Promise<VerifyOrderPaymentResult> => {
+export const verifyTransactionOccurred = async (
+  orderId: string,
+): Promise<VerifyOrderPaymentResult> => {
   const order = await getOrderById(orderId)
   const txEntries = getOrderTransactionHashEntries(order)
 

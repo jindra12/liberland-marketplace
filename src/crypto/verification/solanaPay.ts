@@ -6,7 +6,10 @@ import { hasHashBeenUsed } from '../hash'
 import type { VerifySolanaPayTransactionInput, VerifyTransactionResult } from '../types'
 import { getSolanaOrderReference } from './solanaReference'
 
-const resolveTimestampMs = (txBlockTimeSeconds?: number | null, referenceBlockTimeSeconds?: number | null): number => {
+const resolveTimestampMs = (
+  txBlockTimeSeconds?: number | null,
+  referenceBlockTimeSeconds?: number | null,
+): number => {
   const seconds = txBlockTimeSeconds ?? referenceBlockTimeSeconds
   if (!seconds || seconds <= 0) {
     return 0
@@ -71,8 +74,8 @@ export const verifySolanaPayTransaction = async (
     if (
       await hasHashBeenUsed({
         chain: 'solana',
+        orderId: input.orderId,
         transactionHash: input.transactionHash,
-        orderIdToExclude: input.orderId,
       })
     ) {
       return {

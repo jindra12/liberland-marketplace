@@ -3,6 +3,7 @@ import { getTronBaseConfig } from '../env'
 import { hasHashBeenUsed } from '../hash'
 import { decimalToUnits } from '../math'
 import { createTronClient, normalizeTronAddress } from '../tron'
+import { hasMatchingOrderReferenceHex } from './orderReference'
 import type { VerifyNativeTransferTransactionInput, VerifyTransactionResult } from '../types'
 
 type TronTransferPayload = {
@@ -30,8 +31,8 @@ export const verifyTronNativeTransfer = async (
     if (
       await hasHashBeenUsed({
         chain: 'tron',
+        orderId: input.orderId,
         transactionHash: input.transactionHash,
-        orderIdToExclude: input.orderIdToExclude,
       })
     ) {
       return {
@@ -57,6 +58,15 @@ export const verifyTronNativeTransfer = async (
       tronWeb.trx.getTransaction(input.transactionHash),
       tronWeb.trx.getTransactionInfo(input.transactionHash).catch(() => undefined),
     ])
+
+    if (!hasMatchingOrderReferenceHex({ actual: tx?.raw_data?.data, orderId: input.orderId })) {
+      return {
+        chain: 'tron',
+        ok: false,
+        transactionHash: input.transactionHash,
+        error: 'Transaction is missing the required order ID payload.',
+      }
+    }
 
     const contractType = tx?.raw_data?.contract?.[0]?.type
     if (contractType !== 'TransferContract') {

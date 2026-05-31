@@ -4,7 +4,7 @@ import { getPayloadInstance } from './payload'
 
 type HasHashBeenUsedInput = {
   chain: SupportedChain
-  orderIdToExclude?: string
+  orderId?: string
   transactionHash: string
 }
 
@@ -19,7 +19,7 @@ const getHashCandidates = (transactionHash: string, chain: SupportedChain): stri
 
 export const hasHashBeenUsed = async ({
   chain,
-  orderIdToExclude,
+  orderId,
   transactionHash,
 }: HasHashBeenUsedInput): Promise<boolean> => {
   const candidates = getHashCandidates(transactionHash, chain)
@@ -28,29 +28,29 @@ export const hasHashBeenUsed = async ({
   const hashWhere: Where =
     candidates.length === 1
       ? {
-        'transactionHashes.transactionHash': {
-          equals: candidates[0],
-        },
-      }
-      : {
-        or: candidates.map((candidate) => ({
           'transactionHashes.transactionHash': {
-            equals: candidate,
+            equals: candidates[0],
           },
-        })),
-      }
+        }
+      : {
+          or: candidates.map((candidate) => ({
+            'transactionHashes.transactionHash': {
+              equals: candidate,
+            },
+          })),
+        }
 
-  const where: Where = orderIdToExclude
+  const where: Where = orderId
     ? {
-      and: [
-        hashWhere,
-        {
-          id: {
-            not_equals: orderIdToExclude,
+        and: [
+          hashWhere,
+          {
+            id: {
+              not_equals: orderId,
+            },
           },
-        },
-      ],
-    }
+        ],
+      }
     : hashWhere
 
   const existing = await payload.find({

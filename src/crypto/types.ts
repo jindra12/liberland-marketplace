@@ -31,7 +31,7 @@ export type VerifyNativeTransferTransactionInput = {
   chain: 'ethereum' | 'tron'
   expectedAmount: number | string
   minTimestampMs: number
-  orderIdToExclude?: string
+  orderId: string
   recipientAddress: string
   transactionHash: string
 }
