@@ -1,6 +1,5 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { Payload } from 'payload'
-import type { User } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 let payload: Payload | null = null
@@ -11,6 +10,12 @@ const createdOauthAccessTokenIDs: string[] = []
 const createdCommentIDs: string[] = []
 const createdPostIDs: string[] = []
 const createdUserIDs: string[] = []
+
+type TestUser = {
+  email: string
+  id: string
+  name: string
+}
 
 type GraphQLResponseBody = {
   data?: {
@@ -97,13 +102,7 @@ type GraphQLResponseBody = {
   errors?: Array<{ message?: string }>
 }
 
-type GraphQLInputValue =
-  | boolean
-  | null
-  | number
-  | string
-  | GraphQLInputObject
-  | GraphQLInputValue[]
+type GraphQLInputValue = boolean | null | number | string | GraphQLInputObject | GraphQLInputValue[]
 
 type GraphQLInputObject = {
   [key: string]: GraphQLInputValue
@@ -162,7 +161,7 @@ const createdByUserGraphQLContent = (label: string): GraphQLInputObject => ({
   },
 })
 
-const createUser = async (label: string): Promise<User> => {
+const createUser = async (label: string): Promise<TestUser> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -176,9 +175,14 @@ const createUser = async (label: string): Promise<User> => {
     },
   })
 
-  createdUserIDs.push(user.id)
+  const userID = String(user.id)
+  createdUserIDs.push(userID)
 
-  return user
+  return {
+    email: user.email,
+    id: userID,
+    name: user.name,
+  }
 }
 
 const getOwnedCompanyID = async (userID: string): Promise<string> => {
@@ -203,10 +207,10 @@ const getOwnedCompanyID = async (userID: string): Promise<string> => {
     throw new Error(`Could not find a company owned by user ${userID}.`)
   }
 
-  return companyID
+  return String(companyID)
 }
 
-const createBearerToken = async (user: User): Promise<string> => {
+const createBearerToken = async (user: TestUser): Promise<string> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -223,7 +227,7 @@ const createBearerToken = async (user: User): Promise<string> => {
     },
   })
 
-  createdOauthAccessTokenIDs.push(tokenRecord.id)
+  createdOauthAccessTokenIDs.push(String(tokenRecord.id))
 
   return accessToken
 }
@@ -542,7 +546,7 @@ describe('Posts GraphQL queries', () => {
 
     const user = await createUser('Posts GraphQL User')
     const bearerToken = await createBearerToken(user)
-    const companyID = await getOwnedCompanyID(user.id)
+    const companyID = await getOwnedCompanyID(String(user.id))
     const postTitle = `Posts GraphQL ${crypto.randomUUID()}`
     const postSlug = `posts-graphql-${crypto.randomUUID()}`
 
@@ -564,7 +568,7 @@ describe('Posts GraphQL queries', () => {
     expect(readResponse.body.data?.post).toMatchObject({
       company: {
         createdBy: {
-          id: user.id,
+          id: String(user.id),
           image: null,
           nickname: user.name,
         },
@@ -638,7 +642,7 @@ describe('Posts GraphQL queries', () => {
 
     const user = await createUser('Posts Comment GraphQL User')
     const bearerToken = await createBearerToken(user)
-    const companyID = await getOwnedCompanyID(user.id)
+    const companyID = await getOwnedCompanyID(String(user.id))
     const post = await createTrackedPost({
       bearerToken,
       companyID,
@@ -672,7 +676,7 @@ describe('Posts GraphQL queries', () => {
       overrideAccess: true,
     })
 
-    createdCommentIDs.push(comment.id)
+    createdCommentIDs.push(String(comment.id))
 
     expect(comment.serverUrl).toBe(getServerSideURL())
     expect((comment as { company?: string | null }).company).toBe(companyID)
@@ -681,17 +685,17 @@ describe('Posts GraphQL queries', () => {
       collection: 'comments',
       data: {
         ...commentData,
-        replyComment: comment.id,
+        replyComment: String(comment.id),
       },
       draft: false,
       overrideAccess: true,
     })
 
-    createdCommentIDs.push(replyComment.id)
+    createdCommentIDs.push(String(replyComment.id))
 
     const commentResponse = await runAuthorizedGraphQLOperation({
       bearerToken,
-      query: commentByIDQuery(comment.id),
+      query: commentByIDQuery(String(comment.id)),
     })
 
     expect(commentResponse.response.status).toBe(200)
@@ -713,7 +717,7 @@ describe('Posts GraphQL queries', () => {
 
     const user = await createUser('Posts Search GraphQL User')
     const bearerToken = await createBearerToken(user)
-    const companyID = await getOwnedCompanyID(user.id)
+    const companyID = await getOwnedCompanyID(String(user.id))
     const searchToken = crypto.randomUUID()
     const matchingPost = await createTrackedPost({
       bearerToken,
@@ -785,7 +789,7 @@ describe('Posts GraphQL queries', () => {
 
     const user = await createUser('Posts Company Filter GraphQL User')
     const bearerToken = await createBearerToken(user)
-    const companyID = await getOwnedCompanyID(user.id)
+    const companyID = await getOwnedCompanyID(String(user.id))
     const matchingPost = await createTrackedPost({
       bearerToken,
       companyID,

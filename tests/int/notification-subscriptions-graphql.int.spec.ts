@@ -4,7 +4,8 @@ import type { Field } from 'payload'
 
 import { buildNotificationSubscriptionDocumentID } from '@/newsletter/notificationSubscriptions'
 import { collectDocumentChanges, renderItemUpdateEmail } from '@/utilities/notificationDiff'
-import type { Product, User } from '@/payload-types'
+import type { Product } from '@/payload-types'
+import { toStringID } from '@/utilities/toStringID'
 
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
@@ -32,6 +33,11 @@ const createdDocumentIDs: Record<(typeof trackedCollections)[number], string[]> 
   startups: [],
   subscribers: [],
   users: [],
+}
+
+type TestUser = {
+  email: string
+  id: string
 }
 
 const getRelationshipID = <TRelation extends { id: string }>(
@@ -136,7 +142,7 @@ const listNotificationSubscriptionsQuery = (email: string): string => `
   }
 `
 
-const createLinkedUser = async (email: string): Promise<User> => {
+const createLinkedUser = async (email: string): Promise<TestUser> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -151,7 +157,12 @@ const createLinkedUser = async (email: string): Promise<User> => {
     draft: false,
   })
 
-  createdDocumentIDs.users.push(user.id)
+  const userID = toStringID(user.id)
+  if (!userID) {
+    throw new Error('User ID is missing.')
+  }
+
+  createdDocumentIDs.users.push(userID)
 
   const relatedCompanies = await payload.find({
     collection: 'companies',
@@ -159,16 +170,22 @@ const createLinkedUser = async (email: string): Promise<User> => {
     limit: 10,
     where: {
       createdBy: {
-        equals: user.id,
+        equals: userID,
       },
     },
   })
 
   relatedCompanies.docs.forEach((company) => {
-    createdDocumentIDs.companies.push(company.id)
+    const companyID = toStringID(company.id)
+    if (companyID) {
+      createdDocumentIDs.companies.push(companyID)
+    }
   })
 
-  return user
+  return {
+    email: user.email,
+    id: userID,
+  }
 }
 
 describe('Notification subscriptions collection GraphQL', () => {
@@ -230,7 +247,8 @@ describe('Notification subscriptions collection GraphQL', () => {
       },
       draft: false,
     })
-    createdDocumentIDs.identities.push(identity.id)
+    const identityID = String(identity.id)
+    createdDocumentIDs.identities.push(identityID)
 
     const company = await payload.create({
       collection: 'companies',
@@ -239,19 +257,20 @@ describe('Notification subscriptions collection GraphQL', () => {
         createdBy: 'system',
         description: 'Company for notifications.',
         email: 'company@example.com',
-        identity: identity.id,
+        identity: identityID,
         name: 'Notification Company',
         website: 'https://example.com/company',
       },
       draft: false,
     })
-    createdDocumentIDs.companies.push(company.id)
+    const companyID = String(company.id)
+    createdDocumentIDs.companies.push(companyID)
 
     const job = await payload.create({
       collection: 'jobs',
       data: {
         _status: 'published',
-        company: company.id,
+        company: companyID,
         createdBy: 'system',
         description: 'Initial description.',
         employmentType: 'full-time',
@@ -261,20 +280,21 @@ describe('Notification subscriptions collection GraphQL', () => {
       },
       draft: false,
     })
-    createdDocumentIDs.jobs.push(job.id)
+    const jobID = String(job.id)
+    createdDocumentIDs.jobs.push(jobID)
 
     const email = `job-updates-${Date.now()}@example.com`
     const subscriptionID = buildNotificationSubscriptionDocumentID({
       email,
       targetCollection: 'jobs',
-      targetID: job.id,
+      targetID: jobID,
     })
 
     const createResponse = await runGraphQLOperation(
       createNotificationSubscriptionMutation({
         email,
         targetCollection: 'jobs',
-        targetID: job.id,
+        targetID: jobID,
       }),
     )
 
@@ -283,7 +303,7 @@ describe('Notification subscriptions collection GraphQL', () => {
       email,
       id: subscriptionID,
       targetCollection: 'jobs',
-      targetID: job.id,
+      targetID: jobID,
     })
     createdDocumentIDs['notification-subscriptions'].push(subscriptionID)
 
@@ -337,7 +357,8 @@ describe('Notification subscriptions collection GraphQL', () => {
       },
       draft: false,
     })
-    createdDocumentIDs.identities.push(identity.id)
+    const identityID = String(identity.id)
+    createdDocumentIDs.identities.push(identityID)
 
     const company = await payload.create({
       collection: 'companies',
@@ -346,19 +367,20 @@ describe('Notification subscriptions collection GraphQL', () => {
         createdBy: 'system',
         description: 'Company for linked-user notifications.',
         email: 'linked-company@example.com',
-        identity: identity.id,
+        identity: identityID,
         name: 'Subscribed Company',
         website: 'https://example.com/subscribed-company',
       },
       draft: false,
     })
-    createdDocumentIDs.companies.push(company.id)
+    const companyID = String(company.id)
+    createdDocumentIDs.companies.push(companyID)
 
     const job = await payload.create({
       collection: 'jobs',
       data: {
         _status: 'published',
-        company: company.id,
+        company: companyID,
         createdBy: 'system',
         description: 'Linked-user job description.',
         employmentType: 'full-time',
@@ -368,18 +390,20 @@ describe('Notification subscriptions collection GraphQL', () => {
       },
       draft: false,
     })
-    createdDocumentIDs.jobs.push(job.id)
+    const jobID = String(job.id)
+    createdDocumentIDs.jobs.push(jobID)
 
     const product = await payload.create({
       collection: 'products',
       data: {
         _status: 'published',
-        company: company.id,
+        company: companyID,
         name: 'Subscribed Product',
       },
       draft: false,
     })
-    createdDocumentIDs.products.push(product.id)
+    const productID = String(product.id)
+    createdDocumentIDs.products.push(productID)
 
     const linkedUser = await createLinkedUser(`linked-${Date.now()}@example.com`)
 
@@ -389,7 +413,7 @@ describe('Notification subscriptions collection GraphQL', () => {
         data: {
           email: linkedUser.email,
           targetCollection: 'jobs',
-          targetID: job.id,
+          targetID: jobID,
         },
         overrideAccess: false,
       }),
@@ -400,12 +424,12 @@ describe('Notification subscriptions collection GraphQL', () => {
       data: {
         email: linkedUser.email,
         targetCollection: 'jobs',
-        targetID: job.id,
+        targetID: jobID,
       },
       overrideAccess: false,
       user: linkedUser,
     })
-    createdDocumentIDs['notification-subscriptions'].push(jobSubscription.id)
+    createdDocumentIDs['notification-subscriptions'].push(String(jobSubscription.id))
     createdDocumentIDs.subscribers.push(String(jobSubscription.subscriber))
 
     const identitySubscription = await payload.create({
@@ -413,24 +437,24 @@ describe('Notification subscriptions collection GraphQL', () => {
       data: {
         email: linkedUser.email,
         targetCollection: 'identities',
-        targetID: identity.id,
+        targetID: identityID,
       },
       overrideAccess: false,
       user: linkedUser,
     })
-    createdDocumentIDs['notification-subscriptions'].push(identitySubscription.id)
+    createdDocumentIDs['notification-subscriptions'].push(String(identitySubscription.id))
 
     const productSubscription = await payload.create({
       collection: 'notification-subscriptions',
       data: {
         email: linkedUser.email,
         targetCollection: 'products',
-        targetID: product.id,
+        targetID: productID,
       },
       overrideAccess: false,
       user: linkedUser,
     })
-    createdDocumentIDs['notification-subscriptions'].push(productSubscription.id)
+    createdDocumentIDs['notification-subscriptions'].push(String(productSubscription.id))
 
     const readableSubscriptions = await payload.find({
       collection: 'notification-subscriptions',
@@ -449,7 +473,7 @@ describe('Notification subscriptions collection GraphQL', () => {
 
     const publicJob = await payload.findByID({
       collection: 'jobs',
-      id: job.id,
+      id: jobID,
       depth: 0,
       overrideAccess: false,
     })
@@ -458,7 +482,7 @@ describe('Notification subscriptions collection GraphQL', () => {
 
     const subscribedJob = await payload.findByID({
       collection: 'jobs',
-      id: job.id,
+      id: jobID,
       depth: 0,
       overrideAccess: false,
       user: linkedUser,
@@ -468,7 +492,7 @@ describe('Notification subscriptions collection GraphQL', () => {
 
     const subscribedIdentity = await payload.findByID({
       collection: 'identities',
-      id: identity.id,
+      id: identityID,
       depth: 0,
       overrideAccess: false,
       user: linkedUser,
@@ -478,7 +502,7 @@ describe('Notification subscriptions collection GraphQL', () => {
 
     const subscribedProduct = await payload.findByID({
       collection: 'products',
-      id: product.id,
+      id: productID,
       depth: 0,
       overrideAccess: false,
       user: linkedUser,
@@ -587,7 +611,8 @@ describe('Notification subscriptions collection GraphQL', () => {
       },
       draft: false,
     })
-    createdDocumentIDs.identities.push(identity.id)
+    const identityID = String(identity.id)
+    createdDocumentIDs.identities.push(identityID)
 
     const subscriptionEmail = `tribe-published-company-${Date.now()}@example.com`
     const subscription = await payload.create({
@@ -595,11 +620,11 @@ describe('Notification subscriptions collection GraphQL', () => {
       data: {
         email: subscriptionEmail,
         targetCollection: 'identities',
-        targetID: identity.id,
+        targetID: identityID,
       },
       overrideAccess: false,
     })
-    createdDocumentIDs['notification-subscriptions'].push(subscription.id)
+    createdDocumentIDs['notification-subscriptions'].push(String(subscription.id))
 
     const subscriberID = getRelationshipID(subscription.subscriber)
     if (subscriberID) {
@@ -613,13 +638,14 @@ describe('Notification subscriptions collection GraphQL', () => {
         createdBy: 'system',
         description: 'Freshly published company.',
         email: 'published-company@example.com',
-        identity: identity.id,
+        identity: identityID,
         name: 'Fresh Company',
         website: 'https://example.com/fresh-company',
       },
       draft: false,
     })
-    createdDocumentIDs.companies.push(company.id)
+    const companyID = String(company.id)
+    createdDocumentIDs.companies.push(companyID)
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1)
 
@@ -627,10 +653,10 @@ describe('Notification subscriptions collection GraphQL', () => {
 
     expect(sentEmail?.to).toBe(subscriptionEmail)
     expect(sentEmail?.subject).toBe('New Company: Fresh Company')
-    expect(sentEmail?.html).toContain(`https://frontend.example.com/companies/${company.id}`)
-    expect(sentEmail?.text).toContain(`https://frontend.example.com/companies/${company.id}`)
+    expect(sentEmail?.html).toContain(`https://frontend.example.com/companies/${companyID}`)
+    expect(sentEmail?.text).toContain(`https://frontend.example.com/companies/${companyID}`)
     expect(sentEmail?.html).toContain(
-      `type=Tribes&id=${identity.id}&email=${encodeURIComponent(subscriptionEmail)}`,
+      `type=Tribes&id=${identityID}&email=${encodeURIComponent(subscriptionEmail)}`,
     )
   })
 
@@ -651,7 +677,8 @@ describe('Notification subscriptions collection GraphQL', () => {
       },
       draft: false,
     })
-    createdDocumentIDs.identities.push(identity.id)
+    const identityID = String(identity.id)
+    createdDocumentIDs.identities.push(identityID)
 
     const company = await payload.create({
       collection: 'companies',
@@ -660,13 +687,14 @@ describe('Notification subscriptions collection GraphQL', () => {
         createdBy: 'system',
         description: 'Company with subscribers.',
         email: 'subscribed-company@example.com',
-        identity: identity.id,
+        identity: identityID,
         name: 'Subscriber Company',
         website: 'https://example.com/subscriber-company',
       },
       draft: false,
     })
-    createdDocumentIDs.companies.push(company.id)
+    const companyID = String(company.id)
+    createdDocumentIDs.companies.push(companyID)
 
     const subscriptionEmail = `company-published-items-${Date.now()}@example.com`
     const subscription = await payload.create({
@@ -674,11 +702,11 @@ describe('Notification subscriptions collection GraphQL', () => {
       data: {
         email: subscriptionEmail,
         targetCollection: 'companies',
-        targetID: company.id,
+        targetID: companyID,
       },
       overrideAccess: false,
     })
-    createdDocumentIDs['notification-subscriptions'].push(subscription.id)
+    createdDocumentIDs['notification-subscriptions'].push(String(subscription.id))
 
     const subscriberID = getRelationshipID(subscription.subscriber)
     if (subscriberID) {
@@ -689,7 +717,7 @@ describe('Notification subscriptions collection GraphQL', () => {
       collection: 'jobs',
       data: {
         _status: 'published',
-        company: company.id,
+        company: companyID,
         createdBy: 'system',
         description: 'Newly published job.',
         employmentType: 'full-time',
@@ -699,38 +727,41 @@ describe('Notification subscriptions collection GraphQL', () => {
       },
       draft: false,
     })
-    createdDocumentIDs.jobs.push(job.id)
+    const jobID = String(job.id)
+    createdDocumentIDs.jobs.push(jobID)
 
     const startup = await payload.create({
       collection: 'startups',
       data: {
         _status: 'published',
-        company: company.id,
+        company: companyID,
         createdBy: 'system',
         description: 'Newly published venture.',
-        identity: identity.id,
+        identity: identityID,
         stage: 'idea',
         title: 'Fresh Venture',
       },
       draft: false,
     })
-    createdDocumentIDs.startups.push(startup.id)
+    const startupID = String(startup.id)
+    createdDocumentIDs.startups.push(startupID)
 
     const product = await payload.create({
       collection: 'products',
       data: {
-        company: company.id,
+        company: companyID,
         name: 'Draft Product',
       },
       draft: true,
     })
-    createdDocumentIDs.products.push(product.id)
+    const productID = String(product.id)
+    createdDocumentIDs.products.push(productID)
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(2)
 
     await payload.update({
       collection: 'products',
-      id: product.id,
+      id: productID,
       data: {
         _status: 'published',
       },
@@ -745,19 +776,23 @@ describe('Notification subscriptions collection GraphQL', () => {
     expect(subjects).toContain('New Job: Fresh Job')
     expect(subjects).toContain('New Venture: Fresh Venture')
     expect(subjects).toContain('New Product: Draft Product')
-    expect(htmlBodies.some((html) => html.includes(`https://frontend.example.com/jobs/${job.id}`))).toBe(true)
     expect(
-      htmlBodies.some((html) => html.includes(`https://frontend.example.com/ventures/${startup.id}`)),
+      htmlBodies.some((html) => html.includes(`https://frontend.example.com/jobs/${jobID}`)),
     ).toBe(true)
     expect(
       htmlBodies.some((html) =>
-        html.includes(`https://frontend.example.com/products-services/${product.id}`),
+        html.includes(`https://frontend.example.com/ventures/${startupID}`),
+      ),
+    ).toBe(true)
+    expect(
+      htmlBodies.some((html) =>
+        html.includes(`https://frontend.example.com/products-services/${productID}`),
       ),
     ).toBe(true)
     expect(
       htmlBodies.every((html) =>
         html.includes(
-          `type=Companies&id=${company.id}&email=${encodeURIComponent(subscriptionEmail)}`,
+          `type=Companies&id=${companyID}&email=${encodeURIComponent(subscriptionEmail)}`,
         ),
       ),
     ).toBe(true)

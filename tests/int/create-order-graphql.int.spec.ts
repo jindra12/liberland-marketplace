@@ -1,5 +1,6 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { Payload } from 'payload'
+import { toStringID } from '@/utilities/toStringID'
 
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
@@ -204,7 +205,7 @@ describe('GraphQL createOrder mutation regression', () => {
         sort: '-createdAt',
       })
 
-      productID = products.docs[0]?.id || null
+      productID = toStringID(products.docs[0])
     } catch (error) {
       bootstrapError = error instanceof Error ? error : new Error('Unknown Payload bootstrap error')
     }
@@ -229,190 +230,188 @@ describe('GraphQL createOrder mutation regression', () => {
     createdOrderIDs = []
   })
 
-  it(
-    'executes the failing createOrder mutation successfully under normal conditions',
-    async () => {
-      const hasRealGraphQL = !bootstrapError && Boolean(payload) && Boolean(productID) && Boolean(graphqlPost)
-      const postHandler = hasRealGraphQL && graphqlPost ? graphqlPost : createMockGraphQLPost
-      const resolvedProductID = hasRealGraphQL && productID ? productID : mockDB.products[0].id
+  it('executes the failing createOrder mutation successfully under normal conditions', async () => {
+    const hasRealGraphQL =
+      !bootstrapError && Boolean(payload) && Boolean(productID) && Boolean(graphqlPost)
+    const postHandler = hasRealGraphQL && graphqlPost ? graphqlPost : createMockGraphQLPost
+    const resolvedProductID = hasRealGraphQL && productID ? productID : mockDB.products[0].id
 
-      const variables = {
-        draft: false,
-        data: {
-          customerEmail: 'create-order-regression@example.com',
-          items: [{ product: resolvedProductID, quantity: 1 }],
-          shippingAddress: {
-            firstName: 'Jan',
-            lastName: 'Jindracek',
-            addressLine1: 'Bojcenkova',
-            addressLine2: '198 00 Capital City of Prague, Czechia',
-            city: 'Capital City of Prague',
-            state: 'Prague',
-            postalCode: '198 00',
-            country: 'Czechia',
-            phone: '724163293',
+    const variables = {
+      draft: false,
+      data: {
+        customerEmail: 'create-order-regression@example.com',
+        items: [{ product: resolvedProductID, quantity: 1 }],
+        shippingAddress: {
+          firstName: 'Jan',
+          lastName: 'Jindracek',
+          addressLine1: 'Bojcenkova',
+          addressLine2: '198 00 Capital City of Prague, Czechia',
+          city: 'Capital City of Prague',
+          state: 'Prague',
+          postalCode: '198 00',
+          country: 'Czechia',
+          phone: '724163293',
+        },
+      },
+    }
+
+    const request = new Request('http://localhost:3001/api/graphql', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: CREATE_ORDER_MUTATION,
+        variables,
+      }),
+    })
+
+    const response = await postHandler(request)
+    const result = (await response.json()) as GraphQLResponseBody
+
+    expect(response.status).toBe(200)
+    expect(result.errors).toBeUndefined()
+    expect(result.data?.createOrder?.id).toBeDefined()
+    if (hasRealGraphQL) {
+      expect(typeof result.data?.createOrder?.amount).toBe('number')
+    }
+
+    if (result.data?.createOrder?.id) {
+      createdOrderIDs.push(result.data.createOrder.id)
+    }
+
+    if (!hasRealGraphQL || !graphqlPost || !result.data?.createOrder?.id) {
+      return
+    }
+
+    const updatePayerAddressRequest = new Request('http://localhost:3001/api/graphql', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: UPDATE_ORDER_PAYER_ADDRESS_MUTATION,
+        variables: {
+          draft: false,
+          id: result.data.createOrder.id,
+          data: {
+            payerAddress: '0x1111111111111111111111111111111111111111',
           },
         },
-      }
+      }),
+    })
 
-      const request = new Request('http://localhost:3001/api/graphql', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: CREATE_ORDER_MUTATION,
-          variables,
-        }),
-      })
+    const updatePayerAddressResponse = await graphqlPost(updatePayerAddressRequest)
+    const updatePayerAddressResult =
+      (await updatePayerAddressResponse.json()) as GraphQLResponseBody
 
-      const response = await postHandler(request)
-      const result = (await response.json()) as GraphQLResponseBody
+    expect(updatePayerAddressResponse.status).toBe(200)
+    expect(updatePayerAddressResult.errors).toBeUndefined()
+    expect(updatePayerAddressResult.data?.updateOrder?.payerAddress).toBe(
+      '0x1111111111111111111111111111111111111111',
+    )
 
-      expect(response.status).toBe(200)
-      expect(result.errors).toBeUndefined()
-      expect(result.data?.createOrder?.id).toBeDefined()
-      if (hasRealGraphQL) {
-        expect(typeof result.data?.createOrder?.amount).toBe('number')
-      }
-
-      if (result.data?.createOrder?.id) {
-        createdOrderIDs.push(result.data.createOrder.id)
-      }
-
-      if (!hasRealGraphQL || !graphqlPost || !result.data?.createOrder?.id) {
-        return
-      }
-
-      const updatePayerAddressRequest = new Request('http://localhost:3001/api/graphql', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: UPDATE_ORDER_PAYER_ADDRESS_MUTATION,
-          variables: {
-            draft: false,
-            id: result.data.createOrder.id,
-            data: {
-              payerAddress: '0x1111111111111111111111111111111111111111',
-            },
+    const firstTxHash = '0xe0e5bcbc1ed1fbf19ce55bfd0cd292f19d53783c4bea327c696201a36e17aed9'
+    const updateTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: UPDATE_ORDER_TRANSACTION_HASHES_MUTATION,
+        variables: {
+          orderId: result.data.createOrder.id,
+          draft: false,
+          data: {
+            transactionHashes: [
+              {
+                product: resolvedProductID,
+                chain: 'ethereum',
+                transactionHash: firstTxHash,
+              },
+            ],
           },
-        }),
-      })
-
-      const updatePayerAddressResponse = await graphqlPost(updatePayerAddressRequest)
-      const updatePayerAddressResult = (await updatePayerAddressResponse.json()) as GraphQLResponseBody
-
-      expect(updatePayerAddressResponse.status).toBe(200)
-      expect(updatePayerAddressResult.errors).toBeUndefined()
-      expect(updatePayerAddressResult.data?.updateOrder?.payerAddress).toBe(
-        '0x1111111111111111111111111111111111111111',
-      )
-
-      const firstTxHash = '0xe0e5bcbc1ed1fbf19ce55bfd0cd292f19d53783c4bea327c696201a36e17aed9'
-      const updateTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
         },
-        body: JSON.stringify({
-          query: UPDATE_ORDER_TRANSACTION_HASHES_MUTATION,
-          variables: {
-            orderId: result.data.createOrder.id,
-            draft: false,
-            data: {
-              transactionHashes: [
-                {
-                  product: resolvedProductID,
-                  chain: 'ethereum',
-                  transactionHash: firstTxHash,
-                },
-              ],
-            },
+      }),
+    })
+
+    const updateTxHashesResponse = await graphqlPost(updateTxHashesRequest)
+    const updateTxHashesResult = (await updateTxHashesResponse.json()) as GraphQLResponseBody
+
+    expect(updateTxHashesResponse.status).toBe(200)
+    expect(updateTxHashesResult.errors).toBeUndefined()
+    expect(updateTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
+      {
+        chain: 'ethereum',
+        transactionHash: firstTxHash,
+        product: { id: resolvedProductID },
+      },
+    ])
+
+    const secondTxHash = '0x7f6f6b27a97f70a2a56af190cb4dbd5267db813411f1236d31f86d476fb28a18'
+    const appendTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: UPDATE_ORDER_TRANSACTION_HASHES_MUTATION,
+        variables: {
+          orderId: result.data.createOrder.id,
+          draft: false,
+          data: {
+            transactionHashes: [
+              {
+                product: resolvedProductID,
+                chain: 'ethereum',
+                transactionHash: secondTxHash,
+              },
+            ],
           },
-        }),
-      })
-
-      const updateTxHashesResponse = await graphqlPost(updateTxHashesRequest)
-      const updateTxHashesResult = (await updateTxHashesResponse.json()) as GraphQLResponseBody
-
-      expect(updateTxHashesResponse.status).toBe(200)
-      expect(updateTxHashesResult.errors).toBeUndefined()
-      expect(updateTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
-        {
-          chain: 'ethereum',
-          transactionHash: firstTxHash,
-          product: { id: resolvedProductID },
         },
-      ])
+      }),
+    })
 
-      const secondTxHash = '0x7f6f6b27a97f70a2a56af190cb4dbd5267db813411f1236d31f86d476fb28a18'
-      const appendTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: UPDATE_ORDER_TRANSACTION_HASHES_MUTATION,
-          variables: {
-            orderId: result.data.createOrder.id,
-            draft: false,
-            data: {
-              transactionHashes: [
-                {
-                  product: resolvedProductID,
-                  chain: 'ethereum',
-                  transactionHash: secondTxHash,
-                },
-              ],
-            },
+    const appendTxHashesResponse = await graphqlPost(appendTxHashesRequest)
+    const appendTxHashesResult = (await appendTxHashesResponse.json()) as GraphQLResponseBody
+
+    expect(appendTxHashesResponse.status).toBe(200)
+    expect(appendTxHashesResult.errors).toBeUndefined()
+    expect(appendTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
+      {
+        chain: 'ethereum',
+        transactionHash: firstTxHash,
+        product: { id: resolvedProductID },
+      },
+      {
+        chain: 'ethereum',
+        transactionHash: secondTxHash,
+        product: { id: resolvedProductID },
+      },
+    ])
+
+    const updateStatusRequest = new Request('http://localhost:3001/api/graphql', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: UPDATE_ORDER_STATUS_MUTATION,
+        variables: {
+          draft: false,
+          id: result.data.createOrder.id,
+          data: {
+            status: 'completed',
           },
-        }),
-      })
-
-      const appendTxHashesResponse = await graphqlPost(appendTxHashesRequest)
-      const appendTxHashesResult = (await appendTxHashesResponse.json()) as GraphQLResponseBody
-
-      expect(appendTxHashesResponse.status).toBe(200)
-      expect(appendTxHashesResult.errors).toBeUndefined()
-      expect(appendTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
-        {
-          chain: 'ethereum',
-          transactionHash: firstTxHash,
-          product: { id: resolvedProductID },
         },
-        {
-          chain: 'ethereum',
-          transactionHash: secondTxHash,
-          product: { id: resolvedProductID },
-        },
-      ])
+      }),
+    })
 
-      const updateStatusRequest = new Request('http://localhost:3001/api/graphql', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: UPDATE_ORDER_STATUS_MUTATION,
-          variables: {
-            draft: false,
-            id: result.data.createOrder.id,
-            data: {
-              status: 'completed',
-            },
-          },
-        }),
-      })
+    const updateStatusResponse = await graphqlPost(updateStatusRequest)
+    const updateStatusResult = (await updateStatusResponse.json()) as GraphQLResponseBody
 
-      const updateStatusResponse = await graphqlPost(updateStatusRequest)
-      const updateStatusResult = (await updateStatusResponse.json()) as GraphQLResponseBody
-
-      expect(updateStatusResponse.status).toBe(200)
-      expect(updateStatusResult.errors?.length).toBeGreaterThan(0)
-      expect(updateStatusResult.errors?.[0]?.message).toContain('not allowed')
-    },
-    120_000,
-  )
+    expect(updateStatusResponse.status).toBe(200)
+    expect(updateStatusResult.errors?.length).toBeGreaterThan(0)
+    expect(updateStatusResult.errors?.[0]?.message).toContain('not allowed')
+  }, 120_000)
 })

@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { CollectionSlug, Payload } from 'payload'
-import type { User } from '@/payload-types'
+import { toStringID } from '@/utilities/toStringID'
 
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
@@ -46,6 +46,11 @@ type LikeDocRecord = {
   id: string
   targetID?: string | null
   userId?: string | null
+}
+
+type TestUser = {
+  email: string
+  id: string
 }
 
 type CollectionListEntry = {
@@ -123,7 +128,7 @@ const likeableTargetDefinitions: Array<Omit<LikeTargetDoc, 'id'>> = [
 
 const quoteGraphQLString = (value: string): string => JSON.stringify(value)
 
-const createUser = async (label: string): Promise<User> => {
+const createUser = async (label: string): Promise<TestUser> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -137,12 +142,20 @@ const createUser = async (label: string): Promise<User> => {
     },
   })
 
-  createdUserIDs.push(user.id)
+  const userID = toStringID(user.id)
+  if (!userID) {
+    throw new Error('User ID is missing.')
+  }
 
-  return user
+  createdUserIDs.push(userID)
+
+  return {
+    email: user.email,
+    id: userID,
+  }
 }
 
-const createBearerToken = async (user: User): Promise<string> => {
+const createBearerToken = async (user: TestUser): Promise<string> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -159,7 +172,7 @@ const createBearerToken = async (user: User): Promise<string> => {
     },
   })
 
-  createdOauthAccessTokenIDs.push(tokenRecord.id)
+  createdOauthAccessTokenIDs.push(String(tokenRecord.id))
 
   return accessToken
 }
@@ -188,7 +201,7 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
       _status: 'published',
       createdBy: 'system',
       description: 'Company for likes testing.',
-      identity: identity.id,
+      identity: String(identity.id),
       name: `Likes Company ${crypto.randomUUID()}`,
       website: 'https://example.com/likes-company',
     },
@@ -199,9 +212,9 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     collection: 'startups',
     data: {
       _status: 'published',
-      company: company.id,
+      company: String(company.id),
       createdBy: 'system',
-      identity: identity.id,
+      identity: String(identity.id),
       stage: 'idea',
       title: `Likes Venture ${crypto.randomUUID()}`,
     },
@@ -212,7 +225,7 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     collection: 'jobs',
     data: {
       _status: 'published',
-      company: company.id,
+      company: String(company.id),
       createdBy: 'system',
       description: 'Job for likes testing.',
       employmentType: 'full-time',
@@ -227,7 +240,7 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     collection: 'products',
     data: {
       _status: 'published',
-      company: company.id,
+      company: String(company.id),
       name: `Likes Product ${crypto.randomUUID()}`,
     },
     draft: false,
@@ -237,7 +250,7 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     collection: 'posts',
     data: {
       _status: 'published',
-      company: company.id,
+      company: String(company.id),
       content: createSimplePostContent(`Likes post ${crypto.randomUUID()}`),
       createdBy: 'system',
       slug: `likes-post-${crypto.randomUUID()}`,
@@ -248,7 +261,7 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
 
   const commentData = {
     content: 'Comment for likes testing.',
-    company: company.id,
+    company: String(company.id),
     replyPost: {
       relationTo: 'posts' as const,
       value: post.id,
@@ -262,16 +275,51 @@ const createLikeableDocuments = async (): Promise<LikeTargetDoc[]> => {
     overrideAccess: true,
   })
 
-  expect((comment as { company?: string | null }).company).toBe(company.id)
+  expect((comment as { company?: string | null }).company).toBe(String(company.id))
 
   const createdDocs: LikeTargetDoc[] = [
-    { collection: 'identities', graphqlCollection: 'identities', id: String(identity.id), likeCollectionSlug: 'identity-likes' },
-    { collection: 'comments', graphqlCollection: 'comments', id: String(comment.id), likeCollectionSlug: 'comment-likes' },
-    { collection: 'companies', graphqlCollection: 'companies', id: String(company.id), likeCollectionSlug: 'company-likes' },
-    { collection: 'startups', graphqlCollection: 'ventures', id: String(startup.id), likeCollectionSlug: 'venture-likes' },
-    { collection: 'jobs', graphqlCollection: 'jobs', id: String(job.id), likeCollectionSlug: 'job-likes' },
-    { collection: 'products', graphqlCollection: 'products', id: String(product.id), likeCollectionSlug: 'product-likes' },
-    { collection: 'posts', graphqlCollection: 'posts', id: String(post.id), likeCollectionSlug: 'post-likes' },
+    {
+      collection: 'identities',
+      graphqlCollection: 'identities',
+      id: String(identity.id),
+      likeCollectionSlug: 'identity-likes',
+    },
+    {
+      collection: 'comments',
+      graphqlCollection: 'comments',
+      id: String(comment.id),
+      likeCollectionSlug: 'comment-likes',
+    },
+    {
+      collection: 'companies',
+      graphqlCollection: 'companies',
+      id: String(company.id),
+      likeCollectionSlug: 'company-likes',
+    },
+    {
+      collection: 'startups',
+      graphqlCollection: 'ventures',
+      id: String(startup.id),
+      likeCollectionSlug: 'venture-likes',
+    },
+    {
+      collection: 'jobs',
+      graphqlCollection: 'jobs',
+      id: String(job.id),
+      likeCollectionSlug: 'job-likes',
+    },
+    {
+      collection: 'products',
+      graphqlCollection: 'products',
+      id: String(product.id),
+      likeCollectionSlug: 'product-likes',
+    },
+    {
+      collection: 'posts',
+      graphqlCollection: 'posts',
+      id: String(post.id),
+      likeCollectionSlug: 'post-likes',
+    },
   ]
 
   createdTargetDocs.push(...createdDocs)
@@ -541,20 +589,22 @@ const cleanup = async (): Promise<void> => {
   createdUserIDs.length = 0
 
   await Promise.all(
-    Array.from(new Set(createdTargetDocs.map((doc) => doc.likeCollectionSlug))).map((collection) => {
-      const targetIDs = createdTargetDocs
-        .filter((doc) => doc.likeCollectionSlug === collection)
-        .map((doc) => doc.id)
+    Array.from(new Set(createdTargetDocs.map((doc) => doc.likeCollectionSlug))).map(
+      (collection) => {
+        const targetIDs = createdTargetDocs
+          .filter((doc) => doc.likeCollectionSlug === collection)
+          .map((doc) => doc.id)
 
-      return currentPayload.db.deleteMany({
-        collection: collection as CollectionSlug,
-        where: {
-          targetID: {
-            in: targetIDs,
+        return currentPayload.db.deleteMany({
+          collection: collection as CollectionSlug,
+          where: {
+            targetID: {
+              in: targetIDs,
+            },
           },
-        },
-      })
-    }),
+        })
+      },
+    ),
   )
 
   await Promise.all(

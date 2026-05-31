@@ -1,6 +1,5 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { Payload } from 'payload'
-import type { User } from '@/payload-types'
 
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
@@ -9,6 +8,11 @@ let graphqlPost: ((request: Request) => Promise<Response>) | null = null
 const createdCompanyIDs: string[] = []
 const createdOauthAccessTokenIDs: string[] = []
 const createdUserIDs: string[] = []
+
+type TestUser = {
+  email: string
+  id: string
+}
 
 type WalletChain = 'ethereum' | 'solana' | 'tron'
 
@@ -49,13 +53,11 @@ type GraphQLResponseBody = {
       id: string
       email: string
       phone?: string | null
-      wallets?:
-        | Array<{
-            address?: string | null
-            chain?: WalletChain | null
-            provider?: string | null
-          }>
-        | null
+      wallets?: Array<{
+        address?: string | null
+        chain?: WalletChain | null
+        provider?: string | null
+      }> | null
       shippingAddress?: {
         addressLine1?: string | null
         addressLine2?: string | null
@@ -74,13 +76,11 @@ type GraphQLResponseBody = {
       id: string
       email: string
       phone?: string | null
-      wallets?:
-        | Array<{
-            address?: string | null
-            chain?: WalletChain | null
-            provider?: string | null
-          }>
-        | null
+      wallets?: Array<{
+        address?: string | null
+        chain?: WalletChain | null
+        provider?: string | null
+      }> | null
       shippingAddress?: {
         addressLine1?: string | null
         addressLine2?: string | null
@@ -99,7 +99,7 @@ type GraphQLResponseBody = {
   errors?: Array<{ message?: string }>
 }
 
-const createUser = async (label: string): Promise<User> => {
+const createUser = async (label: string): Promise<TestUser> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -113,7 +113,8 @@ const createUser = async (label: string): Promise<User> => {
     },
   })
 
-  createdUserIDs.push(user.id)
+  const userID = String(user.id)
+  createdUserIDs.push(userID)
 
   const relatedCompanies = await payload.find({
     collection: 'companies',
@@ -121,19 +122,22 @@ const createUser = async (label: string): Promise<User> => {
     limit: 10,
     where: {
       createdBy: {
-        equals: user.id,
+        equals: String(user.id),
       },
     },
   })
 
   relatedCompanies.docs.forEach((company) => {
-    createdCompanyIDs.push(company.id)
+    createdCompanyIDs.push(String(company.id))
   })
 
-  return user
+  return {
+    email: user.email,
+    id: userID,
+  }
 }
 
-const createBearerToken = async (user: User): Promise<string> => {
+const createBearerToken = async (user: TestUser): Promise<string> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -149,7 +153,7 @@ const createBearerToken = async (user: User): Promise<string> => {
     },
   })
 
-  createdOauthAccessTokenIDs.push(tokenRecord.id)
+  createdOauthAccessTokenIDs.push(String(tokenRecord.id))
 
   return accessToken
 }
@@ -314,7 +318,7 @@ describe('Users self GraphQL access', () => {
 
     expect(updateResponse.status).toBe(200)
     expect(updateBody.errors).toBeUndefined()
-    expect(updateBody.data?.updateUserByEmail?.id).toBe(user.id)
+    expect(updateBody.data?.updateUserByEmail?.id).toBe(String(user.id))
     expect(updateBody.data?.updateUserByEmail?.email).toBe(user.email)
     expect(updateBody.data?.updateUserByEmail?.phone).toBe('+1 202 555 0107')
     expect(updateBody.data?.updateUserByEmail?.wallets).toEqual([
@@ -377,7 +381,7 @@ describe('Users self GraphQL access', () => {
     expect(readBody.errors).toBeUndefined()
     expect(readBody.data?.userByEmail).toMatchObject({
       email: user.email,
-      id: user.id,
+      id: String(user.id),
       phone: '+1 202 555 0107',
       wallets: [
         {

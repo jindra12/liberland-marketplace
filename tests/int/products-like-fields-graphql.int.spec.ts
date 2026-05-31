@@ -1,6 +1,5 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { Payload } from 'payload'
-import type { User } from '@/payload-types'
 
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
@@ -11,6 +10,11 @@ const createdProductIDs: string[] = []
 const createdCompanyIDs: string[] = []
 const createdIdentityIDs: string[] = []
 const createdUserIDs: string[] = []
+
+type TestUser = {
+  email: string
+  id: string
+}
 
 type GraphQLResponseBody = {
   data?: {
@@ -44,7 +48,7 @@ type GraphQLResponseBody = {
   errors?: Array<{ message?: string }>
 }
 
-const createUser = async (label: string): Promise<User> => {
+const createUser = async (label: string): Promise<TestUser> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -58,12 +62,16 @@ const createUser = async (label: string): Promise<User> => {
     },
   })
 
-  createdUserIDs.push(user.id)
+  const userID = String(user.id)
+  createdUserIDs.push(userID)
 
-  return user
+  return {
+    email: user.email,
+    id: userID,
+  }
 }
 
-const createBearerToken = async (user: User): Promise<string> => {
+const createBearerToken = async (user: TestUser): Promise<string> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -80,7 +88,7 @@ const createBearerToken = async (user: User): Promise<string> => {
     },
   })
 
-  createdOauthAccessTokenIDs.push(tokenRecord.id)
+  createdOauthAccessTokenIDs.push(String(tokenRecord.id))
 
   return accessToken
 }
@@ -137,7 +145,7 @@ const createLikeableProduct = async ({
       _status: 'published',
       createdBy: ownerID,
       description: 'Company for product likes testing.',
-      identity: identity.id,
+      identity: String(identity.id),
       name: `Products Likes Company ${crypto.randomUUID()}`,
       website: 'https://example.com/products-likes-company',
     },
@@ -148,7 +156,7 @@ const createLikeableProduct = async ({
     collection: 'products',
     data: {
       _status: 'published',
-      company: company.id,
+      company: String(company.id),
       name: `Products Likes Product ${crypto.randomUUID()}`,
     },
     draft: false,
