@@ -44,8 +44,8 @@
         "version": 1
       }
     },
-    "url": "/api/media/file/Flag_of_Liberland.svg.png",
-    "filename": "Flag_of_Liberland.svg.png",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/png",
     "filesize": 42855,
     "width": 1200,
@@ -54,20 +54,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/Flag_of_Liberland.svg-300x200.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 200,
         "mimeType": "image/png",
         "filesize": 10153,
-        "filename": "Flag_of_Liberland.svg-300x200.png"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/Flag_of_Liberland.svg-500x500.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 30995,
-        "filename": "Flag_of_Liberland.svg-500x500.png"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/Flag_of_Liberland.svg-600x400.png",
@@ -111,7 +111,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/Flag_of_Liberland.svg-300x200.png"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -158,8 +158,8 @@
         "version": 1
       }
     },
-    "url": "/api/media/file/prospera_logo.jpg",
-    "filename": "prospera_logo.jpg",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/jpeg",
     "filesize": 9688,
     "width": 400,
@@ -168,20 +168,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/prospera_logo-300x300.jpg",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 5933,
-        "filename": "prospera_logo-300x300.jpg"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/prospera_logo.jpg",
+        "url": "/api/media/file/placeholder-02.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/prospera_logo.jpg",
@@ -225,7 +225,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/prospera_logo-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -272,8 +272,8 @@
         "version": 1
       }
     },
-    "url": "/api/media/file/networkschoolofficial_logo.jpeg",
-    "filename": "networkschoolofficial_logo.jpeg",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/jpeg",
     "filesize": 3228,
     "width": 200,
@@ -282,20 +282,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/networkschoolofficial_logo.jpeg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/networkschoolofficial_logo.jpeg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/networkschoolofficial_logo.jpeg",
@@ -339,7 +339,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -386,8 +386,8 @@
         "version": 1
       }
     },
-    "url": "/api/media/file/Zuzalu.png",
-    "filename": "Zuzalu.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 1462,
     "width": 51,
@@ -396,20 +396,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/Zuzalu.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/Zuzalu.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/Zuzalu.png",
@@ -453,7 +453,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -500,8 +500,8 @@
         "version": 1
       }
     },
-    "url": "/api/media/file/superpowerEU.jpg",
-    "filename": "superpowerEU.jpg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/jpeg",
     "filesize": 20464,
     "width": 400,
@@ -510,20 +510,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/superpowerEU-300x300.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 11167,
-        "filename": "superpowerEU-300x300.jpg"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/superpowerEU.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/superpowerEU.jpg",
@@ -567,7 +567,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/superpowerEU-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -582,8 +582,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/v.png",
-    "filename": "v.png",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/png",
     "filesize": 14079,
     "width": 512,
@@ -592,20 +592,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/v-300x300.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 9286,
-        "filename": "v-300x300.png"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/v-500x500.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 17621,
-        "filename": "v-500x500.png"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/v.png",
@@ -649,7 +649,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/v-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -664,8 +664,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/8713437.png",
-    "filename": "8713437.png",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/png",
     "filesize": 20312,
     "width": 512,
@@ -674,20 +674,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/8713437-300x300.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 18145,
-        "filename": "8713437-300x300.png"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/8713437-500x500.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 34391,
-        "filename": "8713437-500x500.png"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/8713437.png",
@@ -731,7 +731,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/8713437-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -746,8 +746,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/8713437-1.png",
-    "filename": "8713437-1.png",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/png",
     "filesize": 20312,
     "width": 512,
@@ -756,20 +756,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/8713437-1-300x300.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 18145,
-        "filename": "8713437-1-300x300.png"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/8713437-1-500x500.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 34391,
-        "filename": "8713437-1-500x500.png"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/8713437-1.png",
@@ -813,7 +813,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/8713437-1-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -828,8 +828,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/8713437-2.png",
-    "filename": "8713437-2.png",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/png",
     "filesize": 20312,
     "width": 512,
@@ -838,20 +838,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/8713437-2-300x300.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 18145,
-        "filename": "8713437-2-300x300.png"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/8713437-2-500x500.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 34391,
-        "filename": "8713437-2-500x500.png"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/8713437-2.png",
@@ -895,7 +895,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/8713437-2-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -910,8 +910,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/robotic-process-automation-computer-icons-robot-thumbnail.jpg",
-    "filename": "robotic-process-automation-computer-icons-robot-thumbnail.jpg",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/jpeg",
     "filesize": 12857,
     "width": 300,
@@ -920,20 +920,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/robotic-process-automation-computer-icons-robot-thumbnail-300x300.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 12740,
-        "filename": "robotic-process-automation-computer-icons-robot-thumbnail-300x300.jpg"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/robotic-process-automation-computer-icons-robot-thumbnail.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/robotic-process-automation-computer-icons-robot-thumbnail.jpg",
@@ -977,7 +977,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/robotic-process-automation-computer-icons-robot-thumbnail-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -992,8 +992,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/7700640.png",
-    "filename": "7700640.png",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/png",
     "filesize": 52284,
     "width": 512,
@@ -1002,20 +1002,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/7700640-300x300.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 49319,
-        "filename": "7700640-300x300.png"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/7700640-500x500.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 83442,
-        "filename": "7700640-500x500.png"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/7700640.png",
@@ -1059,7 +1059,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/7700640-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -1074,8 +1074,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/logo_2.png",
-    "filename": "logo_2.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 1534,
     "width": 128,
@@ -1084,20 +1084,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/logo_2.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/logo_2.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/logo_2.png",
@@ -1141,7 +1141,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -1156,8 +1156,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/photo_2026-02-23_23-06-02.jpg",
-    "filename": "photo_2026-02-23_23-06-02.jpg",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/jpeg",
     "filesize": 55711,
     "width": 576,
@@ -1166,20 +1166,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/photo_2026-02-23_23-06-02-300x667.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 667,
         "mimeType": "image/jpeg",
         "filesize": 21123,
-        "filename": "photo_2026-02-23_23-06-02-300x667.jpg"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/photo_2026-02-23_23-06-02-500x500.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 12901,
-        "filename": "photo_2026-02-23_23-06-02-500x500.jpg"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/photo_2026-02-23_23-06-02.jpg",
@@ -1223,7 +1223,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/photo_2026-02-23_23-06-02-300x667.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -1238,8 +1238,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/Gemini_Generated_Image_7xk64d7xk64d7xk6.png",
-    "filename": "Gemini_Generated_Image_7xk64d7xk64d7xk6.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 886268,
     "width": 1024,
@@ -1248,20 +1248,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/Gemini_Generated_Image_7xk64d7xk64d7xk6-300x300.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 97168,
-        "filename": "Gemini_Generated_Image_7xk64d7xk64d7xk6-300x300.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/Gemini_Generated_Image_7xk64d7xk64d7xk6-500x500.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 278985,
-        "filename": "Gemini_Generated_Image_7xk64d7xk64d7xk6-500x500.png"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/Gemini_Generated_Image_7xk64d7xk64d7xk6-600x600.png",
@@ -1305,7 +1305,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/Gemini_Generated_Image_7xk64d7xk64d7xk6-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -1320,8 +1320,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/HB2UpFOXoAAYqpN.jpeg",
-    "filename": "HB2UpFOXoAAYqpN.jpeg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/jpeg",
     "filesize": 41334,
     "width": 640,
@@ -1330,20 +1330,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/HB2UpFOXoAAYqpN-300x182.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 182,
         "mimeType": "image/jpeg",
         "filesize": 13956,
-        "filename": "HB2UpFOXoAAYqpN-300x182.jpg"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/HB2UpFOXoAAYqpN-500x500.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 36023,
-        "filename": "HB2UpFOXoAAYqpN-500x500.jpg"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/HB2UpFOXoAAYqpN-600x365.jpg",
@@ -1387,7 +1387,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/HB2UpFOXoAAYqpN-300x182.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -1402,8 +1402,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/app_icon.png",
-    "filename": "app_icon.png",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/png",
     "filesize": 49679,
     "width": 1024,
@@ -1412,20 +1412,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/app_icon-300x300.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 17875,
-        "filename": "app_icon-300x300.png"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/app_icon-500x500.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 28815,
-        "filename": "app_icon-500x500.png"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/app_icon-600x600.png",
@@ -1469,7 +1469,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/app_icon-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -1516,8 +1516,8 @@
         "version": 1
       }
     },
-    "url": "/api/media/file/Genetics_icon_circular_DNA_purple.svg.png",
-    "filename": "Genetics_icon_circular_DNA_purple.svg.png",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/png",
     "filesize": 285660,
     "width": 3840,
@@ -1526,20 +1526,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/Genetics_icon_circular_DNA_purple.svg-300x300.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 21464,
-        "filename": "Genetics_icon_circular_DNA_purple.svg-300x300.png"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/Genetics_icon_circular_DNA_purple.svg-500x500.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 38286,
-        "filename": "Genetics_icon_circular_DNA_purple.svg-500x500.png"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/Genetics_icon_circular_DNA_purple.svg-600x600.png",
@@ -1583,7 +1583,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/Genetics_icon_circular_DNA_purple.svg-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -1598,8 +1598,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/iStock-1008859920.jpg",
-    "filename": "iStock-1008859920.jpg",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/jpeg",
     "filesize": 782097,
     "width": 2212,
@@ -1608,20 +1608,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/iStock-1008859920-300x184.jpg",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 184,
         "mimeType": "image/jpeg",
         "filesize": 6004,
-        "filename": "iStock-1008859920-300x184.jpg"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/iStock-1008859920-500x500.jpg",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 28309,
-        "filename": "iStock-1008859920-500x500.jpg"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/iStock-1008859920-600x368.jpg",
@@ -1665,7 +1665,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/iStock-1008859920-300x184.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -1680,8 +1680,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/iStock-1008859921.jpg",
-    "filename": "iStock-1008859921.jpg",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/jpeg",
     "filesize": 782097,
     "width": 2212,
@@ -1690,20 +1690,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/iStock-1008859921-300x184.jpg",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 184,
         "mimeType": "image/jpeg",
         "filesize": 6004,
-        "filename": "iStock-1008859921-300x184.jpg"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/iStock-1008859921-500x500.jpg",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 28309,
-        "filename": "iStock-1008859921-500x500.jpg"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/iStock-1008859921-600x368.jpg",
@@ -1747,7 +1747,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/iStock-1008859921-300x184.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -1762,8 +1762,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/2025-12-15%20-%20black%20hole%20watermarked.png",
-    "filename": "2025-12-15 - black hole watermarked.png",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/png",
     "filesize": 71359,
     "width": 200,
@@ -1772,20 +1772,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/2025-12-15%20-%20black%20hole%20watermarked.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/2025-12-15%20-%20black%20hole%20watermarked.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/2025-12-15%20-%20black%20hole%20watermarked.png",
@@ -1829,7 +1829,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -1844,18 +1844,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661674060.svg",
-    "filename": "upload-1772661674060.svg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/svg+xml",
     "filesize": 763,
     "width": 180,
     "height": 180,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661674060.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661674060.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661674060.svg"
@@ -1874,7 +1876,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -1889,8 +1891,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661675883.png",
-    "filename": "upload-1772661675883.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 20071,
     "width": 422,
@@ -1899,20 +1901,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661675883-300x215.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 215,
         "mimeType": "image/png",
         "filesize": 18159,
-        "filename": "upload-1772661675883-300x215.png"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661675883.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661675883.png",
@@ -1956,7 +1958,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661675883-300x215.png"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -1971,8 +1973,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661676896.jpg",
-    "filename": "upload-1772661676896.jpg",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/jpeg",
     "filesize": 35673,
     "width": 724,
@@ -1981,20 +1983,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661676896-300x180.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 180,
         "mimeType": "image/jpeg",
         "filesize": 10133,
-        "filename": "upload-1772661676896-300x180.jpg"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661676896-500x500.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 30459,
-        "filename": "upload-1772661676896-500x500.jpg"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661676896-600x360.jpg",
@@ -2038,7 +2040,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661676896-300x180.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -2053,8 +2055,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661677600.png",
-    "filename": "upload-1772661677600.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 2173,
     "width": 192,
@@ -2063,20 +2065,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661677600.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661677600.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661677600.png",
@@ -2120,7 +2122,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -2135,8 +2137,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661679940.png",
-    "filename": "upload-1772661679940.png",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/png",
     "filesize": 1452871,
     "width": 4000,
@@ -2145,20 +2147,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661679940-300x300.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 18716,
-        "filename": "upload-1772661679940-300x300.png"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661679940-500x500.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 39104,
-        "filename": "upload-1772661679940-500x500.png"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661679940-600x600.png",
@@ -2202,7 +2204,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661679940-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -2217,18 +2219,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661686369.svg",
-    "filename": "upload-1772661686369.svg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/svg+xml",
     "filesize": 27919,
     "width": 150,
     "height": 56,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661686369.svg"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661686369.svg"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661686369.svg"
@@ -2247,7 +2251,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -2262,8 +2266,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661687349.webp",
-    "filename": "upload-1772661687349.webp",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/webp",
     "filesize": 9428,
     "width": 190,
@@ -2272,20 +2276,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661687349.webp",
+        "url": "/api/media/file/placeholder-07.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661687349.webp",
+        "url": "/api/media/file/placeholder-07.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661687349.webp",
@@ -2329,7 +2333,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -2344,8 +2348,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661687845.png",
-    "filename": "upload-1772661687845.png",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/png",
     "filesize": 4131,
     "width": 200,
@@ -2354,20 +2358,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661687845.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661687845.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661687845.png",
@@ -2411,7 +2415,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -2426,8 +2430,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661688530.png",
-    "filename": "upload-1772661688530.png",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/png",
     "filesize": 32945,
     "width": 1022,
@@ -2436,20 +2440,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661688530-300x300.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 21571,
-        "filename": "upload-1772661688530-300x300.png"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661688530-500x500.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 33905,
-        "filename": "upload-1772661688530-500x500.png"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661688530-600x600.png",
@@ -2493,7 +2497,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661688530-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -2508,8 +2512,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661689646.jpg",
-    "filename": "upload-1772661689646.jpg",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/jpeg",
     "filesize": 233411,
     "width": 2560,
@@ -2518,20 +2522,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661689646-300x100.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 100,
         "mimeType": "image/jpeg",
         "filesize": 8903,
-        "filename": "upload-1772661689646-300x100.jpg"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661689646-500x500.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 23335,
-        "filename": "upload-1772661689646-500x500.jpg"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661689646-600x200.jpg",
@@ -2575,7 +2579,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661689646-300x100.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -2590,8 +2594,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661691757.png",
-    "filename": "upload-1772661691757.png",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/png",
     "filesize": 15989,
     "width": 500,
@@ -2600,20 +2604,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661691757-300x146.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 146,
         "mimeType": "image/png",
         "filesize": 16168,
-        "filename": "upload-1772661691757-300x146.png"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661691757-500x500.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 52571,
-        "filename": "upload-1772661691757-500x500.png"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661691757.png",
@@ -2657,7 +2661,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661691757-300x146.png"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -2672,18 +2676,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661971319.svg",
-    "filename": "upload-1772661971319.svg",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/svg+xml",
     "filesize": 763,
     "width": 180,
     "height": 180,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661971319.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661971319.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661971319.svg"
@@ -2702,7 +2708,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -2717,8 +2723,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661972043.png",
-    "filename": "upload-1772661972043.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 61716,
     "width": 577,
@@ -2727,20 +2733,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661972043-300x666.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 666,
         "mimeType": "image/jpeg",
         "filesize": 24938,
-        "filename": "upload-1772661972043-300x666.jpg"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661972043-500x500.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 31206,
-        "filename": "upload-1772661972043-500x500.jpg"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661972043.png",
@@ -2784,7 +2790,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661972043-300x666.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -2799,8 +2805,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661974730.png",
-    "filename": "upload-1772661974730.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 20071,
     "width": 422,
@@ -2809,20 +2815,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661974730-300x215.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 215,
         "mimeType": "image/png",
         "filesize": 18159,
-        "filename": "upload-1772661974730-300x215.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661974730.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661974730.png",
@@ -2866,7 +2872,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661974730-300x215.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -2881,8 +2887,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661976584.jpg",
-    "filename": "upload-1772661976584.jpg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/jpeg",
     "filesize": 35673,
     "width": 724,
@@ -2891,20 +2897,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661976584-300x180.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 180,
         "mimeType": "image/jpeg",
         "filesize": 10133,
-        "filename": "upload-1772661976584-300x180.jpg"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661976584-500x500.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 30459,
-        "filename": "upload-1772661976584-500x500.jpg"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661976584-600x360.jpg",
@@ -2948,7 +2954,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661976584-300x180.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -2963,8 +2969,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661977201.jpg",
-    "filename": "upload-1772661977201.jpg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/jpeg",
     "filesize": 118131,
     "width": 740,
@@ -2973,20 +2979,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661977201-300x415.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 415,
         "mimeType": "image/jpeg",
         "filesize": 39012,
-        "filename": "upload-1772661977201-300x415.jpg"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661977201-500x500.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 77317,
-        "filename": "upload-1772661977201-500x500.jpg"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661977201-600x830.jpg",
@@ -3030,7 +3036,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661977201-300x415.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -3045,8 +3051,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661978246.jpg",
-    "filename": "upload-1772661978246.jpg",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/jpeg",
     "filesize": 28684,
     "width": 320,
@@ -3055,20 +3061,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661978246-300x300.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 18472,
-        "filename": "upload-1772661978246-300x300.jpg"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661978246.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661978246.jpg",
@@ -3112,7 +3118,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661978246-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -3127,8 +3133,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661978790.jpg",
-    "filename": "upload-1772661978790.jpg",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/jpeg",
     "filesize": 70375,
     "width": 649,
@@ -3137,20 +3143,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661978790-300x343.jpg",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 343,
         "mimeType": "image/jpeg",
         "filesize": 25860,
-        "filename": "upload-1772661978790-300x343.jpg"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661978790-500x500.jpg",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 52303,
-        "filename": "upload-1772661978790-500x500.jpg"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661978790-600x685.jpg",
@@ -3194,7 +3200,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661978790-300x343.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -3209,8 +3215,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661979747.jpg",
-    "filename": "upload-1772661979747.jpg",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/jpeg",
     "filesize": 8469,
     "width": 156,
@@ -3219,20 +3225,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661979747.jpg",
+        "url": "/api/media/file/placeholder-09.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661979747.jpg",
+        "url": "/api/media/file/placeholder-09.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661979747.jpg",
@@ -3276,7 +3282,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -3291,8 +3297,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661980151.jpg",
-    "filename": "upload-1772661980151.jpg",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/jpeg",
     "filesize": 56415,
     "width": 626,
@@ -3301,20 +3307,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661980151-300x450.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 450,
         "mimeType": "image/jpeg",
         "filesize": 8715,
-        "filename": "upload-1772661980151-300x450.jpg"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661980151-500x500.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 13255,
-        "filename": "upload-1772661980151-500x500.jpg"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661980151-600x900.jpg",
@@ -3358,7 +3364,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661980151-300x450.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -3373,8 +3379,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661981173.png",
-    "filename": "upload-1772661981173.png",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/png",
     "filesize": 2173,
     "width": 192,
@@ -3383,20 +3389,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661981173.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661981173.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661981173.png",
@@ -3440,7 +3446,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -3455,8 +3461,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661982212.png",
-    "filename": "upload-1772661982212.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 1452871,
     "width": 4000,
@@ -3465,20 +3471,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661982212-300x300.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 18716,
-        "filename": "upload-1772661982212-300x300.png"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661982212-500x500.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 39104,
-        "filename": "upload-1772661982212-500x500.png"
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661982212-600x600.png",
@@ -3522,7 +3528,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661982212-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -3537,8 +3543,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661989669.jpg",
-    "filename": "upload-1772661989669.jpg",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/jpeg",
     "filesize": 144407,
     "width": 2048,
@@ -3547,20 +3553,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661989669-300x300.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 6006,
-        "filename": "upload-1772661989669-300x300.jpg"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661989669-500x500.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 13042,
-        "filename": "upload-1772661989669-500x500.jpg"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661989669-600x600.jpg",
@@ -3604,7 +3610,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661989669-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -3619,8 +3625,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661991827.jpg",
-    "filename": "upload-1772661991827.jpg",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/jpeg",
     "filesize": 147126,
     "width": 2048,
@@ -3629,20 +3635,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661991827-300x300.jpg",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 5360,
-        "filename": "upload-1772661991827-300x300.jpg"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661991827-500x500.jpg",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 12228,
-        "filename": "upload-1772661991827-500x500.jpg"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661991827-600x600.jpg",
@@ -3686,7 +3692,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661991827-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -3701,8 +3707,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661994420.jpg",
-    "filename": "upload-1772661994420.jpg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/jpeg",
     "filesize": 243460,
     "width": 2048,
@@ -3711,20 +3717,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661994420-300x300.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 10207,
-        "filename": "upload-1772661994420-300x300.jpg"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661994420-500x500.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 24205,
-        "filename": "upload-1772661994420-500x500.jpg"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661994420-600x600.jpg",
@@ -3768,7 +3774,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661994420-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -3783,8 +3789,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661997177.jpg",
-    "filename": "upload-1772661997177.jpg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/jpeg",
     "filesize": 230965,
     "width": 2048,
@@ -3793,20 +3799,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661997177-300x300.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 6336,
-        "filename": "upload-1772661997177-300x300.jpg"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661997177-500x500.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 16456,
-        "filename": "upload-1772661997177-500x500.jpg"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661997177-600x600.jpg",
@@ -3850,7 +3856,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661997177-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -3865,8 +3871,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772661999107.jpg",
-    "filename": "upload-1772661999107.jpg",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/jpeg",
     "filesize": 283666,
     "width": 2048,
@@ -3875,20 +3881,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772661999107-300x300.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 8351,
-        "filename": "upload-1772661999107-300x300.jpg"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772661999107-500x500.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 19812,
-        "filename": "upload-1772661999107-500x500.jpg"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772661999107-600x600.jpg",
@@ -3932,7 +3938,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772661999107-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -3947,18 +3953,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662001502.svg",
-    "filename": "upload-1772662001502.svg",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/svg+xml",
     "filesize": 27919,
     "width": 150,
     "height": 56,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662001502.svg"
+        "url": "/api/media/file/placeholder-08.png",
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662001502.svg"
+        "url": "/api/media/file/placeholder-08.png",
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662001502.svg"
@@ -3977,7 +3985,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -3992,8 +4000,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662004457.webp",
-    "filename": "upload-1772662004457.webp",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/webp",
     "filesize": 9428,
     "width": 190,
@@ -4002,20 +4010,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662004457.webp",
+        "url": "/api/media/file/placeholder-09.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662004457.webp",
+        "url": "/api/media/file/placeholder-09.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662004457.webp",
@@ -4059,7 +4067,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -4074,8 +4082,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662005219.webp",
-    "filename": "upload-1772662005219.webp",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/webp",
     "filesize": 11782,
     "width": 500,
@@ -4084,20 +4092,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662005219-300x180.webp",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 180,
         "mimeType": "image/webp",
         "filesize": 6130,
-        "filename": "upload-1772662005219-300x180.webp"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662005219-500x500.webp",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/webp",
         "filesize": 13254,
-        "filename": "upload-1772662005219-500x500.webp"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662005219.webp",
@@ -4141,7 +4149,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662005219-300x180.webp"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -4156,8 +4164,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662006128.webp",
-    "filename": "upload-1772662006128.webp",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/webp",
     "filesize": 9124,
     "width": 500,
@@ -4166,20 +4174,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662006128-300x180.webp",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 180,
         "mimeType": "image/webp",
         "filesize": 5044,
-        "filename": "upload-1772662006128-300x180.webp"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662006128-500x500.webp",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/webp",
         "filesize": 10606,
-        "filename": "upload-1772662006128-500x500.webp"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662006128.webp",
@@ -4223,7 +4231,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662006128-300x180.webp"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -4238,8 +4246,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662007692.png",
-    "filename": "upload-1772662007692.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 108696,
     "width": 500,
@@ -4248,20 +4256,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662007692-300x180.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 180,
         "mimeType": "image/png",
         "filesize": 125746,
-        "filename": "upload-1772662007692-300x180.png"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662007692-500x500.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 515948,
-        "filename": "upload-1772662007692-500x500.png"
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662007692.png",
@@ -4305,7 +4313,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662007692-300x180.png"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -4320,8 +4328,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662009248.png",
-    "filename": "upload-1772662009248.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 4131,
     "width": 200,
@@ -4330,20 +4338,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662009248.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662009248.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662009248.png",
@@ -4387,7 +4395,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -4402,8 +4410,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662010225.png",
-    "filename": "upload-1772662010225.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 32945,
     "width": 1022,
@@ -4412,20 +4420,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662010225-300x300.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 21571,
-        "filename": "upload-1772662010225-300x300.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662010225-500x500.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 33905,
-        "filename": "upload-1772662010225-500x500.png"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662010225-600x600.png",
@@ -4469,7 +4477,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662010225-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -4484,8 +4492,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662016620.png",
-    "filename": "upload-1772662016620.png",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/png",
     "filesize": 1398529,
     "width": 1024,
@@ -4494,20 +4502,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662016620-300x339.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 339,
         "mimeType": "image/png",
         "filesize": 290088,
-        "filename": "upload-1772662016620-300x339.png"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662016620-500x500.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 702292,
-        "filename": "upload-1772662016620-500x500.png"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662016620-600x678.png",
@@ -4551,7 +4559,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662016620-300x339.png"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -4566,8 +4574,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662019382.jpg",
-    "filename": "upload-1772662019382.jpg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/jpeg",
     "filesize": 233411,
     "width": 2560,
@@ -4576,20 +4584,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662019382-300x100.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 100,
         "mimeType": "image/jpeg",
         "filesize": 8903,
-        "filename": "upload-1772662019382-300x100.jpg"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662019382-500x500.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 23335,
-        "filename": "upload-1772662019382-500x500.jpg"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662019382-600x200.jpg",
@@ -4633,7 +4641,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662019382-300x100.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -4648,8 +4656,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662022670.png",
-    "filename": "upload-1772662022670.png",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/png",
     "filesize": 15989,
     "width": 500,
@@ -4658,20 +4666,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662022670-300x146.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 146,
         "mimeType": "image/png",
         "filesize": 16168,
-        "filename": "upload-1772662022670-300x146.png"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662022670-500x500.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 52571,
-        "filename": "upload-1772662022670-500x500.png"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662022670.png",
@@ -4715,7 +4723,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662022670-300x146.png"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -4730,8 +4738,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662024273.png",
-    "filename": "upload-1772662024273.png",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/png",
     "filesize": 34162,
     "width": 1804,
@@ -4740,20 +4748,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662024273-300x40.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 40,
         "mimeType": "image/png",
         "filesize": 10506,
-        "filename": "upload-1772662024273-300x40.png"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662024273-500x500.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 36477,
-        "filename": "upload-1772662024273-500x500.png"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662024273-600x79.png",
@@ -4797,7 +4805,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662024273-300x40.png"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -4812,8 +4820,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662025520.jpg",
-    "filename": "upload-1772662025520.jpg",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/jpeg",
     "filesize": 18027,
     "width": 300,
@@ -4822,20 +4830,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662025520-300x300.jpg",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 16790,
-        "filename": "upload-1772662025520-300x300.jpg"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662025520.jpg",
+        "url": "/api/media/file/placeholder-09.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662025520.jpg",
@@ -4879,7 +4887,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662025520-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -4894,8 +4902,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662026044.jpg",
-    "filename": "upload-1772662026044.jpg",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/jpeg",
     "filesize": 242737,
     "width": 2560,
@@ -4904,20 +4912,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662026044-300x175.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 175,
         "mimeType": "image/jpeg",
         "filesize": 8986,
-        "filename": "upload-1772662026044-300x175.jpg"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662026044-500x500.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 34328,
-        "filename": "upload-1772662026044-500x500.jpg"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662026044-600x349.jpg",
@@ -4961,7 +4969,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662026044-300x175.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -4976,8 +4984,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662027578.jpg",
-    "filename": "upload-1772662027578.jpg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/jpeg",
     "filesize": 358742,
     "width": 2560,
@@ -4986,20 +4994,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662027578-300x150.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 150,
         "mimeType": "image/jpeg",
         "filesize": 11265,
-        "filename": "upload-1772662027578-300x150.jpg"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662027578-500x500.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 44938,
-        "filename": "upload-1772662027578-500x500.jpg"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662027578-600x300.jpg",
@@ -5043,7 +5051,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662027578-300x150.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -5058,8 +5066,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662028832.png",
-    "filename": "upload-1772662028832.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 454977,
     "width": 679,
@@ -5068,20 +5076,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662028832-300x236.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 236,
         "mimeType": "image/png",
         "filesize": 119616,
-        "filename": "upload-1772662028832-300x236.png"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662028832-500x500.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 380199,
-        "filename": "upload-1772662028832-500x500.png"
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662028832-600x473.png",
@@ -5125,7 +5133,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662028832-300x236.png"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -5140,8 +5148,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662030141.jpg",
-    "filename": "upload-1772662030141.jpg",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/jpeg",
     "filesize": 154619,
     "width": 1024,
@@ -5150,20 +5158,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662030141-300x300.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 15166,
-        "filename": "upload-1772662030141-300x300.jpg"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662030141-500x500.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 35462,
-        "filename": "upload-1772662030141-500x500.jpg"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662030141-600x600.jpg",
@@ -5207,7 +5215,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662030141-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -5222,8 +5230,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662031373.webp",
-    "filename": "upload-1772662031373.webp",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/webp",
     "filesize": 169338,
     "width": 1920,
@@ -5232,20 +5240,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662031373-300x169.webp",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 169,
         "mimeType": "image/webp",
         "filesize": 13382,
-        "filename": "upload-1772662031373-300x169.webp"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662031373-500x500.webp",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/webp",
         "filesize": 40830,
-        "filename": "upload-1772662031373-500x500.webp"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662031373-600x338.webp",
@@ -5289,7 +5297,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662031373-300x169.webp"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -5304,8 +5312,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662033984.webp",
-    "filename": "upload-1772662033984.webp",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/webp",
     "filesize": 169338,
     "width": 1920,
@@ -5314,20 +5322,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662033984-300x169.webp",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 169,
         "mimeType": "image/webp",
         "filesize": 13382,
-        "filename": "upload-1772662033984-300x169.webp"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662033984-500x500.webp",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/webp",
         "filesize": 40830,
-        "filename": "upload-1772662033984-500x500.webp"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662033984-600x338.webp",
@@ -5371,7 +5379,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662033984-300x169.webp"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -5386,18 +5394,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662036975.svg",
-    "filename": "upload-1772662036975.svg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/svg+xml",
     "filesize": 1370,
     "width": 576,
     "height": 512,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662036975.svg"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662036975.svg"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662036975.svg"
@@ -5416,7 +5426,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -5431,18 +5441,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662037356.svg",
-    "filename": "upload-1772662037356.svg",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/svg+xml",
     "filesize": 1370,
     "width": 576,
     "height": 512,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662037356.svg"
+        "url": "/api/media/file/placeholder-07.png",
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662037356.svg"
+        "url": "/api/media/file/placeholder-07.png",
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662037356.svg"
@@ -5461,7 +5473,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -5476,8 +5488,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662056225.avif",
-    "filename": "upload-1772662056225.avif",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/avif",
     "filesize": 8702,
     "width": 2000,
@@ -5486,20 +5498,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662056225-300x53.avif",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 53,
         "mimeType": "image/avif",
         "filesize": 4261,
-        "filename": "upload-1772662056225-300x53.avif"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662056225-500x500.avif",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/avif",
         "filesize": 4574,
-        "filename": "upload-1772662056225-500x500.avif"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662056225-600x105.avif",
@@ -5543,7 +5555,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662056225-300x53.avif"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -5558,18 +5570,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662070135.svg",
-    "filename": "upload-1772662070135.svg",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/svg+xml",
     "filesize": 16669,
     "width": 187,
     "height": 40,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662070135.svg"
+        "url": "/api/media/file/placeholder-09.png",
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662070135.svg"
+        "url": "/api/media/file/placeholder-09.png",
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662070135.svg"
@@ -5588,7 +5602,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -5603,18 +5617,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662070888.svg",
-    "filename": "upload-1772662070888.svg",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/svg+xml",
     "filesize": 1772,
     "width": 524,
     "height": 195,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662070888.svg"
+        "url": "/api/media/file/placeholder-10.png",
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662070888.svg"
+        "url": "/api/media/file/placeholder-10.png",
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662070888.svg"
@@ -5633,7 +5649,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -5648,18 +5664,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662076767.svg",
-    "filename": "upload-1772662076767.svg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/svg+xml",
     "filesize": 2793,
     "width": 569,
     "height": 547,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662076767.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662076767.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662076767.svg"
@@ -5678,7 +5696,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -5693,18 +5711,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662077414.svg",
-    "filename": "upload-1772662077414.svg",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/svg+xml",
     "filesize": 5150,
     "width": 770,
     "height": 235,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662077414.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662077414.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662077414.svg"
@@ -5723,7 +5743,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -5738,18 +5758,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662079254.svg",
-    "filename": "upload-1772662079254.svg",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/svg+xml",
     "filesize": 2561,
     "width": 176,
     "height": 49,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662079254.svg"
+        "url": "/api/media/file/placeholder-03.png",
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662079254.svg"
+        "url": "/api/media/file/placeholder-03.png",
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662079254.svg"
@@ -5768,7 +5790,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -5783,18 +5805,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662079980.svg",
-    "filename": "upload-1772662079980.svg",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/svg+xml",
     "filesize": 3284,
     "width": 1184,
     "height": 303,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662079980.svg"
+        "url": "/api/media/file/placeholder-04.png",
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662079980.svg"
+        "url": "/api/media/file/placeholder-04.png",
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662079980.svg"
@@ -5813,7 +5837,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -5828,18 +5852,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662080573.svg",
-    "filename": "upload-1772662080573.svg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/svg+xml",
     "filesize": 2324,
     "width": 167,
     "height": 174,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662080573.svg"
+        "url": "/api/media/file/placeholder-05.png",
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662080573.svg"
+        "url": "/api/media/file/placeholder-05.png",
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662080573.svg"
@@ -5858,7 +5884,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -5873,8 +5899,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662081038.png",
-    "filename": "upload-1772662081038.png",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/png",
     "filesize": 23992,
     "width": 484,
@@ -5883,20 +5909,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662081038-300x271.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 271,
         "mimeType": "image/png",
         "filesize": 19426,
-        "filename": "upload-1772662081038-300x271.png"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662081038.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662081038.png",
@@ -5940,7 +5966,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662081038-300x271.png"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -5955,8 +5981,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662082792.png",
-    "filename": "upload-1772662082792.png",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/png",
     "filesize": 133456,
     "width": 824,
@@ -5965,20 +5991,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662082792-300x316.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 316,
         "mimeType": "image/png",
         "filesize": 38015,
-        "filename": "upload-1772662082792-300x316.png"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662082792-500x500.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 71343,
-        "filename": "upload-1772662082792-500x500.png"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662082792-600x632.png",
@@ -6022,7 +6048,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662082792-300x316.png"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -6037,8 +6063,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662084092.png",
-    "filename": "upload-1772662084092.png",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/png",
     "filesize": 10579,
     "width": 600,
@@ -6047,20 +6073,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662084092-300x90.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 90,
         "mimeType": "image/png",
         "filesize": 8386,
-        "filename": "upload-1772662084092-300x90.png"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662084092-500x500.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 17220,
-        "filename": "upload-1772662084092-500x500.png"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662084092-600x180.png",
@@ -6104,7 +6130,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662084092-300x90.png"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -6119,8 +6145,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662085390.png",
-    "filename": "upload-1772662085390.png",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/png",
     "filesize": 6678,
     "width": 500,
@@ -6129,20 +6155,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662085390-300x300.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 16158,
-        "filename": "upload-1772662085390-300x300.png"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662085390-500x500.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 15577,
-        "filename": "upload-1772662085390-500x500.png"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662085390.png",
@@ -6186,7 +6212,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662085390-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -6201,8 +6227,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662085927.png",
-    "filename": "upload-1772662085927.png",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/png",
     "filesize": 87094,
     "width": 1330,
@@ -6211,20 +6237,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662085927-300x300.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 12950,
-        "filename": "upload-1772662085927-300x300.png"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662085927-500x500.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 22842,
-        "filename": "upload-1772662085927-500x500.png"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662085927-600x600.png",
@@ -6268,7 +6294,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662085927-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -6283,18 +6309,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662087072.svg",
-    "filename": "upload-1772662087072.svg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/svg+xml",
     "filesize": 4050,
     "width": 100,
     "height": 28,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662087072.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662087072.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662087072.svg"
@@ -6313,7 +6341,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -6328,8 +6356,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662087636.png",
-    "filename": "upload-1772662087636.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 7791,
     "width": 192,
@@ -6338,20 +6366,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662087636.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662087636.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662087636.png",
@@ -6395,7 +6423,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -6410,8 +6438,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662088918.png",
-    "filename": "upload-1772662088918.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 842610,
     "width": 1200,
@@ -6420,20 +6448,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662088918-300x158.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 158,
         "mimeType": "image/png",
         "filesize": 89261,
-        "filename": "upload-1772662088918-300x158.png"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662088918-500x500.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 459650,
-        "filename": "upload-1772662088918-500x500.png"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662088918-600x315.png",
@@ -6477,7 +6505,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662088918-300x158.png"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -6492,8 +6520,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662090702.png",
-    "filename": "upload-1772662090702.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 202072,
     "width": 990,
@@ -6502,20 +6530,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662090702-300x91.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 91,
         "mimeType": "image/png",
         "filesize": 31305,
-        "filename": "upload-1772662090702-300x91.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662090702-500x500.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 242053,
-        "filename": "upload-1772662090702-500x500.png"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662090702-600x182.png",
@@ -6559,7 +6587,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662090702-300x91.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -6574,8 +6602,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662092462.png",
-    "filename": "upload-1772662092462.png",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/png",
     "filesize": 10106,
     "width": 1267,
@@ -6584,20 +6612,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662092462-300x69.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 69,
         "mimeType": "image/png",
         "filesize": 11128,
-        "filename": "upload-1772662092462-300x69.png"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662092462-500x500.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 25081,
-        "filename": "upload-1772662092462-500x500.png"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662092462-600x139.png",
@@ -6641,7 +6669,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662092462-300x69.png"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -6656,8 +6684,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662094603.png",
-    "filename": "upload-1772662094603.png",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/png",
     "filesize": 12714,
     "width": 612,
@@ -6666,20 +6694,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662094603-300x101.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 101,
         "mimeType": "image/png",
         "filesize": 14619,
-        "filename": "upload-1772662094603-300x101.png"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662094603-500x500.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 64019,
-        "filename": "upload-1772662094603-500x500.png"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662094603-600x202.png",
@@ -6723,7 +6751,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662094603-300x101.png"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -6738,8 +6766,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662096572.png",
-    "filename": "upload-1772662096572.png",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/png",
     "filesize": 55517,
     "width": 512,
@@ -6748,20 +6776,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662096572-300x300.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 36034,
-        "filename": "upload-1772662096572-300x300.png"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662096572-500x500.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 80350,
-        "filename": "upload-1772662096572-500x500.png"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662096572.png",
@@ -6805,7 +6833,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662096572-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -6820,18 +6848,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662097871.svg",
-    "filename": "upload-1772662097871.svg",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/svg+xml",
     "filesize": 10574,
     "width": 370,
     "height": 69,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662097871.svg"
+        "url": "/api/media/file/placeholder-08.png",
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662097871.svg"
+        "url": "/api/media/file/placeholder-08.png",
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662097871.svg"
@@ -6850,7 +6880,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -6865,8 +6895,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662098470.webp",
-    "filename": "upload-1772662098470.webp",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/webp",
     "filesize": 21082,
     "width": 1240,
@@ -6875,20 +6905,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662098470-300x115.webp",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 115,
         "mimeType": "image/webp",
         "filesize": 12988,
-        "filename": "upload-1772662098470-300x115.webp"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662098470-500x500.webp",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/webp",
         "filesize": 20736,
-        "filename": "upload-1772662098470-500x500.webp"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662098470-600x230.webp",
@@ -6932,7 +6962,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662098470-300x115.webp"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -6947,8 +6977,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662101033.png",
-    "filename": "upload-1772662101033.png",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/png",
     "filesize": 72631,
     "width": 774,
@@ -6957,20 +6987,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662101033-300x153.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 153,
         "mimeType": "image/png",
         "filesize": 17153,
-        "filename": "upload-1772662101033-300x153.png"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662101033-500x500.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 57282,
-        "filename": "upload-1772662101033-500x500.png"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662101033-600x305.png",
@@ -7014,7 +7044,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662101033-300x153.png"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -7029,8 +7059,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662102454.png",
-    "filename": "upload-1772662102454.png",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/png",
     "filesize": 83681,
     "width": 3038,
@@ -7039,20 +7069,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662102454-300x299.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 299,
         "mimeType": "image/png",
         "filesize": 16511,
-        "filename": "upload-1772662102454-300x299.png"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662102454-500x500.png",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 28509,
-        "filename": "upload-1772662102454-500x500.png"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662102454-600x597.png",
@@ -7096,7 +7126,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662102454-300x299.png"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -7111,8 +7141,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662106942.png",
-    "filename": "upload-1772662106942.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 28931,
     "width": 1500,
@@ -7121,20 +7151,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662106942-300x100.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 100,
         "mimeType": "image/png",
         "filesize": 7159,
-        "filename": "upload-1772662106942-300x100.png"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662106942-500x500.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 15862,
-        "filename": "upload-1772662106942-500x500.png"
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662106942-600x200.png",
@@ -7178,7 +7208,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662106942-300x100.png"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -7193,8 +7223,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662108807.png",
-    "filename": "upload-1772662108807.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 172718,
     "width": 6250,
@@ -7203,20 +7233,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662108807-300x104.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 104,
         "mimeType": "image/png",
         "filesize": 12030,
-        "filename": "upload-1772662108807-300x104.png"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662108807-500x500.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 19533,
-        "filename": "upload-1772662108807-500x500.png"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662108807-600x207.png",
@@ -7260,7 +7290,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662108807-300x104.png"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -7275,8 +7305,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662112009.png",
-    "filename": "upload-1772662112009.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 84313,
     "width": 1600,
@@ -7285,20 +7315,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662112009-300x113.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 113,
         "mimeType": "image/png",
         "filesize": 13460,
-        "filename": "upload-1772662112009-300x113.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662112009-500x500.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 22784,
-        "filename": "upload-1772662112009-500x500.png"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662112009-600x225.png",
@@ -7342,7 +7372,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662112009-300x113.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -7357,18 +7387,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662113245.svg",
-    "filename": "upload-1772662113245.svg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/svg+xml",
     "filesize": 2363,
     "width": 320,
     "height": 80,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662113245.svg"
+        "url": "/api/media/file/placeholder-05.png",
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662113245.svg"
+        "url": "/api/media/file/placeholder-05.png",
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662113245.svg"
@@ -7387,7 +7419,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -7402,8 +7434,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662114409.jpg",
-    "filename": "upload-1772662114409.jpg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/jpeg",
     "filesize": 119988,
     "width": 2500,
@@ -7412,20 +7444,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662114409-300x73.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 73,
         "mimeType": "image/jpeg",
         "filesize": 6854,
-        "filename": "upload-1772662114409-300x73.jpg"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662114409-500x500.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 16578,
-        "filename": "upload-1772662114409-500x500.jpg"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662114409-600x145.jpg",
@@ -7469,7 +7501,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662114409-300x73.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -7484,18 +7516,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662115673.svg",
-    "filename": "upload-1772662115673.svg",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/svg+xml",
     "filesize": 5287,
     "width": 186,
     "height": 29,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662115673.svg"
+        "url": "/api/media/file/placeholder-07.png",
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662115673.svg"
+        "url": "/api/media/file/placeholder-07.png",
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662115673.svg"
@@ -7514,7 +7548,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -7529,8 +7563,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662116685.webp",
-    "filename": "upload-1772662116685.webp",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/webp",
     "filesize": 17616,
     "width": 1359,
@@ -7539,20 +7573,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662116685-300x277.webp",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 277,
         "mimeType": "image/webp",
         "filesize": 4360,
-        "filename": "upload-1772662116685-300x277.webp"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662116685-500x500.webp",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/webp",
         "filesize": 7364,
-        "filename": "upload-1772662116685-500x500.webp"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662116685-600x555.webp",
@@ -7596,7 +7630,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662116685-300x277.webp"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -7611,8 +7645,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662118467.png",
-    "filename": "upload-1772662118467.png",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/png",
     "filesize": 526297,
     "width": 600,
@@ -7621,20 +7655,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662118467-300x300.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 164277,
-        "filename": "upload-1772662118467-300x300.png"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662118467-500x500.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 471084,
-        "filename": "upload-1772662118467-500x500.png"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662118467-600x600.png",
@@ -7678,7 +7712,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662118467-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -7693,8 +7727,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662120934.webp",
-    "filename": "upload-1772662120934.webp",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/webp",
     "filesize": 57872,
     "width": 1440,
@@ -7703,20 +7737,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662120934-300x300.webp",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/webp",
         "filesize": 8842,
-        "filename": "upload-1772662120934-300x300.webp"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662120934-500x500.webp",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/webp",
         "filesize": 16510,
-        "filename": "upload-1772662120934-500x500.webp"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662120934-600x600.webp",
@@ -7760,7 +7794,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662120934-300x300.webp"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -7775,8 +7809,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662124137.jpg",
-    "filename": "upload-1772662124137.jpg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/jpeg",
     "filesize": 5278,
     "width": 300,
@@ -7785,20 +7819,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662124137-300x126.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 126,
         "mimeType": "image/jpeg",
         "filesize": 4514,
-        "filename": "upload-1772662124137-300x126.jpg"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662124137.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662124137.jpg",
@@ -7842,7 +7876,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662124137-300x126.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -7857,18 +7891,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662125265.svg",
-    "filename": "upload-1772662125265.svg",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/svg+xml",
     "filesize": 3353,
     "width": 2048,
     "height": 2048,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662125265.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662125265.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662125265.svg"
@@ -7887,7 +7923,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -7902,8 +7938,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662126143.png",
-    "filename": "upload-1772662126143.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 6907,
     "width": 130,
@@ -7912,20 +7948,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662126143.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662126143.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662126143.png",
@@ -7969,7 +8005,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -7984,8 +8020,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662723474.png",
-    "filename": "upload-1772662723474.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 13923,
     "width": 600,
@@ -7994,20 +8030,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662723474-300x300.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 25047,
-        "filename": "upload-1772662723474-300x300.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662723474-500x500.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 50062,
-        "filename": "upload-1772662723474-500x500.png"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662723474-600x600.png",
@@ -8051,7 +8087,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662723474-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -8066,8 +8102,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662724529.jpg",
-    "filename": "upload-1772662724529.jpg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/jpeg",
     "filesize": 102877,
     "width": 640,
@@ -8076,20 +8112,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662724529-300x338.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 338,
         "mimeType": "image/jpeg",
         "filesize": 29304,
-        "filename": "upload-1772662724529-300x338.jpg"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662724529-500x500.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 59308,
-        "filename": "upload-1772662724529-500x500.jpg"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662724529-600x675.jpg",
@@ -8133,7 +8169,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662724529-300x338.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -8148,8 +8184,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662725396.jpg",
-    "filename": "upload-1772662725396.jpg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/jpeg",
     "filesize": 88697,
     "width": 640,
@@ -8158,20 +8194,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662725396-300x338.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 338,
         "mimeType": "image/jpeg",
         "filesize": 22151,
-        "filename": "upload-1772662725396-300x338.jpg"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662725396-500x500.jpg",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 48360,
-        "filename": "upload-1772662725396-500x500.jpg"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662725396-600x675.jpg",
@@ -8215,7 +8251,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662725396-300x338.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -8230,8 +8266,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662740972.png",
-    "filename": "upload-1772662740972.png",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/png",
     "filesize": 79054,
     "width": 1986,
@@ -8240,20 +8276,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662740972-300x74.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 74,
         "mimeType": "image/png",
         "filesize": 12542,
-        "filename": "upload-1772662740972-300x74.png"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662740972-500x500.png",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 15419,
-        "filename": "upload-1772662740972-500x500.png"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662740972-600x148.png",
@@ -8297,7 +8333,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662740972-300x74.png"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -8312,18 +8348,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662742674.svg",
-    "filename": "upload-1772662742674.svg",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/svg+xml",
     "filesize": 5999,
     "width": 75,
     "height": 29,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662742674.svg"
+        "url": "/api/media/file/placeholder-08.png",
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662742674.svg"
+        "url": "/api/media/file/placeholder-08.png",
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662742674.svg"
@@ -8342,7 +8380,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -8357,18 +8395,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662743544.svg",
-    "filename": "upload-1772662743544.svg",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/svg+xml",
     "filesize": 19661,
     "width": 201,
     "height": 34,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662743544.svg"
+        "url": "/api/media/file/placeholder-09.png",
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662743544.svg"
+        "url": "/api/media/file/placeholder-09.png",
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662743544.svg"
@@ -8387,7 +8427,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -8402,8 +8442,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662743973.webp",
-    "filename": "upload-1772662743973.webp",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/webp",
     "filesize": 2666,
     "width": 150,
@@ -8412,20 +8452,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662743973.webp",
+        "url": "/api/media/file/placeholder-10.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662743973.webp",
+        "url": "/api/media/file/placeholder-10.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662743973.webp",
@@ -8469,7 +8509,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -8484,8 +8524,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662746934.jpg",
-    "filename": "upload-1772662746934.jpg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/jpeg",
     "filesize": 31554,
     "width": 800,
@@ -8494,20 +8534,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662746934-300x102.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 102,
         "mimeType": "image/jpeg",
         "filesize": 7807,
-        "filename": "upload-1772662746934-300x102.jpg"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662746934-500x500.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 24483,
-        "filename": "upload-1772662746934-500x500.jpg"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662746934-600x205.jpg",
@@ -8551,7 +8591,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662746934-300x102.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -8566,18 +8606,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662747971.svg",
-    "filename": "upload-1772662747971.svg",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/svg+xml",
     "filesize": 9144,
     "width": 157,
     "height": 30,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662747971.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662747971.svg"
+        "url": "/api/media/file/placeholder-02.png",
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662747971.svg"
@@ -8596,7 +8638,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -8611,8 +8653,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662749736.jpg",
-    "filename": "upload-1772662749736.jpg",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/jpeg",
     "filesize": 718492,
     "width": 2500,
@@ -8621,20 +8663,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662749736-300x225.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 225,
         "mimeType": "image/jpeg",
         "filesize": 13426,
-        "filename": "upload-1772662749736-300x225.jpg"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662749736-500x500.jpg",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 43624,
-        "filename": "upload-1772662749736-500x500.jpg"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662749736-600x449.jpg",
@@ -8678,7 +8720,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662749736-300x225.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -8693,8 +8735,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662752705.png",
-    "filename": "upload-1772662752705.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 166329,
     "width": 1200,
@@ -8703,20 +8745,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662752705-300x152.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 152,
         "mimeType": "image/png",
         "filesize": 30672,
-        "filename": "upload-1772662752705-300x152.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662752705-500x500.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 110271,
-        "filename": "upload-1772662752705-500x500.png"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662752705-600x304.png",
@@ -8760,7 +8802,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662752705-300x152.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -8775,8 +8817,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662753814.png",
-    "filename": "upload-1772662753814.png",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/png",
     "filesize": 166329,
     "width": 1200,
@@ -8785,20 +8827,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662753814-300x152.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 152,
         "mimeType": "image/png",
         "filesize": 30672,
-        "filename": "upload-1772662753814-300x152.png"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662753814-500x500.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 110271,
-        "filename": "upload-1772662753814-500x500.png"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662753814-600x304.png",
@@ -8842,7 +8884,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662753814-300x152.png"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -8857,8 +8899,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662755138.png",
-    "filename": "upload-1772662755138.png",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/png",
     "filesize": 122753,
     "width": 2048,
@@ -8867,20 +8909,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662755138-300x84.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 300,
         "height": 84,
         "mimeType": "image/png",
         "filesize": 16911,
-        "filename": "upload-1772662755138-300x84.png"
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662755138-500x500.png",
+        "url": "/api/media/file/placeholder-06.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 32317,
-        "filename": "upload-1772662755138-500x500.png"
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662755138-600x168.png",
@@ -8924,7 +8966,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662755138-300x84.png"
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -8939,8 +8981,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662756643.jpg",
-    "filename": "upload-1772662756643.jpg",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/jpeg",
     "filesize": 6773,
     "width": 141,
@@ -8949,20 +8991,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662756643.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662756643.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662756643.jpg",
@@ -9006,7 +9048,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -9021,8 +9063,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662757662.jpg",
-    "filename": "upload-1772662757662.jpg",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/jpeg",
     "filesize": 532321,
     "width": 2400,
@@ -9031,20 +9073,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662757662-300x158.jpg",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 158,
         "mimeType": "image/jpeg",
         "filesize": 6367,
-        "filename": "upload-1772662757662-300x158.jpg"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662757662-500x500.jpg",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 18873,
-        "filename": "upload-1772662757662-500x500.jpg"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662757662-600x315.jpg",
@@ -9088,7 +9130,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662757662-300x158.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -9103,18 +9145,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662760197.svg",
-    "filename": "upload-1772662760197.svg",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/svg+xml",
     "filesize": 3853,
     "width": 63,
     "height": 17,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662760197.svg"
+        "url": "/api/media/file/placeholder-09.png",
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662760197.svg"
+        "url": "/api/media/file/placeholder-09.png",
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662760197.svg"
@@ -9133,7 +9177,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -9148,8 +9192,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662760810.png",
-    "filename": "upload-1772662760810.png",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/png",
     "filesize": 2003904,
     "width": 2400,
@@ -9158,20 +9202,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662760810-300x158.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 158,
         "mimeType": "image/png",
         "filesize": 64932,
-        "filename": "upload-1772662760810-300x158.png"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662760810-500x500.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 275037,
-        "filename": "upload-1772662760810-500x500.png"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662760810-600x315.png",
@@ -9215,7 +9259,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662760810-300x158.png"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -9230,18 +9274,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662764169.svg",
-    "filename": "upload-1772662764169.svg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/svg+xml",
     "filesize": 11736,
     "width": 471,
     "height": 470,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662764169.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662764169.svg"
+        "url": "/api/media/file/placeholder-01.png",
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662764169.svg"
@@ -9260,7 +9306,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -9275,8 +9321,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662764722.png",
-    "filename": "upload-1772662764722.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 12191,
     "width": 1440,
@@ -9285,20 +9331,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662764722-300x180.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 180,
         "mimeType": "image/png",
         "filesize": 13743,
-        "filename": "upload-1772662764722-300x180.png"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662764722-500x500.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 32228,
-        "filename": "upload-1772662764722-500x500.png"
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662764722-600x360.png",
@@ -9342,7 +9388,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662764722-300x180.png"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -9357,8 +9403,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662766253.png",
-    "filename": "upload-1772662766253.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 9106,
     "width": 936,
@@ -9367,20 +9413,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662766253-300x167.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 167,
         "mimeType": "image/png",
         "filesize": 15483,
-        "filename": "upload-1772662766253-300x167.png"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662766253-500x500.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 39233,
-        "filename": "upload-1772662766253-500x500.png"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662766253-600x333.png",
@@ -9424,7 +9470,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662766253-300x167.png"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -9439,8 +9485,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662767187.png",
-    "filename": "upload-1772662767187.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 33808,
     "width": 1633,
@@ -9449,20 +9495,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662767187-300x111.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 111,
         "mimeType": "image/png",
         "filesize": 14250,
-        "filename": "upload-1772662767187-300x111.png"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662767187-500x500.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 30265,
-        "filename": "upload-1772662767187-500x500.png"
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662767187-600x222.png",
@@ -9506,7 +9552,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662767187-300x111.png"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -9521,8 +9567,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662768795.png",
-    "filename": "upload-1772662768795.png",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/png",
     "filesize": 5553,
     "width": 1200,
@@ -9531,20 +9577,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662768795-300x158.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 158,
         "mimeType": "image/png",
         "filesize": 5994,
-        "filename": "upload-1772662768795-300x158.png"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662768795-500x500.png",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 19702,
-        "filename": "upload-1772662768795-500x500.png"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662768795-600x315.png",
@@ -9588,7 +9634,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662768795-300x158.png"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -9603,18 +9649,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662770135.svg",
-    "filename": "upload-1772662770135.svg",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "image/svg+xml",
     "filesize": 12186,
     "width": 120,
     "height": 60,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662770135.svg"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662770135.svg"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662770135.svg"
@@ -9633,7 +9681,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -9648,18 +9696,20 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662770886.svg",
-    "filename": "upload-1772662770886.svg",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/svg+xml",
     "filesize": 3607,
     "width": 512,
     "height": 512,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662770886.svg"
+        "url": "/api/media/file/placeholder-07.png",
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662770886.svg"
+        "url": "/api/media/file/placeholder-07.png",
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662770886.svg"
@@ -9678,7 +9728,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -9693,8 +9743,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662772099.png",
-    "filename": "upload-1772662772099.png",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/png",
     "filesize": 2754,
     "width": 312,
@@ -9703,20 +9753,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662772099-300x65.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 65,
         "mimeType": "image/png",
         "filesize": 6371,
-        "filename": "upload-1772662772099-300x65.png"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662772099.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662772099.png",
@@ -9760,7 +9810,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662772099-300x65.png"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -9775,8 +9825,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/upload-1772662773167.png",
-    "filename": "upload-1772662773167.png",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/png",
     "filesize": 6466,
     "width": 500,
@@ -9785,20 +9835,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/upload-1772662773167-300x300.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 14464,
-        "filename": "upload-1772662773167-300x300.png"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/upload-1772662773167-500x500.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 13909,
-        "filename": "upload-1772662773167-500x500.png"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/upload-1772662773167.png",
@@ -9842,7 +9892,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/upload-1772662773167-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -9857,8 +9907,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/IMG_2043.jpeg",
-    "filename": "IMG_2043.jpeg",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/jpeg",
     "filesize": 963791,
     "width": 2000,
@@ -9867,20 +9917,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/IMG_2043-300x225.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 225,
         "mimeType": "image/jpeg",
         "filesize": 16577,
-        "filename": "IMG_2043-300x225.jpg"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/IMG_2043-500x500.jpg",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 56642,
-        "filename": "IMG_2043-500x500.jpg"
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/IMG_2043-600x450.jpg",
@@ -9924,7 +9974,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/IMG_2043-300x225.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -9939,8 +9989,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n.jpg",
-    "filename": "654239641_1501798864838427_3425296531183794395_n.jpg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/jpeg",
     "filesize": 218002,
     "width": 1118,
@@ -9949,20 +9999,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-300x298.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 298,
         "mimeType": "image/jpeg",
         "filesize": 16451,
-        "filename": "654239641_1501798864838427_3425296531183794395_n-300x298.jpg"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-500x500.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 38756,
-        "filename": "654239641_1501798864838427_3425296531183794395_n-500x500.jpg"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-600x596.jpg",
@@ -10006,7 +10056,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-300x298.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -10021,8 +10071,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-1.jpg",
-    "filename": "654239641_1501798864838427_3425296531183794395_n-1.jpg",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/jpeg",
     "filesize": 218002,
     "width": 1118,
@@ -10031,20 +10081,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-1-300x298.jpg",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 298,
         "mimeType": "image/jpeg",
         "filesize": 16451,
-        "filename": "654239641_1501798864838427_3425296531183794395_n-1-300x298.jpg"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-1-500x500.jpg",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 38756,
-        "filename": "654239641_1501798864838427_3425296531183794395_n-1-500x500.jpg"
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-1-600x596.jpg",
@@ -10088,7 +10138,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/654239641_1501798864838427_3425296531183794395_n-1-300x298.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -10103,8 +10153,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/skychatters.png",
-    "filename": "skychatters.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 22936,
     "width": 480,
@@ -10113,20 +10163,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/skychatters-300x300.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 15533,
-        "filename": "skychatters-300x300.png"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/skychatters.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/skychatters.png",
@@ -10170,7 +10220,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/skychatters-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -10185,8 +10235,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/atlasdays.png",
-    "filename": "atlasdays.png",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/png",
     "filesize": 35871,
     "width": 256,
@@ -10195,20 +10245,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/atlasdays.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/atlasdays.png",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/atlasdays.png",
@@ -10252,7 +10302,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   },
   {
     "_id": {
@@ -10267,8 +10317,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/liberlandpress.jpg",
-    "filename": "liberlandpress.jpg",
+    "url": "/api/media/file/placeholder-05.png",
+    "filename": "placeholder-05.png",
     "mimeType": "image/jpeg",
     "filesize": 28776,
     "width": 783,
@@ -10277,20 +10327,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/liberlandpress-300x290.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 300,
         "height": 290,
         "mimeType": "image/jpeg",
         "filesize": 7287,
-        "filename": "liberlandpress-300x290.jpg"
+        "filename": "placeholder-05.png"
       },
       "square": {
-        "url": "/api/media/file/liberlandpress-500x500.jpg",
+        "url": "/api/media/file/placeholder-05.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 14091,
-        "filename": "liberlandpress-500x500.jpg"
+        "filename": "placeholder-05.png"
       },
       "small": {
         "url": "/api/media/file/liberlandpress-600x580.jpg",
@@ -10334,7 +10384,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/liberlandpress-300x290.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-05.png"
   },
   {
     "_id": {
@@ -10349,16 +10399,18 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/liberverse.ico",
-    "filename": "liberverse.ico",
+    "url": "/api/media/file/placeholder-06.png",
+    "filename": "placeholder-06.png",
     "mimeType": "application/octet-stream",
     "filesize": 11339,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/liberverse.ico"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "square": {
-        "url": "/api/media/file/liberverse.ico"
+        "url": "/api/media/file/placeholder-06.png",
+        "filename": "placeholder-06.png"
       },
       "small": {
         "url": "/api/media/file/liberverse.ico"
@@ -10377,7 +10429,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": null
+    "thumbnailURL": "/api/media/file/placeholder-06.png"
   },
   {
     "_id": {
@@ -10392,8 +10444,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/liberlandgroup.jpg",
-    "filename": "liberlandgroup.jpg",
+    "url": "/api/media/file/placeholder-07.png",
+    "filename": "placeholder-07.png",
     "mimeType": "image/jpeg",
     "filesize": 149994,
     "width": 800,
@@ -10402,20 +10454,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/liberlandgroup-300x300.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 27660,
-        "filename": "liberlandgroup-300x300.jpg"
+        "filename": "placeholder-07.png"
       },
       "square": {
-        "url": "/api/media/file/liberlandgroup-500x500.jpg",
+        "url": "/api/media/file/placeholder-07.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 66189,
-        "filename": "liberlandgroup-500x500.jpg"
+        "filename": "placeholder-07.png"
       },
       "small": {
         "url": "/api/media/file/liberlandgroup-600x600.jpg",
@@ -10459,7 +10511,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/liberlandgroup-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-07.png"
   },
   {
     "_id": {
@@ -10474,8 +10526,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/settlement.png",
-    "filename": "settlement.png",
+    "url": "/api/media/file/placeholder-08.png",
+    "filename": "placeholder-08.png",
     "mimeType": "image/png",
     "filesize": 382344,
     "width": 2060,
@@ -10484,20 +10536,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/settlement-300x300.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 30437,
-        "filename": "settlement-300x300.png"
+        "filename": "placeholder-08.png"
       },
       "square": {
-        "url": "/api/media/file/settlement-500x500.png",
+        "url": "/api/media/file/placeholder-08.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 61222,
-        "filename": "settlement-500x500.png"
+        "filename": "placeholder-08.png"
       },
       "small": {
         "url": "/api/media/file/settlement-600x600.png",
@@ -10541,7 +10593,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/settlement-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-08.png"
   },
   {
     "_id": {
@@ -10556,8 +10608,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/archistroj.png",
-    "filename": "archistroj.png",
+    "url": "/api/media/file/placeholder-09.png",
+    "filename": "placeholder-09.png",
     "mimeType": "image/png",
     "filesize": 35267,
     "width": 1183,
@@ -10566,20 +10618,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/archistroj-300x300.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 8992,
-        "filename": "archistroj-300x300.png"
+        "filename": "placeholder-09.png"
       },
       "square": {
-        "url": "/api/media/file/archistroj-500x500.png",
+        "url": "/api/media/file/placeholder-09.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 15255,
-        "filename": "archistroj-500x500.png"
+        "filename": "placeholder-09.png"
       },
       "small": {
         "url": "/api/media/file/archistroj-600x599.png",
@@ -10623,7 +10675,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/archistroj-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-09.png"
   },
   {
     "_id": {
@@ -10638,8 +10690,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/danubepearls.png",
-    "filename": "danubepearls.png",
+    "url": "/api/media/file/placeholder-10.png",
+    "filename": "placeholder-10.png",
     "mimeType": "image/png",
     "filesize": 46931,
     "width": 345,
@@ -10648,20 +10700,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/danubepearls-300x285.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": 300,
         "height": 285,
         "mimeType": "image/png",
         "filesize": 42554,
-        "filename": "danubepearls-300x285.png"
+        "filename": "placeholder-10.png"
       },
       "square": {
-        "url": "/api/media/file/danubepearls.png",
+        "url": "/api/media/file/placeholder-10.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-10.png"
       },
       "small": {
         "url": "/api/media/file/danubepearls.png",
@@ -10705,7 +10757,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/danubepearls-300x285.png"
+    "thumbnailURL": "/api/media/file/placeholder-10.png"
   },
   {
     "_id": {
@@ -10720,8 +10772,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/foreignaffairs.jpg",
-    "filename": "foreignaffairs.jpg",
+    "url": "/api/media/file/placeholder-01.png",
+    "filename": "placeholder-01.png",
     "mimeType": "image/jpeg",
     "filesize": 50225,
     "width": 500,
@@ -10730,20 +10782,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/foreignaffairs-300x300.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/jpeg",
         "filesize": 11800,
-        "filename": "foreignaffairs-300x300.jpg"
+        "filename": "placeholder-01.png"
       },
       "square": {
-        "url": "/api/media/file/foreignaffairs-500x500.jpg",
+        "url": "/api/media/file/placeholder-01.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/jpeg",
         "filesize": 27124,
-        "filename": "foreignaffairs-500x500.jpg"
+        "filename": "placeholder-01.png"
       },
       "small": {
         "url": "/api/media/file/foreignaffairs.jpg",
@@ -10787,7 +10839,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/foreignaffairs-300x300.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-01.png"
   },
   {
     "_id": {
@@ -10802,8 +10854,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/raazdigital.png",
-    "filename": "raazdigital.png",
+    "url": "/api/media/file/placeholder-02.png",
+    "filename": "placeholder-02.png",
     "mimeType": "image/png",
     "filesize": 11546,
     "width": 500,
@@ -10812,20 +10864,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/raazdigital-300x300.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 8606,
-        "filename": "raazdigital-300x300.png"
+        "filename": "placeholder-02.png"
       },
       "square": {
-        "url": "/api/media/file/raazdigital-500x500.png",
+        "url": "/api/media/file/placeholder-02.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 9532,
-        "filename": "raazdigital-500x500.png"
+        "filename": "placeholder-02.png"
       },
       "small": {
         "url": "/api/media/file/raazdigital.png",
@@ -10869,7 +10921,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/raazdigital-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-02.png"
   },
   {
     "_id": {
@@ -10884,8 +10936,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/finommetall.png",
-    "filename": "finommetall.png",
+    "url": "/api/media/file/placeholder-03.png",
+    "filename": "placeholder-03.png",
     "mimeType": "image/png",
     "filesize": 47465,
     "width": 1000,
@@ -10894,20 +10946,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/finommetall-300x300.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 300,
         "height": 300,
         "mimeType": "image/png",
         "filesize": 16473,
-        "filename": "finommetall-300x300.png"
+        "filename": "placeholder-03.png"
       },
       "square": {
-        "url": "/api/media/file/finommetall-500x500.png",
+        "url": "/api/media/file/placeholder-03.png",
         "width": 500,
         "height": 500,
         "mimeType": "image/png",
         "filesize": 29183,
-        "filename": "finommetall-500x500.png"
+        "filename": "placeholder-03.png"
       },
       "small": {
         "url": "/api/media/file/finommetall-600x600.png",
@@ -10951,7 +11003,7 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/finommetall-300x300.png"
+    "thumbnailURL": "/api/media/file/placeholder-03.png"
   },
   {
     "_id": {
@@ -10966,8 +11018,8 @@
     "createdBy": {
       "$oid": "699a4fb034fa2b9e6436599c"
     },
-    "url": "/api/media/file/ethos.jpeg",
-    "filename": "ethos.jpeg",
+    "url": "/api/media/file/placeholder-04.png",
+    "filename": "placeholder-04.png",
     "mimeType": "image/jpeg",
     "filesize": 23725,
     "width": 342,
@@ -10976,20 +11028,20 @@
     "focalY": 50,
     "sizes": {
       "thumbnail": {
-        "url": "/api/media/file/ethos-300x267.jpg",
+        "url": "/api/media/file/placeholder-04.png",
         "width": 300,
         "height": 267,
         "mimeType": "image/jpeg",
         "filesize": 13270,
-        "filename": "ethos-300x267.jpg"
+        "filename": "placeholder-04.png"
       },
       "square": {
-        "url": "/api/media/file/ethos.jpeg",
+        "url": "/api/media/file/placeholder-04.png",
         "width": null,
         "height": null,
         "mimeType": null,
         "filesize": null,
-        "filename": null
+        "filename": "placeholder-04.png"
       },
       "small": {
         "url": "/api/media/file/ethos.jpeg",
@@ -11033,6 +11085,6 @@
       }
     },
     "__v": 0,
-    "thumbnailURL": "/api/media/file/ethos-300x267.jpg"
+    "thumbnailURL": "/api/media/file/placeholder-04.png"
   }
 ]

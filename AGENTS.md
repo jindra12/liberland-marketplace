@@ -19,6 +19,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Do not stop after a partial verification; keep going until `tsc --noEmit` and the relevant build pass, or identify the blocking failure and fix it.
 - Run tests outside the sandbox when they depend on live network access, browser automation, DNS, Docker, or other host services.
 - Always run `pnpm dev` outside the sandbox when you need a live local server for debugging or host-bound browser/API probes.
+- Do not run `pnpm deploy` or `pnpm deploy:test` unless the user explicitly asks for the deploy to be executed. Report whether the repo is ready instead.
 - Generate import maps after creating or modifying components.
 - Do not run formatters on generated files such as import maps or `payload-types.ts`; regenerate them instead.
 - Do not claim a test or verification path is finished until the command exits successfully and you have checked the final result.
