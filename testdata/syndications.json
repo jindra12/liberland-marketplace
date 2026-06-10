@@ -7,7 +7,7 @@
       "$oid": "699a4fb034fa2b9e6436599c"
     },
     "name": "Test Data Launch (testdata1)",
-    "url": "https://devserver1.203-0-113-10.nip.io",
+    "url": "https://devserver1.207-180-231-104.nip.io",
     "description": "A draft syndication entry for the test dataset. (testdata1)",
     "autoEnable": true,
     "nsfw": true,
