@@ -142,6 +142,9 @@
         }
       }
     },
+    "patchedDependencies": {
+      "payload@3.74.0": "patches/payload@3.74.0.patch"
+    },
     "onlyBuiltDependencies": [
       "sharp",
       "esbuild",

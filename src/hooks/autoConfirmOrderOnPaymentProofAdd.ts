@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
-type TransactionHashRow = {
+type PaymentProofRow = {
   chain?: unknown
   product?: unknown
   productID?: unknown
@@ -32,20 +32,20 @@ const asString = (value: unknown): string => {
   return value.trim().toLowerCase()
 }
 
-const getHashRows = (value: unknown): TransactionHashRow[] => {
+const getHashRows = (value: unknown): PaymentProofRow[] => {
   if (!Array.isArray(value)) {
     return []
   }
 
-  return value.filter((row): row is TransactionHashRow => isRecord(row))
+  return value.filter((row): row is PaymentProofRow => isRecord(row))
 }
 
-const rowKey = (row: TransactionHashRow): string => {
+const rowKey = (row: PaymentProofRow): string => {
   const productID = toDocID(row.productID ?? row.product) ?? ''
   return `${productID}|${asString(row.chain)}|${asString(row.transactionHash ?? row.txHash)}`
 }
 
-export const autoConfirmOrderOnTransactionHashAdd: CollectionAfterChangeHook = async ({
+export const autoConfirmOrderOnPaymentProofAdd: CollectionAfterChangeHook = async ({
   context,
   doc,
   operation,
@@ -62,12 +62,12 @@ export const autoConfirmOrderOnTransactionHashAdd: CollectionAfterChangeHook = a
     return doc
   }
 
-  const currentRows = getHashRows(orderDoc.transactionHashes)
+  const currentRows = getHashRows(orderDoc.paymentProofs)
   if (currentRows.length === 0) {
     return doc
   }
 
-  const previousRows = getHashRows(isRecord(previousDoc) ? previousDoc.transactionHashes : undefined)
+  const previousRows = getHashRows(isRecord(previousDoc) ? previousDoc.paymentProofs : undefined)
   const previousKeys = new Set(previousRows.map(rowKey))
   const hasNewRow = currentRows.some((row) => !previousKeys.has(rowKey(row)))
   if (!hasNewRow) {

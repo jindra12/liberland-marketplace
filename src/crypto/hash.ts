@@ -28,13 +28,13 @@ export const hasHashBeenUsed = async ({
   const hashWhere: Where =
     candidates.length === 1
       ? {
-          'transactionHashes.transactionHash': {
+          'paymentProofs.transactionHash': {
             equals: candidates[0],
           },
         }
       : {
           or: candidates.map((candidate) => ({
-            'transactionHashes.transactionHash': {
+            'paymentProofs.transactionHash': {
               equals: candidate,
             },
           })),

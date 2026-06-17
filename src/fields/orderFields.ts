@@ -8,13 +8,14 @@ const chainOptions = [
   { label: 'Tron', value: 'tron' },
 ]
 
-type TransactionHashRow = {
-  product?: unknown
-  chain?: unknown
-  transactionHash?: unknown
+export type PaymentProofRow = {
+  product?: string | { id?: string | number | null } | null
+  chain?: 'ethereum' | 'solana' | 'tron' | null
+  transactionHash?: string | null
+  fulfilled?: boolean | null
 }
 
-const getTransactionHashRowKey = (row: TransactionHashRow): string => {
+const getPaymentProofRowKey = (row: PaymentProofRow): string => {
   const product =
     typeof row.product === 'string'
       ? row.product
@@ -105,12 +106,12 @@ export const orderFields: Field[] = [
     ],
   },
   {
-    name: 'transactionHashes',
-    label: 'Transaction Hashes',
+    name: 'paymentProofs',
+    label: 'Payment Proofs',
     type: 'array',
     labels: {
-      singular: 'Transaction Hash',
-      plural: 'Transaction Hashes',
+      singular: 'Payment Proof',
+      plural: 'Payment Proofs',
     },
     access: {
       create: () => false,
@@ -123,18 +124,18 @@ export const orderFields: Field[] = [
             return value
           }
 
-          const existingRows = Array.isArray(originalDoc?.transactionHashes)
-            ? (originalDoc.transactionHashes as TransactionHashRow[])
+          const existingRows = Array.isArray(originalDoc?.paymentProofs)
+            ? (originalDoc.paymentProofs as PaymentProofRow[])
             : []
-          const incomingRows = Array.isArray(value) ? (value as TransactionHashRow[]) : []
+          const incomingRows = Array.isArray(value) ? (value as PaymentProofRow[]) : []
 
           if (incomingRows.length === 0) {
             return existingRows
           }
 
-          const existingKeys = new Set(existingRows.map(getTransactionHashRowKey))
+          const existingKeys = new Set(existingRows.map(getPaymentProofRowKey))
           const appendedRows = incomingRows.filter((row) => {
-            const key = getTransactionHashRowKey(row)
+            const key = getPaymentProofRowKey(row)
             if (existingKeys.has(key)) {
               return false
             }
@@ -165,6 +166,16 @@ export const orderFields: Field[] = [
         label: 'Transaction Hash',
         type: 'text',
         required: true,
+      },
+      {
+        name: 'fulfilled',
+        label: 'Fulfilled',
+        type: 'checkbox',
+        defaultValue: false,
+        admin: {
+          description:
+            'Mark this payment proof as fulfilled after the order has been shipped or delivered.',
+        },
       },
     ],
   },

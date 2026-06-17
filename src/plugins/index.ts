@@ -12,7 +12,7 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 
-import { Page, Post } from '@/payload-types'
+import type { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { addCreatedBy } from './addCreatedBy'
 import { marketplaceEcommercePlugin } from './ecommerce'
@@ -107,17 +107,17 @@ export const plugins: Plugin[] = [
           allowDynamicClientRegistration: false,
           trustedClients: process.env.OIDC_CLIENT_ID
             ? [
-              {
-                clientId: process.env.OIDC_CLIENT_ID,
-                clientSecret: process.env.OIDC_CLIENT_SECRET || '',
-                name: 'Frontend App',
-                type: 'web' as const,
-                redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
-                metadata: null,
-                skipConsent: true,
-                disabled: false,
-              },
-            ]
+                {
+                  clientId: process.env.OIDC_CLIENT_ID,
+                  clientSecret: process.env.OIDC_CLIENT_SECRET || '',
+                  name: 'Frontend App',
+                  type: 'web' as const,
+                  redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
+                  metadata: null,
+                  skipConsent: true,
+                  disabled: false,
+                },
+              ]
             : [],
         }),
       ],

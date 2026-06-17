@@ -8,7 +8,7 @@ import { createLikeableFields } from '@/likes/fields'
 import { orderFields } from '@/fields/orderFields'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import {
-  lazyAutoConfirmOrderOnTransactionHashAdd,
+  lazyAutoConfirmOrderOnPaymentProofAdd,
   lazyComputeOrderAmountOnCreate,
   lazyLockOrderCryptoPricesOnCreate,
   lazyPopulateProductCryptoPrices,
@@ -29,7 +29,7 @@ import { replaceEcommerceAdminComponentPaths } from './replaceEcommerceAdminComp
 import type { Field } from 'payload'
 import type { AccessUser } from '@/access/types'
 
-const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'transactionHashes'])
+const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'paymentProofs'])
 
 const canUpdateOrderCheckoutFields = ({
   data,
@@ -231,7 +231,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
         ],
         afterChange: [
           ...(defaultCollection.hooks?.afterChange ?? []),
-          lazyAutoConfirmOrderOnTransactionHashAdd,
+          lazyAutoConfirmOrderOnPaymentProofAdd,
           lazyUpdateProductPurchaseCountAfterOrderValidation,
           lazySendOrderCompletedNotifications,
         ],

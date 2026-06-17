@@ -10,7 +10,10 @@ vi.mock('@/crypto/recipient', () => ({
 }))
 
 import { verifyTransactionOccurred } from '@/crypto'
-import { resolveProductIDsForItems, resolveProductPaymentTargetsFromItems } from '@/crypto/recipient'
+import {
+  resolveProductIDsForItems,
+  resolveProductPaymentTargetsFromItems,
+} from '@/crypto/recipient'
 import { cryptoAdapter } from '@/payments/cryptoAdapter'
 
 type CreateCall = {
@@ -41,7 +44,7 @@ const createFakeReq = ({ withExistingTransaction }: { withExistingTransaction: b
             { product: 'prod_1', quantity: 1 },
             { product: 'prod_2', quantity: 2 },
           ],
-          transactionHashes: [
+          paymentProofs: [
             { product: 'prod_1', chain: 'ethereum', transactionHash: '0xabc' },
             { product: 'prod_2', chain: 'ethereum', transactionHash: '0xabc' },
           ],
@@ -59,28 +62,32 @@ const createFakeReq = ({ withExistingTransaction }: { withExistingTransaction: b
       throw new Error(`Unexpected findByID(${collection}, ${id})`)
     }),
 
-    create: vi.fn(async ({ collection, data }: { collection: string; data: Record<string, unknown> }) => {
-      creates.push({ collection, data })
+    create: vi.fn(
+      async ({ collection, data }: { collection: string; data: Record<string, unknown> }) => {
+        creates.push({ collection, data })
 
-      if (collection === 'transactions') {
-        return { id: 'tx_created' }
-      }
+        if (collection === 'transactions') {
+          return { id: 'tx_created' }
+        }
 
-      throw new Error(`Unexpected create(${collection})`)
-    }),
+        throw new Error(`Unexpected create(${collection})`)
+      },
+    ),
 
-    update: vi.fn(async ({
-      collection,
-      data,
-      id,
-    }: {
-      collection: string
-      data: Record<string, unknown>
-      id: string
-    }) => {
-      updates.push({ collection, data, id })
-      return { id }
-    }),
+    update: vi.fn(
+      async ({
+        collection,
+        data,
+        id,
+      }: {
+        collection: string
+        data: Record<string, unknown>
+        id: string
+      }) => {
+        updates.push({ collection, data, id })
+        return { id }
+      },
+    ),
   }
 
   return {

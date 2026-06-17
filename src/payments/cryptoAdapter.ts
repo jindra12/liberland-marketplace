@@ -1,5 +1,7 @@
 import type { VerifyOrderPaymentResult } from '@/crypto'
 import type { ProductPaymentTarget } from '@/crypto/recipient'
+import type { OrderWithPaymentProofs } from '@/crypto/order'
+import type { PaymentProofRow } from '@/fields/orderFields'
 import type { Order } from '@/payload-types'
 import { toStringID } from '@/utilities/toStringID'
 import uniq from 'lodash/uniq.js'
@@ -42,24 +44,35 @@ const group: GroupField = {
 
 const buildPaymentRef = ({
   paymentTargets,
-  transactionHashEntries,
+  paymentProofEntries,
 }: {
   paymentTargets: ProductPaymentTarget[]
-  transactionHashEntries: Order["transactionHashes"]
+  paymentProofEntries: PaymentProofRow[] | null | undefined
 }): string => {
-  const paymentTargetByProductID = new Map(paymentTargets.map((target) => [target.productID, target]))
+  const paymentTargetByProductID = new Map(
+    paymentTargets.map((target) => [target.productID, target]),
+  )
 
   return uniq(
-    transactionHashEntries?.map((entry) => {
-      const target = paymentTargetByProductID.get(typeof entry.product === "string" ? entry.product : entry.product.id)!
-      return `${entry.chain}:${target.recipientAddress}`
-    }) || [],
+    paymentProofEntries
+      ?.map((entry) => {
+        const productID = toStringID(entry.product)
+        if (!productID) {
+          return null
+        }
+
+        const target = paymentTargetByProductID.get(productID)
+        if (!target || !entry.chain) {
+          return null
+        }
+
+        return `${entry.chain}:${target.recipientAddress}`
+      })
+      .filter((value): value is string => Boolean(value)) || [],
   ).join(' | ')
 }
 
-const buildVerificationErrorMessage = (
-  result: VerifyOrderPaymentResult,
-): string => {
+const buildVerificationErrorMessage = (result: VerifyOrderPaymentResult): string => {
   if (result.error) {
     return result.error
   }
@@ -81,10 +94,10 @@ const appendTransactionToOrder = ({
   order,
   transactionID,
 }: {
-  order: Record<string, unknown>
+  order: OrderWithPaymentProofs
   transactionID: string
 }): string[] => {
-  const transactions = (order.transactions as unknown[] | undefined) ?? []
+  const transactions = Array.isArray(order.transactions) ? order.transactions : []
   const ids = transactions
     .map((entry) => {
       if (typeof entry === 'string' || typeof entry === 'number') {
@@ -124,7 +137,7 @@ const upsertTransaction = async ({
   currency: 'USD'
   customer: string
   customerEmail: string
-  items: Order["items"]
+  items: Order['items']
   orderID: string
   paymentRef: string
   req: PayloadRequest
@@ -170,15 +183,12 @@ export const cryptoAdapter = () => ({
     }
   },
 
-  confirmOrder: async ({
-    data,
-    req,
-  }: ConfirmOrderArgs) => {
+  confirmOrder: async ({ data, req }: ConfirmOrderArgs) => {
     const [{ verifyTransactionOccurred }, { resolveProductPaymentTargetsFromItems }] =
       await Promise.all([import('@/crypto'), import('@/crypto/recipient')])
-    const payloadData = data as { orderID: string };
+    const payloadData = data as { orderID: string }
 
-    const order = await req.payload.findByID({
+    const order = (await req.payload.findByID({
       collection: 'orders',
       id: payloadData.orderID,
       depth: 2,
@@ -190,10 +200,10 @@ export const cryptoAdapter = () => ({
         customer: true,
         customerEmail: true,
         items: true,
-        transactionHashes: true,
+        paymentProofs: true,
         transactions: true,
       },
-    })!
+    })) as unknown as OrderWithPaymentProofs
 
     const paymentTargets = await resolveProductPaymentTargetsFromItems({
       items: order.items || [],
@@ -201,14 +211,16 @@ export const cryptoAdapter = () => ({
       req,
     })
 
-    const transactionHashEntries = Array.isArray(order.transactionHashes) ? order.transactionHashes : []
+    const paymentProofEntries = Array.isArray(order.paymentProofs) ? order.paymentProofs : []
 
     const paymentRef = buildPaymentRef({
       paymentTargets,
-      transactionHashEntries,
+      paymentProofEntries,
     })
 
-    const transactionHashReference = uniq(transactionHashEntries.map((entry) => entry.transactionHash)).join(',')
+    const transactionHashReference = uniq(
+      paymentProofEntries.map((entry) => entry.transactionHash),
+    ).join(',')
     const customerID = toStringID(order.customer) || toStringID(req.user)
 
     if (!customerID) {
@@ -218,9 +230,10 @@ export const cryptoAdapter = () => ({
     const amount = Number(order.amount)
     const currency = 'USD'
     const transactions = Array.isArray(order.transactions) ? order.transactions : []
-    const items: Order['items'] = Array.isArray(order.items) ? order.items : []
+    const items = Array.isArray(order.items) ? order.items : []
     const firstTransaction = transactions[0]
-    const inferredTransactionID = typeof firstTransaction === "string" ? firstTransaction : firstTransaction?.id;
+    const inferredTransactionID =
+      typeof firstTransaction === 'string' ? firstTransaction : firstTransaction?.id
     const customerEmail = typeof order.customerEmail === 'string' ? order.customerEmail : null
 
     if (!customerEmail) {

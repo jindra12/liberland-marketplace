@@ -11,7 +11,7 @@ vi.mock('@/crypto/order', () => ({
   getOrderById: vi.fn(),
   getOrderCreatedAtMs: vi.fn(),
   getOrderCryptoPriceEntries: vi.fn(),
-  getOrderTransactionHashEntries: vi.fn(),
+  getOrderPaymentProofEntries: vi.fn(),
 }))
 
 vi.mock('@/crypto/payload', () => ({
@@ -38,7 +38,7 @@ import {
   getOrderById,
   getOrderCreatedAtMs,
   getOrderCryptoPriceEntries,
-  getOrderTransactionHashEntries,
+  getOrderPaymentProofEntries,
 } from '@/crypto/order'
 import { getPayloadInstance } from '@/crypto/payload'
 import { resolveProductPaymentTargetsFromItems } from '@/crypto/recipient'
@@ -105,7 +105,7 @@ describe('crypto/verification aggregation integration', () => {
   })
 
   it('groups same-order duplicate hashes by wallet and sums expected product amounts', async () => {
-    vi.mocked(getOrderTransactionHashEntries).mockReturnValue([
+    vi.mocked(getOrderPaymentProofEntries).mockReturnValue([
       { chain: 'ethereum', productID: 'p1', transactionHash: '0xhash-shared' },
       { chain: 'ethereum', productID: 'p2', transactionHash: '0xhash-shared' },
       { chain: 'ethereum', productID: 'p3', transactionHash: '0xhash-second' },
@@ -164,7 +164,7 @@ describe('crypto/verification aggregation integration', () => {
   })
 
   it('fails when a product is mapped to more than one transaction entry', async () => {
-    vi.mocked(getOrderTransactionHashEntries).mockReturnValue([
+    vi.mocked(getOrderPaymentProofEntries).mockReturnValue([
       { chain: 'ethereum', productID: 'p1', transactionHash: '0xhash-a' },
       { chain: 'ethereum', productID: 'p1', transactionHash: '0xhash-b' },
     ])
@@ -195,7 +195,7 @@ describe('crypto/verification aggregation integration', () => {
   })
 
   it('fails when order is missing transaction entry for one product target', async () => {
-    vi.mocked(getOrderTransactionHashEntries).mockReturnValue([
+    vi.mocked(getOrderPaymentProofEntries).mockReturnValue([
       { chain: 'ethereum', productID: 'p1', transactionHash: '0xhash-a' },
     ])
 

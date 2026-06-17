@@ -14,7 +14,7 @@ type GraphQLResponseBody = {
     updateOrder?: {
       id?: string
       payerAddress?: string | null
-      transactionHashes?: Array<{
+      paymentProofs?: Array<{
         chain?: 'ethereum' | 'solana' | 'tron'
         transactionHash?: string
         product?: { id?: string }
@@ -97,7 +97,7 @@ const CREATE_ORDER_MUTATION = `
         expectedNativeAmount
         fetchedAt
       }
-      transactionHashes {
+      paymentProofs {
         id
         chain
         transactionHash
@@ -173,7 +173,7 @@ const UPDATE_ORDER_TRANSACTION_HASHES_MUTATION = `
   mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
     updateOrder(id: $orderId, data: $data, draft: $draft) {
       id
-      transactionHashes {
+      paymentProofs {
         chain
         transactionHash
         product {
@@ -323,7 +323,7 @@ describe('GraphQL createOrder mutation regression', () => {
           orderId: result.data.createOrder.id,
           draft: false,
           data: {
-            transactionHashes: [
+            paymentProofs: [
               {
                 product: resolvedProductID,
                 chain: 'ethereum',
@@ -340,7 +340,7 @@ describe('GraphQL createOrder mutation regression', () => {
 
     expect(updateTxHashesResponse.status).toBe(200)
     expect(updateTxHashesResult.errors).toBeUndefined()
-    expect(updateTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
+    expect(updateTxHashesResult.data?.updateOrder?.paymentProofs).toEqual([
       {
         chain: 'ethereum',
         transactionHash: firstTxHash,
@@ -360,7 +360,7 @@ describe('GraphQL createOrder mutation regression', () => {
           orderId: result.data.createOrder.id,
           draft: false,
           data: {
-            transactionHashes: [
+            paymentProofs: [
               {
                 product: resolvedProductID,
                 chain: 'ethereum',
@@ -377,7 +377,7 @@ describe('GraphQL createOrder mutation regression', () => {
 
     expect(appendTxHashesResponse.status).toBe(200)
     expect(appendTxHashesResult.errors).toBeUndefined()
-    expect(appendTxHashesResult.data?.updateOrder?.transactionHashes).toEqual([
+    expect(appendTxHashesResult.data?.updateOrder?.paymentProofs).toEqual([
       {
         chain: 'ethereum',
         transactionHash: firstTxHash,

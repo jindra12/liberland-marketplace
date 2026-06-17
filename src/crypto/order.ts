@@ -1,11 +1,16 @@
-import type { Order } from '@/payload-types'
 import { getPayloadInstance } from './payload'
 import type { OrderCryptoPrice, SupportedChain } from './types'
+import type { PaymentProofRow } from '@/fields/orderFields'
+import type { Order } from '@/payload-types'
 
-export type OrderTransactionHashEntry = {
+export type OrderPaymentProofEntry = {
   chain: SupportedChain
   productID: string
   transactionHash: string
+}
+
+export type OrderWithPaymentProofs = Order & {
+  paymentProofs?: PaymentProofRow[] | null
 }
 
 export type OrderCryptoPriceEntry = OrderCryptoPrice
@@ -15,22 +20,24 @@ const toDocID = (value: unknown): string =>
     ? String((value as { id: unknown }).id)
     : String(value)
 
-export const getOrderById = async (orderId: string): Promise<Order> => {
+export const getOrderById = async (orderId: string): Promise<OrderWithPaymentProofs> => {
   const payload = await getPayloadInstance()
 
   return (await payload.findByID({
     collection: 'orders',
     id: orderId,
     depth: 0,
-  })) as unknown as Order
+  })) as unknown as OrderWithPaymentProofs
 }
 
-export const getOrderTransactionHashEntries = (order: Order): OrderTransactionHashEntry[] => {
-  if (!Array.isArray(order.transactionHashes)) {
+export const getOrderPaymentProofEntries = (
+  order: OrderWithPaymentProofs,
+): OrderPaymentProofEntry[] => {
+  if (!Array.isArray(order.paymentProofs)) {
     return []
   }
 
-  return order.transactionHashes.map((entry) => ({
+  return order.paymentProofs.map((entry) => ({
     chain: (entry as { chain: SupportedChain }).chain,
     productID: toDocID((entry as { product: unknown }).product),
     transactionHash: String((entry as { transactionHash: unknown }).transactionHash),

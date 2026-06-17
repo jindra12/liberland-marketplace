@@ -26,9 +26,8 @@ export const lazySendRelatedItemPublishedNotifications = <TDoc extends ChildNoti
   config: RelatedItemNotificationConfig<TDoc>,
 ): CollectionAfterChangeHook<TDoc> => {
   return async (args) => {
-    const { sendRelatedItemPublishedNotifications } = await import(
-      './sendRelatedItemPublishedNotifications'
-    )
+    const { sendRelatedItemPublishedNotifications } =
+      await import('./sendRelatedItemPublishedNotifications')
     return sendRelatedItemPublishedNotifications(config)(args)
   }
 }
@@ -66,17 +65,16 @@ export const lazyLockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = asy
   return lockOrderCryptoPricesOnCreate(args)
 }
 
-export const lazyAutoConfirmOrderOnTransactionHashAdd: CollectionAfterChangeHook = async (args) => {
-  const { autoConfirmOrderOnTransactionHashAdd } = await import('./autoConfirmOrderOnTransactionHashAdd')
-  return autoConfirmOrderOnTransactionHashAdd(args)
+export const lazyAutoConfirmOrderOnPaymentProofAdd: CollectionAfterChangeHook = async (args) => {
+  const { autoConfirmOrderOnPaymentProofAdd } = await import('./autoConfirmOrderOnPaymentProofAdd')
+  return autoConfirmOrderOnPaymentProofAdd(args)
 }
 
 export const lazyUpdateProductPurchaseCountAfterOrderValidation: CollectionAfterChangeHook = async (
   args,
 ) => {
-  const { updateProductPurchaseCountAfterOrderValidation } = await import(
-    './updateProductPurchaseCount'
-  )
+  const { updateProductPurchaseCountAfterOrderValidation } =
+    await import('./updateProductPurchaseCount')
   return updateProductPurchaseCountAfterOrderValidation(args)
 }
 
@@ -93,8 +91,7 @@ export const lazySendReportCreatedNotifications: CollectionAfterChangeHook = asy
 export const lazySendInformationRequestCreatedNotifications: CollectionAfterChangeHook = async (
   args,
 ) => {
-  const { sendInformationRequestCreatedNotifications } = await import(
-    './sendInformationRequestCreatedNotifications'
-  )
+  const { sendInformationRequestCreatedNotifications } =
+    await import('./sendInformationRequestCreatedNotifications')
   return sendInformationRequestCreatedNotifications(args)
 }

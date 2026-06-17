@@ -4,7 +4,7 @@ import {
   getOrderById,
   getOrderCreatedAtMs,
   getOrderCryptoPriceEntries,
-  getOrderTransactionHashEntries,
+  getOrderPaymentProofEntries,
 } from '../order'
 import { getPayloadInstance } from '../payload'
 import type {
@@ -125,13 +125,13 @@ export const verifyTransactionOccurred = async (
   orderId: string,
 ): Promise<VerifyOrderPaymentResult> => {
   const order = await getOrderById(orderId)
-  const txEntries = getOrderTransactionHashEntries(order)
+  const txEntries = getOrderPaymentProofEntries(order)
 
   if (txEntries.length === 0) {
     return {
       orderId: order.id,
       ok: false,
-      error: 'Order has no transactionHashes entries to verify.',
+      error: 'Order has no paymentProofs entries to verify.',
       results: [],
     }
   }
