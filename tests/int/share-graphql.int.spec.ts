@@ -93,13 +93,14 @@ const createOwnedCompany = async (user: User): Promise<string> => {
     draft: false,
   })) as { id: string | number }
   createdIdentityIDs.push(String(identity.id))
+  const identityId = String(identity.id)
 
   const company = (await payload.create({
     collection: 'companies',
     data: {
       _status: 'published',
       createdBy: user.id,
-      identity: identity.id,
+      identity: identityId,
       name: `Share Company ${crypto.randomUUID()}`,
       noAutoPost: false,
     },

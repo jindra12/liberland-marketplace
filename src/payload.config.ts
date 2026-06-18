@@ -27,6 +27,7 @@ import { analyticsConfigEndpoint } from './endpoints/analytics/config'
 import { NotificationSubscriptions } from './collections/NotificationSubscriptions'
 import { Subscribers } from './collections/Subscribers'
 import { analyticsGraphQLMutations } from './graphql/analytics'
+import { sellerOrderGraphQLMutations, sellerOrderGraphQLQueries } from './graphql/sellerOrders'
 import { permissionsGraphQLQueries } from './graphql/permissions'
 import { shareGraphQLMutations } from './graphql/share'
 import { startupGraphQLMutations } from './graphql/startups'
@@ -263,11 +264,13 @@ export default buildConfig({
     mutations: (graphQL, context) => ({
       ...analyticsGraphQLMutations(graphQL, context),
       ...shareGraphQLMutations(graphQL, context),
+      ...sellerOrderGraphQLMutations(graphQL, context),
       ...startupGraphQLMutations(graphQL, context),
       ...userGraphQLMutations(graphQL, context),
     }),
     queries: (graphQL, context) => ({
       ...permissionsGraphQLQueries(graphQL, context),
+      ...sellerOrderGraphQLQueries(graphQL, context),
       ...userGraphQLQueries(graphQL, context),
     }),
   },
