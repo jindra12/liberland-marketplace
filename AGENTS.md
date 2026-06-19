@@ -30,6 +30,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Do not use `typescriptSchema` as an ad-hoc workaround for generated Payload type gaps. Fix the actual schema shape or generator path instead.
 - If you are forced to change a file under `node_modules`, you must also create a proper patch artifact in the repo so the change is reproducible and reviewable.
 - When patching dependencies, use the real `pnpm patch` flow or an equivalent reproducible patch mechanism; do not leave raw manual edits in `node_modules`.
+- Do not edit copied or generated mirror trees such as `source/` unless the user explicitly asks for that tree; always make the tracked repo file the source of truth so the change is actually commit-ready.
 - Do not toggle git index state (`assume-unchanged`, `skip-worktree`) or assume git is malfunctioning when generated files look stale; verify the repo state and fix the underlying source or generator instead.
 - If a change would require a lot of custom parsing, scraping, serialization, or similar infrastructure code, check npm first for a proven library before writing the logic by hand.
 - Never statically import heavy client-side libraries in server or route modules; load them with `next/dynamic` or an equivalent lazy-loading boundary to avoid unnecessary RAM usage.
