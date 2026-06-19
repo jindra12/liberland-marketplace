@@ -14,7 +14,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 
 ### Code Validation
 
-- To validate typescript correctness after modifying code run `tsc --noEmit`
+- To validate code after modifying schema or build-sensitive code, run `pnpm build` first; `tsc --noEmit` is not a substitute for the actual build.
 - Delete `tsconfig.tsbuildinfo` after you finish your work.
 - Do not stop after a partial verification; keep going until `tsc --noEmit` and the relevant build pass, or identify the blocking failure and fix it.
 - Run tests outside the sandbox when they depend on live network access, browser automation, DNS, Docker, or other host services.

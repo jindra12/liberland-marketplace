@@ -9,6 +9,8 @@ type GraphQLContext = {
   req: PayloadRequest
 }
 
+type GraphQLFactory = typeof import('graphql')
+
 type SellerOrderPaymentProof = {
   product: string | Product
   chain: 'ethereum' | 'solana' | 'tron'
@@ -18,7 +20,10 @@ type SellerOrderPaymentProof = {
   id?: string | null
 }
 
-type SellerOrderDoc = Omit<Pick<Order, 'createdAt' | 'customerEmail' | 'id' | 'items' | 'shippingAddress' | 'status'>, never> & {
+type SellerOrderDoc = Omit<
+  Pick<Order, 'createdAt' | 'customerEmail' | 'id' | 'items' | 'payerAddress' | 'shippingAddress' | 'status'>,
+  never
+> & {
   paymentProofs?: SellerOrderPaymentProof[] | null
 }
 
@@ -142,7 +147,7 @@ const getExistingField = ({
   return field as { type: import('graphql').GraphQLOutputType }
 }
 
-const buildShippingAddressType = (graphQL: Parameters<GraphQLExtension>[0]) => {
+const buildShippingAddressType = (graphQL: GraphQLFactory) => {
   if (shippingAddressType) {
     return shippingAddressType
   }
@@ -193,7 +198,7 @@ const requireAuthorizedUser = ({
   graphQL,
   req,
 }: {
-  graphQL: Parameters<GraphQLExtension>[0]
+  graphQL: GraphQLFactory
   req: PayloadRequest
 }) => {
   if (!req.user) {
@@ -204,8 +209,6 @@ const requireAuthorizedUser = ({
     })
   }
 }
-
-const isAdminUser = (user: AccessUser): boolean => Boolean(user?.role?.includes('admin'))
 
 const getUserID = (user: SellerOrdersRequest['user']): string | null => {
   if (!user?.id) {
@@ -575,7 +578,10 @@ export const updateSellerOrderProductRejected = async ({
   })
 }
 
-export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) => {
+export const sellerOrderGraphQLQueries: GraphQLExtension = (
+  graphQL: GraphQLFactory,
+  context,
+) => {
   const productField = getExistingField({
     fields: context.Query.fields,
     name: 'Product',
@@ -721,7 +727,10 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) =>
   }
 }
 
-export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL, context) => {
+export const sellerOrderGraphQLMutations: GraphQLExtension = (
+  graphQL: GraphQLFactory,
+  context,
+) => {
   const productField = getExistingField({
     fields: context.Query.fields,
     name: 'Product',
