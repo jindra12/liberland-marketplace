@@ -1798,6 +1798,10 @@ export interface Order {
          * Mark this payment proof as fulfilled after the order has been shipped or delivered.
          */
         fulfilled?: boolean | null;
+        /**
+         * Mark this payment proof as rejected if the payment was invalid or should not be counted.
+         */
+        rejected?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -3183,6 +3187,7 @@ export interface OrdersSelect<T extends boolean = true> {
         chain?: T;
         transactionHash?: T;
         fulfilled?: T;
+        rejected?: T;
         id?: T;
       };
   updatedAt?: T;

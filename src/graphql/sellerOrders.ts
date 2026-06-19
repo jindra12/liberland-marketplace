@@ -9,10 +9,18 @@ type GraphQLContext = {
   req: PayloadRequest
 }
 
-type SellerOrderDoc = Pick<
-  Order,
-  'createdAt' | 'id' | 'items' | 'paymentProofs' | 'shippingAddress' | 'status'
->
+type SellerOrderPaymentProof = {
+  product: string | Product
+  chain: 'ethereum' | 'solana' | 'tron'
+  transactionHash: string
+  fulfilled?: boolean | null
+  rejected?: boolean | null
+  id?: string | null
+}
+
+type SellerOrderDoc = Omit<Pick<Order, 'createdAt' | 'customerEmail' | 'id' | 'items' | 'shippingAddress' | 'status'>, never> & {
+  paymentProofs?: SellerOrderPaymentProof[] | null
+}
 
 type SellerProductDoc = Pick<Product, 'company' | 'createdBy' | 'createdAt' | 'id' | 'name' | 'updatedAt'>
 
@@ -52,6 +60,7 @@ type SellerOrdersPayload = {
 
 type SellerOrderProductsArgs = {
   fulfilled?: boolean | null
+  rejected?: boolean | null
   limit?: number | null
   page?: number | null
 }
@@ -62,19 +71,29 @@ type UpdateSellerOrderProductFulfilledArgs = {
   paymentProofId: string
 }
 
+type UpdateSellerOrderProductRejectedArgs = {
+  orderId: string
+  paymentProofId: string
+  rejected: boolean
+}
+
 type SellerOrderProductPaymentProof = {
   chain: 'ethereum' | 'solana' | 'tron'
   fulfilled: boolean
   id: string
+  rejected: boolean
   transactionHash: string
 }
 
 type SellerOrderProductListing = {
+  id: string
   chain: 'ethereum' | 'solana' | 'tron'
   fulfilled: boolean
+  customerEmail: string | null | undefined
   orderCreatedAt: string
   orderId: string
   orderStatus: string
+  payerAddress: string | null | undefined
   paymentProof: SellerOrderProductPaymentProof
   paymentProofId: string
   product: SellerProductDoc
@@ -82,6 +101,7 @@ type SellerOrderProductListing = {
   quantity: number
   shippingAddress: SellerOrderDoc['shippingAddress']
   transactionHash: string
+  rejected: boolean
 }
 
 type SellerOrderProductsPage = {
@@ -104,6 +124,7 @@ type OrderItemRow = NonNullable<SellerOrderDoc['items']>[number]
 const DEFAULT_LIMIT = 20
 const MAX_LIMIT = 100
 const ORDER_PAGE_SIZE = 50
+let shippingAddressType: import('graphql').GraphQLObjectType | null = null
 
 const getExistingField = ({
   fields,
@@ -119,6 +140,53 @@ const getExistingField = ({
   }
 
   return field as { type: import('graphql').GraphQLOutputType }
+}
+
+const buildShippingAddressType = (graphQL: Parameters<GraphQLExtension>[0]) => {
+  if (shippingAddressType) {
+    return shippingAddressType
+  }
+
+  shippingAddressType = new graphQL.GraphQLObjectType({
+    fields: {
+      addressLine1: {
+        type: graphQL.GraphQLString,
+      },
+      addressLine2: {
+        type: graphQL.GraphQLString,
+      },
+      city: {
+        type: graphQL.GraphQLString,
+      },
+      company: {
+        type: graphQL.GraphQLString,
+      },
+      country: {
+        type: graphQL.GraphQLString,
+      },
+      firstName: {
+        type: graphQL.GraphQLString,
+      },
+      lastName: {
+        type: graphQL.GraphQLString,
+      },
+      phone: {
+        type: graphQL.GraphQLString,
+      },
+      postalCode: {
+        type: graphQL.GraphQLString,
+      },
+      state: {
+        type: graphQL.GraphQLString,
+      },
+      title: {
+        type: graphQL.GraphQLString,
+      },
+    },
+    name: 'SellerOrderShippingAddress',
+  })
+
+  return shippingAddressType
 }
 
 const requireAuthorizedUser = ({
@@ -223,11 +291,13 @@ const getOrderProductQuantity = ({
 
 const buildListing = async ({
   fulfilled,
+  rejected,
   limit,
   page,
   req,
 }: {
   fulfilled?: boolean | null
+  rejected?: boolean | null
   limit: number
   page: number
   req: SellerOrdersRequest
@@ -290,6 +360,11 @@ const buildListing = async ({
             return null
           }
 
+          const isRejected = Boolean(paymentProof.rejected)
+          if (typeof rejected === 'boolean' && isRejected !== rejected) {
+            return null
+          }
+
           const paymentProofId = toStringID(paymentProof.id)
           if (!paymentProofId) {
             return null
@@ -302,15 +377,19 @@ const buildListing = async ({
           }
 
           return {
+            id: paymentProofId,
             chain: paymentProof.chain,
             fulfilled: isFulfilled,
+            customerEmail: order.customerEmail,
             orderCreatedAt: order.createdAt,
             orderId: order.id,
             orderStatus: String(order.status ?? ''),
+            payerAddress: order.payerAddress,
             paymentProof: {
               chain: paymentProof.chain,
               fulfilled: isFulfilled,
               id: paymentProofId,
+              rejected: isRejected,
               transactionHash: paymentProof.transactionHash,
             },
             paymentProofId,
@@ -321,6 +400,7 @@ const buildListing = async ({
               productID,
             }),
             shippingAddress: order.shippingAddress,
+            rejected: isRejected,
             transactionHash: paymentProof.transactionHash,
           }
         })
@@ -347,11 +427,13 @@ const buildListing = async ({
 
 export const getSellerOrderProducts = async ({
   fulfilled,
+  rejected,
   limit,
   page,
   req,
 }: {
   fulfilled?: boolean | null
+  rejected?: boolean | null
   limit?: number | null
   page?: number | null
   req: SellerOrdersRequest
@@ -360,20 +442,27 @@ export const getSellerOrderProducts = async ({
   const normalizedPage = Math.max(1, Number(page ?? 1))
   return buildListing({
     fulfilled,
+    rejected,
     limit: normalizedLimit,
     page: normalizedPage,
     req,
   })
 }
 
-export const updateSellerOrderProductFulfilled = async ({
-  fulfilled,
+const updateSellerOrderProductState = async ({
+  paymentProofKey,
+  paymentProofValue,
   orderId,
   paymentProofId,
   req,
-}: UpdateSellerOrderProductFulfilledArgs & {
+}: {
+  orderId: string
+  paymentProofId: string
+  paymentProofKey: 'fulfilled' | 'rejected'
+  paymentProofValue: boolean
   req: SellerOrdersRequest
 }): Promise<SellerOrderProductListing> => {
+  const paymentProofOppositeKey = paymentProofKey === 'fulfilled' ? 'rejected' : 'fulfilled'
   const order = (await req.payload.findByID({
     collection: 'orders',
     depth: 0,
@@ -407,8 +496,11 @@ export const updateSellerOrderProductFulfilled = async ({
 
   paymentProofs[paymentProofIndex] = {
     ...currentProof,
-    fulfilled,
+    [paymentProofKey]: paymentProofValue,
+    [paymentProofOppositeKey]: false,
   }
+
+  const updatedProof = paymentProofs[paymentProofIndex] as SellerOrderPaymentProof
 
   await req.payload.update({
     collection: 'orders',
@@ -421,15 +513,19 @@ export const updateSellerOrderProductFulfilled = async ({
   })
 
   return {
+    id: paymentProofId,
     chain: currentProof.chain,
-    fulfilled,
+    fulfilled: Boolean(updatedProof.fulfilled),
+    customerEmail: order.customerEmail,
     orderCreatedAt: order.createdAt,
     orderId: order.id,
     orderStatus: String(order.status ?? ''),
+    payerAddress: order.payerAddress,
     paymentProof: {
       chain: currentProof.chain,
-      fulfilled,
+      fulfilled: Boolean(updatedProof.fulfilled),
       id: paymentProofId,
+      rejected: Boolean(updatedProof.rejected),
       transactionHash: currentProof.transactionHash,
     },
     paymentProofId,
@@ -440,8 +536,43 @@ export const updateSellerOrderProductFulfilled = async ({
       productID,
     }),
     shippingAddress: order.shippingAddress,
+    rejected: Boolean(updatedProof.rejected),
     transactionHash: currentProof.transactionHash,
   }
+}
+
+export const updateSellerOrderProductFulfilled = async ({
+  fulfilled,
+  orderId,
+  paymentProofId,
+  req,
+}: UpdateSellerOrderProductFulfilledArgs & {
+  req: SellerOrdersRequest
+}): Promise<SellerOrderProductListing> => {
+  return updateSellerOrderProductState({
+    orderId,
+    paymentProofId,
+    paymentProofKey: 'fulfilled',
+    paymentProofValue: fulfilled,
+    req,
+  })
+}
+
+export const updateSellerOrderProductRejected = async ({
+  orderId,
+  paymentProofId,
+  rejected,
+  req,
+}: UpdateSellerOrderProductRejectedArgs & {
+  req: SellerOrdersRequest
+}): Promise<SellerOrderProductListing> => {
+  return updateSellerOrderProductState({
+    orderId,
+    paymentProofId,
+    paymentProofKey: 'rejected',
+    paymentProofValue: rejected,
+    req,
+  })
 }
 
 export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) => {
@@ -449,6 +580,7 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) =>
     fields: context.Query.fields,
     name: 'Product',
   })
+  const shippingAddressType = buildShippingAddressType(graphQL)
 
   const paymentProofType = new graphQL.GraphQLObjectType({
     fields: {
@@ -456,6 +588,9 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) =>
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },
       fulfilled: {
+        type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
+      },
+      rejected: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
       },
       id: {
@@ -476,13 +611,25 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) =>
       fulfilled: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
       },
+      rejected: {
+        type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
+      },
       orderCreatedAt: {
+        type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
+      },
+      id: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },
       orderId: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },
       orderStatus: {
+        type: graphQL.GraphQLString,
+      },
+      customerEmail: {
+        type: graphQL.GraphQLString,
+      },
+      payerAddress: {
         type: graphQL.GraphQLString,
       },
       paymentProof: {
@@ -501,7 +648,7 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) =>
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLInt),
       },
       shippingAddress: {
-        type: context.Query.fields.Order.fields.shippingAddress.type,
+        type: shippingAddressType,
       },
       transactionHash: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
@@ -545,6 +692,9 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) =>
         fulfilled: {
           type: graphQL.GraphQLBoolean,
         },
+        rejected: {
+          type: graphQL.GraphQLBoolean,
+        },
         limit: {
           type: graphQL.GraphQLInt,
         },
@@ -560,6 +710,7 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL, context) =>
 
         return getSellerOrderProducts({
           fulfilled: args.fulfilled ?? null,
+          rejected: args.rejected ?? null,
           limit: args.limit ?? null,
           page: args.page ?? null,
           req: context.req as SellerOrdersRequest,
@@ -575,6 +726,7 @@ export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL, context) 
     fields: context.Query.fields,
     name: 'Product',
   })
+  const shippingAddressType = buildShippingAddressType(graphQL)
 
   const paymentProofType = new graphQL.GraphQLObjectType({
     fields: {
@@ -582,6 +734,9 @@ export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL, context) 
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },
       fulfilled: {
+        type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
+      },
+      rejected: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
       },
       id: {
@@ -602,13 +757,22 @@ export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL, context) 
       fulfilled: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
       },
+      rejected: {
+        type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
+      },
       orderCreatedAt: {
+        type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
+      },
+      id: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },
       orderId: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },
       orderStatus: {
+        type: graphQL.GraphQLString,
+      },
+      payerAddress: {
         type: graphQL.GraphQLString,
       },
       paymentProof: {
@@ -627,7 +791,7 @@ export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL, context) 
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLInt),
       },
       shippingAddress: {
-        type: context.Query.fields.Order.fields.shippingAddress.type,
+        type: shippingAddressType,
       },
       transactionHash: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
@@ -663,6 +827,37 @@ export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL, context) 
           fulfilled: args.fulfilled,
           orderId: args.orderId,
           paymentProofId: args.paymentProofId,
+          req: context.req as SellerOrdersRequest,
+        })
+      },
+      type: new graphQL.GraphQLNonNull(sellerOrderProductTypeResult),
+    },
+    updateSellerOrderProductRejected: {
+      args: {
+        orderId: {
+          type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
+        },
+        paymentProofId: {
+          type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
+        },
+        rejected: {
+          type: new graphQL.GraphQLNonNull(graphQL.GraphQLBoolean),
+        },
+      },
+      resolve: async (
+        _source: unknown,
+        args: UpdateSellerOrderProductRejectedArgs,
+        context: GraphQLContext,
+      ) => {
+        requireAuthorizedUser({
+          graphQL,
+          req: context.req,
+        })
+
+        return updateSellerOrderProductRejected({
+          orderId: args.orderId,
+          paymentProofId: args.paymentProofId,
+          rejected: args.rejected,
           req: context.req as SellerOrdersRequest,
         })
       },

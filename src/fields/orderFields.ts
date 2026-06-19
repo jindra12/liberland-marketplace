@@ -13,6 +13,7 @@ export type PaymentProofRow = {
   chain?: 'ethereum' | 'solana' | 'tron' | null
   transactionHash?: string | null
   fulfilled?: boolean | null
+  rejected?: boolean | null
 }
 
 const getPaymentProofRowKey = (row: PaymentProofRow): string => {
@@ -175,6 +176,16 @@ export const orderFields: Field[] = [
         admin: {
           description:
             'Mark this payment proof as fulfilled after the order has been shipped or delivered.',
+        },
+      },
+      {
+        name: 'rejected',
+        label: 'Rejected',
+        type: 'checkbox',
+        defaultValue: false,
+        admin: {
+          description:
+            'Mark this payment proof as rejected if the payment was invalid or should not be counted.',
         },
       },
     ],

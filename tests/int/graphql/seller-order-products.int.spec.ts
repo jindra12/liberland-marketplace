@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   getSellerOrderProducts,
   updateSellerOrderProductFulfilled,
+  updateSellerOrderProductRejected,
   type SellerOrdersRequest,
 } from '@/graphql/sellerOrders'
 import type { AccessUser } from '@/access/types'
@@ -15,10 +16,18 @@ type SellerOrderProductValue = Pick<
   'company' | 'createdBy' | 'createdAt' | 'id' | 'name' | 'updatedAt'
 >
 
-type SellerOrderDocValue = Pick<
-  Order,
-  'createdAt' | 'id' | 'items' | 'paymentProofs' | 'shippingAddress' | 'status'
->
+type SellerOrderPaymentProofValue = {
+  product: string | Product
+  chain: 'ethereum' | 'solana' | 'tron'
+  transactionHash: string
+  fulfilled?: boolean | null
+  rejected?: boolean | null
+  id?: string | null
+}
+
+type SellerOrderDocValue = Omit<Pick<Order, 'createdAt' | 'id' | 'items' | 'shippingAddress' | 'status'>, never> & {
+  paymentProofs?: SellerOrderPaymentProofValue[] | null
+}
 
 const createRequest = (): SellerOrdersRequest => {
   const ownedProduct = {
@@ -56,6 +65,7 @@ const createRequest = (): SellerOrdersRequest => {
       {
         chain: 'ethereum' as const,
         fulfilled: false,
+        rejected: true,
         id: 'proof-owned',
         product: 'owned-product',
         transactionHash: '0xowned',
@@ -63,11 +73,12 @@ const createRequest = (): SellerOrdersRequest => {
       {
         chain: 'ethereum' as const,
         fulfilled: true,
+        rejected: false,
         id: 'proof-other',
         product: 'other-product',
         transactionHash: '0xother',
       },
-    ],
+    ] satisfies SellerOrderPaymentProofValue[],
     shippingAddress: {
       addressLine1: '123 Main St',
       city: 'Berlin',
@@ -154,6 +165,7 @@ describe('seller order products graphql', () => {
     expect(result.docs).toHaveLength(1)
     expect(result.docs[0]?.productId).toBe('owned-product')
     expect(result.docs[0]?.fulfilled).toBe(false)
+    expect(result.docs[0]?.rejected).toBe(true)
     expect(result.docs[0]?.quantity).toBe(2)
     expect(req.payload.find).toHaveBeenCalledTimes(2)
   })
@@ -171,6 +183,22 @@ describe('seller order products graphql', () => {
     expect(req.payload.update).toHaveBeenCalledTimes(1)
     expect(result.fulfilled).toBe(true)
     expect(result.paymentProof.fulfilled).toBe(true)
+    expect(result.paymentProofId).toBe('proof-owned')
+  })
+
+  it('updates the selected payment proof rejected flag', async () => {
+    const req = createRequest()
+
+    const result = await updateSellerOrderProductRejected({
+      rejected: false,
+      orderId: 'order-1',
+      paymentProofId: 'proof-owned',
+      req,
+    })
+
+    expect(req.payload.update).toHaveBeenCalledTimes(1)
+    expect(result.rejected).toBe(false)
+    expect(result.paymentProof.rejected).toBe(false)
     expect(result.paymentProofId).toBe('proof-owned')
   })
 })
