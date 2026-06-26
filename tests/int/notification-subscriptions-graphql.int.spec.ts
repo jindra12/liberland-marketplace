@@ -35,9 +35,15 @@ const createdDocumentIDs: Record<(typeof trackedCollections)[number], string[]> 
   users: [],
 }
 
+const createdOauthAccessTokenIDs: string[] = []
+
 type TestUser = {
   email: string
   id: string
+}
+
+type AuthenticatedTestUser = TestUser & {
+  token: string
 }
 
 const getRelationshipID = <TRelation extends { id: string }>(
@@ -74,7 +80,13 @@ type GraphQLResponseBody = {
 
 const quoteGraphQLString = (value: string): string => JSON.stringify(value)
 
-const runGraphQLOperation = async (query: string): Promise<GraphQLResponseBody> => {
+const runGraphQLOperation = async ({
+  bearerToken,
+  query,
+}: {
+  bearerToken?: string
+  query: string
+}): Promise<GraphQLResponseBody> => {
   if (!graphqlPost) {
     throw new Error('GraphQL route is not available.')
   }
@@ -83,6 +95,7 @@ const runGraphQLOperation = async (query: string): Promise<GraphQLResponseBody> 
     method: 'POST',
     headers: {
       'content-type': 'application/json',
+      ...(bearerToken ? { authorization: `Bearer ${bearerToken}` } : {}),
     },
     body: JSON.stringify({ query }),
   })
@@ -92,18 +105,15 @@ const runGraphQLOperation = async (query: string): Promise<GraphQLResponseBody> 
 }
 
 const createNotificationSubscriptionMutation = ({
-  email,
   targetCollection,
   targetID,
 }: {
-  email: string
   targetCollection: 'companies' | 'identities' | 'jobs' | 'products' | 'startups'
   targetID: string
 }): string => `
   mutation {
     createNotificationSubscription(
       data: {
-        email: ${quoteGraphQLString(email)}
         targetCollection: ${targetCollection}
         targetID: ${quoteGraphQLString(targetID)}
       }
@@ -124,25 +134,28 @@ const deleteNotificationSubscriptionMutation = (id: string): string => `
   }
 `
 
-const listNotificationSubscriptionsQuery = (email: string): string => `
-  query {
-    notificationSubscriptions(
-      limit: 10
-      where: {
-        email: {
-          equals: ${quoteGraphQLString(email)}
-        }
-      }
-    ) {
-      totalDocs
-      docs {
-        id
-      }
-    }
+const createBearerToken = async (userID: string): Promise<string> => {
+  if (!payload) {
+    throw new Error('Payload is not available.')
   }
-`
 
-const createLinkedUser = async (email: string): Promise<TestUser> => {
+  const accessToken = `test-oidc-access-token-${crypto.randomUUID()}`
+  const tokenRecord = await payload.create({
+    collection: 'oauthAccessTokens',
+    data: {
+      accessToken,
+      accessTokenExpiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+      scopes: 'openid profile email',
+      user: userID,
+    },
+  })
+
+  createdOauthAccessTokenIDs.push(String(tokenRecord.id))
+
+  return accessToken
+}
+
+const createAuthenticatedUser = async (email: string): Promise<AuthenticatedTestUser> => {
   if (!payload) {
     throw new Error('Payload is not available.')
   }
@@ -151,8 +164,8 @@ const createLinkedUser = async (email: string): Promise<TestUser> => {
     collection: 'users',
     data: {
       email,
-      emailVerified: false,
-      name: 'Linked User',
+      emailVerified: true,
+      name: 'Authenticated User',
     },
     draft: false,
   })
@@ -163,28 +176,12 @@ const createLinkedUser = async (email: string): Promise<TestUser> => {
   }
 
   createdDocumentIDs.users.push(userID)
-
-  const relatedCompanies = await payload.find({
-    collection: 'companies',
-    depth: 0,
-    limit: 10,
-    where: {
-      createdBy: {
-        equals: userID,
-      },
-    },
-  })
-
-  relatedCompanies.docs.forEach((company) => {
-    const companyID = toStringID(company.id)
-    if (companyID) {
-      createdDocumentIDs.companies.push(companyID)
-    }
-  })
+  const token = await createBearerToken(userID)
 
   return {
     email: user.email,
     id: userID,
+    token,
   }
 }
 
@@ -229,13 +226,24 @@ describe('Notification subscriptions collection GraphQL', () => {
       createdDocumentIDs[collection] = []
     }
 
+    for (const id of createdOauthAccessTokenIDs.reverse()) {
+      await payload.delete({
+        collection: 'oauthAccessTokens',
+        id,
+      })
+    }
+
+    createdOauthAccessTokenIDs.length = 0
+
     vi.restoreAllMocks()
   })
 
-  it('allows anonymous GraphQL create and delete for unlinked emails without exposing read access', async () => {
+  it('derives notification subscription email from the authenticated user context', async () => {
     if (bootstrapError || !payload || !graphqlPost) {
       return
     }
+
+    const authUser = await createAuthenticatedUser(`subscriber-${Date.now()}@example.com`)
 
     const identity = await payload.create({
       collection: 'identities',
@@ -283,20 +291,20 @@ describe('Notification subscriptions collection GraphQL', () => {
     const jobID = String(job.id)
     createdDocumentIDs.jobs.push(jobID)
 
-    const email = `job-updates-${Date.now()}@example.com`
+    const email = authUser.email
     const subscriptionID = buildNotificationSubscriptionDocumentID({
       email,
       targetCollection: 'jobs',
       targetID: jobID,
     })
 
-    const createResponse = await runGraphQLOperation(
-      createNotificationSubscriptionMutation({
-        email,
+    const createResponse = await runGraphQLOperation({
+      bearerToken: authUser.token,
+      query: createNotificationSubscriptionMutation({
         targetCollection: 'jobs',
         targetID: jobID,
       }),
-    )
+    })
 
     expect(createResponse.errors).toBeUndefined()
     expect(createResponse.data?.createNotificationSubscription).toMatchObject({
@@ -311,6 +319,8 @@ describe('Notification subscriptions collection GraphQL', () => {
       collection: 'notification-subscriptions',
       depth: 0,
       limit: 10,
+      overrideAccess: false,
+      user: authUser,
       where: {
         id: {
           equals: subscriptionID,
@@ -321,17 +331,10 @@ describe('Notification subscriptions collection GraphQL', () => {
     expect(subscriptions.docs).toHaveLength(1)
     createdDocumentIDs.subscribers.push(String(subscriptions.docs[0].subscriber))
 
-    const readResponse = await runGraphQLOperation(listNotificationSubscriptionsQuery(email))
-
-    expect(readResponse.errors).toBeUndefined()
-    expect(readResponse.data?.notificationSubscriptions).toMatchObject({
-      totalDocs: 0,
-      docs: [],
+    const deleteResponse = await runGraphQLOperation({
+      bearerToken: authUser.token,
+      query: deleteNotificationSubscriptionMutation(subscriptionID),
     })
-
-    const deleteResponse = await runGraphQLOperation(
-      deleteNotificationSubscriptionMutation(subscriptionID),
-    )
 
     expect(deleteResponse.errors).toBeUndefined()
     expect(deleteResponse.data?.deleteNotificationSubscription).toMatchObject({
@@ -342,10 +345,12 @@ describe('Notification subscriptions collection GraphQL', () => {
     createdDocumentIDs.subscribers = []
   })
 
-  it('requires the matching authenticated user for linked emails and populates isSubscribed on jobs, identities, and products', async () => {
+  it('uses the authenticated user context for subscription status on jobs, identities, and products', async () => {
     if (bootstrapError || !payload) {
       return
     }
+
+    const authUser = await createAuthenticatedUser(`linked-${Date.now()}@example.com`)
 
     const identity = await payload.create({
       collection: 'identities',
@@ -405,71 +410,91 @@ describe('Notification subscriptions collection GraphQL', () => {
     const productID = String(product.id)
     createdDocumentIDs.products.push(productID)
 
-    const linkedUser = await createLinkedUser(`linked-${Date.now()}@example.com`)
+    const jobSubscriptionID = buildNotificationSubscriptionDocumentID({
+      email: authUser.email,
+      targetCollection: 'jobs',
+      targetID: jobID,
+    })
 
-    await expect(
-      payload.create({
-        collection: 'notification-subscriptions',
-        data: {
-          email: linkedUser.email,
+    const identitySubscriptionID = buildNotificationSubscriptionDocumentID({
+      email: authUser.email,
+      targetCollection: 'identities',
+      targetID: identityID,
+    })
+
+    const productSubscriptionID = buildNotificationSubscriptionDocumentID({
+      email: authUser.email,
+      targetCollection: 'products',
+      targetID: productID,
+    })
+
+    const [jobSubscriptionResponse, identitySubscriptionResponse, productSubscriptionResponse] = await Promise.all([
+      runGraphQLOperation({
+        bearerToken: authUser.token,
+        query: createNotificationSubscriptionMutation({
           targetCollection: 'jobs',
           targetID: jobID,
-        },
-        overrideAccess: false,
+        }),
       }),
-    ).rejects.toThrow()
+      runGraphQLOperation({
+        bearerToken: authUser.token,
+        query: createNotificationSubscriptionMutation({
+          targetCollection: 'identities',
+          targetID: identityID,
+        }),
+      }),
+      runGraphQLOperation({
+        bearerToken: authUser.token,
+        query: createNotificationSubscriptionMutation({
+          targetCollection: 'products',
+          targetID: productID,
+        }),
+      }),
+    ])
 
-    const jobSubscription = await payload.create({
-      collection: 'notification-subscriptions',
-      data: {
-        email: linkedUser.email,
-        targetCollection: 'jobs',
-        targetID: jobID,
-      },
-      overrideAccess: false,
-      user: linkedUser,
+    expect(jobSubscriptionResponse.errors).toBeUndefined()
+    expect(jobSubscriptionResponse.data?.createNotificationSubscription).toMatchObject({
+      email: authUser.email,
+      id: jobSubscriptionID,
+      targetCollection: 'jobs',
+      targetID: jobID,
     })
-    createdDocumentIDs['notification-subscriptions'].push(String(jobSubscription.id))
-    createdDocumentIDs.subscribers.push(String(jobSubscription.subscriber))
+    expect(identitySubscriptionResponse.errors).toBeUndefined()
+    expect(identitySubscriptionResponse.data?.createNotificationSubscription).toMatchObject({
+      email: authUser.email,
+      id: identitySubscriptionID,
+      targetCollection: 'identities',
+      targetID: identityID,
+    })
+    expect(productSubscriptionResponse.errors).toBeUndefined()
+    expect(productSubscriptionResponse.data?.createNotificationSubscription).toMatchObject({
+      email: authUser.email,
+      id: productSubscriptionID,
+      targetCollection: 'products',
+      targetID: productID,
+    })
 
-    const identitySubscription = await payload.create({
-      collection: 'notification-subscriptions',
-      data: {
-        email: linkedUser.email,
-        targetCollection: 'identities',
-        targetID: identityID,
-      },
-      overrideAccess: false,
-      user: linkedUser,
-    })
-    createdDocumentIDs['notification-subscriptions'].push(String(identitySubscription.id))
-
-    const productSubscription = await payload.create({
-      collection: 'notification-subscriptions',
-      data: {
-        email: linkedUser.email,
-        targetCollection: 'products',
-        targetID: productID,
-      },
-      overrideAccess: false,
-      user: linkedUser,
-    })
-    createdDocumentIDs['notification-subscriptions'].push(String(productSubscription.id))
+    createdDocumentIDs['notification-subscriptions'].push(jobSubscriptionID)
+    createdDocumentIDs['notification-subscriptions'].push(identitySubscriptionID)
+    createdDocumentIDs['notification-subscriptions'].push(productSubscriptionID)
 
     const readableSubscriptions = await payload.find({
       collection: 'notification-subscriptions',
       depth: 0,
       limit: 10,
       overrideAccess: false,
-      user: linkedUser,
+      user: authUser,
       where: {
-        email: {
-          equals: linkedUser.email,
+        createdBy: {
+          equals: authUser.id,
         },
       },
     })
 
     expect(readableSubscriptions.docs).toHaveLength(3)
+    createdDocumentIDs.subscribers.push(
+      ...readableSubscriptions.docs.map((subscription) => String(subscription.subscriber)),
+    )
 
     const publicJob = await payload.findByID({
       collection: 'jobs',
@@ -485,7 +510,7 @@ describe('Notification subscriptions collection GraphQL', () => {
       id: jobID,
       depth: 0,
       overrideAccess: false,
-      user: linkedUser,
+      user: authUser,
     })
 
     expect(subscribedJob.isSubscribed).toBe(true)
@@ -495,7 +520,7 @@ describe('Notification subscriptions collection GraphQL', () => {
       id: identityID,
       depth: 0,
       overrideAccess: false,
-      user: linkedUser,
+      user: authUser,
     })
 
     expect(subscribedIdentity.isSubscribed).toBe(true)
@@ -505,7 +530,7 @@ describe('Notification subscriptions collection GraphQL', () => {
       id: productID,
       depth: 0,
       overrideAccess: false,
-      user: linkedUser,
+      user: authUser,
     })
 
     expect(subscribedProduct.isSubscribed).toBe(true)
@@ -614,15 +639,16 @@ describe('Notification subscriptions collection GraphQL', () => {
     const identityID = String(identity.id)
     createdDocumentIDs.identities.push(identityID)
 
-    const subscriptionEmail = `tribe-published-company-${Date.now()}@example.com`
+    const subscriberUser = await createAuthenticatedUser(`tribe-published-company-${Date.now()}@example.com`)
+    const subscriptionEmail = subscriberUser.email
     const subscription = await payload.create({
       collection: 'notification-subscriptions',
       data: {
-        email: subscriptionEmail,
         targetCollection: 'identities',
         targetID: identityID,
       },
       overrideAccess: false,
+      user: subscriberUser,
     })
     createdDocumentIDs['notification-subscriptions'].push(String(subscription.id))
 
@@ -696,15 +722,16 @@ describe('Notification subscriptions collection GraphQL', () => {
     const companyID = String(company.id)
     createdDocumentIDs.companies.push(companyID)
 
-    const subscriptionEmail = `company-published-items-${Date.now()}@example.com`
+    const subscriberUser = await createAuthenticatedUser(`company-published-items-${Date.now()}@example.com`)
+    const subscriptionEmail = subscriberUser.email
     const subscription = await payload.create({
       collection: 'notification-subscriptions',
       data: {
-        email: subscriptionEmail,
         targetCollection: 'companies',
         targetID: companyID,
       },
       overrideAccess: false,
+      user: subscriberUser,
     })
     createdDocumentIDs['notification-subscriptions'].push(String(subscription.id))
 

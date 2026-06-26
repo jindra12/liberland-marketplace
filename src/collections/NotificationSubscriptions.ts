@@ -21,7 +21,7 @@ import {
   buildNotificationSubscriptionDocumentID,
   ensureNotificationSubscriber,
   ensureNotificationTargetExists,
-  normalizeNotificationEmail,
+  getCurrentUserNotificationEmail,
 } from '@/newsletter/notificationSubscriptions'
 import {
   syncSubscriberCountAfterChange,
@@ -41,18 +41,18 @@ const prepareNotificationSubscription: CollectionBeforeValidateHook<Notification
     return data
   }
 
-  const email = typeof data.email === 'string' ? normalizeNotificationEmail(data.email) : null
+  const email = getCurrentUserNotificationEmail(req)
   const targetCollection = getNotificationTargetCollection(data.targetCollection)
   const targetID = typeof data.targetID === 'string' ? data.targetID : null
 
   return {
     ...data,
     createdBy: req.user ? req.user.id : data.createdBy,
-    email: email ?? data.email,
+    email: email ?? '',
     id:
       email && targetCollection && targetID
         ? buildNotificationSubscriptionDocumentID({
-            email,
+          email,
             targetCollection,
             targetID,
           })
@@ -69,7 +69,7 @@ const attachNotificationSubscriber: CollectionBeforeChangeHook<NotificationSubsc
     return data
   }
 
-  const email = typeof data.email === 'string' ? normalizeNotificationEmail(data.email) : null
+  const email = getCurrentUserNotificationEmail(req)
   const targetCollection = getNotificationTargetCollection(data.targetCollection)
   const targetID = typeof data.targetID === 'string' ? data.targetID : null
 
@@ -127,7 +127,7 @@ export const NotificationSubscriptions: CollectionConfig = {
       name: 'email',
       type: 'email',
       index: true,
-      required: true,
+      required: false,
     },
     {
       name: 'subscriber',

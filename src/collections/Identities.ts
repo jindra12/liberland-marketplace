@@ -10,7 +10,30 @@ import { lazySendItemUpdateNotifications } from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { adminOnly } from '@/access/admin'
 import { ObjectId } from 'mongodb'
-import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload'
+import type {
+  CollectionBeforeOperationHook,
+  CollectionBeforeValidateHook,
+  CollectionConfig,
+  PayloadRequest,
+} from 'payload'
+
+type LegacyIdentityDocument = {
+  _id: ObjectId
+  [key: string]: unknown
+}
+
+type LegacyIdentityCollection = {
+  findOne: (filter: { _id: ObjectId }) => Promise<LegacyIdentityDocument | null>
+}
+
+type IdentityLookupArgs = {
+  args: {
+    data?: Record<string, unknown>
+    id?: number | string
+  }
+  operation: 'findByID'
+  req: PayloadRequest
+}
 
 const populateIdentityID: CollectionBeforeValidateHook = (args) => {
   if (args.operation !== 'create') {
@@ -25,6 +48,54 @@ const populateIdentityID: CollectionBeforeValidateHook = (args) => {
     ...args.data,
     id: new ObjectId().toHexString(),
   }
+}
+
+const findLegacyIdentityByMongoID = async ({
+  id,
+  req,
+}: {
+  id: string
+  req: PayloadRequest
+}): Promise<LegacyIdentityDocument | null> => {
+  const collection = req.payload.db.collections.identities?.collection as LegacyIdentityCollection | undefined
+
+  if (!collection || !ObjectId.isValid(id)) {
+    return null
+  }
+
+  try {
+    return await collection.findOne({ _id: new ObjectId(id) })
+  } catch {
+    return null
+  }
+}
+
+const resolveLegacyIdentityByMongoID: CollectionBeforeOperationHook = async (args) => {
+  if (args.operation !== 'findByID') {
+    return undefined
+  }
+
+  const lookupArgs = args as IdentityLookupArgs
+  const id = typeof lookupArgs.args.id === 'string' ? lookupArgs.args.id : null
+  if (!id) {
+    return undefined
+  }
+
+  const legacyDoc = await findLegacyIdentityByMongoID({
+    id,
+    req: lookupArgs.req,
+  })
+
+  if (!legacyDoc) {
+    return undefined
+  }
+
+  lookupArgs.args.data = {
+    ...legacyDoc,
+    id,
+  }
+
+  return undefined
 }
 
 export const Identities: CollectionConfig = {
@@ -47,6 +118,7 @@ export const Identities: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [populateIdentityID],
+    beforeOperation: [resolveLegacyIdentityByMongoID],
     beforeChange: [
       computeContentRanking({
         fieldPaths: ['website', 'image', 'description'],

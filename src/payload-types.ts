@@ -1533,7 +1533,7 @@ export interface Subscriber {
 export interface NotificationSubscription {
   id: string;
   createdBy?: (string | null) | User;
-  email: string;
+  email?: string | null;
   subscriber?: (string | null) | Subscriber;
   targetCollection: 'companies' | 'jobs' | 'products' | 'startups' | 'identities';
   targetID: string;

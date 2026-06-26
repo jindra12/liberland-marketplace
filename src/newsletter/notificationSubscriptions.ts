@@ -282,7 +282,15 @@ export const getNotificationRecipientsForTarget = async ({
   const activeSubscriberIDs = new Set(subscribers.docs.map((subscriber) => String(subscriber.id)))
 
   return subscriptions.docs
-    .filter((subscription) => activeSubscriberIDs.has(String(subscription.subscriber)))
+    .filter(
+      (
+        subscription,
+      ): subscription is typeof subscription & {
+        email: string
+      } =>
+        activeSubscriberIDs.has(String(subscription.subscriber)) &&
+        typeof subscription.email === 'string',
+    )
     .map((subscription) => ({
       email: subscription.email,
     }))
