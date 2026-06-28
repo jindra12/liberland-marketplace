@@ -1,5 +1,10 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
+import {
+  getDefaultBotUserCredentials,
+  getDefaultBotUserData,
+} from '@/utilities/defaultBotUser'
+
 type CreateDefaultBotUserIfMissingArgs = {
   botUserExists: boolean
   createBotUser: () => Promise<void>
@@ -46,25 +51,18 @@ export const createDefaultBotUser: CollectionAfterChangeHook = async ({
     },
   })
 
+  const credentials = getDefaultBotUserCredentials()
+
   await createDefaultBotUserIfMissing({
     botUserExists: existingBots.totalDocs > 0,
     createBotUser: async () => {
-      const botPassword = process.env.CHATGPT_BOT_PASSWORD || process.env.CHATGPT_KEY
+      if (!credentials) {
+        return
+      }
 
       await req.payload.db.create({
         collection: 'users',
-        data: {
-          bot: true,
-          ...(botPassword
-            ? {
-                password: botPassword,
-              }
-            : {}),
-          email: 'chatgpt-bot@liberland.marketplace',
-          emailVerified: true,
-          name: 'ChatGPT',
-          role: ['user'],
-        },
+        data: getDefaultBotUserData(credentials),
         req,
       })
     },

@@ -898,5 +898,215 @@
     "slug": "release-notes",
     "_status": "published",
     "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000015"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Expanding Project Glasswing",
+    "company": {
+      "$oid": "699a52f1e3cc9546fc95d9b6"
+    },
+    "heroImage": {
+      "$oid": "699af05fe3cc9546fc95dc86"
+    },
+    "content": "Anthropic expanded Project Glasswing to broaden cybersecurity coverage.",
+    "repost": "https://www.anthropic.com/news/expanding-project-glasswing",
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "expanding-project-glasswing-anthropic",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000016"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Introducing the Third Generation of Apple’s Foundation Models",
+    "company": {
+      "$oid": "699b11e5e3cc9546fc95e813"
+    },
+    "heroImage": {
+      "$oid": "699af0b1e3cc9546fc95dd7c"
+    },
+    "content": "Apple announced its third-generation foundation models.",
+    "repost": "https://machinelearning.apple.com/research/introducing-third-generation-of-apple-foundation-models",
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "introducing-the-third-generation-of-apple-s-foundation-models-apple",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000017"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Amazon Quick announces autonomous agents, multi-dataset analytics, and redesigned activity feed",
+    "company": {
+      "$oid": "699d9e9aabd211e082f42ea2"
+    },
+    "heroImage": {
+      "$oid": "699af135e3cc9546fc95de57"
+    },
+    "content": "AWS announced new Amazon Quick capabilities including autonomous agents and multi-dataset analytics.",
+    "repost": "https://aws.amazon.com/about-aws/whats-new/2026/06/amazon-quick/",
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "amazon-quick-announces-autonomous-agents-multi-dataset-analytics-and-redesigned-activity-feed-amazon",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000018"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Introducing the Cosmos Coalition",
+    "company": {
+      "$oid": "699f816d8b400022f9bf4970"
+    },
+    "heroImage": {
+      "$oid": "699af22ae3cc9546fc95df25"
+    },
+    "content": "Runway announced it is joining the Cosmos Coalition with NVIDIA and other AI labs.",
+    "repost": "https://runwayml.com/news/introducing-cosmos-coalition",
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "introducing-the-cosmos-coalition-runway",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f300000000000000000019"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "Netflix and Warner Bros. Discovery Amend Agreement to All-Cash Transaction",
+    "company": {
+      "$oid": "69a5dafa1fa4248965364de2"
+    },
+    "heroImage": {
+      "$oid": "699af2f9e3cc9546fc95e07d"
+    },
+    "content": "Netflix amended its agreement to an all-cash transaction for Warner Bros. Discovery.",
+    "repost": "https://about.netflix.com/en/news/netflix-and-warner-bros-discovery-amend-agreement-to-all-cash-transaction",
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "netflix-and-warner-bros-discovery-amend-agreement-to-all-cash-transaction-netflix",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "69f30000000000000000001a"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "699a4fb034fa2b9e6436599c"
+    },
+    "title": "DSpark: Speculative decoding accelerates LLM inference [pdf]",
+    "company": {
+      "$oid": "69a8a8ac4882761f5f68ea4a"
+    },
+    "heroImage": {
+      "$oid": "699af5aae3cc9546fc95e461"
+    },
+    "content": "Front page story about speculative decoding for LLM inference.",
+    "repost": "https://news.ycombinator.com/front",
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "699a4fb034fa2b9e6436599c"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "dspark-speculative-decoding-accelerates-llm-inference-pdf-hacker-news",
+    "_status": "published",
+    "__v": 0
   }
 ]

@@ -36,6 +36,8 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Never statically import heavy client-side libraries in server or route modules; load them with `next/dynamic` or an equivalent lazy-loading boundary to avoid unnecessary RAM usage.
 - Do not respond to a localized bug or feature request by randomly rewriting unrelated parts of the app. Keep the change narrowly scoped to the affected codepath unless the user explicitly asks for a broader refactor or migration.
 - Never replace a failing test path with ad hoc test-only plumbing or workarounds. Preserve the real flow under test and fix the underlying issue instead of swapping in a special-case shortcut.
+- If the user explicitly asks for actual AI results or live discovery output, do not use a mocked AI/unit test as the verification path. Use the live integration test or the real runtime path and report the real output, not fabricated candidates.
+- If the user asks for the full JSON of something, provide the full JSON literally instead of summarizing or selectively quoting it.
 
 ### Coding Style Constraints
 

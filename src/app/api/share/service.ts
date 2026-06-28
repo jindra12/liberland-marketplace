@@ -174,9 +174,7 @@ export const createShareRepost = async ({
       })
     : null
 
-  const content = effectiveDescription
-    ? `${effectiveDescription}\n\n[Original content](${targetURL.toString()})`
-    : `[Original content](${targetURL.toString()})`
+  const content = effectiveDescription || ''
 
   const postData = {
     _status: 'published',

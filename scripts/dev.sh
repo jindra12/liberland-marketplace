@@ -4,7 +4,8 @@ set -euo pipefail
 export NODE_ENV=development
 
 MAILDEV_PID=""
-CRON_PID=""
+CRYPTO_CRON_PID=""
+AI_CRON_PID=""
 NEXT_PID=""
 
 cleanup() {
@@ -12,8 +13,12 @@ cleanup() {
     kill "${NEXT_PID}" >/dev/null 2>&1 || true
   fi
 
-  if [[ -n "${CRON_PID}" ]]; then
-    kill "${CRON_PID}" >/dev/null 2>&1 || true
+  if [[ -n "${CRYPTO_CRON_PID}" ]]; then
+    kill "${CRYPTO_CRON_PID}" >/dev/null 2>&1 || true
+  fi
+
+  if [[ -n "${AI_CRON_PID}" ]]; then
+    kill "${AI_CRON_PID}" >/dev/null 2>&1 || true
   fi
 
   if [[ -n "${MAILDEV_PID}" ]]; then
@@ -27,7 +32,10 @@ trap cleanup EXIT INT TERM
 MAILDEV_PID="$!"
 
 ./scripts/crypto-rate-cron.sh &
-CRON_PID="$!"
+CRYPTO_CRON_PID="$!"
+
+./scripts/ai-repost-cron.sh &
+AI_CRON_PID="$!"
 
 ./scripts/next-dev.sh &
 NEXT_PID="$!"

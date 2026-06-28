@@ -38,8 +38,7 @@ type AiBotSession = {
 const getChatGPTKey = (): string | null => process.env.CHATGPT_KEY || null
 
 const getBotCredentials = (): { email: string; password: string } | null => {
-  const password =
-    process.env.CHATGPT_BOT_PASSWORD || process.env.CHATGPT_BOT_TOKEN || process.env.CHATGPT_KEY || null
+  const password = process.env.CHATGPT_KEY || null
 
   if (!password) {
     return null
@@ -188,7 +187,6 @@ const createRepost = async ({
     company: company.id,
     content: buildRepostContent({
       description: decision.description,
-      url: candidate.url,
     }),
     heroImage: heroImageID || undefined,
     meta: {
