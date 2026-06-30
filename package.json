@@ -13,6 +13,7 @@
     "predev": "rm -rf .next",
     "dev": "./scripts/dev.sh",
     "dev:maildev": "./maildev.sh",
+    "dev:mongo": "bash ./scripts/test-mongo.sh",
     "dev:next": "cross-env NODE_OPTIONS=--no-deprecation ./scripts/next-dev.sh",
     "dev:crypto-rate-cron": "cross-env NODE_OPTIONS=--no-deprecation ./scripts/crypto-rate-cron.sh",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",

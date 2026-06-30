@@ -4,6 +4,7 @@ import { addressFields } from '@/fields/addressFields'
 import { anyone } from '@/access/anyone'
 import { onlyOwnProductsOrAdmin } from '@/access/onlyOwnProductsOrAdmin'
 import { mergeProductCollectionFields, normalizeProductInventoryData } from '@/fields/productFields'
+import { appendParametersToItemsField } from '@/fields/productParameterFields'
 import { createLikeableFields } from '@/likes/fields'
 import { orderFields } from '@/fields/orderFields'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
@@ -19,6 +20,7 @@ import {
   lazyUpdateIdentityItemCountAfterDelete,
   lazyUpdateProductPurchaseCountAfterOrderValidation,
 } from '@/hooks/lazyCollectionHooks'
+import { validateItemParametersBeforeChange } from '@/hooks/validateItemParameters'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
@@ -73,7 +75,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
     cartsCollectionOverride: ({ defaultCollection }) => ({
       ...defaultCollection,
       fields: replaceEcommerceAdminComponentPaths(
-        defaultCollection.fields.map((field) => {
+        appendParametersToItemsField(defaultCollection.fields).map((field) => {
           if ('name' in field && field.name === 'secret') {
             const secretField = field as Field
 
@@ -91,6 +93,10 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
       ),
       hooks: {
         ...defaultCollection.hooks,
+        beforeChange: [
+          validateItemParametersBeforeChange,
+          ...(defaultCollection.hooks?.beforeChange ?? []),
+        ],
         afterRead: [
           ...(defaultCollection.hooks?.afterRead ?? []),
           ({ doc, req }) => {
@@ -200,11 +206,12 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
         },
       },
       fields: replaceEcommerceAdminComponentPaths(
-        mergeFields(defaultCollection.fields, orderFields),
+        mergeFields(appendParametersToItemsField(defaultCollection.fields), orderFields),
       ),
       hooks: {
         ...defaultCollection.hooks,
         beforeChange: [
+          validateItemParametersBeforeChange,
           ({ data, operation, req }) => {
             if (operation !== 'create' || !data) {
               return data

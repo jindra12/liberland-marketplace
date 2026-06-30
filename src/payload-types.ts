@@ -955,6 +955,7 @@ export interface Product {
   createdBy?: (string | null) | User;
   name: string;
   company?: (string | null) | Company;
+  relatedProducts?: (string | Product)[] | null;
   companyIdentityId?: string | null;
   url?: string | null;
   orderable?: boolean | null;
@@ -977,6 +978,20 @@ export interface Product {
     | {
         key: string;
         value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  parameters?:
+    | {
+        name: string;
+        values?:
+          | {
+              key: string;
+              name: string;
+              default?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1733,6 +1748,20 @@ export interface Cart {
         product?: (string | null) | Product;
         variant?: (string | null) | Variant;
         quantity: number;
+        parameters?:
+          | {
+              name: string;
+              values?:
+                | {
+                    key: string;
+                    name: string;
+                    selected?: boolean | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1756,6 +1785,20 @@ export interface Order {
         product?: (string | null) | Product;
         variant?: (string | null) | Variant;
         quantity: number;
+        parameters?:
+          | {
+              name: string;
+              values?:
+                | {
+                    key: string;
+                    name: string;
+                    selected?: boolean | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -3079,6 +3122,7 @@ export interface ProductsSelect<T extends boolean = true> {
   createdBy?: T;
   name?: T;
   company?: T;
+  relatedProducts?: T;
   companyIdentityId?: T;
   url?: T;
   orderable?: T;
@@ -3098,6 +3142,20 @@ export interface ProductsSelect<T extends boolean = true> {
     | {
         key?: T;
         value?: T;
+        id?: T;
+      };
+  parameters?:
+    | T
+    | {
+        name?: T;
+        values?:
+          | T
+          | {
+              key?: T;
+              name?: T;
+              default?: T;
+              id?: T;
+            };
         id?: T;
       };
   purchaseCount?: T;
@@ -3124,6 +3182,20 @@ export interface CartsSelect<T extends boolean = true> {
         product?: T;
         variant?: T;
         quantity?: T;
+        parameters?:
+          | T
+          | {
+              name?: T;
+              values?:
+                | T
+                | {
+                    key?: T;
+                    name?: T;
+                    selected?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
         id?: T;
       };
   secret?: T;
@@ -3146,6 +3218,20 @@ export interface OrdersSelect<T extends boolean = true> {
         product?: T;
         variant?: T;
         quantity?: T;
+        parameters?:
+          | T
+          | {
+              name?: T;
+              values?:
+                | T
+                | {
+                    key?: T;
+                    name?: T;
+                    selected?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
         id?: T;
       };
   shippingAddress?:

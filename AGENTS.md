@@ -18,7 +18,10 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Delete `tsconfig.tsbuildinfo` after you finish your work.
 - Do not stop after a partial verification; keep going until `tsc --noEmit` and the relevant build pass, or identify the blocking failure and fix it.
 - Run tests outside the sandbox when they depend on live network access, browser automation, DNS, Docker, or other host services.
-- Always run `pnpm dev` outside the sandbox when you need a live local server for debugging or host-bound browser/API probes.
+- Never run this app's dev server inside the sandbox. Always start `pnpm dev`, `yarn dev`, or equivalent host-bound server commands outside the sandbox when you need a live local server for debugging or browser/API probes.
+- Treat host-bound dev server commands as off-limits in the sandbox even when you think a local probe would be convenient; use an out-of-sandbox process instead.
+- When the user asks to run `yarn dev`, run `yarn dev` specifically; do not substitute a different command or launcher unless the user explicitly approves the replacement.
+- Never start Docker unless the user explicitly asks for a Docker action or the task explicitly requires it.
 - Do not run `pnpm deploy` or `pnpm deploy:test` unless the user explicitly asks for the deploy to be executed. Report whether the repo is ready instead.
 - Generate import maps after creating or modifying components.
 - Do not run formatters on generated files such as import maps or `payload-types.ts`; regenerate them instead.
@@ -38,6 +41,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 - Never replace a failing test path with ad hoc test-only plumbing or workarounds. Preserve the real flow under test and fix the underlying issue instead of swapping in a special-case shortcut.
 - If the user explicitly asks for actual AI results or live discovery output, do not use a mocked AI/unit test as the verification path. Use the live integration test or the real runtime path and report the real output, not fabricated candidates.
 - If the user asks for the full JSON of something, provide the full JSON literally instead of summarizing or selectively quoting it.
+- In GraphQL documents, do not introduce fragment abstractions unless the user explicitly asks for them; keep query and mutation selections inline and easy to inspect.
 
 ### Coding Style Constraints
 

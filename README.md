@@ -24,6 +24,7 @@ It provides the collections, APIs, auth, payment, publishing, and syndication da
 ## Local development
 
 - Install dependencies with `pnpm install`
+- Start the standalone test Mongo container with `pnpm dev:mongo`
 - Start the app with `pnpm dev`
 - Run unit and integration tests with `pnpm test:int`
 - Run end-to-end tests with `pnpm test:e2e`

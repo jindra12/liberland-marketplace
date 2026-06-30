@@ -5,6 +5,7 @@ import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
+import { productParametersField, relatedProductsField } from '@/fields/productParameterFields'
 import { serverURLField } from '@/fields/serverURLField'
 import { mergeFields } from '@/utilities/mergeFields'
 import type {
@@ -88,6 +89,7 @@ export const productFields: Field[] = [
     required: false,
     filterOptions: publicCompanyFilter,
   },
+  relatedProductsField,
   {
     name: 'companyIdentityId',
     type: 'text',
@@ -147,6 +149,7 @@ export const productFields: Field[] = [
       },
     ],
   },
+  productParametersField,
   {
     name: 'purchaseCount',
     label: 'Purchases',
