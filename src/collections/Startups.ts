@@ -1,5 +1,5 @@
 import { computeContentRanking } from '@/hooks/computeContentRanking'
-import { authenticated } from '@/access/authenticated'
+import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { createdByField } from '@/fields/createdByField'
@@ -81,7 +81,7 @@ export const Startups: CollectionConfig = {
     },
   },
   access: {
-    create: authenticated,
+    create: canCreateContentWithPublicCompany,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,

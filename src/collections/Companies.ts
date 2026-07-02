@@ -1,5 +1,4 @@
 import { computeContentRanking } from '@/hooks/computeContentRanking'
-import { authenticated } from '@/access/authenticated'
 import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
@@ -8,6 +7,7 @@ import { notificationSubscriptionStatusField } from '@/fields/notificationSubscr
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
+import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import {
   lazySendItemUpdateNotifications,
@@ -70,7 +70,7 @@ export const Companies: CollectionConfig = {
     },
   },
   access: {
-    create: authenticated,
+    create: canCreateContentWithPublicCompany,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,

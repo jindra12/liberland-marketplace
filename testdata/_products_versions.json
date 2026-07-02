@@ -146,6 +146,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad364882761f5f68fb4f"
+        },
+        {
+          "$oid": "69c84c091f3f15d84d8a2917"
+        },
+        {
+          "$oid": "69a8afd84882761f5f6905f5"
+        },
+        {
+          "$oid": "69a8acd84882761f5f68f249"
+        },
+        {
+          "$oid": "69a8afdc4882761f5f6906e0"
+        }
       ]
     },
     "createdAt": {
@@ -380,6 +397,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acd44882761f5f68f0f8"
+        },
+        {
+          "$oid": "69a8ad064882761f5f68f877"
+        },
+        {
+          "$oid": "69a8afc74882761f5f6904d9"
+        },
+        {
+          "$oid": "69a8ad154882761f5f68fa99"
+        },
+        {
+          "$oid": "69c84c171f3f15d84d8a2ad4"
+        }
       ]
     },
     "createdAt": {
@@ -561,6 +595,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a5649f1fa42489653643b2"
+        },
+        {
+          "$oid": "69c84c011f3f15d84d8a2810"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ffc7"
+        },
+        {
+          "$oid": "69c84c1c1f3f15d84d8a2b91"
+        },
+        {
+          "$oid": "69c84c091f3f15d84d8a28f4"
+        }
       ]
     },
     "createdAt": {
@@ -652,6 +703,23 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad414882761f5f68fd2a"
+        },
+        {
+          "$oid": "69a8ad3f4882761f5f68fc85"
+        },
+        {
+          "$oid": "69a8afd64882761f5f690519"
+        },
+        {
+          "$oid": "699d9b53abd211e082f42c22"
+        },
+        {
+          "$oid": "69a8acf34882761f5f68f5d2"
         }
       ]
     },
@@ -1118,6 +1186,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69c84c1f1f3f15d84d8a2bde"
+        },
+        {
+          "$oid": "69a5649f1fa42489653643b2"
+        },
+        {
+          "$oid": "69a8afd64882761f5f690519"
+        },
+        {
+          "$oid": "69a8acf64882761f5f68f643"
+        },
+        {
+          "$oid": "69c84c161f3f15d84d8a2ab1"
+        }
       ]
     },
     "createdAt": {
@@ -1297,6 +1382,17 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad644882761f5f6901c7"
+        },
+        {
+          "$oid": "69a8acf64882761f5f68f643"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f6a9"
+        }
       ]
     },
     "createdAt": {
@@ -1388,6 +1484,20 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acdc4882761f5f68f362"
+        },
+        {
+          "$oid": "69a8afc64882761f5f690453"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ff91"
+        },
+        {
+          "$oid": "69a8ad364882761f5f68fb4f"
         }
       ]
     },
@@ -1768,6 +1878,17 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad054882761f5f68f7d6"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ff91"
+        },
+        {
+          "$oid": "69c84c191f3f15d84d8a2b44"
+        }
       ]
     },
     "createdAt": {
@@ -1962,6 +2083,17 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8afdc4882761f5f6906fb"
+        },
+        {
+          "$oid": "69a8ad354882761f5f68fad9"
+        },
+        {
+          "$oid": "69a8ad054882761f5f68f7d6"
         }
       ]
     },
@@ -2411,6 +2543,20 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad3f4882761f5f68fc85"
+        },
+        {
+          "$oid": "69a8ad5a4882761f5f690098"
+        },
+        {
+          "$oid": "69a744771fd64de75ab5cefc"
+        },
+        {
+          "$oid": "69a8ad144882761f5f68f9ff"
+        }
       ]
     },
     "createdAt": {
@@ -2521,6 +2667,17 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acf24882761f5f68f59c"
+        },
+        {
+          "$oid": "69a8ad3f4882761f5f68fc85"
+        },
+        {
+          "$oid": "69c84c011f3f15d84d8a2810"
+        }
       ]
     },
     "createdAt": {
@@ -2625,6 +2782,17 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8afda4882761f5f69062a"
+        },
+        {
+          "$oid": "69a8afd74882761f5f69058f"
+        },
+        {
+          "$oid": "69a8acf14882761f5f68f50b"
         }
       ]
     },
@@ -2941,6 +3109,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8afc64882761f5f6904a3"
+        },
+        {
+          "$oid": "69a8ad354882761f5f68fad9"
+        },
+        {
+          "$oid": "69a8ad0b4882761f5f68f942"
+        },
+        {
+          "$oid": "699d9a13abd211e082f42b30"
+        },
+        {
+          "$oid": "69a8ace94882761f5f68f464"
+        }
       ]
     },
     "createdAt": {
@@ -3042,6 +3227,23 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acf14882761f5f68f541"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ffc7"
+        },
+        {
+          "$oid": "69a8acf24882761f5f68f581"
+        },
+        {
+          "$oid": "69a8afc64882761f5f690453"
+        },
+        {
+          "$oid": "69a8ad034882761f5f68f77b"
         }
       ]
     },
@@ -3155,6 +3357,17 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad414882761f5f68fd2a"
+        },
+        {
+          "$oid": "69a8acdb4882761f5f68f316"
+        },
+        {
+          "$oid": "69f200000000000000000001"
+        }
       ]
     },
     "createdAt": {
@@ -3241,6 +3454,23 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "699d9cbfabd211e082f42c81"
+        },
+        {
+          "$oid": "69a8acf24882761f5f68f581"
+        },
+        {
+          "$oid": "69a8afd64882761f5f690519"
+        },
+        {
+          "$oid": "69a8acd74882761f5f68f1f4"
+        },
+        {
+          "$oid": "69c84c041f3f15d84d8a285c"
         }
       ]
     },
@@ -3518,6 +3748,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8afdb4882761f5f690685"
+        },
+        {
+          "$oid": "69a8ad144882761f5f68f9ff"
+        },
+        {
+          "$oid": "69c84c011f3f15d84d8a2810"
+        },
+        {
+          "$oid": "69a8afe24882761f5f6907a0"
+        },
+        {
+          "$oid": "69a8ad054882761f5f68f7f1"
+        }
       ]
     },
     "createdAt": {
@@ -3715,6 +3962,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8afd84882761f5f6905da"
+        },
+        {
+          "$oid": "69a8ad374882761f5f68fbaa"
+        },
+        {
+          "$oid": "69a8afdc4882761f5f6906fb"
+        },
+        {
+          "$oid": "69a8ad074882761f5f68f8d1"
+        },
+        {
+          "$oid": "69a8ace74882761f5f68f43e"
+        }
       ]
     },
     "createdAt": {
@@ -3819,6 +4083,23 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acde4882761f5f68f3f3"
+        },
+        {
+          "$oid": "69a8afc54882761f5f69042d"
+        },
+        {
+          "$oid": "69a8acd84882761f5f68f249"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f6c4"
+        },
+        {
+          "$oid": "69c84c1c1f3f15d84d8a2b91"
         }
       ]
     },
@@ -4019,6 +4300,20 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8afc64882761f5f690453"
+        },
+        {
+          "$oid": "69a8ad374882761f5f68fbc5"
+        },
+        {
+          "$oid": "69a8ad0d4882761f5f68f98e"
+        },
+        {
+          "$oid": "69c84c091f3f15d84d8a28f4"
+        }
       ]
     },
     "createdAt": {
@@ -4208,6 +4503,17 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad6b4882761f5f6902d4"
+        },
+        {
+          "$oid": "69a8ad054882761f5f68f7f1"
+        },
+        {
+          "$oid": "69a8ad554882761f5f690007"
+        }
       ]
     },
     "createdAt": {
@@ -4299,6 +4605,20 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acdc4882761f5f68f362"
+        },
+        {
+          "$oid": "69a8afdc4882761f5f6906e0"
+        },
+        {
+          "$oid": "69a8acd74882761f5f68f1f4"
+        },
+        {
+          "$oid": "69a8acd44882761f5f68f0f8"
         }
       ]
     },
@@ -4491,6 +4811,23 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad354882761f5f68fb0f"
+        },
+        {
+          "$oid": "69a8acd54882761f5f68f163"
+        },
+        {
+          "$oid": "69a8acdc4882761f5f68f362"
+        },
+        {
+          "$oid": "69a8acd54882761f5f68f148"
+        },
+        {
+          "$oid": "699d9b53abd211e082f42c22"
         }
       ]
     },
@@ -4778,6 +5115,20 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad6b4882761f5f6902d4"
+        },
+        {
+          "$oid": "69a8afd74882761f5f69058f"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ff76"
+        },
+        {
+          "$oid": "69c84bff1f3f15d84d8a27c4"
+        }
       ]
     },
     "createdAt": {
@@ -4874,6 +5225,23 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "699d9b53abd211e082f42c22"
+        },
+        {
+          "$oid": "69a8ad054882761f5f68f7d6"
+        },
+        {
+          "$oid": "69a8ad094882761f5f68f91c"
+        },
+        {
+          "$oid": "69a8acd74882761f5f68f20f"
+        },
+        {
+          "$oid": "69c84c141f3f15d84d8a2a65"
         }
       ]
     },
@@ -4986,6 +5354,17 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8afd84882761f5f6905da"
+        },
+        {
+          "$oid": "69a8ace94882761f5f68f464"
+        },
+        {
+          "$oid": "69f200000000000000000003"
         }
       ]
     },
@@ -5405,6 +5784,17 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acd74882761f5f68f20f"
+        },
+        {
+          "$oid": "69a8ace74882761f5f68f43e"
+        },
+        {
+          "$oid": "69a744771fd64de75ab5cefc"
+        }
       ]
     },
     "createdAt": {
@@ -5615,6 +6005,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69c84c1f1f3f15d84d8a2bde"
+        },
+        {
+          "$oid": "69c84c141f3f15d84d8a2a65"
+        },
+        {
+          "$oid": "69a8afdb4882761f5f6906a0"
+        },
+        {
+          "$oid": "69c84c191f3f15d84d8a2b44"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ff76"
+        }
       ]
     },
     "createdAt": {
@@ -5719,6 +6126,17 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69c84c161f3f15d84d8a2ab1"
+        },
+        {
+          "$oid": "69a8ad0b4882761f5f68f942"
+        },
+        {
+          "$oid": "69c84c1c1f3f15d84d8a2b91"
         }
       ]
     },
@@ -5924,6 +6342,20 @@
               "default": false
             }
           ]
+        }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad6b4882761f5f6902d4"
+        },
+        {
+          "$oid": "69a8acfb4882761f5f68f73a"
+        },
+        {
+          "$oid": "69a8ad3f4882761f5f68fc85"
+        },
+        {
+          "$oid": "69a8afeb4882761f5f6908c4"
         }
       ]
     },
@@ -6222,6 +6654,23 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acf04882761f5f68f4d6"
+        },
+        {
+          "$oid": "69a8acf24882761f5f68f59c"
+        },
+        {
+          "$oid": "69a8acf14882761f5f68f541"
+        },
+        {
+          "$oid": "69a8acdc4882761f5f68f362"
+        },
+        {
+          "$oid": "69a8ad4a4882761f5f68fe48"
+        }
       ]
     },
     "createdAt": {
@@ -6498,6 +6947,20 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad154882761f5f68fa99"
+        },
+        {
+          "$oid": "69a8acf24882761f5f68f59c"
+        },
+        {
+          "$oid": "69c84c0e1f3f15d84d8a2987"
+        },
+        {
+          "$oid": "699d9cbfabd211e082f42c81"
+        }
       ]
     },
     "createdAt": {
@@ -6682,6 +7145,20 @@
             }
           ]
         }
+      ],
+      "relatedProducts": [
+        {
+          "$oid": "69a8acf54882761f5f68f61d"
+        },
+        {
+          "$oid": "69c84c111f3f15d84d8a29f7"
+        },
+        {
+          "$oid": "69a8acd74882761f5f68f1be"
+        },
+        {
+          "$oid": "69a8ad064882761f5f68f877"
+        }
       ]
     },
     "createdAt": {
@@ -6794,7 +7271,24 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8afdb4882761f5f690685"
+        },
+        {
+          "$oid": "69a8afe74882761f5f690844"
+        },
+        {
+          "$oid": "69a8ad144882761f5f68f9ff"
+        },
+        {
+          "$oid": "69a8acfb4882761f5f68f73a"
+        },
+        {
+          "$oid": "69a8afdc4882761f5f6906e0"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:51.414Z"
@@ -6859,7 +7353,18 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acd84882761f5f68f249"
+        },
+        {
+          "$oid": "69a8ad054882761f5f68f7f1"
+        },
+        {
+          "$oid": "69a8ad364882761f5f68fb4f"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:57.301Z"
@@ -7039,7 +7544,18 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acd54882761f5f68f163"
+        },
+        {
+          "$oid": "69a8afc54882761f5f69042d"
+        },
+        {
+          "$oid": "69a8ad144882761f5f68fa34"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:00.47Z"
@@ -7224,7 +7740,18 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acde4882761f5f68f3f3"
+        },
+        {
+          "$oid": "69a8acda4882761f5f68f2ca"
+        },
+        {
+          "$oid": "69c84c011f3f15d84d8a2810"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:15.346Z"
@@ -7389,7 +7916,18 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8afdc4882761f5f6906e0"
+        },
+        {
+          "$oid": "69a8acd54882761f5f68f17e"
+        },
+        {
+          "$oid": "69c84c1f1f3f15d84d8a2bde"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:20.483Z"
@@ -7444,7 +7982,24 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acec4882761f5f68f48a"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f669"
+        },
+        {
+          "$oid": "69c84c041f3f15d84d8a285c"
+        },
+        {
+          "$oid": "69a8afd84882761f5f6905da"
+        },
+        {
+          "$oid": "69a8ad054882761f5f68f80c"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:20.58Z"
@@ -7509,7 +8064,24 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69c84c0e1f3f15d84d8a2987"
+        },
+        {
+          "$oid": "69a8afe74882761f5f690844"
+        },
+        {
+          "$oid": "69c84c171f3f15d84d8a2ad4"
+        },
+        {
+          "$oid": "69a8ad144882761f5f68fa34"
+        },
+        {
+          "$oid": "69a8afc74882761f5f6904be"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:21.952Z"
@@ -7754,7 +8326,21 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8afd74882761f5f69058f"
+        },
+        {
+          "$oid": "69a8afdc4882761f5f6906fb"
+        },
+        {
+          "$oid": "699d9a13abd211e082f42b30"
+        },
+        {
+          "$oid": "699da1ecabd211e082f4301d"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:26.28Z"
@@ -7814,7 +8400,21 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad5a4882761f5f690098"
+        },
+        {
+          "$oid": "699d9b53abd211e082f42c22"
+        },
+        {
+          "$oid": "699d9cbfabd211e082f42c81"
+        },
+        {
+          "$oid": "69a8acf34882761f5f68f5b7"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:26.398Z"
@@ -8069,7 +8669,24 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad564882761f5f690058"
+        },
+        {
+          "$oid": "69f200000000000000000003"
+        },
+        {
+          "$oid": "69a8acf04882761f5f68f4d6"
+        },
+        {
+          "$oid": "69f200000000000000000001"
+        },
+        {
+          "$oid": "69a8ad374882761f5f68fbc5"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:43.614Z"
@@ -8134,7 +8751,21 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ace94882761f5f68f464"
+        },
+        {
+          "$oid": "69c84c161f3f15d84d8a2ab1"
+        },
+        {
+          "$oid": "69a8acd74882761f5f68f1f4"
+        },
+        {
+          "$oid": "69a8afe74882761f5f690844"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:08:43.741Z"
@@ -8331,7 +8962,21 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8afd74882761f5f69058f"
+        },
+        {
+          "$oid": "69c84c1f1f3f15d84d8a2bde"
+        },
+        {
+          "$oid": "69a8ad6b4882761f5f6902d4"
+        },
+        {
+          "$oid": "69a8afe74882761f5f690844"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:18:46.617Z"
@@ -8537,7 +9182,24 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad054882761f5f68f7f1"
+        },
+        {
+          "$oid": "69a8acd54882761f5f68f148"
+        },
+        {
+          "$oid": "69a8afc64882761f5f6904a3"
+        },
+        {
+          "$oid": "69a8ad024882761f5f68f760"
+        },
+        {
+          "$oid": "69a8acf64882761f5f68f643"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:18:47.249Z"
@@ -8597,7 +9259,21 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "699d9a13abd211e082f42b30"
+        },
+        {
+          "$oid": "69a8ad0c4882761f5f68f968"
+        },
+        {
+          "$oid": "69a8acdd4882761f5f68f3d8"
+        },
+        {
+          "$oid": "69a8afe24882761f5f6907a0"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:02.494Z"
@@ -8657,7 +9333,21 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad054882761f5f68f80c"
+        },
+        {
+          "$oid": "69a8acec4882761f5f68f48a"
+        },
+        {
+          "$oid": "69a8acde4882761f5f68f3f3"
+        },
+        {
+          "$oid": "69a8acf14882761f5f68f526"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:03.122Z"
@@ -8850,7 +9540,18 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad544882761f5f68ffc7"
+        },
+        {
+          "$oid": "69a8ad154882761f5f68fa99"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ffac"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:04.495Z"
@@ -8912,7 +9613,18 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acfa4882761f5f68f6fa"
+        },
+        {
+          "$oid": "69c5576b1f3f15d84d89d07f"
+        },
+        {
+          "$oid": "69a8acda4882761f5f68f2f0"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:04.632Z"
@@ -8979,7 +9691,21 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad354882761f5f68faf4"
+        },
+        {
+          "$oid": "69a8afe24882761f5f6907a0"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ffac"
+        },
+        {
+          "$oid": "69a8afd74882761f5f69058f"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:06.076Z"
@@ -9108,7 +9834,24 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acde4882761f5f68f3f3"
+        },
+        {
+          "$oid": "69a8afda4882761f5f690645"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f6df"
+        },
+        {
+          "$oid": "69a8ad0c4882761f5f68f968"
+        },
+        {
+          "$oid": "69a8acf24882761f5f68f59c"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:07.587Z"
@@ -9165,7 +9908,21 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad154882761f5f68fa99"
+        },
+        {
+          "$oid": "69a5649f1fa42489653643b2"
+        },
+        {
+          "$oid": "69c84c141f3f15d84d8a2a65"
+        },
+        {
+          "$oid": "69a8ad364882761f5f68fb4f"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:07.691Z"
@@ -9415,7 +10172,24 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69c5576b1f3f15d84d89d07f"
+        },
+        {
+          "$oid": "69c84c171f3f15d84d8a2ad4"
+        },
+        {
+          "$oid": "699d9a13abd211e082f42b30"
+        },
+        {
+          "$oid": "69a8ad0d4882761f5f68f98e"
+        },
+        {
+          "$oid": "69a8ad034882761f5f68f77b"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:14.764Z"
@@ -9470,7 +10244,24 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad5a4882761f5f690098"
+        },
+        {
+          "$oid": "69a8ad0d4882761f5f68f98e"
+        },
+        {
+          "$oid": "69a8acd74882761f5f68f1be"
+        },
+        {
+          "$oid": "69a8ad5a4882761f5f6900b3"
+        },
+        {
+          "$oid": "69a8acdb4882761f5f68f316"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:19.377Z"
@@ -9532,7 +10323,21 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad564882761f5f690058"
+        },
+        {
+          "$oid": "69a8acf04882761f5f68f4d6"
+        },
+        {
+          "$oid": "69c84c0a1f3f15d84d8a293a"
+        },
+        {
+          "$oid": "69c84c111f3f15d84d8a29f7"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:19.527Z"
@@ -9592,7 +10397,24 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acf24882761f5f68f581"
+        },
+        {
+          "$oid": "69a8ad5a4882761f5f690098"
+        },
+        {
+          "$oid": "69a8acde4882761f5f68f3f3"
+        },
+        {
+          "$oid": "69a8afc64882761f5f690453"
+        },
+        {
+          "$oid": "69a8ad054882761f5f68f841"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:19:23.384Z"
@@ -9636,7 +10458,18 @@
       "_status": "draft",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad0c4882761f5f68f968"
+        },
+        {
+          "$oid": "69a8ad3f4882761f5f68fc85"
+        },
+        {
+          "$oid": "69a8ad364882761f5f68fb6a"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-26T15:57:31.36Z"
@@ -9675,7 +10508,21 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acf04882761f5f68f4d6"
+        },
+        {
+          "$oid": "69a8ad024882761f5f68f760"
+        },
+        {
+          "$oid": "69c84c0e1f3f15d84d8a29aa"
+        },
+        {
+          "$oid": "69a8ad074882761f5f68f8d1"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:35.58Z"
@@ -9833,7 +10680,18 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acd54882761f5f68f17e"
+        },
+        {
+          "$oid": "69a8acdc4882761f5f68f33c"
+        },
+        {
+          "$oid": "69a8acf14882761f5f68f541"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:45.2Z"
@@ -9874,7 +10732,21 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad4f4882761f5f68fed2"
+        },
+        {
+          "$oid": "69a8ad364882761f5f68fb4f"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f669"
+        },
+        {
+          "$oid": "69a8ad6b4882761f5f6902b9"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:45.757Z"
@@ -9915,7 +10787,18 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acde4882761f5f68f3f3"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f6c4"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f669"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:46.299Z"
@@ -9997,7 +10880,24 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad3d4882761f5f68fc05"
+        },
+        {
+          "$oid": "699d9a13abd211e082f42b30"
+        },
+        {
+          "$oid": "69a8acf34882761f5f68f5d2"
+        },
+        {
+          "$oid": "69a8acd84882761f5f68f27f"
+        },
+        {
+          "$oid": "69a8ad154882761f5f68fa99"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:50.742Z"
@@ -10036,7 +10936,21 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69c5576b1f3f15d84d89d07f"
+        },
+        {
+          "$oid": "69a8acec4882761f5f68f48a"
+        },
+        {
+          "$oid": "69a8acf94882761f5f68f6a9"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ffc7"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:53.527Z"
@@ -10075,7 +10989,18 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad094882761f5f68f91c"
+        },
+        {
+          "$oid": "69a744771fd64de75ab5cefc"
+        },
+        {
+          "$oid": "69a8ad5a4882761f5f690098"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:54.047Z"
@@ -10114,7 +11039,18 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acd74882761f5f68f1be"
+        },
+        {
+          "$oid": "69a8afdb4882761f5f690685"
+        },
+        {
+          "$oid": "69c84c011f3f15d84d8a2810"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:56.432Z"
@@ -10155,7 +11091,18 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8afc54882761f5f69042d"
+        },
+        {
+          "$oid": "69a8acf14882761f5f68f526"
+        },
+        {
+          "$oid": "69a8afc74882761f5f6904d9"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:58.755Z"
@@ -10196,7 +11143,24 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8acde4882761f5f68f3f3"
+        },
+        {
+          "$oid": "69a8ad364882761f5f68fb4f"
+        },
+        {
+          "$oid": "69a8afdb4882761f5f6906a0"
+        },
+        {
+          "$oid": "69a8acfb4882761f5f68f73a"
+        },
+        {
+          "$oid": "69a8ad5a4882761f5f6900b3"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:45:59.269Z"
@@ -10319,7 +11283,24 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad644882761f5f6901c7"
+        },
+        {
+          "$oid": "69a8acf14882761f5f68f541"
+        },
+        {
+          "$oid": "69a8ad544882761f5f68ff76"
+        },
+        {
+          "$oid": "69a8afc64882761f5f69046e"
+        },
+        {
+          "$oid": "69c84c121f3f15d84d8a2a19"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-28T21:46:04.729Z"
@@ -10404,7 +11385,21 @@
       "_status": "published",
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "relatedProducts": [
+        {
+          "$oid": "69a8ad064882761f5f68f877"
+        },
+        {
+          "$oid": "69a8ad094882761f5f68f91c"
+        },
+        {
+          "$oid": "69a8ad404882761f5f68fcc5"
+        },
+        {
+          "$oid": "69a8ad364882761f5f68fb6a"
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-05-03T00:00:00.000Z"

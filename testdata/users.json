@@ -32,10 +32,7 @@
         "address": "TYKp9tVWjPpLeLLrWnzYZGFJa4Qt23UACz"
       }
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -53,10 +50,7 @@
     "role": [
       "admin"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -91,10 +85,7 @@
         "address": "TYKp9tVWjPpLeLLrWnzYZGFJa4Qt23UACz"
       }
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -112,10 +103,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -133,10 +121,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -154,10 +139,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -175,10 +157,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -196,10 +175,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -217,10 +193,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -238,10 +211,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -259,10 +229,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -280,10 +247,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -301,10 +265,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -322,10 +283,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -343,10 +301,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -364,10 +319,7 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   },
   {
     "_id": {
@@ -385,9 +337,6 @@
     "role": [
       "user"
     ],
-    "__v": 0,
-    "createdBy": {
-      "$oid": "699a4fb034fa2b9e6436599c"
-    }
+    "__v": 0
   }
 ]

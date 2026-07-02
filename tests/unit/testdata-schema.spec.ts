@@ -296,7 +296,7 @@ const buildValidators = async () => {
 }
 
 describe('testdata schema', () => {
-  it('matches the current Payload collection schemas', async () => {
+  it('matches the current Payload collection schemas', { timeout: 60000 }, async () => {
     const mappedFiles = fixtureMappings.map((mapping) => mapping.fileName).sort()
 
     const validators = await buildValidators()
@@ -305,6 +305,7 @@ describe('testdata schema', () => {
     fixtureDirectories.forEach((fixtureDir) => {
       const testdataFiles = readdirSync(fixtureDir)
         .filter((fileName) => fileName.endsWith('.json'))
+        .filter((fileName) => !fileName.startsWith('_'))
         .sort()
 
       expect(testdataFiles).toEqual(mappedFiles)

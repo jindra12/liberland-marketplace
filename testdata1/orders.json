@@ -44,27 +44,33 @@
     "amount": 10500,
     "currency": "USD",
     "payerAddress": "0x48b3Bc2d439395843E04b890530b9B9135Ef76a3",
-    "transactionHashes": [
+    "paymentProofs": [
       {
         "product": {
           "$oid": "c8194e03168498b04b88b9b6"
         },
         "chain": "ethereum",
-        "transactionHash": "0xabc0000000000000000000000000000000000000000000000000000000000001"
+        "transactionHash": "0xabc0000000000000000000000000000000000000000000000000000000000001",
+        "fulfilled": false,
+        "rejected": false
       },
       {
         "product": {
           "$oid": "3dae7d890246a9c8269b3eb6"
         },
         "chain": "solana",
-        "transactionHash": "5Xc1nD9V7Zxg7X6v2nQ3xWm5iP2sK7rT9pL1uM8cY4bG"
+        "transactionHash": "5Xc1nD9V7Zxg7X6v2nQ3xWm5iP2sK7rT9pL1uM8cY4bG",
+        "fulfilled": true,
+        "rejected": false
       },
       {
         "product": {
           "$oid": "ea9432e419fedd0ce1974f2c"
         },
         "chain": "tron",
-        "transactionHash": "0xTRONTESTHASH0000000000000000000000000000000001"
+        "transactionHash": "0xTRONTESTHASH0000000000000000000000000000000001",
+        "fulfilled": false,
+        "rejected": true
       }
     ],
     "updatedAt": {
@@ -72,9 +78,6 @@
     },
     "createdAt": {
       "$date": "2026-05-03T00:00:00.000Z"
-    },
-    "createdBy": {
-      "$oid": "eb4a56a38dd5c05623069ca9"
     }
   }
 ]

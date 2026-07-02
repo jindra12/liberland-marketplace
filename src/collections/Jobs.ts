@@ -1,4 +1,4 @@
-import { authenticated } from '@/access/authenticated'
+import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
@@ -73,7 +73,7 @@ export const Jobs: CollectionConfig = {
     drafts: true,
   },
   access: {
-    create: authenticated,
+    create: canCreateContentWithPublicCompany,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,

@@ -1,4 +1,5 @@
 import { ecommercePlugin } from '@payloadcms/plugin-ecommerce'
+import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { authenticated } from '@/access/authenticated'
 import { addressFields } from '@/fields/addressFields'
 import { anyone } from '@/access/anyone'
@@ -123,7 +124,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
       defaultSort: '-contentRankScore',
       access: {
         ...defaultCollection.access,
-        create: authenticated,
+        create: canCreateContentWithPublicCompany,
         read: anyone,
         update: onlyOwnProductsOrAdmin,
         delete: onlyOwnProductsOrAdmin,
