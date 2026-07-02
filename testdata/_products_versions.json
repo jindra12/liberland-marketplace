@@ -35,7 +35,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-02-24T12:31:15.401Z"
@@ -82,7 +114,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-02-24T12:36:35.29Z"
@@ -129,7 +193,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-02-24T12:42:39.259Z"
@@ -173,7 +269,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-02-24T13:04:44.095Z"
@@ -220,7 +348,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-02T10:21:19.771Z"
@@ -264,7 +424,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-03T20:28:39.441Z"
@@ -337,7 +529,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:12.973Z"
@@ -397,7 +621,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:13.221Z"
@@ -457,7 +713,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:13.339Z"
@@ -517,7 +805,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:13.456Z"
@@ -577,7 +897,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:13.576Z"
@@ -642,7 +994,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:15.274Z"
@@ -702,7 +1086,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:15.438Z"
@@ -757,7 +1173,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:15.594Z"
@@ -817,7 +1265,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:15.714Z"
@@ -877,7 +1357,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:16.101Z"
@@ -932,7 +1444,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:16.214Z"
@@ -997,7 +1541,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:16.339Z"
@@ -1060,7 +1636,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:18.131Z"
@@ -1128,7 +1736,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:18.67Z"
@@ -1191,7 +1831,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:19.637Z"
@@ -1259,7 +1931,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:20.051Z"
@@ -1322,7 +2026,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:20.958Z"
@@ -1382,7 +2118,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:21.642Z"
@@ -1437,7 +2205,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:21.794Z"
@@ -1492,7 +2292,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:21.894Z"
@@ -1547,7 +2379,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:22.047Z"
@@ -1625,7 +2489,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:31.717Z"
@@ -1698,7 +2594,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:33.782Z"
@@ -1771,7 +2699,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:36.254Z"
@@ -1844,7 +2804,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:39.003Z"
@@ -1917,7 +2909,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:40.843Z"
@@ -1987,7 +3011,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:41.074Z"
@@ -2067,7 +3123,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:41.19Z"
@@ -2122,7 +3210,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:41.352Z"
@@ -2192,7 +3312,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:42.322Z"
@@ -2247,7 +3399,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:42.809Z"
@@ -2302,7 +3486,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:43.338Z"
@@ -2357,7 +3573,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:43.862Z"
@@ -2435,7 +3683,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:45.866Z"
@@ -2508,7 +3788,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:46.909Z"
@@ -2581,7 +3893,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:49.095Z"
@@ -2643,7 +3987,39 @@
       "orderable": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:49.666Z"
@@ -2708,7 +4084,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:49.803Z"
@@ -2768,7 +4176,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:49.921Z"
@@ -2828,7 +4268,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:50.045Z"
@@ -2888,7 +4360,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:51.609Z"
@@ -2956,7 +4460,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:58.973Z"
@@ -3016,7 +4552,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:06:59.127Z"
@@ -3086,7 +4654,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:01.306Z"
@@ -3146,7 +4746,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:01.435Z"
@@ -3211,7 +4843,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:01.546Z"
@@ -3291,7 +4955,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:01.649Z"
@@ -3366,7 +5062,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:01.866Z"
@@ -3431,7 +5159,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:02.006Z"
@@ -3501,7 +5261,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:02.147Z"
@@ -3581,7 +5373,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:03.468Z"
@@ -3654,7 +5478,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:05.872Z"
@@ -3727,7 +5583,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:07.145Z"
@@ -3800,7 +5688,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:08.616Z"
@@ -3873,7 +5793,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:09.983Z"
@@ -3941,7 +5893,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:10.957Z"
@@ -4009,7 +5993,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:16.539Z"
@@ -4079,7 +6095,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:16.75Z"
@@ -4142,7 +6190,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:17.661Z"
@@ -4202,7 +6282,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:49.703Z"
@@ -4262,7 +6374,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:49.827Z"
@@ -4322,7 +6466,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:49.935Z"
@@ -4382,7 +6558,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:50.641Z"
@@ -4442,7 +6650,39 @@
       "priceInUSDEnabled": true,
       "createdBy": {
         "$oid": "699a4fb034fa2b9e6436599c"
-      }
+      },
+      "parameters": [
+        {
+          "name": "Size",
+          "values": [
+            {
+              "key": "S",
+              "name": "Small",
+              "default": false
+            },
+            {
+              "key": "M",
+              "name": "Medium",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            {
+              "key": "RED",
+              "name": "Red",
+              "default": true
+            },
+            {
+              "key": "BLUE",
+              "name": "Blue",
+              "default": false
+            }
+          ]
+        }
+      ]
     },
     "createdAt": {
       "$date": "2026-03-04T22:07:50.781Z"
