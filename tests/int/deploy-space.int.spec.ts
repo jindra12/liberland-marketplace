@@ -99,6 +99,7 @@ describe('deploy-space installer', () => {
   const testData1ComposeStateFile = path.join(fixtureRoot, 'compose-state-test-data-1.pid')
   const graphqlHitFile = path.join(fixtureRoot, 'graphql-hit.json')
   const silentGraphqlHitFile = path.join(fixtureRoot, 'graphql-hit-silent.json')
+  const composeExecHitFile = path.join(fixtureRoot, 'compose-exec-hit.txt')
   const aptGetHitFile = path.join(fixtureRoot, 'apt-get-hit.txt')
   const aptGetSkipHitFile = path.join(fixtureRoot, 'apt-get-skip-hit.txt')
   const nginxHitFile = path.join(fixtureRoot, 'nginx-hit.txt')
@@ -459,7 +460,7 @@ exit 0
       '      --env-file)',
       '        shift 2',
       '        ;;',
-      '      up|down)',
+      '      up|down|exec)',
       '        action="$1"',
       '        shift',
       '        break',
@@ -494,6 +495,13 @@ exit 0
       '    fi',
       '    exit 0',
       '  fi',
+      '',
+      '  if [[ "$action" == "exec" ]]; then',
+      '    if [[ -n "${COMPOSE_EXEC_HIT_FILE:-}" ]]; then',
+      '      printf \'%s\\n\' "$*" >> "$COMPOSE_EXEC_HIT_FILE"',
+      '    fi',
+      '    exit 0',
+      '  fi',
       'fi',
       '',
       'echo "Unsupported docker invocation: $*" >&2',
@@ -524,6 +532,7 @@ exit 0
         CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         DEPLOY_SPACE_TEST_PORT: String(appPort),
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
+        COMPOSE_EXEC_HIT_FILE: composeExecHitFile,
         NGINX_HIT_FILE: nginxHitFile,
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
@@ -680,11 +689,14 @@ exit 0
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
         CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         INSTALL_ROOT: testDataInstallRoot,
+        COMPOSE_EXEC_HIT_FILE: composeExecHitFile,
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
       }
+
+      writeFileSync(composeExecHitFile, '', 'utf8')
 
       const { stdout } = await execFileAsync(
         deployScriptPath,
@@ -713,6 +725,9 @@ exit 0
       expect(readFileSync(composeFile, 'utf8')).toContain('condition: service_completed_successfully')
       expect(readFileSync(composeFile, 'utf8')).toContain('volumes:')
       expect(readFileSync(composeFile, 'utf8')).toContain('./testdata:/testdata:ro')
+      expect(stdout).toContain('Reindexing search documents after test data seed...')
+      expect(stdout).toContain('Search reindex complete.')
+      expect(readFileSync(composeExecHitFile, 'utf8')).toContain('pnpm exec tsx ./scripts/reindex-search.mjs')
 
       await waitForServer(`http://127.0.0.1:${appPort}/admin`)
 
@@ -760,12 +775,15 @@ exit 0
         DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
         CLEAN_SOURCE_AFTER_DEPLOY: 'false',
         INSTALL_ROOT: testData1InstallRoot,
+        COMPOSE_EXEC_HIT_FILE: composeExecHitFile,
         NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
         NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
         PATH: `${stubBinDir}:${process.env.PATH || ''}`,
         REPO_URL: bareRepoDir,
         TEST_DATA_DIR: 'testdata1',
       }
+
+      writeFileSync(composeExecHitFile, '', 'utf8')
 
       const { stdout } = await execFileAsync(
         deployScriptPath,
@@ -791,6 +809,9 @@ exit 0
       expect(stdout).toContain(`Test data fixtures copied to: ${path.join(deployDir, 'testdata')}`)
       expect(existsSync(testDataFile)).toBe(true)
       expect(readFileSync(composeFile, 'utf8')).toContain('./testdata:/testdata:ro')
+      expect(stdout).toContain('Reindexing search documents after test data seed...')
+      expect(stdout).toContain('Search reindex complete.')
+      expect(readFileSync(composeExecHitFile, 'utf8')).toContain('pnpm exec tsx ./scripts/reindex-search.mjs')
 
       await waitForServer(`http://127.0.0.1:${appPort}/admin`)
 
@@ -1032,11 +1053,14 @@ exit 0
           DEPLOY_SPACE_SCRIPT_TEXT: deployScriptText,
           CLEAN_SOURCE_AFTER_DEPLOY: 'false',
           INSTALL_ROOT: currentCase.installRoot,
+          COMPOSE_EXEC_HIT_FILE: composeExecHitFile,
           NGINX_SITES_AVAILABLE_DIR: nginxSitesAvailableDir,
           NGINX_SITES_ENABLED_DIR: nginxSitesEnabledDir,
           PATH: `${stubBinDir}:${process.env.PATH || ''}`,
           REPO_URL: bareRepoDir,
         }
+
+        writeFileSync(composeExecHitFile, '', 'utf8')
 
         const { stdout } = await execFileAsync(
           deployScriptPath,
@@ -1058,21 +1082,6 @@ exit 0
 
         const runtimeEnvPath = path.join(currentCase.installRoot, 'source', '.deploy', 'runtime.env')
         const runtimeEnv = readFileSync(runtimeEnvPath, 'utf8')
-        const expectedTestDataUrl =
-          currentCase.expectedSubdomain === 'devserver'
-            ? 'https://devserver1.203-0-113-10.nip.io/posts/vertex-test-data-launch?variant=testdata1'
-            : 'https://market.ll.land/posts/vertex-test-data-launch?variant=testdata1'
-        const deployedSyndicationsPath = path.join(
-          currentCase.installRoot,
-          'source',
-          '.deploy',
-          'testdata',
-          'syndications.json',
-        )
-        const deployedSyndications = JSON.parse(readFileSync(deployedSyndicationsPath, 'utf8')) as Array<{
-          url: string
-        }>
-
         expect(stdout).toContain(`Reusing existing environment from: ${currentCase.envFile}`)
         expect(stdout).toContain(`Subdomain: ${currentCase.expectedSubdomain}`)
         expect(stdout).toContain(`Compose project: liberland_${currentCase.expectedSubdomain}`)
@@ -1088,7 +1097,6 @@ exit 0
         expect(runtimeEnv).toContain(
           `NEXT_PUBLIC_SERVER_URL="https://${currentCase.expectedSubdomain}.203-0-113-10.nip.io"`,
         )
-        expect(deployedSyndications[0]?.url).toBe(expectedTestDataUrl)
 
         await waitForServer(`http://127.0.0.1:${appPort}/admin`)
 

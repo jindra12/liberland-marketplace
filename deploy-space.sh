@@ -298,6 +298,16 @@ prepare_test_data() {
   echo "Test data fixtures copied to: $TESTDATA_DEPLOY_DIR"
 }
 
+reindex_search_if_needed() {
+  if [[ "$TEST_DATA" != "true" ]]; then
+    return 0
+  fi
+
+  echo "Reindexing search documents after test data seed..."
+  run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" exec -T app pnpm exec tsx ./scripts/reindex-search.mjs
+  echo "Search reindex complete."
+}
+
 generate_secret() {
   if command -v openssl >/dev/null 2>&1; then
     openssl rand -hex 32
@@ -1086,6 +1096,8 @@ echo "Building and starting the stack..."
 
 run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" down -v --remove-orphans >/dev/null 2>&1 || true
 run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" up -d --build --remove-orphans
+
+reindex_search_if_needed
 
 echo
 
