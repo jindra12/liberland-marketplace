@@ -32,7 +32,12 @@ export const createDefaultBotUser: CollectionAfterChangeHook = async ({
 }) => {
   if (operation !== 'create') return doc
 
-  const isBotUser = typeof doc === 'object' && doc !== null && Reflect.get(doc, 'bot') === true
+  const isBotUser =
+    typeof doc === 'object' &&
+    doc !== null &&
+    !Array.isArray(doc) &&
+    'bot' in doc &&
+    doc.bot === true
 
   if (isBotUser) {
     return doc

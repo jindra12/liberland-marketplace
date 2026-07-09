@@ -30,17 +30,65 @@ import { cryptoAdapter } from '@/payments/cryptoAdapter'
 import { mergeFields } from '@/utilities/mergeFields'
 import { replaceEcommerceAdminComponentPaths } from './replaceEcommerceAdminComponentPaths'
 import type { Field } from 'payload'
+import type { PayloadRequest } from 'payload'
 import type { AccessUser } from '@/access/types'
 
 const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'paymentProofs'])
 
-const canUpdateOrderCheckoutFields = ({
+const getOrderCustomerID = async ({
+  id,
+  req,
+}: {
+  id?: string | number | null
+  req: PayloadRequest
+}): Promise<string | null> => {
+  if (!id) {
+    return null
+  }
+
+  try {
+    const order = await req.payload.findByID({
+      collection: 'orders',
+      depth: 0,
+      id: String(id),
+      overrideAccess: true,
+      req,
+      select: {
+        customer: true,
+      },
+    })
+
+    if (!order || typeof order !== 'object' || Array.isArray(order)) {
+      return null
+    }
+
+    const customer = 'customer' in order ? order.customer : null
+    if (typeof customer === 'string' || typeof customer === 'number') {
+      return String(customer)
+    }
+
+    if (customer && typeof customer === 'object' && !Array.isArray(customer)) {
+      const customerID = 'id' in customer ? customer.id : null
+      if (typeof customerID === 'string' || typeof customerID === 'number') {
+        return String(customerID)
+      }
+    }
+  } catch {
+    return null
+  }
+
+  return null
+}
+
+const canUpdateOrderCheckoutFields = async ({
   data,
+  id,
   req,
 }: {
   data?: unknown
-  req: { user?: AccessUser }
-}): boolean => {
+  id?: string | number
+  req: { user?: AccessUser } & PayloadRequest
+}): Promise<boolean> => {
   const role = req.user?.role
   const isAdmin = role?.includes('admin') || false
 
@@ -54,7 +102,21 @@ const canUpdateOrderCheckoutFields = ({
 
   const keys = Object.keys(data as Record<string, unknown>)
 
-  return keys.length > 0 && keys.every((key) => nonAdminOrderUpdateKeys.has(key))
+  if (keys.length === 0 || !keys.every((key) => nonAdminOrderUpdateKeys.has(key))) {
+    return false
+  }
+
+  const userID = req.user?.id
+  if (!userID) {
+    return false
+  }
+
+  const orderCustomerID = await getOrderCustomerID({
+    id,
+    req,
+  })
+
+  return orderCustomerID === String(userID)
 }
 
 export const marketplaceEcommercePlugin = ecommercePlugin({
@@ -190,7 +252,12 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
       access: {
         ...defaultCollection.access,
         create: () => true,
-        update: ({ data, req }) => canUpdateOrderCheckoutFields({ data, req }),
+        update: async ({ data, id, req }) =>
+          canUpdateOrderCheckoutFields({
+            data,
+            id,
+            req,
+          }),
       },
       admin: {
         ...defaultCollection.admin,

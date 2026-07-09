@@ -9,6 +9,7 @@ import { userWalletsField } from '@/fields/userWalletsField'
 import { createDefaultBotUser } from '@/hooks/createDefaultBotUser'
 import { createDefaultCompany } from '@/hooks/createDefaultCompany'
 import { populateReportedLinks } from './hooks/populateReportedLinks'
+import { sanitizeUserCreateData } from './utils'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -41,20 +42,16 @@ export const Users: CollectionConfig = {
             collection: 'users',
             limit: 1,
           })
-          if (existing.totalDocs === 0) {
-            return {
-              ...data,
-              bot: false,
-              role: ['admin'],
-            }
-          }
 
-          if (!isAdminUser(req.user)) {
-            return {
-              ...data,
-              bot: false,
-            }
-          }
+          return sanitizeUserCreateData({
+            data: data as {
+              bot?: boolean
+              emailVerified?: boolean
+              role?: string[]
+            },
+            existingUserCount: existing.totalDocs,
+            isAdmin: isAdminUser(req.user),
+          })
         }
         return data
       },

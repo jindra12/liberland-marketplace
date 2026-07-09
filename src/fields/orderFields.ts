@@ -16,6 +16,16 @@ export type PaymentProofRow = {
   rejected?: boolean | null
 }
 
+export type PaymentTargetRow = {
+  chain?: 'ethereum' | 'solana' | 'tron' | null
+  normalizedRecipientAddress?: string | null
+  productID?: string | null
+  quantity?: number | null
+  recipientAddress?: string | null
+  stableAmount?: number | null
+  unitAmount?: number | null
+}
+
 const getPaymentProofRowKey = (row: PaymentProofRow): string => {
   const product =
     typeof row.product === 'string'
@@ -107,6 +117,64 @@ export const orderFields: Field[] = [
     ],
   },
   {
+    name: 'paymentTargets',
+    label: 'Payment Targets',
+    type: 'array',
+    labels: {
+      singular: 'Payment Target',
+      plural: 'Payment Targets',
+    },
+    access: {
+      create: () => false,
+      update: () => false,
+    },
+    fields: [
+      {
+        name: 'chain',
+        type: 'select',
+        required: true,
+        options: chainOptions,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'productID',
+        type: 'text',
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'quantity',
+        type: 'number',
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'recipientAddress',
+        type: 'text',
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'normalizedRecipientAddress',
+        type: 'text',
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'stableAmount',
+        type: 'number',
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'unitAmount',
+        type: 'number',
+        required: true,
+        admin: { readOnly: true },
+      },
+    ],
+  },
+  {
     name: 'paymentProofs',
     label: 'Payment Proofs',
     type: 'array',
@@ -121,6 +189,10 @@ export const orderFields: Field[] = [
     hooks: {
       beforeChange: [
         ({ operation, req, originalDoc, value }) => {
+          if (req.context?.skipPaymentProofMerge === true) {
+            return value
+          }
+
           if (operation !== 'update' || adminOnlyFieldAccess({ req })) {
             return value
           }

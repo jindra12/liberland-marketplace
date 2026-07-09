@@ -3,6 +3,7 @@ import type { Payload, PayloadRequest } from 'payload'
 import { getPayload } from 'payload'
 
 import { toStringID } from '@/utilities/toStringID'
+import { fetchSafeURLResponse, resolveSafeURL } from './security'
 import {
   ShareApiError,
   extractShareMetadataFromHTML,
@@ -31,20 +32,6 @@ export type ShareRepostResult = {
   }
   post: unknown
   source: ShareSource
-}
-
-const getSafeURL = (value: string): URL | null => {
-  try {
-    const parsed = new URL(value)
-
-    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-      return null
-    }
-
-    return parsed
-  } catch {
-    return null
-  }
 }
 
 const getFileExtension = (mimeType: string): string => {
@@ -79,8 +66,14 @@ const createSharedImage = async ({
   req?: PayloadRequest
   user: ShareUser
   title: string
-}): Promise<string | null> => {
-  const response = await fetch(imageURL)
+  }): Promise<string | null> => {
+  const targetURL = await resolveSafeURL(imageURL)
+
+  if (!targetURL) {
+    return null
+  }
+
+  const response = await fetchSafeURLResponse(targetURL)
 
   if (!response.ok) {
     return null
@@ -130,7 +123,7 @@ export const createShareRepost = async ({
   req?: PayloadRequest
   user: ShareUser
 }): Promise<ShareRepostResult> => {
-  const targetURL = getSafeURL(link)
+  const targetURL = await resolveSafeURL(link)
 
   if (!targetURL) {
     throw new ShareApiError('link must be an http(s) URL.', 400)
@@ -146,7 +139,7 @@ export const createShareRepost = async ({
     throw new ShareApiError('Automated posting is disabled for this company.', 403)
   }
 
-  const response = await fetch(targetURL)
+  const response = await fetchSafeURLResponse(targetURL)
 
   if (!response.ok) {
     throw new ShareApiError(`Unable to fetch ${targetURL.toString()}.`, 400)

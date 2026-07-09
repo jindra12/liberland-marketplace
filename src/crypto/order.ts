@@ -1,4 +1,5 @@
 import { getPayloadInstance } from './payload'
+import type { ProductPaymentTarget } from './recipient'
 import type { OrderCryptoPrice, SupportedChain } from './types'
 import type { PaymentProofRow } from '@/fields/orderFields'
 import type { Order } from '@/payload-types'
@@ -11,6 +12,7 @@ export type OrderPaymentProofEntry = {
 
 export type OrderWithPaymentProofs = Order & {
   paymentProofs?: PaymentProofRow[] | null
+  paymentTargets?: ProductPaymentTarget[] | null
 }
 
 export type OrderCryptoPriceEntry = OrderCryptoPrice
@@ -50,6 +52,26 @@ export const getOrderCryptoPriceEntries = (order: Order): OrderCryptoPriceEntry[
   }
 
   return order.cryptoPrices as OrderCryptoPriceEntry[]
+}
+
+export const getOrderPaymentTargetEntries = (
+  order: OrderWithPaymentProofs,
+): ProductPaymentTarget[] => {
+  if (!Array.isArray(order.paymentTargets)) {
+    return []
+  }
+
+  return order.paymentTargets
+    .filter((entry): entry is ProductPaymentTarget => Boolean(entry && typeof entry === 'object'))
+    .map((entry) => ({
+      chain: entry.chain,
+      normalizedRecipientAddress: String(entry.normalizedRecipientAddress ?? ''),
+      productID: String(entry.productID ?? ''),
+      quantity: Number(entry.quantity ?? 0),
+      recipientAddress: String(entry.recipientAddress ?? ''),
+      stableAmount: Number(entry.stableAmount ?? 0),
+      unitAmount: Number(entry.unitAmount ?? 0),
+    }))
 }
 
 export const getOrderCreatedAtMs = (order: Order): number => {

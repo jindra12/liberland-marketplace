@@ -181,6 +181,13 @@ describe('seller order products graphql', () => {
     })
 
     expect(req.payload.update).toHaveBeenCalledTimes(1)
+    expect(req.payload.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: {
+          skipPaymentProofMerge: true,
+        },
+      }),
+    )
     expect(result.fulfilled).toBe(true)
     expect(result.paymentProof.fulfilled).toBe(true)
     expect(result.paymentProofId).toBe('proof-owned')
@@ -197,6 +204,13 @@ describe('seller order products graphql', () => {
     })
 
     expect(req.payload.update).toHaveBeenCalledTimes(1)
+    expect(req.payload.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: {
+          skipPaymentProofMerge: true,
+        },
+      }),
+    )
     expect(result.rejected).toBe(false)
     expect(result.paymentProof.rejected).toBe(false)
     expect(result.paymentProofId).toBe('proof-owned')

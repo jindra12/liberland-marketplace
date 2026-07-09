@@ -35,5 +35,6 @@ export const lockOrderCryptoPricesOnCreate: CollectionBeforeChangeHook = async (
   })
 
   next.cryptoPrices = prices
+  next.paymentTargets = paymentTargets
   return next
 }

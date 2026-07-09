@@ -58,6 +58,7 @@ type SellerOrdersPayload = {
     collection: 'orders'
     data: Partial<SellerOrderDoc>
     id: string
+    context?: Record<string, unknown>
     overrideAccess: boolean
     req?: SellerOrdersRequest
   }) => Promise<unknown>
@@ -511,6 +512,9 @@ const updateSellerOrderProductState = async ({
       paymentProofs,
     },
     id: orderId,
+    context: {
+      skipPaymentProofMerge: true,
+    },
     overrideAccess: true,
     req,
   })

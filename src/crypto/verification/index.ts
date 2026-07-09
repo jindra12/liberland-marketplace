@@ -5,6 +5,7 @@ import {
   getOrderCreatedAtMs,
   getOrderCryptoPriceEntries,
   getOrderPaymentProofEntries,
+  getOrderPaymentTargetEntries,
 } from '../order'
 import { getPayloadInstance } from '../payload'
 import type {
@@ -137,21 +138,25 @@ export const verifyTransactionOccurred = async (
   }
 
   const payload = await getPayloadInstance()
-  const { resolveProductPaymentTargetsFromItems } = await import('../recipient')
   const results: VerifyTransactionResult[] = []
+  const snapshotTargets = getOrderPaymentTargetEntries(order)
+  let productTargets = snapshotTargets
 
-  let productTargets: Awaited<ReturnType<typeof resolveProductPaymentTargetsFromItems>>
-  try {
-    productTargets = await resolveProductPaymentTargetsFromItems({
-      items: order.items,
-      payload,
-    })
-  } catch (error) {
-    return {
-      orderId: order.id,
-      ok: false,
-      error: error instanceof Error ? error.message : 'Failed to resolve order payout targets.',
-      results: [],
+  if (productTargets.length === 0) {
+    const { resolveProductPaymentTargetsFromItems } = await import('../recipient')
+
+    try {
+      productTargets = await resolveProductPaymentTargetsFromItems({
+        items: order.items,
+        payload,
+      })
+    } catch (error) {
+      return {
+        orderId: order.id,
+        ok: false,
+        error: error instanceof Error ? error.message : 'Failed to resolve order payout targets.',
+        results: [],
+      }
     }
   }
 

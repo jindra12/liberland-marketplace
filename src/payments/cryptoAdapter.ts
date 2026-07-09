@@ -1,6 +1,6 @@
 import type { VerifyOrderPaymentResult } from '@/crypto'
 import type { ProductPaymentTarget } from '@/crypto/recipient'
-import type { OrderWithPaymentProofs } from '@/crypto/order'
+import { getOrderPaymentTargetEntries, type OrderWithPaymentProofs } from '@/crypto/order'
 import type { PaymentProofRow } from '@/fields/orderFields'
 import type { Order } from '@/payload-types'
 import { toStringID } from '@/utilities/toStringID'
@@ -184,8 +184,7 @@ export const cryptoAdapter = () => ({
   },
 
   confirmOrder: async ({ data, req }: ConfirmOrderArgs) => {
-    const [{ verifyTransactionOccurred }, { resolveProductPaymentTargetsFromItems }] =
-      await Promise.all([import('@/crypto'), import('@/crypto/recipient')])
+    const { verifyTransactionOccurred } = await import('@/crypto')
     const payloadData = data as { orderID: string }
 
     const order = (await req.payload.findByID({
@@ -201,20 +200,17 @@ export const cryptoAdapter = () => ({
         customerEmail: true,
         items: true,
         paymentProofs: true,
+        paymentTargets: true,
         transactions: true,
       },
     })) as unknown as OrderWithPaymentProofs
 
-    const paymentTargets = await resolveProductPaymentTargetsFromItems({
-      items: order.items || [],
-      payload: req.payload,
-      req,
-    })
+    const resolvedPaymentTargets = getOrderPaymentTargetEntries(order)
 
     const paymentProofEntries = Array.isArray(order.paymentProofs) ? order.paymentProofs : []
 
     const paymentRef = buildPaymentRef({
-      paymentTargets,
+      paymentTargets: resolvedPaymentTargets,
       paymentProofEntries,
     })
 

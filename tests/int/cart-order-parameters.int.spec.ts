@@ -147,6 +147,164 @@ const CREATE_ORDER_MUTATION = `
   }
 `
 
+const FRONTEND_CREATE_ORDER_MUTATION = `
+mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
+    createOrder(data: $data, draft: $draft) {
+        id
+        status
+        payerAddress
+        customer {
+            id
+        }
+        transactions {
+            id
+        }
+        cryptoPrices {
+            id
+            chain
+            stablePerNative
+            nativePerStable
+            expectedNativeAmount
+            fetchedAt
+        }
+        currency
+        amount
+        customerEmail
+        createdAt
+        updatedAt
+        items {
+            id
+            quantity
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    selected
+                }
+            }
+            product {
+                id
+                serverURL
+                name
+                priceInETH
+                priceInSOL
+                priceInTRX
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                company {
+                    id
+                    cryptoAddresses {
+                        chain
+                        address
+                    }
+                }
+            }
+            variant {
+                id
+                title
+            }
+        }
+        shippingAddress {
+            title
+            firstName
+            lastName
+            company
+            addressLine1
+            addressLine2
+            city
+            postalCode
+            state
+            country
+            phone
+        }
+    }
+}
+`
+
+const FRONTEND_UPDATE_ORDER_MUTATION = `
+mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
+    updateOrder(id: $orderId, data: $data, draft: $draft) {
+        id
+        status
+        payerAddress
+        customer {
+            id
+        }
+        transactions {
+            id
+        }
+        cryptoPrices {
+            id
+            chain
+            stablePerNative
+            nativePerStable
+            expectedNativeAmount
+            fetchedAt
+        }
+        currency
+        amount
+        customerEmail
+        createdAt
+        updatedAt
+        items {
+            id
+            quantity
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    selected
+                }
+            }
+            product {
+                id
+                serverURL
+                name
+                priceInETH
+                priceInSOL
+                priceInTRX
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                company {
+                    id
+                    cryptoAddresses {
+                        chain
+                        address
+                    }
+                }
+            }
+            variant {
+                id
+                title
+            }
+        }
+        shippingAddress {
+            title
+            firstName
+            lastName
+            company
+            addressLine1
+            addressLine2
+            city
+            postalCode
+            state
+            country
+            phone
+        }
+    }
+}
+`
+
 const postGraphQL = async ({
   query,
   variables,
@@ -334,7 +492,7 @@ describe('Cart and order parameter selection', () => {
       })
 
     const createOrderResult = await postGraphQL({
-      query: CREATE_ORDER_MUTATION,
+      query: FRONTEND_CREATE_ORDER_MUTATION,
       variables: {
         data: {
           customerEmail: 'parameter-flow@example.com',
@@ -375,6 +533,24 @@ describe('Cart and order parameter selection', () => {
     if (orderID) {
       createdOrderIDs.push(orderID)
     }
+
+    const updateOrderResult = orderID
+      ? await postGraphQL({
+          query: FRONTEND_UPDATE_ORDER_MUTATION,
+          variables: {
+            data: {
+              payerAddress: '0x1111111111111111111111111111111111111111',
+            },
+            draft: false,
+            orderId: orderID,
+          },
+        })
+      : null
+
+    expect(updateOrderResult?.errors).toBeUndefined()
+    expect(updateOrderResult?.data?.updateOrder?.payerAddress).toBe(
+      '0x1111111111111111111111111111111111111111',
+    )
   }, 120_000)
 
   it('rejects spoofed parameter values on carts and orders', async () => {

@@ -1,4 +1,4 @@
-import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { Payload } from 'payload'
 import { toStringID } from '@/utilities/toStringID'
 
@@ -7,6 +7,9 @@ let bootstrapError: Error | null = null
 let graphqlPost: ((request: Request) => Promise<Response>) | null = null
 let productID: string | null = null
 let createdOrderIDs: string[] = []
+let orderBearerToken: string | null = null
+let createdUserIDs: string[] = []
+let createdOauthAccessTokenIDs: string[] = []
 
 type GraphQLResponseBody = {
   data?: {
@@ -75,6 +78,45 @@ const createMockGraphQLPost = async (request: Request): Promise<Response> => {
     } satisfies GraphQLResponseBody),
     { status: 200 },
   )
+}
+
+const createUser = async (label: string): Promise<string> => {
+  if (!payload) {
+    throw new Error('Payload is not available.')
+  }
+
+  const user = await payload.create({
+    collection: 'users',
+    data: {
+      email: `${label}-${crypto.randomUUID()}@example.com`,
+      emailVerified: true,
+      name: label,
+    },
+  })
+
+  const userID = String(user.id)
+  createdUserIDs.push(userID)
+  return userID
+}
+
+const createBearerToken = async (userID: string): Promise<string> => {
+  if (!payload) {
+    throw new Error('Payload is not available.')
+  }
+
+  const accessToken = `test-oidc-access-token-${crypto.randomUUID()}`
+  const tokenRecord = await payload.create({
+    collection: 'oauthAccessTokens',
+    data: {
+      accessToken,
+      accessTokenExpiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+      scopes: 'openid profile email',
+      user: userID,
+    },
+  })
+
+  createdOauthAccessTokenIDs.push(String(tokenRecord.id))
+  return accessToken
 }
 
 const CREATE_ORDER_MUTATION = `
@@ -206,6 +248,10 @@ describe('GraphQL createOrder mutation regression', () => {
       })
 
       productID = toStringID(products.docs[0])
+
+      await createUser('order-bootstrap')
+      const orderUserID = await createUser('order-owner')
+      orderBearerToken = await createBearerToken(orderUserID)
     } catch (error) {
       bootstrapError = error instanceof Error ? error : new Error('Unknown Payload bootstrap error')
     }
@@ -228,6 +274,50 @@ describe('GraphQL createOrder mutation regression', () => {
     }
 
     createdOrderIDs = []
+  })
+
+  afterAll(async () => {
+    if (!payload) {
+      return
+    }
+
+    for (const id of [...createdOauthAccessTokenIDs].reverse()) {
+      await payload.delete({
+        collection: 'oauthAccessTokens',
+        id,
+      })
+    }
+
+    createdOauthAccessTokenIDs = []
+
+    for (const userID of [...createdUserIDs].reverse()) {
+      const companies = await payload.find({
+        collection: 'companies',
+        depth: 0,
+        limit: 100,
+        where: {
+          createdBy: {
+            equals: userID,
+          },
+        },
+      })
+
+      for (const company of companies.docs) {
+        await payload.delete({
+          collection: 'companies',
+          id: String(company.id),
+        })
+      }
+    }
+
+    for (const id of [...createdUserIDs].reverse()) {
+      await payload.delete({
+        collection: 'users',
+        id,
+      })
+    }
+
+    createdUserIDs = []
   })
 
   it('executes the failing createOrder mutation successfully under normal conditions', async () => {
@@ -258,6 +348,7 @@ describe('GraphQL createOrder mutation regression', () => {
     const request = new Request('http://localhost:3001/api/graphql', {
       method: 'POST',
       headers: {
+        ...(orderBearerToken ? { authorization: `Bearer ${orderBearerToken}` } : {}),
         'content-type': 'application/json',
       },
       body: JSON.stringify({
@@ -284,9 +375,35 @@ describe('GraphQL createOrder mutation regression', () => {
       return
     }
 
+    const anonymousUpdatePayerAddressRequest = new Request('http://localhost:3001/api/graphql', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: UPDATE_ORDER_PAYER_ADDRESS_MUTATION,
+        variables: {
+          draft: false,
+          id: result.data.createOrder.id,
+          data: {
+            payerAddress: '0x1111111111111111111111111111111111111111',
+          },
+        },
+      }),
+    })
+
+    const anonymousUpdatePayerAddressResponse = await graphqlPost(
+      anonymousUpdatePayerAddressRequest,
+    )
+    const anonymousUpdatePayerAddressResult = (await anonymousUpdatePayerAddressResponse.json()) as GraphQLResponseBody
+
+    expect(anonymousUpdatePayerAddressResponse.status).toBe(200)
+    expect(anonymousUpdatePayerAddressResult.errors?.length).toBeGreaterThan(0)
+
     const updatePayerAddressRequest = new Request('http://localhost:3001/api/graphql', {
       method: 'POST',
       headers: {
+        ...(orderBearerToken ? { authorization: `Bearer ${orderBearerToken}` } : {}),
         'content-type': 'application/json',
       },
       body: JSON.stringify({
@@ -315,6 +432,7 @@ describe('GraphQL createOrder mutation regression', () => {
     const updateTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
       method: 'POST',
       headers: {
+        ...(orderBearerToken ? { authorization: `Bearer ${orderBearerToken}` } : {}),
         'content-type': 'application/json',
       },
       body: JSON.stringify({
@@ -352,6 +470,7 @@ describe('GraphQL createOrder mutation regression', () => {
     const appendTxHashesRequest = new Request('http://localhost:3001/api/graphql', {
       method: 'POST',
       headers: {
+        ...(orderBearerToken ? { authorization: `Bearer ${orderBearerToken}` } : {}),
         'content-type': 'application/json',
       },
       body: JSON.stringify({
@@ -393,6 +512,7 @@ describe('GraphQL createOrder mutation regression', () => {
     const updateStatusRequest = new Request('http://localhost:3001/api/graphql', {
       method: 'POST',
       headers: {
+        ...(orderBearerToken ? { authorization: `Bearer ${orderBearerToken}` } : {}),
         'content-type': 'application/json',
       },
       body: JSON.stringify({
