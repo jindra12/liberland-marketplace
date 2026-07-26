@@ -1,5 +1,6 @@
 import { sanitizeMarkdownFieldValue } from '@/hooks/sanitizeMarkdownFieldValue'
 import type { Field } from 'payload'
+import { TEXTAREA_MAX_LENGTH } from './constants'
 
 type MarkdownFieldOptions = {
   name: string
@@ -11,6 +12,7 @@ export const markdownField = ({ name, label, required }: MarkdownFieldOptions): 
   name,
   label,
   type: 'textarea',
+  maxLength: TEXTAREA_MAX_LENGTH,
   required,
   admin: {
     description: 'Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.',

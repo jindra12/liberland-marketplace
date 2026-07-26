@@ -2,6 +2,7 @@ import type { ArrayField, Field } from 'payload'
 
 import { onlyOwnProductsOrAdminFilter } from '@/access/onlyOwnProductsOrAdmin'
 import { mergeFields } from '@/utilities/mergeFields'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 
 type ParameterMode = 'default' | 'selected'
 
@@ -62,11 +63,13 @@ const createParameterValuesField = (mode: ParameterMode): Field => {
         name: 'key',
         type: 'text',
         required: true,
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
       {
         name: 'name',
         type: 'text',
         required: true,
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
       {
         name: booleanFieldName,
@@ -86,14 +89,15 @@ const createParametersField = (mode: ParameterMode): Field => ({
   admin: {
     initCollapsed: true,
   },
-  fields: [
-    {
-      name: 'name',
-      type: 'text',
-      required: true,
-    },
-    createParameterValuesField(mode),
-  ],
+    fields: [
+      {
+        name: 'name',
+        type: 'text',
+        required: true,
+        maxLength: TEXT_INPUT_MAX_LENGTH,
+      },
+      createParameterValuesField(mode),
+    ],
   label: 'Parameters',
 })
 

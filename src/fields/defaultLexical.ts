@@ -8,6 +8,7 @@ import {
   UnderlineFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 
 export const defaultLexical = lexicalEditor({
   features: [
@@ -28,6 +29,7 @@ export const defaultLexical = lexicalEditor({
           {
             name: 'url',
             type: 'text',
+            maxLength: TEXT_INPUT_MAX_LENGTH,
             admin: {
               condition: (_data, siblingData) => siblingData?.linkType !== 'internal',
             },

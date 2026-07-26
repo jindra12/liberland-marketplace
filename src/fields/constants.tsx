@@ -1,0 +1,2 @@
+export const TEXT_INPUT_MAX_LENGTH = 100
+export const TEXTAREA_MAX_LENGTH = 600

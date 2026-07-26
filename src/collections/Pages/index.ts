@@ -7,6 +7,7 @@ import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { hero } from '@/heros/config'
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
@@ -64,6 +65,7 @@ export const Pages: CollectionConfig<'pages'> = {
       name: 'title',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
     {
       type: 'tabs',

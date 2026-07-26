@@ -6,6 +6,7 @@ import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
@@ -81,7 +82,7 @@ export const Jobs: CollectionConfig = {
   fields: [
     createdByField,
     serverURLField(),
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
 
     // Each job connected to a company
     {
@@ -94,6 +95,7 @@ export const Jobs: CollectionConfig = {
     {
       name: 'companyIdentityId',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       index: true,
       admin: {
         hidden: true,
@@ -101,7 +103,7 @@ export const Jobs: CollectionConfig = {
       },
     },
 
-    { name: 'location', type: 'text' },
+    { name: 'location', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
     { name: 'isActive', type: 'checkbox', defaultValue: true },
     { name: 'positions', type: 'number', required: true, min: 1, defaultValue: 1 },
 
@@ -197,7 +199,7 @@ export const Jobs: CollectionConfig = {
       name: 'description',
       label: 'Description',
     }),
-    { name: 'applyUrl', type: 'text' },
+    { name: 'applyUrl', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
     notificationSubscriberCountField(),
     notificationSubscriptionStatusField('jobs'),
     completenessScoreField,

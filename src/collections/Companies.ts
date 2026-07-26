@@ -9,6 +9,7 @@ import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import {
   lazySendItemUpdateNotifications,
   lazySendRelatedItemPublishedNotifications,
@@ -114,9 +115,9 @@ export const Companies: CollectionConfig = {
         },
       ],
     },
-    { name: 'name', type: 'text', required: true },
-    { name: 'website', type: 'text' },
-    { name: 'phone', type: 'text' },
+    { name: 'name', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
+    { name: 'website', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
+    { name: 'phone', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
     { name: 'email', type: 'email' },
     cryptoAddressesField(),
     {

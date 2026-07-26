@@ -2,6 +2,7 @@ import type { VerifyOrderPaymentResult } from '@/crypto'
 import type { ProductPaymentTarget } from '@/crypto/recipient'
 import { getOrderPaymentTargetEntries, type OrderWithPaymentProofs } from '@/crypto/order'
 import type { PaymentProofRow } from '@/fields/orderFields'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import type { Order } from '@/payload-types'
 import { toStringID } from '@/utilities/toStringID'
 import uniq from 'lodash/uniq.js'
@@ -31,12 +32,14 @@ const group: GroupField = {
     {
       name: 'paymentRef',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       label: 'Payment reference (invoice / address)',
       admin: { readOnly: true },
     },
     {
       name: 'txHash',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       label: 'Transaction hash',
     },
   ],

@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { lazySendReportCreatedNotifications } from '@/hooks/lazyCollectionHooks'
 import { adminOnly, adminOnlyFieldAccess, isAdminUser } from '@/access/admin'
 
@@ -70,11 +71,13 @@ export const Reports: CollectionConfig = {
       name: 'contentLink',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
     {
       name: 'reason',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
   ],
   timestamps: true,

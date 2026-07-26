@@ -3,6 +3,7 @@ import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { publicCompanyFilter } from '@/access/publicCompanyFilter'
 import { markdownField } from '@/fields/markdownField'
 import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
@@ -89,7 +90,7 @@ export const Startups: CollectionConfig = {
   fields: [
     createdByField,
     serverURLField(),
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
     {
       name: 'company',
       type: 'relationship',

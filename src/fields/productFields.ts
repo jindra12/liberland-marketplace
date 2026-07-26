@@ -7,6 +7,7 @@ import { notificationSubscriberCountField } from '@/fields/notificationSubscribe
 import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { productParametersField, relatedProductsField } from '@/fields/productParameterFields'
 import { serverURLField } from '@/fields/serverURLField'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 import { mergeFields } from '@/utilities/mergeFields'
 import type {
   CheckboxField,
@@ -19,6 +20,7 @@ import type {
 const readonlyCryptoPriceField = ({ label, name }: { label: string; name: string }): Field => ({
   name,
   type: 'text',
+  maxLength: TEXT_INPUT_MAX_LENGTH,
   virtual: true,
   access: {
     create: () => false,
@@ -79,6 +81,7 @@ export const productFields: Field[] = [
   {
     name: 'name',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     required: true,
   },
 
@@ -93,6 +96,7 @@ export const productFields: Field[] = [
   {
     name: 'companyIdentityId',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     index: true,
     required: false,
     admin: {
@@ -104,6 +108,7 @@ export const productFields: Field[] = [
   {
     name: 'url',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     required: false,
   },
 
@@ -141,11 +146,13 @@ export const productFields: Field[] = [
       {
         name: 'key',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
       },
       {
         name: 'value',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
     ],
   },

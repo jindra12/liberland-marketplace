@@ -3,6 +3,7 @@ import type { CollectionConfig, Config, Field, Plugin } from 'payload'
 
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { markdownField } from '@/fields/markdownField'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToCreate } from '@/hooks/requireVerifiedEmail'
@@ -50,16 +51,23 @@ const baseComments = commentsPlugin({
         readOnly: true,
       },
     },
-    { name: 'serverUrl', type: 'text', admin: { hidden: true, readOnly: true } },
+    {
+      name: 'serverUrl',
+      type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
+      admin: { hidden: true, readOnly: true },
+    },
     {
       name: 'replyPostRelationTo',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       index: true,
       admin: { hidden: true, readOnly: true },
     },
     {
       name: 'replyPostValue',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       index: true,
       admin: { hidden: true, readOnly: true },
     },

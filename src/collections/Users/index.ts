@@ -5,6 +5,7 @@ import { anyone } from '@/access/anyone'
 import { adminOrSelf } from '@/access/adminOrSelf'
 import { Forbidden } from 'payload'
 import { shippingAddressField } from '@/fields/addressFields'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { userWalletsField } from '@/fields/userWalletsField'
 import { createDefaultBotUser } from '@/hooks/createDefaultBotUser'
 import { createDefaultCompany } from '@/hooks/createDefaultCompany'
@@ -97,6 +98,7 @@ export const Users: CollectionConfig = {
     {
       name: 'phone',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
     {
       name: 'bot',
@@ -112,6 +114,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       hasMany: true,
       virtual: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       admin: {
         hidden: true,
         readOnly: true,

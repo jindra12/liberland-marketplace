@@ -5,6 +5,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { markdownField } from '@/fields/markdownField'
@@ -74,10 +75,12 @@ export const Posts: CollectionConfig<'posts'> = {
       name: 'title',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
     {
       name: 'repost',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       admin: {
         position: 'sidebar',
       },
@@ -216,14 +219,16 @@ export const Posts: CollectionConfig<'posts'> = {
         readOnly: true,
       },
       fields: [
-        {
-          name: 'id',
-          type: 'text',
-        },
-        {
-          name: 'name',
-          type: 'text',
-        },
+            {
+              name: 'id',
+              type: 'text',
+              maxLength: TEXT_INPUT_MAX_LENGTH,
+            },
+            {
+              name: 'name',
+              type: 'text',
+              maxLength: TEXT_INPUT_MAX_LENGTH,
+            },
       ],
     },
     slugField(),

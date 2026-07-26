@@ -1,9 +1,11 @@
 import { Field } from 'payload'
+import { TEXTAREA_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 
 export const searchFields: Field[] = [
   {
     name: 'slug',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     index: true,
     admin: {
       readOnly: true,
@@ -22,11 +24,13 @@ export const searchFields: Field[] = [
         type: 'text',
         name: 'title',
         label: 'Title',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
       {
         type: 'text',
         name: 'description',
         label: 'Description',
+        maxLength: TEXTAREA_MAX_LENGTH,
       },
       {
         name: 'image',
@@ -47,14 +51,17 @@ export const searchFields: Field[] = [
       {
         name: 'relationTo',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
       {
         name: 'categoryID',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
       {
         name: 'title',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
     ],
   },

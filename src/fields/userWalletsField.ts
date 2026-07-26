@@ -1,5 +1,6 @@
 import WAValidator from 'multicoin-address-validator'
 import type { Field, TextFieldSingleValidation } from 'payload'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 
 type WalletChain = 'ethereum' | 'solana' | 'tron'
 
@@ -71,6 +72,7 @@ export const userWalletsField = (): Field => ({
       name: 'provider',
       label: 'Provider',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       required: true,
     },
     {

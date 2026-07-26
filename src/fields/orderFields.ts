@@ -1,6 +1,7 @@
 import type { Field } from 'payload'
 
 import { adminOnlyFieldAccess } from '@/access/admin'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 
 const chainOptions = [
   { label: 'Ethereum', value: 'ethereum' },
@@ -72,6 +73,7 @@ export const orderFields: Field[] = [
     name: 'payerAddress',
     label: 'Payer Address',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     access: {
       create: () => true,
       update: () => true,
@@ -139,6 +141,7 @@ export const orderFields: Field[] = [
       {
         name: 'productID',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
         admin: { readOnly: true },
       },
@@ -151,12 +154,14 @@ export const orderFields: Field[] = [
       {
         name: 'recipientAddress',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
         admin: { readOnly: true },
       },
       {
         name: 'normalizedRecipientAddress',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
         admin: { readOnly: true },
       },
@@ -238,6 +243,7 @@ export const orderFields: Field[] = [
         name: 'transactionHash',
         label: 'Transaction Hash',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
       },
       {

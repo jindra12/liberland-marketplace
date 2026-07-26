@@ -1,6 +1,7 @@
 import { anyone } from '@/access/anyone'
 import { adminOnly, isAdminUser } from '@/access/admin'
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { markdownField } from '@/fields/markdownField'
 import type { Access, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
@@ -54,11 +55,13 @@ export const Syndications: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
     {
       name: 'url',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       validate: (value?: null | string) => {
         if (!value?.trim()) {
           return 'URL is required.'

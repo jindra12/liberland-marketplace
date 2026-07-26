@@ -1,4 +1,5 @@
 import type { Field } from 'payload'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 
 const fallbackServerURL = 'http://localhost:3001'
 
@@ -8,6 +9,7 @@ export const serverURLField = (): Field => ({
   name: 'serverURL',
   label: 'Server URL',
   type: 'text',
+  maxLength: TEXT_INPUT_MAX_LENGTH,
   virtual: true,
   admin: {
     hidden: true,

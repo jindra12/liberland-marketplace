@@ -2,6 +2,7 @@ import type { ClientUser, CollectionBeforeValidateHook, CollectionConfig } from 
 
 import { adminOnly, isAdminUser } from '@/access/admin'
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { lazySendInformationRequestCreatedNotifications } from '@/hooks/lazyCollectionHooks'
 const ownOrAdmin = ({ req: { user } }: { req: { user?: ClientUser | null } }) => {
   if (isAdminUser(user)) {
@@ -65,6 +66,7 @@ export const InformationRequests: CollectionConfig = {
       name: 'reason',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
   ],
   timestamps: true,

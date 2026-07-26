@@ -9,6 +9,7 @@ import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { lazySendItemUpdateNotifications } from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { adminOnly } from '@/access/admin'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { ObjectId } from 'mongodb'
 import type {
   CollectionBeforeOperationHook,
@@ -133,6 +134,7 @@ export const Identities: CollectionConfig = {
       name: 'id',
       label: 'Tribe ID',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       required: true,
       unique: true,
       index: true,
@@ -140,8 +142,8 @@ export const Identities: CollectionConfig = {
         description: 'Use this ID when sharing a tribe from another nSwap server.',
       },
     },
-    { name: 'name', type: 'text', required: true },
-    { name: 'website', type: 'text' },
+    { name: 'name', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
+    { name: 'website', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
     {
       name: 'image',
       type: 'upload',

@@ -12,6 +12,7 @@ import { anyone } from '../access/anyone'
 import { isAdminUser } from '@/access/admin'
 import { authenticated } from '../access/authenticated'
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 
 const filename = fileURLToPath(import.meta.url)
@@ -32,6 +33,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       //required: true,
     },
     {

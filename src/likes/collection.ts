@@ -8,6 +8,7 @@ import type {
 } from 'payload'
 
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import type { LikeableCollectionSlug } from './constants'
 import { getLikeActorKey, getLikeCollectionConfig, getLikeCollectionSlug, getLikeTargetID } from './utils'
 import {
@@ -136,6 +137,7 @@ const likeFields: Field[] = [
   {
     name: 'targetID',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     required: true,
     admin: {
       hidden: true,

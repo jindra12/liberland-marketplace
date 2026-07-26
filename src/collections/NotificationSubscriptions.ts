@@ -10,6 +10,7 @@ import {
   canReadNotificationSubscriptions,
 } from '@/access/notificationSubscriptions'
 import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import type { NotificationSubscription } from '@/payload-types'
 import {
   NEWSLETTER_SUBSCRIBERS_SLUG,
@@ -151,6 +152,7 @@ export const NotificationSubscriptions: CollectionConfig = {
       type: 'text',
       index: true,
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
   ],
 }
