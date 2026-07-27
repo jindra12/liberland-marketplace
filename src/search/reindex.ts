@@ -1,4 +1,5 @@
 import type { Search } from '@/payload-types'
+import type { PayloadRequest } from 'payload'
 
 export const indexedCollections = ['jobs', 'companies', 'identities', 'products', 'startups', 'posts'] as const
 
@@ -6,12 +7,12 @@ export type SearchIndexedCollectionSlug = (typeof indexedCollections)[number]
 
 type SearchDocRelation = Search['doc']['relationTo']
 
-type SearchCategoryDoc = {
-  id: string | number
+export type SearchCategoryDoc = {
+  id?: string | number | null
   title?: string | null
 }
 
-type SearchableDoc = {
+export type SearchableDoc = {
   id: string | number
   _status?: string | null
   title?: string | null
@@ -22,10 +23,17 @@ type SearchableDoc = {
     description?: string | null
     image?: NonNullable<Search['meta']>['image']
   } | null
-  categories?: Array<string | number | SearchCategoryDoc> | null
+  categories?: Array<
+    | string
+    | number
+    | {
+        id?: string | number | null
+        title?: string | null
+      }
+  > | null
 }
 
-type SearchCollectionResult = {
+export type SearchCollectionResult = {
   docs: SearchableDoc[]
   hasNextPage: boolean
 }
@@ -61,7 +69,7 @@ export type SearchReindexService = {
       depth: number
       id: string | number
       overrideAccess: boolean
-      req?: unknown
+      req?: Partial<PayloadRequest>
       select: {
         title: true
       }

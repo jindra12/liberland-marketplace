@@ -304,7 +304,7 @@ reindex_search_if_needed() {
   fi
 
   echo "Reindexing search documents after test data seed..."
-  run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" exec -T app pnpm exec tsx ./scripts/reindex-search.mjs
+  run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" exec -T app sh -lc 'curl -fsS -H "authorization: Bearer ${CRON_SECRET:-$PAYLOAD_SECRET}" "http://127.0.0.1:${PORT:-${APP_PORT:-3001}}/api/cron/reindex-search" >/dev/null'
   echo "Search reindex complete."
 }
 
