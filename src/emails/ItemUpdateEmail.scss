@@ -1,0 +1,108 @@
+.item-update-email {
+  background: #f5f7fb;
+  color: #111827;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 24px;
+}
+
+.item-update-email__card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin: 0 auto;
+  max-width: 760px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.item-update-email__cell {
+  padding: 24px 24px 12px;
+}
+
+.item-update-email__cell--full {
+  padding: 24px;
+}
+
+.item-update-email__cell--actions {
+  padding: 12px 24px 0;
+}
+
+.item-update-email__cell--footer {
+  padding: 0 24px 24px;
+}
+
+.item-update-email__eyebrow {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.item-update-email__title {
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.item-update-email__intro {
+  color: #4b5563;
+  margin: 12px 0 0;
+}
+
+.item-update-email__button {
+  background: #111827;
+  border-radius: 999px;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: 600;
+  padding: 12px 18px;
+  text-decoration: none;
+}
+
+.item-update-email__table {
+  border: 1px solid #e5e7eb;
+  border-collapse: collapse;
+  overflow: hidden;
+  width: 100%;
+}
+
+.item-update-email__table-head {
+  background: #f9fafb;
+}
+
+.item-update-email__table-heading {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px;
+  text-align: left;
+}
+
+.item-update-email__table-cell {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+.item-update-email__table-cell--field {
+  font-weight: 600;
+}
+
+.item-update-email__table-cell--muted,
+.item-update-email__muted {
+  color: #6b7280;
+}
+
+.item-update-email__more {
+  margin: 16px 0 0;
+}
+
+.item-update-email__unsubscribe {
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  color: #374151;
+  display: inline-block;
+  padding: 10px 14px;
+  text-decoration: none;
+}

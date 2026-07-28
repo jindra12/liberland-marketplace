@@ -1,6 +1,6 @@
-import type { CollectionConfig, Config, Field, FieldAccess } from 'payload'
+import type { CollectionConfig, Config, Field } from 'payload'
 
-const adminOnly: FieldAccess = ({ req }) => Boolean(req.user?.role?.includes('admin'))
+import { adminOnlyFieldAccess } from '@/access/admin'
 
 const PROTECTED_FIELDS = ['email', 'emailVerified', 'role']
 
@@ -19,7 +19,7 @@ export const protectUserFields = (config: Config): Config => ({
           ...field,
           access: {
             ...(field.access as Record<string, unknown>),
-            update: adminOnly,
+            update: adminOnlyFieldAccess,
           },
         } as Field
       }),

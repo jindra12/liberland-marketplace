@@ -1,4 +1,7 @@
-import type { Field, FieldAccess } from 'payload'
+import type { Field } from 'payload'
+
+import { adminOnlyFieldAccess } from '@/access/admin'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 
 const chainOptions = [
   { label: 'Ethereum', value: 'ethereum' },
@@ -6,15 +9,25 @@ const chainOptions = [
   { label: 'Tron', value: 'tron' },
 ]
 
-const isAdminUpdate: FieldAccess = ({ req }) => req.user?.role?.includes('admin') || false
-
-type TransactionHashRow = {
-  product?: unknown
-  chain?: unknown
-  transactionHash?: unknown
+export type PaymentProofRow = {
+  product?: string | { id?: string | number | null } | null
+  chain?: 'ethereum' | 'solana' | 'tron' | null
+  transactionHash?: string | null
+  fulfilled?: boolean | null
+  rejected?: boolean | null
 }
 
-const getTransactionHashRowKey = (row: TransactionHashRow): string => {
+export type PaymentTargetRow = {
+  chain?: 'ethereum' | 'solana' | 'tron' | null
+  normalizedRecipientAddress?: string | null
+  productID?: string | null
+  quantity?: number | null
+  recipientAddress?: string | null
+  stableAmount?: number | null
+  unitAmount?: number | null
+}
+
+const getPaymentProofRowKey = (row: PaymentProofRow): string => {
   const product =
     typeof row.product === 'string'
       ? row.product
@@ -60,6 +73,7 @@ export const orderFields: Field[] = [
     name: 'payerAddress',
     label: 'Payer Address',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     access: {
       create: () => true,
       update: () => true,
@@ -105,12 +119,73 @@ export const orderFields: Field[] = [
     ],
   },
   {
-    name: 'transactionHashes',
-    label: 'Transaction Hashes',
+    name: 'paymentTargets',
+    label: 'Payment Targets',
     type: 'array',
     labels: {
-      singular: 'Transaction Hash',
-      plural: 'Transaction Hashes',
+      singular: 'Payment Target',
+      plural: 'Payment Targets',
+    },
+    access: {
+      create: () => false,
+      update: () => false,
+    },
+    fields: [
+      {
+        name: 'chain',
+        type: 'select',
+        required: true,
+        options: chainOptions,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'productID',
+        type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'quantity',
+        type: 'number',
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'recipientAddress',
+        type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'normalizedRecipientAddress',
+        type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'stableAmount',
+        type: 'number',
+        required: true,
+        admin: { readOnly: true },
+      },
+      {
+        name: 'unitAmount',
+        type: 'number',
+        required: true,
+        admin: { readOnly: true },
+      },
+    ],
+  },
+  {
+    name: 'paymentProofs',
+    label: 'Payment Proofs',
+    type: 'array',
+    labels: {
+      singular: 'Payment Proof',
+      plural: 'Payment Proofs',
     },
     access: {
       create: () => false,
@@ -119,22 +194,26 @@ export const orderFields: Field[] = [
     hooks: {
       beforeChange: [
         ({ operation, req, originalDoc, value }) => {
-          if (operation !== 'update' || isAdminUpdate({ req })) {
+          if (req.context?.skipPaymentProofMerge === true) {
             return value
           }
 
-          const existingRows = Array.isArray(originalDoc?.transactionHashes)
-            ? (originalDoc.transactionHashes as TransactionHashRow[])
+          if (operation !== 'update' || adminOnlyFieldAccess({ req })) {
+            return value
+          }
+
+          const existingRows = Array.isArray(originalDoc?.paymentProofs)
+            ? (originalDoc.paymentProofs as PaymentProofRow[])
             : []
-          const incomingRows = Array.isArray(value) ? (value as TransactionHashRow[]) : []
+          const incomingRows = Array.isArray(value) ? (value as PaymentProofRow[]) : []
 
           if (incomingRows.length === 0) {
             return existingRows
           }
 
-          const existingKeys = new Set(existingRows.map(getTransactionHashRowKey))
+          const existingKeys = new Set(existingRows.map(getPaymentProofRowKey))
           const appendedRows = incomingRows.filter((row) => {
-            const key = getTransactionHashRowKey(row)
+            const key = getPaymentProofRowKey(row)
             if (existingKeys.has(key)) {
               return false
             }
@@ -164,7 +243,28 @@ export const orderFields: Field[] = [
         name: 'transactionHash',
         label: 'Transaction Hash',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
+      },
+      {
+        name: 'fulfilled',
+        label: 'Fulfilled',
+        type: 'checkbox',
+        defaultValue: false,
+        admin: {
+          description:
+            'Mark this payment proof as fulfilled after the order has been shipped or delivered.',
+        },
+      },
+      {
+        name: 'rejected',
+        label: 'Rejected',
+        type: 'checkbox',
+        defaultValue: false,
+        admin: {
+          description:
+            'Mark this payment proof as rejected if the payment was invalid or should not be counted.',
+        },
       },
     ],
   },

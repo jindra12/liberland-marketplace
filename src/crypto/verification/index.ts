@@ -1,12 +1,19 @@
 import BigNumber from 'bignumber.js'
 import { quantizeNativeAmount } from '../nativeAmount'
-import { getOrderById, getOrderCreatedAtMs, getOrderCryptoPriceEntries, getOrderTransactionHashEntries } from '../order'
+import {
+  getOrderById,
+  getOrderCreatedAtMs,
+  getOrderCryptoPriceEntries,
+  getOrderPaymentProofEntries,
+  getOrderPaymentTargetEntries,
+} from '../order'
 import { getPayloadInstance } from '../payload'
-import { resolveProductPaymentTargetsFromItems } from '../recipient'
-import type { OrderCryptoPrice, SupportedChain, VerifyOrderPaymentResult, VerifyTransactionResult } from '../types'
-import { verifyEthereumNativeTransfer } from './ethereum'
-import { verifySolanaPayTransaction } from './solanaPay'
-import { verifyTronNativeTransfer } from './tron'
+import type {
+  OrderCryptoPrice,
+  SupportedChain,
+  VerifyOrderPaymentResult,
+  VerifyTransactionResult,
+} from '../types'
 
 type VerificationGroup = {
   chain: SupportedChain
@@ -17,7 +24,9 @@ type VerificationGroup = {
   transactionHash: string
 }
 
-const toPriceMap = (prices: OrderCryptoPrice[]): Record<SupportedChain, OrderCryptoPrice | undefined> => {
+const toPriceMap = (
+  prices: OrderCryptoPrice[],
+): Record<SupportedChain, OrderCryptoPrice | undefined> => {
   return {
     ethereum: prices.find((price) => price.chain === 'ethereum'),
     solana: prices.find((price) => price.chain === 'solana'),
@@ -79,17 +88,19 @@ const verifyGroup = async ({
   )
 
   if (group.chain === 'ethereum') {
+    const { verifyEthereumNativeTransfer } = await import('./ethereum')
     return verifyEthereumNativeTransfer({
       chain: 'ethereum',
       expectedAmount: expectedNativeAmount,
       minTimestampMs,
-      orderIdToExclude: orderID,
+      orderId: orderID,
       recipientAddress: group.recipientAddress,
       transactionHash: group.transactionHash,
     })
   }
 
   if (group.chain === 'solana') {
+    const { verifySolanaPayTransaction } = await import('./solanaPay')
     return verifySolanaPayTransaction({
       chain: 'solana',
       expectedAmount: expectedNativeAmount,
@@ -100,44 +111,52 @@ const verifyGroup = async ({
     })
   }
 
+  const { verifyTronNativeTransfer } = await import('./tron')
   return verifyTronNativeTransfer({
     chain: 'tron',
     expectedAmount: expectedNativeAmount,
     minTimestampMs,
-    orderIdToExclude: orderID,
+    orderId: orderID,
     recipientAddress: group.recipientAddress,
     transactionHash: group.transactionHash,
   })
 }
 
-export const verifyTransactionOccurred = async (orderId: string): Promise<VerifyOrderPaymentResult> => {
+export const verifyTransactionOccurred = async (
+  orderId: string,
+): Promise<VerifyOrderPaymentResult> => {
   const order = await getOrderById(orderId)
-  const txEntries = getOrderTransactionHashEntries(order)
+  const txEntries = getOrderPaymentProofEntries(order)
 
   if (txEntries.length === 0) {
     return {
       orderId: order.id,
       ok: false,
-      error: 'Order has no transactionHashes entries to verify.',
+      error: 'Order has no paymentProofs entries to verify.',
       results: [],
     }
   }
 
   const payload = await getPayloadInstance()
   const results: VerifyTransactionResult[] = []
+  const snapshotTargets = getOrderPaymentTargetEntries(order)
+  let productTargets = snapshotTargets
 
-  let productTargets: Awaited<ReturnType<typeof resolveProductPaymentTargetsFromItems>>
-  try {
-    productTargets = await resolveProductPaymentTargetsFromItems({
-      items: order.items,
-      payload,
-    })
-  } catch (error) {
-    return {
-      orderId: order.id,
-      ok: false,
-      error: error instanceof Error ? error.message : 'Failed to resolve order payout targets.',
-      results: [],
+  if (productTargets.length === 0) {
+    const { resolveProductPaymentTargetsFromItems } = await import('../recipient')
+
+    try {
+      productTargets = await resolveProductPaymentTargetsFromItems({
+        items: order.items,
+        payload,
+      })
+    } catch (error) {
+      return {
+        orderId: order.id,
+        ok: false,
+        error: error instanceof Error ? error.message : 'Failed to resolve order payout targets.',
+        results: [],
+      }
     }
   }
 

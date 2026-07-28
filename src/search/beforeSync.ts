@@ -48,7 +48,14 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
       })
 
       if (doc !== null) {
-        populatedCategories.push(doc)
+        const categoryTitle = typeof doc.title === 'string' ? doc.title : null
+
+        if (categoryTitle !== null) {
+          populatedCategories.push({
+            id: doc.id,
+            title: categoryTitle,
+          })
+        }
       } else {
         console.error(
           `Failed. Category not found when syncing collection '${collection}' with id: '${id}' to search.`,

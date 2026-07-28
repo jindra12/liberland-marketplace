@@ -1,39 +1,60 @@
-import { authenticated } from '@/access/authenticated'
-import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
+import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
+import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { syncCompanyIdentityId } from '@/hooks/syncCompanyIdentityId'
 import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
+  lazySendItemUpdateNotifications,
+  lazySendRelatedItemPublishedNotifications,
+  lazyUpdateIdentityItemCountAfterChange,
+  lazyUpdateIdentityItemCountAfterDelete,
+} from '@/hooks/lazyCollectionHooks'
 import { getCurrencies } from '@/utilities/getCurrencies'
+import { publicCompanyFilter } from '@/access/publicCompanyFilter'
 import type { CollectionConfig } from 'payload'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
-  defaultSort: '-completenessScore',
+  defaultSort: '-contentRankScore',
   hooks: {
     beforeChange: [
+      requirePublicCompany,
       requireOwnCompany,
       syncCompanyIdentityId,
-      computeCompletenessScore([
-        'location',
-        'image',
-        'description',
-        'applyUrl',
-        'salaryRange.min',
-        'bounty.amount',
-      ]),
+      computeContentRanking({
+        fieldPaths: [
+          'location',
+          'image',
+          'description',
+          'applyUrl',
+          'salaryRange.min',
+          'bounty.amount',
+        ],
+      }),
       requireVerifiedEmailToPublish,
     ],
-    afterChange: [updateIdentityItemCountAfterChange('companyIdentityId')],
-    afterDelete: [updateIdentityItemCountAfterDelete('companyIdentityId')],
+    afterChange: [
+      lazySendItemUpdateNotifications('jobs'),
+      lazySendRelatedItemPublishedNotifications({
+        childCollection: 'jobs',
+        getParentID: (doc) =>
+          typeof doc.company === 'string' ? doc.company : (doc.company?.id ?? null),
+        parentCollection: 'companies',
+      }),
+      lazyUpdateIdentityItemCountAfterChange('companyIdentityId'),
+    ],
+    afterDelete: [lazyUpdateIdentityItemCountAfterDelete('companyIdentityId')],
   },
   admin: {
     useAsTitle: 'title',
@@ -53,14 +74,15 @@ export const Jobs: CollectionConfig = {
     drafts: true,
   },
   access: {
-    create: authenticated,
+    create: canCreateContentWithPublicCompany,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    createdByField,
     serverURLField(),
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
 
     // Each job connected to a company
     {
@@ -68,11 +90,12 @@ export const Jobs: CollectionConfig = {
       type: 'relationship',
       relationTo: 'companies',
       required: true,
-      filterOptions: onlyOwnDocsOrAdminFilter,
+      filterOptions: publicCompanyFilter,
     },
     {
       name: 'companyIdentityId',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       index: true,
       admin: {
         hidden: true,
@@ -80,7 +103,7 @@ export const Jobs: CollectionConfig = {
       },
     },
 
-    { name: 'location', type: 'text' },
+    { name: 'location', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
     { name: 'isActive', type: 'checkbox', defaultValue: true },
     { name: 'positions', type: 'number', required: true, min: 1, defaultValue: 1 },
 
@@ -144,9 +167,9 @@ export const Jobs: CollectionConfig = {
       defaultValue: () => new Date().toISOString(),
     },
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
     },
     {
       name: 'allowedIdentities',
@@ -176,7 +199,9 @@ export const Jobs: CollectionConfig = {
       name: 'description',
       label: 'Description',
     }),
-    { name: 'applyUrl', type: 'text' },
+    { name: 'applyUrl', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
+    notificationSubscriberCountField(),
+    notificationSubscriptionStatusField('jobs'),
     completenessScoreField,
   ],
 }

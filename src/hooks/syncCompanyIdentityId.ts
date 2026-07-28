@@ -1,19 +1,6 @@
 import type { CollectionBeforeChangeHook, PayloadRequest } from 'payload'
 
-type MaybeID = null | number | string | { id?: unknown }
-
-const toStringID = (value: MaybeID): null | string => {
-  if (typeof value === 'string') return value
-  if (typeof value === 'number') return String(value)
-
-  if (value && typeof value === 'object') {
-    const nestedID = value.id
-    if (typeof nestedID === 'string') return nestedID
-    if (typeof nestedID === 'number') return String(nestedID)
-  }
-
-  return null
-}
+import { toStringID, type MaybeID } from '@/utilities/toStringID'
 
 const getCompanyIdentityID = async ({
   companyID,
@@ -49,9 +36,7 @@ export const syncCompanyIdentityId: CollectionBeforeChangeHook = async ({
   }
 
   const shouldRecalculate =
-    operation === 'create' ||
-    Object.prototype.hasOwnProperty.call(next, 'company') ||
-    !originalDoc?.companyIdentityId
+    operation === 'create' || 'company' in next || !originalDoc?.companyIdentityId
 
   if (!shouldRecalculate) {
     next.companyIdentityId = originalDoc?.companyIdentityId ?? null

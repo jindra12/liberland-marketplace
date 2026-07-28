@@ -10,7 +10,7 @@ vi.mock('@/payments/cryptoAdapter', () => ({
   }),
 }))
 
-import { autoConfirmOrderOnTransactionHashAdd } from '@/hooks/autoConfirmOrderOnTransactionHashAdd'
+import { autoConfirmOrderOnPaymentProofAdd } from '@/hooks/autoConfirmOrderOnPaymentProofAdd'
 
 const createHookArgs = () => {
   const logger = {
@@ -22,13 +22,13 @@ const createHookArgs = () => {
     doc: {
       id: 'order_1',
       status: 'processing',
-      transactionHashes: [{ product: 'prod_1', chain: 'ethereum', transactionHash: '0xabc' }],
+      paymentProofs: [{ product: 'prod_1', chain: 'ethereum', transactionHash: '0xabc' }],
     },
     operation: 'update' as const,
     previousDoc: {
       id: 'order_1',
       status: 'processing',
-      transactionHashes: [],
+      paymentProofs: [],
     },
     req: {
       payload: {
@@ -39,7 +39,7 @@ const createHookArgs = () => {
   }
 }
 
-describe('autoConfirmOrderOnTransactionHashAdd', () => {
+describe('autoConfirmOrderOnPaymentProofAdd', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     confirmOrderMock.mockResolvedValue({
@@ -49,10 +49,10 @@ describe('autoConfirmOrderOnTransactionHashAdd', () => {
     })
   })
 
-  it('auto-confirms when a new transaction hash is appended on a processing order', async () => {
+  it('auto-confirms when a new payment proof is appended on a processing order', async () => {
     const { context, doc, operation, previousDoc, req } = createHookArgs()
 
-    const result = await autoConfirmOrderOnTransactionHashAdd({
+    const result = await autoConfirmOrderOnPaymentProofAdd({
       context,
       doc,
       operation,
@@ -76,10 +76,10 @@ describe('autoConfirmOrderOnTransactionHashAdd', () => {
     const previousDoc = {
       id: 'order_1',
       status: 'processing',
-      transactionHashes: [{ product: 'prod_1', chain: 'ethereum', transactionHash: '0xabc' }],
+      paymentProofs: [{ product: 'prod_1', chain: 'ethereum', transactionHash: '0xabc' }],
     }
 
-    await autoConfirmOrderOnTransactionHashAdd({
+    await autoConfirmOrderOnPaymentProofAdd({
       context,
       doc,
       operation,
@@ -90,12 +90,12 @@ describe('autoConfirmOrderOnTransactionHashAdd', () => {
     expect(confirmOrderMock).not.toHaveBeenCalled()
   })
 
-  it('swallows confirmation errors so transaction-hash updates do not crash', async () => {
+  it('swallows confirmation errors so payment-proof updates do not crash', async () => {
     confirmOrderMock.mockRejectedValueOnce(new Error('verification failed'))
 
     const { context, doc, logger, operation, previousDoc, req } = createHookArgs()
 
-    const result = await autoConfirmOrderOnTransactionHashAdd({
+    const result = await autoConfirmOrderOnPaymentProofAdd({
       context,
       doc,
       operation,

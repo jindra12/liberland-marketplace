@@ -1,13 +1,6 @@
-import type { CollectionBeforeChangeHook, CollectionConfig, Config, Field } from 'payload'
+import type { CollectionBeforeChangeHook, CollectionConfig, Config } from 'payload'
 
-const createdByField = (required: boolean): Field => ({
-  name: 'createdBy',
-  type: 'relationship',
-  relationTo: 'users',
-  required,
-  maxDepth: 0,
-  admin: { hidden: true, readOnly: true },
-})
+import { createdByField } from '@/fields/createdByField'
 
 const getRelationshipID = (value: unknown): string | null => {
   if (!value) return null
@@ -54,7 +47,7 @@ export const addCreatedBy = (config: Config): Config => ({
 
     return {
       ...collection,
-      fields: hasCreatedBy ? fields : [createdByField(collection.slug !== 'comments'), ...fields],
+      fields: hasCreatedBy ? fields : [createdByField, ...fields],
       hooks: {
         ...collection.hooks,
         beforeChange: [setCreatedBy, ...(collection.hooks?.beforeChange ?? [])],

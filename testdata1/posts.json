@@ -1,0 +1,902 @@
+[
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6ea6b6"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Vertex Test Data Launch (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Vertex Test Data Launch\n\nThis post exists in the test dataset so the frontend has something realistic to render.\n\nIt links to the payment-ready demo products and keeps the test environment looking like a real marketplace.\n (testdata1)",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "vertex-test-data-launch (testdata1)",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "461e3ae60b1f71d06d9ea828"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Three Ways to Pay in the Test Env (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Three Ways to Pay in the Test Env\n\nThe backup now includes Ethereum, Solana, and Tron products with matching user wallets so payment flows can be exercised end to end.\n (testdata1)",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "three-ways-to-pay-in-the-test-env (testdata1)",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0003"
+    },
+    "createdAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Marketplace Snapshot (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Marketplace Snapshot (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-03T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "marketplace-snapshot-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0004"
+    },
+    "createdAt": {
+      "$date": "2026-05-04T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-04T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Community Spotlight (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "cceec23902a9dd5c30701d4e"
+    },
+    "content": "# Community Spotlight (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-04T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "community-spotlight-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0005"
+    },
+    "createdAt": {
+      "$date": "2026-05-05T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-05T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Payments Roundup (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "e4fc1aa73c15cea8f5ecf4e1"
+    },
+    "content": "# Payments Roundup (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-05T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "payments-roundup-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0006"
+    },
+    "createdAt": {
+      "$date": "2026-05-06T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-06T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Settlement Notes (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Settlement Notes (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-06T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "settlement-notes-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0007"
+    },
+    "createdAt": {
+      "$date": "2026-05-07T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-07T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Product Directory Update (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "cceec23902a9dd5c30701d4e"
+    },
+    "content": "# Product Directory Update (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-07T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "product-directory-update-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0008"
+    },
+    "createdAt": {
+      "$date": "2026-05-08T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-08T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Company Showcase (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "e4fc1aa73c15cea8f5ecf4e1"
+    },
+    "content": "# Company Showcase (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-08T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "company-showcase-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0009"
+    },
+    "createdAt": {
+      "$date": "2026-05-09T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-09T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Launch Brief (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Launch Brief (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-09T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "launch-brief-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e000a"
+    },
+    "createdAt": {
+      "$date": "2026-05-10T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-10T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Operations Log (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "cceec23902a9dd5c30701d4e"
+    },
+    "content": "# Operations Log (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-10T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "operations-log-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e000b"
+    },
+    "createdAt": {
+      "$date": "2026-05-11T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-11T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Infrastructure Memo (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "e4fc1aa73c15cea8f5ecf4e1"
+    },
+    "content": "# Infrastructure Memo (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-11T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "infrastructure-memo-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e000c"
+    },
+    "createdAt": {
+      "$date": "2026-05-12T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-12T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Trading Desk Update (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Trading Desk Update (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-12T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "trading-desk-update-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e000d"
+    },
+    "createdAt": {
+      "$date": "2026-05-13T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-13T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Growth Report (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "cceec23902a9dd5c30701d4e"
+    },
+    "content": "# Growth Report (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-13T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "growth-report-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e000e"
+    },
+    "createdAt": {
+      "$date": "2026-05-14T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-14T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Creator Digest (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "e4fc1aa73c15cea8f5ecf4e1"
+    },
+    "content": "# Creator Digest (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-14T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "creator-digest-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e000f"
+    },
+    "createdAt": {
+      "$date": "2026-05-15T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-15T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Weekend Briefing (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Weekend Briefing (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-15T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "weekend-briefing-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0010"
+    },
+    "createdAt": {
+      "$date": "2026-05-16T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-16T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Developer Notes (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "cceec23902a9dd5c30701d4e"
+    },
+    "content": "# Developer Notes (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-16T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "developer-notes-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0011"
+    },
+    "createdAt": {
+      "$date": "2026-05-17T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-17T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Marketplace Signals (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "e4fc1aa73c15cea8f5ecf4e1"
+    },
+    "content": "# Marketplace Signals (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-17T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "marketplace-signals-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0012"
+    },
+    "createdAt": {
+      "$date": "2026-05-18T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-18T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Ecosystem Report (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "a4f8fac643015877c0bfd5d1"
+    },
+    "content": "# Ecosystem Report (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-18T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "ecosystem-report-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0013"
+    },
+    "createdAt": {
+      "$date": "2026-05-19T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-19T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Field Update (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "cceec23902a9dd5c30701d4e"
+    },
+    "content": "# Field Update (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "c8194e03168498b04b88b9b6"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-19T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "field-update-testdata1",
+    "_status": "published",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "54b6de5bd4fbc0c82d6e0014"
+    },
+    "createdAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "createdBy": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "title": "Release Notes (testdata1)",
+    "company": {
+      "$oid": "824a743c230cb55a725ac217"
+    },
+    "heroImage": {
+      "$oid": "e4fc1aa73c15cea8f5ecf4e1"
+    },
+    "content": "# Release Notes (testdata1)\n\nThis post expands the seeded marketplace content so browsing, search, and sharing flows have a fuller dataset to work with.\n\nThis entry belongs to the testdata1 deployment snapshot.\n",
+    "relatedPosts": [
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "3dae7d890246a9c8269b3eb6"
+        }
+      },
+      {
+        "relationTo": "products",
+        "value": {
+          "$oid": "ea9432e419fedd0ce1974f2c"
+        }
+      }
+    ],
+    "publishedAt": {
+      "$date": "2026-05-20T00:00:00.000Z"
+    },
+    "authors": [
+      {
+        "$oid": "eb4a56a38dd5c05623069ca9"
+      }
+    ],
+    "generateSlug": true,
+    "slug": "release-notes-testdata1",
+    "_status": "published",
+    "__v": 0
+  }
+]

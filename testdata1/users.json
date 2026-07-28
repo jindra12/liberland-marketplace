@@ -1,0 +1,342 @@
+[
+  {
+    "_id": {
+      "$oid": "eb4a56a38dd5c05623069ca9"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T00:37:04.256Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T00:38:16.513Z"
+    },
+    "name": "DJStern (testdata1)",
+    "email": "dorian.sternvukotic+testdata1@gmail.com",
+    "emailVerified": true,
+    "role": [
+      "admin"
+    ],
+    "wallets": [
+      {
+        "chain": "ethereum",
+        "provider": "test-data",
+        "address": "0x48b3Bc2d439395843E04b890530b9B9135Ef76a3"
+      },
+      {
+        "chain": "solana",
+        "provider": "test-data",
+        "address": "9qbXVSxjBqf7GT97uStb2g7JnM8xZk8GhPnnxjcfjjmp"
+      },
+      {
+        "chain": "tron",
+        "provider": "test-data",
+        "address": "TYKp9tVWjPpLeLLrWnzYZGFJa4Qt23UACz"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7a522ee22679047cc29cdd60"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T00:40:15.386Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T00:40:15.386Z"
+    },
+    "name": "Jan Jindráček (testdata1)",
+    "email": "jindra12.underdark+testdata1@gmail.com",
+    "emailVerified": true,
+    "role": [
+      "admin"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "742505abeaee1cf674ef596e"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T00:50:56.99Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T00:50:56.99Z"
+    },
+    "name": "Vertex Obrt (testdata1)",
+    "email": "vertexobrt+testdata1@gmail.com",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "wallets": [
+      {
+        "chain": "ethereum",
+        "provider": "test-data",
+        "address": "0x48b3Bc2d439395843E04b890530b9B9135Ef76a3"
+      },
+      {
+        "chain": "solana",
+        "provider": "test-data",
+        "address": "9qbXVSxjBqf7GT97uStb2g7JnM8xZk8GhPnnxjcfjjmp"
+      },
+      {
+        "chain": "tron",
+        "provider": "test-data",
+        "address": "TYKp9tVWjPpLeLLrWnzYZGFJa4Qt23UACz"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "c9fc50a5849bf7deec899542"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T14:25:41.16Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T14:26:04.151Z"
+    },
+    "name": "LLsol (testdata1)",
+    "email": "infollsol+testdata1@proton.me",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "b3b4e44e72bda7f94cbd93da"
+    },
+    "createdAt": {
+      "$date": "2026-02-22T21:47:22.127Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-22T21:47:22.127Z"
+    },
+    "name": "Mirek Kaspar (testdata1)",
+    "email": "k+testdata1@e0.cz",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "ffe54ddd0f86932449271190"
+    },
+    "createdAt": {
+      "$date": "2026-02-24T12:50:34.42Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-24T12:50:34.42Z"
+    },
+    "name": "Liberstake (testdata1)",
+    "email": "liberstake+testdata1@gmail.com",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "3d86c4ac9fdff4f15998de51"
+    },
+    "createdAt": {
+      "$date": "2026-03-04T21:52:48.915Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-04T21:55:50.263Z"
+    },
+    "name": "Libby (testdata1)",
+    "email": "x+testdata1@li.berland.io",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "da7dcd789c799a6ba68d591f"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T11:53:25.504Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T11:53:25.504Z"
+    },
+    "name": "Liberland X (testdata1)",
+    "email": "x+testdata1@liberland.io",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6c1b773b49c0f5826e701b0b"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T11:54:56.303Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T11:59:32.145Z"
+    },
+    "name": "vertex.o.brt@gmail.com (testdata1)",
+    "email": "vertex.o.brt+testdata1@gmail.com",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "f0e4cfc80d1bf1de79aa9f95"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T20:12:14.726Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T20:12:14.726Z"
+    },
+    "name": "Liberstake (testdata1)",
+    "email": "huknofamla+testdata1@necub.com",
+    "emailVerified": false,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6c03bc16acc5454d99b013f4"
+    },
+    "createdAt": {
+      "$date": "2026-03-25T22:59:13.089Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-25T22:59:13.089Z"
+    },
+    "name": "Liberstake 2 (testdata1)",
+    "email": "nodragopsi+testdata1@necub.com",
+    "emailVerified": false,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "d919023cc69b9a0519af6508"
+    },
+    "createdAt": {
+      "$date": "2026-03-26T15:56:19.729Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-26T15:56:51.547Z"
+    },
+    "name": "v.e.r.texobrt@gmail.com (testdata1)",
+    "email": "v.e.r.texobrt+testdata1@gmail.com",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "31073b1877cac392c8feb050"
+    },
+    "createdAt": {
+      "$date": "2026-03-28T12:46:36.969Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-28T12:46:36.969Z"
+    },
+    "name": "admin (testdata1)",
+    "email": "qlnpfs.f1oz+testdata1@dg75x9.com",
+    "emailVerified": false,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "8058441bf6e35e05d11da53d"
+    },
+    "createdAt": {
+      "$date": "2026-03-29T14:21:49.662Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-29T14:21:49.662Z"
+    },
+    "name": "admin (testdata1)",
+    "email": "qbqr55.d9lg+testdata1@qnxo7d.com",
+    "emailVerified": false,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7261022230ef9f5be319e201"
+    },
+    "createdAt": {
+      "$date": "2026-03-31T07:10:36.586Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-31T07:10:36.586Z"
+    },
+    "name": "Steve Wollett (testdata1)",
+    "email": "baalshamon+testdata1@gmail.com",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "807195c54240332de11adbde"
+    },
+    "createdAt": {
+      "$date": "2026-03-31T10:47:31.073Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-31T10:47:31.073Z"
+    },
+    "name": "admin (testdata1)",
+    "email": "4tklfs.xamf+testdata1@3sjd81.com",
+    "emailVerified": false,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "e025f62ecfc919c3cd7112ef"
+    },
+    "createdAt": {
+      "$date": "2026-04-08T06:47:20.97Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-08T06:52:09.973Z"
+    },
+    "name": "Arman (testdata1)",
+    "email": "tangianarman+testdata1@yahoo.com",
+    "emailVerified": true,
+    "role": [
+      "user"
+    ],
+    "__v": 0
+  }
+]

@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { decimalToUnits } from '@/crypto/math'
 import { getChainNativeDecimals } from '@/crypto/nativeAmount'
-import { getCryptoRateCacheSnapshot } from '@/crypto/rates/cache'
 import type { SupportedChain } from '@/crypto/types'
 import type { CollectionAfterReadHook, PayloadRequest } from 'payload'
 
@@ -16,9 +15,13 @@ type ProductCryptoPriceDoc = {
   priceInUSDEnabled?: unknown
 }
 
+type CryptoRateSnapshot = {
+  rates?: Partial<Record<SupportedChain, { nativePerStable?: unknown }>>
+}
+
 const rateSnapshotByRequest = new WeakMap<
   PayloadRequest,
-  Awaited<ReturnType<typeof getCryptoRateCacheSnapshot>>
+  CryptoRateSnapshot | null
 >()
 
 const pow10 = (exponent: number): bigint => 10n ** BigInt(exponent)
@@ -99,6 +102,7 @@ const getCachedRatesForRequest = async (req: PayloadRequest) => {
     return rateSnapshotByRequest.get(req) ?? null
   }
 
+  const { getCryptoRateCacheSnapshot } = await import('@/crypto/rates/cache')
   const snapshot = await getCryptoRateCacheSnapshot({ payload: req.payload })
   rateSnapshotByRequest.set(req, snapshot)
   return snapshot

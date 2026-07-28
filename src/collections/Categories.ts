@@ -1,6 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../access/anyone'
+import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { slugField } from 'payload'
 import { authenticated } from '../access/authenticated'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
@@ -19,10 +21,12 @@ export const Categories: CollectionConfig = {
     group: false,
   },
   fields: [
+    createdByField,
     {
       name: 'title',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
     },
     {
       name: "image",

@@ -1,5 +1,4 @@
 import type { Endpoint } from 'payload'
-import { cryptoAdapter } from '@/payments/cryptoAdapter'
 
 export const confirmCryptoOrderEndpoint: Endpoint = {
   path: '/orders/:id/confirm-crypto',
@@ -15,6 +14,7 @@ export const confirmCryptoOrderEndpoint: Endpoint = {
     }
 
     try {
+      const { cryptoAdapter } = await import('@/payments/cryptoAdapter')
       const result = await cryptoAdapter().confirmOrder({
         data: { orderID },
         ordersSlug: 'orders',

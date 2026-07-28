@@ -1,6 +1,7 @@
 import type { Field, GroupField } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
 
 export type LinkAppearances = 'default' | 'outline'
 
@@ -78,15 +79,16 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       relationTo: ['pages', 'posts'],
       required: true,
     },
-    {
-      name: 'url',
-      type: 'text',
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === 'custom',
+      {
+        name: 'url',
+        type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
+        admin: {
+          condition: (_, siblingData) => siblingData?.type === 'custom',
+        },
+        label: 'Custom URL',
+        required: true,
       },
-      label: 'Custom URL',
-      required: true,
-    },
   ]
 
   if (!disableLabel) {
@@ -103,11 +105,12 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       fields: [
         ...linkTypes,
         {
-          name: 'label',
-          type: 'text',
-          admin: {
-            width: '50%',
-          },
+        name: 'label',
+        type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
+        admin: {
+          width: '50%',
+        },
           label: 'Label',
           required: true,
         },

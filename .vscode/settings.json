@@ -36,5 +36,26 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit"
     }
-  }
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/build/**": true,
+    "**/coverage/**": true,
+    "**/screenshots/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/build": true,
+    "**/coverage": true,
+    "**/screenshots": true
+  },
+  "files.exclude": {
+    "**/.next": true,
+    "**/build": true,
+    "**/coverage": true
+  },
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "npm.autoDetect": "off"
 }

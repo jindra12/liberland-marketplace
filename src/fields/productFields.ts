@@ -1,35 +1,87 @@
-import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
-import { completenessScoreField } from "@/fields/completenessScoreField";
-import { markdownField } from "@/fields/markdownField";
-import { serverURLField } from '@/fields/serverURLField'
+import { publicCompanyFilter } from '@/access/publicCompanyFilter'
+import { createdByField } from '@/fields/createdByField'
+import { completenessScoreField } from '@/fields/completenessScoreField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
-import { Field } from "payload";
+import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
+import { productParametersField, relatedProductsField } from '@/fields/productParameterFields'
+import { serverURLField } from '@/fields/serverURLField'
+import { TEXT_INPUT_MAX_LENGTH } from './constants'
+import { mergeFields } from '@/utilities/mergeFields'
+import type {
+  CheckboxField,
+  Condition,
+  Field,
+  NumberField,
+  NumberFieldSingleValidation,
+} from 'payload'
 
-const readonlyCryptoPriceField = ({
-  label,
-  name,
-}: {
-  label: string
-  name: string
-}): Field => ({
+const readonlyCryptoPriceField = ({ label, name }: { label: string; name: string }): Field => ({
   name,
   type: 'text',
+  maxLength: TEXT_INPUT_MAX_LENGTH,
   virtual: true,
   access: {
     create: () => false,
     update: () => false,
   },
   admin: {
+    hidden: true,
     readOnly: true,
   },
   label,
 })
 
+const unlimitedInventoryFieldName = 'unlimitedInventory'
+
+type ProductInventoryData = {
+  enableVariants?: boolean | null
+  inventory?: number | null
+  unlimitedInventory?: boolean | null
+}
+
+type ProductInventoryConditionData = ProductInventoryData & {
+  id: number | string
+}
+
+type ProductInventoryCondition = Condition<ProductInventoryConditionData, ProductInventoryData>
+type ProductInventoryConditionArgs = Parameters<ProductInventoryCondition>[2]
+
+const isNamedField = (field: Field): field is Field & { name: string } =>
+  typeof field === 'object' && field !== null && 'name' in field && typeof field.name === 'string'
+
+const isInventoryField = (
+  field: Field,
+): field is NumberField & { hasMany?: false | undefined; validate?: NumberFieldSingleValidation } =>
+  isNamedField(field) &&
+  field.name === 'inventory' &&
+  field.type === 'number' &&
+  field.hasMany !== true
+
+const hasUnlimitedInventory = (siblingData: unknown): boolean =>
+  typeof siblingData === 'object' &&
+  siblingData !== null &&
+  'unlimitedInventory' in siblingData &&
+  siblingData.unlimitedInventory === true
+
+const unlimitedInventoryField: CheckboxField = {
+  name: unlimitedInventoryFieldName,
+  type: 'checkbox',
+  defaultValue: true,
+  label: 'Unlimited inventory',
+  admin: {
+    width: '50%',
+  },
+}
+
 export const productFields: Field[] = [
   serverURLField(),
+  createdByField,
   {
     name: 'name',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     required: true,
   },
 
@@ -37,13 +89,16 @@ export const productFields: Field[] = [
     name: 'company',
     type: 'relationship',
     relationTo: 'companies',
-    required: true,
-    filterOptions: onlyOwnDocsOrAdminFilter,
+    required: false,
+    filterOptions: publicCompanyFilter,
   },
+  relatedProductsField,
   {
     name: 'companyIdentityId',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     index: true,
+    required: false,
     admin: {
       hidden: true,
       readOnly: true,
@@ -53,6 +108,7 @@ export const productFields: Field[] = [
   {
     name: 'url',
     type: 'text',
+    maxLength: TEXT_INPUT_MAX_LENGTH,
     required: false,
   },
 
@@ -75,9 +131,9 @@ export const productFields: Field[] = [
   }),
   cryptoAddressesField(),
   {
-    name: "image",
-    type: "upload",
-    relationTo: "media",
+    name: 'image',
+    type: 'upload',
+    relationTo: 'media',
   },
   markdownField({
     name: 'description',
@@ -90,13 +146,128 @@ export const productFields: Field[] = [
       {
         name: 'key',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
       },
       {
         name: 'value',
         type: 'text',
+        maxLength: TEXT_INPUT_MAX_LENGTH,
       },
     ],
   },
+  productParametersField,
+  {
+    name: 'purchaseCount',
+    label: 'Purchases',
+    type: 'number',
+    defaultValue: 0,
+    admin: {
+      position: 'sidebar',
+      readOnly: true,
+    },
+    access: {
+      create: () => false,
+      update: () => false,
+    },
+  },
+  notificationSubscriberCountField(),
+  notificationSubscriptionStatusField('products'),
   completenessScoreField,
-];
+]
+
+export const mergeProductCollectionFields = (defaultFields: Field[]): Field[] => {
+  const fieldsWithUnlimitedInventory: Field[] = []
+
+  defaultFields.forEach((field) => {
+    if (isNamedField(field) && field.name === 'enableVariants') {
+      field.admin = {
+        ...field.admin,
+        hidden: true,
+      }
+      fieldsWithUnlimitedInventory.push(field)
+      return
+    }
+
+    if (!isInventoryField(field)) {
+      fieldsWithUnlimitedInventory.push(field)
+      return
+    }
+
+    const originalCondition = field.admin?.condition
+    const originalValidate = field.validate
+
+    const shouldShowUnlimitedInventoryField: ProductInventoryCondition = (
+      data,
+      siblingData,
+      args: ProductInventoryConditionArgs,
+    ) => {
+      if (originalCondition) {
+        return originalCondition(data, siblingData, args)
+      }
+
+      return true
+    }
+
+    const shouldShowInventoryField: ProductInventoryCondition = (
+      data,
+      siblingData,
+      args: ProductInventoryConditionArgs,
+    ) => {
+      if (Boolean(siblingData?.unlimitedInventory ?? data?.unlimitedInventory)) {
+        return false
+      }
+
+      return shouldShowUnlimitedInventoryField(data, siblingData, args)
+    }
+
+    const validateInventoryField: NumberFieldSingleValidation = (value, options) => {
+      if (hasUnlimitedInventory(options.siblingData)) {
+        return true
+      }
+
+      if (typeof value !== 'number') {
+        return 'Inventory is required unless Unlimited is checked.'
+      }
+
+      if (originalValidate) {
+        return originalValidate(value, options)
+      }
+
+      return true
+    }
+
+    fieldsWithUnlimitedInventory.push({
+      ...field,
+      admin: {
+        ...field.admin,
+        width: '50%',
+        condition: shouldShowInventoryField,
+      },
+      validate: validateInventoryField,
+    })
+
+    fieldsWithUnlimitedInventory.push({
+      ...unlimitedInventoryField,
+      admin: {
+        ...unlimitedInventoryField.admin,
+        condition: shouldShowUnlimitedInventoryField,
+      },
+    })
+  })
+
+  return mergeFields(fieldsWithUnlimitedInventory, productFields)
+}
+
+export const normalizeProductInventoryData = <T extends ProductInventoryData>(
+  data: T | undefined,
+): T | undefined => {
+  if (!data || !data.unlimitedInventory) {
+    return data
+  }
+
+  return {
+    ...data,
+    inventory: null,
+  }
+}

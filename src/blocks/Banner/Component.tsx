@@ -1,25 +1,30 @@
-import type { BannerBlock as BannerBlockProps } from 'src/payload-types'
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 import { cn } from '@/utilities/ui'
 import React from 'react'
 import RichText from '@/components/RichText'
 
-type Props = {
-  className?: string
-} & BannerBlockProps
+type BannerBlockProps = {
+  content: DefaultTypedEditorState
+  style: 'error' | 'info' | 'success' | 'warning'
+}
 
-export const BannerBlock: React.FC<Props> = ({ className, content, style }) => {
+type Props = BannerBlockProps & {
+  className?: string
+}
+
+export const BannerBlock: React.FC<Props> = (props) => {
   return (
-    <div className={cn('mx-auto my-8 w-full', className)}>
+    <div className={cn('mx-auto my-8 w-full', props.className)}>
       <div
         className={cn('border py-3 px-6 flex items-center rounded', {
-          'border-border bg-card': style === 'info',
-          'border-error bg-error/30': style === 'error',
-          'border-success bg-success/30': style === 'success',
-          'border-warning bg-warning/30': style === 'warning',
+          'border-border bg-card': props.style === 'info',
+          'border-error bg-error/30': props.style === 'error',
+          'border-success bg-success/30': props.style === 'success',
+          'border-warning bg-warning/30': props.style === 'warning',
         })}
       >
-        <RichText data={content} enableGutter={false} enableProse={false} />
+        <RichText data={props.content} enableGutter={false} enableProse={false} />
       </div>
     </div>
   )

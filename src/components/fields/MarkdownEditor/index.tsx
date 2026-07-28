@@ -1,7 +1,6 @@
 'use client'
 
 import { getTranslation } from '@payloadcms/translations'
-import MDEditor, { commands } from '@uiw/react-md-editor/nohighlight'
 import {
   FieldDescription,
   FieldError,
@@ -18,23 +17,7 @@ import React from 'react'
 
 import './index.scss'
 
-const editorCommands = [
-  commands.title,
-  commands.bold,
-  commands.italic,
-  commands.strikethrough,
-  commands.divider,
-  commands.link,
-  commands.quote,
-  commands.code,
-  commands.codeBlock,
-  commands.divider,
-  commands.unorderedListCommand,
-  commands.orderedListCommand,
-  commands.checkedListCommand,
-]
-
-const extraEditorCommands = [commands.codeEdit, commands.codeLive, commands.codePreview, commands.fullscreen]
+const MarkdownEditor = React.lazy(async () => await import('./MarkdownEditorContent'))
 
 const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   field: {
@@ -66,6 +49,17 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
   const classes = [fieldBaseClass, 'markdown-editor-field', className, showError && 'error', isReadOnly && 'read-only']
     .filter(Boolean)
     .join(' ')
+  const fallback = (
+    <textarea
+      className="markdown-editor-field__fallback"
+      disabled={isReadOnly}
+      id={inputId}
+      name={path}
+      onChange={(event) => setValue(event.target.value)}
+      placeholder={typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined}
+      value={markdownValue}
+    />
+  )
 
   return (
     <div className={classes}>
@@ -79,28 +73,26 @@ const MarkdownEditorFieldComponent: TextareaFieldClientComponent = ({
         {BeforeInput}
 
         <div className="markdown-editor-field__editor">
-          <MDEditor
-            commands={editorCommands}
-            data-color-mode={theme}
-            extraCommands={extraEditorCommands}
-            height={360}
-            hideToolbar={isReadOnly}
-            onChange={(nextValue) => setValue(nextValue ?? '')}
-            preview="live"
-            previewOptions={{ skipHtml: true }}
-            textareaProps={{
-              disabled: isReadOnly,
-              id: inputId,
-              name: path,
-              placeholder: typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined,
-            }}
-            value={markdownValue}
-            visibleDragbar={!isReadOnly}
-          />
+          <React.Suspense fallback={fallback}>
+            <MarkdownEditor
+              inputId={inputId}
+              isReadOnly={isReadOnly}
+              markdownValue={markdownValue}
+              placeholder={
+                typeof translatedPlaceholder === 'string' ? translatedPlaceholder : undefined
+              }
+              setValue={setValue}
+              path={path}
+              theme={theme}
+            />
+          </React.Suspense>
         </div>
 
         {AfterInput}
-        <RenderCustomComponent CustomComponent={Description} Fallback={<FieldDescription description={description} path={path} />} />
+        <RenderCustomComponent
+          CustomComponent={Description}
+          Fallback={<FieldDescription description={description} path={path} />}
+        />
       </div>
     </div>
   )

@@ -9,7 +9,10 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
+import { isAdminUser } from '@/access/admin'
 import { authenticated } from '../access/authenticated'
+import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 
 const filename = fileURLToPath(import.meta.url)
@@ -23,12 +26,14 @@ export const Media: CollectionConfig = {
     delete: onlyOwnDocsOrAdmin,
     read: anyone,
     update: onlyOwnDocsOrAdmin,
-    admin: ({ req }) => req.user?.role?.includes('admin') || false,
+    admin: ({ req }) => isAdminUser(req.user),
   },
   fields: [
+    createdByField,
     {
       name: 'alt',
       type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
       //required: true,
     },
     {

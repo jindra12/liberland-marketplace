@@ -7,6 +7,18 @@
     overflow: hidden;
   }
 
+  &__fallback {
+    background: var(--theme-elevation-0);
+    border: 0;
+    color: var(--theme-text);
+    display: block;
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    min-height: 360px;
+    padding: base(0.8);
+    resize: vertical;
+    width: 100%;
+  }
+
   .w-md-editor {
     --md-editor-font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
     --md-editor-background-color: var(--theme-elevation-0);
@@ -46,4 +58,3 @@
     }
   }
 }
-

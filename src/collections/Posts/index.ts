@@ -1,22 +1,19 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { completenessScoreField } from '@/fields/completenessScoreField'
+import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import { markdownField } from '@/fields/markdownField'
 import { populateAuthors } from './hooks/populateAuthors'
+import { setPostAuthors } from './hooks/setPostAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import { requireOwnCompany } from '@/hooks/requireOwnCompany'
+import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 
 import {
   MetaDescriptionField,
@@ -29,11 +26,12 @@ import { slugField } from 'payload'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
+  defaultSort: '-contentRankScore',
   access: {
     create: authenticated,
-    delete: authenticated,
+    delete: onlyOwnDocsOrAdmin,
     read: authenticatedOrPublished,
-    update: authenticated,
+    update: onlyOwnDocsOrAdmin,
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -66,12 +64,36 @@ export const Posts: CollectionConfig<'posts'> = {
         req,
       }),
     useAsTitle: 'title',
+    baseFilter: ({ req }) => {
+      const filter = onlyOwnDocsOrAdminFilter({ user: req.user })
+      return typeof filter === 'object' ? filter : null
+    },
   },
   fields: [
+    createdByField,
     {
       name: 'title',
       type: 'text',
       required: true,
+      maxLength: TEXT_INPUT_MAX_LENGTH,
+    },
+    {
+      name: 'repost',
+      type: 'text',
+      maxLength: TEXT_INPUT_MAX_LENGTH,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'company',
+      type: 'relationship',
+      relationTo: 'companies',
+      required: true,
+      filterOptions: onlyOwnDocsOrAdminFilter,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       type: 'tabs',
@@ -83,24 +105,11 @@ export const Posts: CollectionConfig<'posts'> = {
               type: 'upload',
               relationTo: 'media',
             },
-            {
+            markdownField({
               name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
-                  ]
-                },
-              }),
-              label: false,
+              label: 'Content',
               required: true,
-            },
+            }),
           ],
           label: 'Content',
         },
@@ -112,7 +121,10 @@ export const Posts: CollectionConfig<'posts'> = {
               admin: {
                 position: 'sidebar',
               },
-              filterOptions: ({ id }) => {
+              filterOptions: ({ id, relationTo }) => {
+                if (relationTo !== 'posts') {
+                  return true
+                }
                 return {
                   id: {
                     not_in: [id],
@@ -120,7 +132,7 @@ export const Posts: CollectionConfig<'posts'> = {
                 }
               },
               hasMany: true,
-              relationTo: 'posts',
+              relationTo: ['companies', 'jobs', 'posts', 'products', 'identities', 'startups'],
             },
             {
               name: 'categories',
@@ -192,6 +204,7 @@ export const Posts: CollectionConfig<'posts'> = {
       hasMany: true,
       relationTo: 'users',
     },
+    completenessScoreField,
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
@@ -206,19 +219,29 @@ export const Posts: CollectionConfig<'posts'> = {
         readOnly: true,
       },
       fields: [
-        {
-          name: 'id',
-          type: 'text',
-        },
-        {
-          name: 'name',
-          type: 'text',
-        },
+            {
+              name: 'id',
+              type: 'text',
+              maxLength: TEXT_INPUT_MAX_LENGTH,
+            },
+            {
+              name: 'name',
+              type: 'text',
+              maxLength: TEXT_INPUT_MAX_LENGTH,
+            },
       ],
     },
     slugField(),
   ],
   hooks: {
+    beforeChange: [
+      setPostAuthors,
+      requireOwnCompany,
+      requireVerifiedEmailToPublish,
+      computeContentRanking({
+        fieldPaths: ['title', 'heroImage', 'content', 'relatedPosts', 'categories', 'meta.title', 'meta.description', 'meta.image'],
+      }),
+    ],
     afterChange: [revalidatePost],
     afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],

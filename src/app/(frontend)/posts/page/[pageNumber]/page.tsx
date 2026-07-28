@@ -1,6 +1,7 @@
 import type { Metadata } from 'next/types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import type { CardPostData } from '@/components/Card'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
@@ -52,7 +53,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      <CollectionArchive posts={posts.docs as unknown as CardPostData[]} />
 
       <div className="container">
         {posts?.page && posts?.totalPages > 1 && (
@@ -63,7 +64,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+export const generateMetadata = async ({ params: paramsPromise }: Args): Promise<Metadata> => {
   const { pageNumber } = await paramsPromise
   return {
     title: `Payload Website Template Posts Page ${pageNumber || ''}`,

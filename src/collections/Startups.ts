@@ -1,18 +1,26 @@
-import { authenticated } from '@/access/authenticated'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
+import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
+import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
+import { createdByField } from '@/fields/createdByField'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
+import { publicCompanyFilter } from '@/access/publicCompanyFilter'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
+  lazySendItemUpdateNotifications,
+  lazySendRelatedItemPublishedNotifications,
+  lazyUpdateIdentityItemCountAfterChange,
+  lazyUpdateIdentityItemCountAfterDelete,
+} from '@/hooks/lazyCollectionHooks'
 import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
-import { joinStartup, leaveStartup } from '@/endpoints/involvedUsers'
-import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
+import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
+import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { getCurrencies } from '@/utilities/getCurrencies'
 import type { CollectionConfig } from 'payload'
 
@@ -29,23 +37,32 @@ const resourceOptions = [
 
 export const Startups: CollectionConfig = {
   slug: 'startups',
-  defaultSort: '-completenessScore',
-  endpoints: [joinStartup, leaveStartup],
+  labels: {
+    singular: 'Venture',
+    plural: 'Ventures',
+  },
+  defaultSort: '-contentRankScore',
   hooks: {
     beforeChange: [
+      requirePublicCompany,
       requireOwnCompany,
-      computeCompletenessScore([
-        'description',
-        'image',
-        'fundsNeeded.amount',
-        'lookingFor',
-        'alreadyHave',
-      ]),
+      computeContentRanking({
+        fieldPaths: ['description', 'image', 'fundsNeeded.amount', 'lookingFor', 'alreadyHave'],
+      }),
       requireVerifiedEmailToPublish,
       validateInvolvedUsers,
     ],
-    afterChange: [updateIdentityItemCountAfterChange('identity')],
-    afterDelete: [updateIdentityItemCountAfterDelete('identity')],
+    afterChange: [
+      lazySendItemUpdateNotifications('startups'),
+      lazySendRelatedItemPublishedNotifications({
+        childCollection: 'startups',
+        getParentID: (doc) =>
+          typeof doc.company === 'string' ? doc.company : (doc.company?.id ?? null),
+        parentCollection: 'companies',
+      }),
+      lazyUpdateIdentityItemCountAfterChange('identity'),
+    ],
+    afterDelete: [lazyUpdateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
     drafts: true,
@@ -65,23 +82,21 @@ export const Startups: CollectionConfig = {
     },
   },
   access: {
-    create: authenticated,
+    create: canCreateContentWithPublicCompany,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    createdByField,
     serverURLField(),
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
     {
       name: 'company',
       type: 'relationship',
       relationTo: 'companies',
       required: true,
-      filterOptions: ({ user }) => {
-        if (!user) return true // Local API calls (internal operations)
-        return onlyOwnDocsOrAdminFilter({ user })
-      },
+      filterOptions: publicCompanyFilter,
     },
     markdownField({
       name: 'description',
@@ -157,6 +172,8 @@ export const Startups: CollectionConfig = {
       relationTo: 'users',
       hasMany: true,
     },
+    notificationSubscriberCountField(),
+    notificationSubscriptionStatusField('startups'),
     completenessScoreField,
   ],
 }

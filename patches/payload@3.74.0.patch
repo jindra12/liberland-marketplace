@@ -1,0 +1,14 @@
+diff --git a/dist/uploads/safeFetch.js b/dist/uploads/safeFetch.js
+index ff16f61..1d79f3e 100644
+--- a/dist/uploads/safeFetch.js
++++ b/dist/uploads/safeFetch.js
+@@ -1,6 +1,8 @@
++import { createRequire } from 'node:module';
+ import { lookup } from 'dns';
+ import ipaddr from 'ipaddr.js';
+-import { Agent, fetch as undiciFetch } from 'undici';
++const require = createRequire(import.meta.url);
++const { Agent, fetch: undiciFetch } = require('undici');
+ /**
+  * @internal this is used to mock the IP `lookup` function in integration tests
+  */ export const _internal_safeFetchGlobal = {

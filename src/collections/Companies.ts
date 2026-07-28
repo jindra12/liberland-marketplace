@@ -1,28 +1,57 @@
-import { authenticated } from '@/access/authenticated'
+import { computeContentRanking } from '@/hooks/computeContentRanking'
+import { createdByField } from '@/fields/createdByField'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { markdownField } from '@/fields/markdownField'
+import { notificationSubscriberCountField } from '@/fields/notificationSubscriberCountField'
+import { notificationSubscriptionStatusField } from '@/fields/notificationSubscriptionStatusField'
 import { serverURLField } from '@/fields/serverURLField'
 import { cryptoAddressesField } from '@/fields/cryptoAddressesField'
 import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
-import { computeCompletenessScore } from '@/hooks/computeCompletenessScore'
+import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
+import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import {
-  updateIdentityItemCountAfterChange,
-  updateIdentityItemCountAfterDelete,
-} from '@/hooks/updateIdentityItemCount'
+  lazySendItemUpdateNotifications,
+  lazySendRelatedItemPublishedNotifications,
+  lazyUpdateIdentityItemCountAfterChange,
+  lazyUpdateIdentityItemCountAfterDelete,
+} from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
 
 export const Companies: CollectionConfig = {
   slug: 'companies',
-  defaultSort: '-completenessScore',
+  defaultSort: '-contentRankScore',
   hooks: {
+    beforeValidate: [
+      ({ data, operation }) => {
+        if (operation !== 'create') {
+          return data
+        }
+
+        return {
+          ...data,
+          isPrivate: data?.isPrivate === true,
+        }
+      },
+    ],
     beforeChange: [
-      computeCompletenessScore(['website', 'phone', 'email', 'image', 'description']),
+      computeContentRanking({
+        fieldPaths: ['website', 'phone', 'email', 'image', 'description'],
+      }),
       requireVerifiedEmailToPublish,
     ],
-    afterChange: [updateIdentityItemCountAfterChange('identity')],
-    afterDelete: [updateIdentityItemCountAfterDelete('identity')],
+    afterChange: [
+      lazySendItemUpdateNotifications('companies'),
+      lazySendRelatedItemPublishedNotifications({
+        childCollection: 'companies',
+        getParentID: (doc) =>
+          typeof doc.identity === 'string' ? doc.identity : (doc.identity?.id ?? null),
+        parentCollection: 'identities',
+      }),
+      lazyUpdateIdentityItemCountAfterChange('identity'),
+    ],
+    afterDelete: [lazyUpdateIdentityItemCountAfterDelete('identity')],
   },
   versions: {
     drafts: true,
@@ -42,22 +71,59 @@ export const Companies: CollectionConfig = {
     },
   },
   access: {
-    create: authenticated,
+    create: canCreateContentWithPublicCompany,
     delete: onlyOwnDocsOrAdmin,
     read: publishedOrOwnDocsOrAdmin,
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    createdByField,
     serverURLField(),
-    { name: 'name', type: 'text', required: true },
-    { name: 'website', type: 'text' },
-    { name: 'phone', type: 'text' },
+    {
+      name: 'isPrivate',
+      type: 'checkbox',
+      defaultValue: false,
+      index: true,
+      admin: {
+        description:
+          'Keep this enabled to restrict the company from being used in jobs, products, and ventures.',
+      },
+    },
+    {
+      name: 'noAutoPost',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Disable automated posting?',
+    },
+    {
+      name: 'verification',
+      type: 'select',
+      defaultValue: 'unverified',
+      label: 'Verification',
+      options: [
+        {
+          label: 'Trader',
+          value: 'trader',
+        },
+        {
+          label: 'Private seller',
+          value: 'private-seller',
+        },
+        {
+          label: 'Unverified / not provided',
+          value: 'unverified',
+        },
+      ],
+    },
+    { name: 'name', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
+    { name: 'website', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
+    { name: 'phone', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
     { name: 'email', type: 'email' },
     cryptoAddressesField(),
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
     },
     markdownField({
       name: 'description',
@@ -98,6 +164,8 @@ export const Companies: CollectionConfig = {
         allowEdit: true,
       },
     },
+    notificationSubscriberCountField(),
+    notificationSubscriptionStatusField('companies'),
     completenessScoreField,
   ],
 }
