@@ -304,8 +304,18 @@ reindex_search_if_needed() {
   fi
 
   echo "Reindexing search documents after test data seed..."
-  run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" exec -T app sh -lc 'curl -fsS -H "authorization: Bearer ${CRON_SECRET:-$PAYLOAD_SECRET}" "http://127.0.0.1:${PORT:-${APP_PORT:-3001}}/api/cron/reindex-search" >/dev/null'
-  echo "Search reindex complete."
+
+  for attempt in {1..60}; do
+    if run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" exec -T app sh -lc 'curl -fsS -H "authorization: Bearer ${CRON_SECRET:-$PAYLOAD_SECRET}" "http://127.0.0.1:${PORT:-${APP_PORT:-3001}}/api/cron/reindex-search" >/dev/null'; then
+      echo "Search reindex complete."
+      return
+    fi
+
+    sleep 2
+  done
+
+  echo "Error: search reindex endpoint never became ready." >&2
+  return 1
 }
 
 generate_secret() {
