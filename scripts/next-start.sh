@@ -41,10 +41,10 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-./scripts/crypto-rate-cron.sh &
+bash ./scripts/crypto-rate-cron.sh &
 CRYPTO_CRON_PID="$!"
 
-./scripts/ai-repost-cron.sh &
+bash ./scripts/ai-repost-cron.sh &
 AI_CRON_PID="$!"
 
 ./node_modules/.bin/next start -H "${SERVER_HOST}" -p "${PORT}" &

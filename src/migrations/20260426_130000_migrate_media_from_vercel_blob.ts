@@ -1,5 +1,6 @@
+import 'dotenv/config'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-mongodb'
-import type { ObjectId } from 'mongodb'
+import { ObjectId } from 'mongodb'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -31,6 +32,11 @@ type LegacyMediaDoc = {
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const localMediaDir = path.resolve(dirname, '../../public/media')
+const publicDir = path.resolve(dirname, '../../public')
+const testDataMediaDir = path.resolve(dirname, '../../testdata/media')
+const blobApiUrl = 'https://vercel.com/api/blob'
+const blobReadWriteToken = process.env.BLOB_READ_WRITE_TOKEN || null
+const blobUrlCache = new Map<string, string | null>()
 
 const isLegacyBlobUrl = (value: string | null | undefined): value is string => {
   if (typeof value !== 'string' || value.length === 0) {
@@ -73,15 +79,100 @@ const ensureDirectory = async (targetPath: string): Promise<void> => {
   await fs.mkdir(path.dirname(targetPath), { recursive: true })
 }
 
-const writeRemoteFileIfMissing = async (remoteUrl: string, targetFilename: string): Promise<void> => {
+const fetchBlobUrlForFilename = async (targetFilename: string): Promise<string | null> => {
+  const cachedUrl = blobUrlCache.get(targetFilename)
+  if (cachedUrl !== undefined) {
+    return cachedUrl
+  }
+
+  if (!blobReadWriteToken) {
+    blobUrlCache.set(targetFilename, null)
+    return null
+  }
+
+  const requestUrl = new URL(blobApiUrl)
+  requestUrl.searchParams.set('prefix', targetFilename)
+  requestUrl.searchParams.set('limit', '100')
+
+  const response = await fetch(requestUrl, {
+    headers: {
+      authorization: `Bearer ${blobReadWriteToken}`,
+    },
+  })
+
+  if (!response.ok) {
+    blobUrlCache.set(targetFilename, null)
+    return null
+  }
+
+  const result = (await response.json()) as {
+    blobs?: Array<{
+      downloadUrl?: string
+      pathname?: string
+      url?: string
+    }>
+  }
+
+  const matchingBlob = result.blobs?.find((blob) => blob.pathname === targetFilename)
+  const matchingUrl = matchingBlob?.downloadUrl ?? matchingBlob?.url ?? null
+  blobUrlCache.set(targetFilename, matchingUrl)
+
+  return matchingUrl
+}
+
+const readExistingSourcePath = async (targetFilename: string): Promise<string | null> => {
+  const sourceCandidates = [
+    path.join(publicDir, targetFilename),
+    path.join(testDataMediaDir, targetFilename),
+  ]
+
+  for (let index = 0; index < sourceCandidates.length; index += 1) {
+    const candidate = sourceCandidates[index]
+    try {
+      await fs.access(candidate)
+      return candidate
+    } catch {
+      // Try the next source candidate.
+    }
+  }
+
+  return null
+}
+
+const writeRemoteFileIfMissing = async (
+  remoteUrl: string,
+  targetFilename: string,
+): Promise<'already-present' | 'downloaded' | 'copied-local' | 'missing-source'> => {
   const targetPath = path.join(localMediaDir, targetFilename)
   await ensureDirectory(targetPath)
 
   try {
     await fs.access(targetPath)
-    return
+    return 'already-present'
   } catch {
     // The file does not exist locally yet.
+  }
+
+  const localSourcePath = await readExistingSourcePath(targetFilename)
+  if (localSourcePath) {
+    await fs.copyFile(localSourcePath, targetPath)
+    return 'copied-local'
+  }
+
+  const blobUrl = await fetchBlobUrlForFilename(targetFilename)
+  if (blobUrl) {
+    const response = await fetch(blobUrl)
+    if (!response.ok) {
+      throw new Error(`Failed to download ${blobUrl}: ${response.status} ${response.statusText}`)
+    }
+
+    const arrayBuffer = await response.arrayBuffer()
+    await fs.writeFile(targetPath, new Uint8Array(arrayBuffer))
+    return 'downloaded'
+  }
+
+  if (!isLegacyBlobUrl(remoteUrl)) {
+    return 'missing-source'
   }
 
   const response = await fetch(remoteUrl)
@@ -91,6 +182,7 @@ const writeRemoteFileIfMissing = async (remoteUrl: string, targetFilename: strin
 
   const arrayBuffer = await response.arrayBuffer()
   await fs.writeFile(targetPath, new Uint8Array(arrayBuffer))
+  return 'downloaded'
 }
 
 const getLocalFilename = (doc: LegacyMediaDoc, remoteUrl: string, fallbackName: string): string => {
@@ -102,13 +194,16 @@ const migrateSize = async (
   sizeName: keyof NonNullable<LegacyMediaDoc['sizes']>,
   sizeDoc: MediaSizeDoc,
 ): Promise<{ filename: string; url: string } | null> => {
-  if (!isLegacyBlobUrl(sizeDoc.url)) {
+  if (typeof sizeDoc.url !== 'string' || sizeDoc.url.length === 0) {
     return null
   }
 
   const fallbackName = `${String(doc._id)}-${sizeName}`
   const targetFilename = sizeDoc.filename ?? filenameFromUrl(sizeDoc.url) ?? fallbackName
-  await writeRemoteFileIfMissing(sizeDoc.url, targetFilename)
+  const sourceKind = await writeRemoteFileIfMissing(sizeDoc.url, targetFilename)
+  if (sourceKind === 'missing-source') {
+    return null
+  }
 
   return {
     filename: targetFilename,
@@ -123,6 +218,9 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
   }
 
   await fs.mkdir(localMediaDir, { recursive: true })
+  payload.logger.info(
+    `[migration:migrate_media_from_vercel_blob] Starting. mediaDir=${localMediaDir} publicDir=${publicDir} testDataMediaDir=${testDataMediaDir}`,
+  )
 
   const cursor = mediaCollection.find(
     {},
@@ -150,18 +248,70 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
   let migratedDocs = 0
   let copiedFiles = 0
   let skippedDocs = 0
+  let copiedLocalFiles = 0
+  let downloadedFiles = 0
+  let missingSourceFiles = 0
 
   for (let index = 0; index < docs.length; index += 1) {
     const doc = docs[index]
-    const originalUrl = isLegacyBlobUrl(doc.url) ? doc.url : null
-    const thumbnailUrl = isLegacyBlobUrl(doc.thumbnailURL) ? doc.thumbnailURL : null
+    const originalUrl = typeof doc.url === 'string' ? doc.url : null
+    const thumbnailUrl = typeof doc.thumbnailURL === 'string' ? doc.thumbnailURL : null
     const sizeEntries = Object.entries(doc.sizes ?? {}) as [
       keyof NonNullable<LegacyMediaDoc['sizes']>,
       MediaSizeDoc | undefined,
     ][]
 
-    const hasLegacySize = sizeEntries.some(([, sizeDoc]) => isLegacyBlobUrl(sizeDoc?.url))
-    if (!originalUrl && !thumbnailUrl && !hasLegacySize) {
+    const allTargets = [
+      {
+        label: 'original',
+        url: originalUrl,
+        filename: getLocalFilename(doc, originalUrl ?? '', String(doc._id)),
+      },
+      {
+        label: 'thumbnail',
+        url: thumbnailUrl,
+        filename:
+          doc.sizes?.thumbnail?.filename ??
+          filenameFromUrl(thumbnailUrl) ??
+          `${String(doc._id)}-thumbnail`,
+      },
+      ...sizeEntries
+        .filter(([, sizeDoc]) => Boolean(sizeDoc))
+        .map(([sizeName, sizeDoc]) => {
+          const resolvedSizeDoc = sizeDoc as MediaSizeDoc
+          return {
+            label: String(sizeName),
+            url: resolvedSizeDoc.url ?? null,
+            filename:
+              resolvedSizeDoc.filename ??
+              filenameFromUrl(resolvedSizeDoc.url) ??
+              `${String(doc._id)}-${String(sizeName)}`,
+          }
+        }),
+    ]
+
+    const needsMigration = (
+      await Promise.all(
+        allTargets.map(async ({ url, filename }) => {
+          if (typeof url !== 'string' || url.length === 0) {
+            return false
+          }
+
+          if (!url.startsWith('/media/')) {
+            return true
+          }
+
+          try {
+            await fs.access(path.join(localMediaDir, filename))
+            return false
+          } catch {
+            return true
+          }
+        }),
+      )
+    ).some(Boolean)
+
+    if (!needsMigration) {
       skippedDocs += 1
       continue
     }
@@ -171,10 +321,18 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
     if (originalUrl) {
       const fallbackName = String(doc._id)
       const targetFilename = getLocalFilename(doc, originalUrl, fallbackName)
-      await writeRemoteFileIfMissing(originalUrl, targetFilename)
-      updates.url = toLocalUrl(targetFilename)
-      updates.filename = targetFilename
-      copiedFiles += 1
+      const sourceKind = await writeRemoteFileIfMissing(originalUrl, targetFilename)
+      if (sourceKind === 'copied-local') copiedLocalFiles += 1
+      if (sourceKind === 'downloaded') downloadedFiles += 1
+      if (sourceKind === 'missing-source') missingSourceFiles += 1
+      if (sourceKind !== 'missing-source' && !originalUrl.startsWith('/media/')) {
+        updates.url = toLocalUrl(targetFilename)
+        updates.filename = targetFilename
+        copiedFiles += 1
+        payload.logger.info(
+          `[migration:migrate_media_from_vercel_blob] Repaired original for ${String(doc._id)} using ${sourceKind} source -> ${targetFilename}`,
+        )
+      }
     }
 
     if (thumbnailUrl) {
@@ -183,9 +341,17 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
         filenameFromUrl(thumbnailUrl) ??
         `${String(doc._id)}-thumbnail`
 
-      await writeRemoteFileIfMissing(thumbnailUrl, thumbnailFilename)
-      updates.thumbnailURL = toLocalUrl(thumbnailFilename)
-      copiedFiles += 1
+      const sourceKind = await writeRemoteFileIfMissing(thumbnailUrl, thumbnailFilename)
+      if (sourceKind === 'copied-local') copiedLocalFiles += 1
+      if (sourceKind === 'downloaded') downloadedFiles += 1
+      if (sourceKind === 'missing-source') missingSourceFiles += 1
+      if (sourceKind !== 'missing-source' && !thumbnailUrl.startsWith('/media/')) {
+        updates.thumbnailURL = toLocalUrl(thumbnailFilename)
+        copiedFiles += 1
+        payload.logger.info(
+          `[migration:migrate_media_from_vercel_blob] Repaired thumbnail for ${String(doc._id)} using ${sourceKind} source -> ${thumbnailFilename}`,
+        )
+      }
     }
 
     if (sizeEntries.length > 0) {
@@ -199,6 +365,11 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
 
         const migratedSize = await migrateSize(doc, sizeName, sizeDoc)
         if (!migratedSize) {
+          if (sizeDoc?.url) {
+            payload.logger.warn(
+              `[migration:migrate_media_from_vercel_blob] Missing source for size ${String(sizeName)} on ${String(doc._id)} (${sizeDoc.url}).`,
+            )
+          }
           continue
         }
 
@@ -207,10 +378,24 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
           filename: migratedSize.filename,
           url: migratedSize.url,
         }
-        copiedFiles += 1
+        if (sizeDoc.url !== migratedSize.url) {
+          copiedFiles += 1
+        }
+        payload.logger.info(
+          `[migration:migrate_media_from_vercel_blob] Repaired size ${String(sizeName)} for ${String(doc._id)} -> ${migratedSize.filename}`,
+        )
       }
 
       updates.sizes = updatedSizes
+    }
+
+    const updateKeys = Object.keys(updates)
+    if (updateKeys.length === 0) {
+      skippedDocs += 1
+      payload.logger.info(
+        `[migration:migrate_media_from_vercel_blob] No recoverable asset changes for ${String(doc._id)}.`,
+      )
+      continue
     }
 
     await mediaCollection.updateOne(
@@ -225,7 +410,7 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
   }
 
   payload.logger.info(
-    `[migration:migrate_media_from_vercel_blob] Completed. scanned=${docs.length} migrated=${migratedDocs} copiedFiles=${copiedFiles} skipped=${skippedDocs}`,
+    `[migration:migrate_media_from_vercel_blob] Completed. scanned=${docs.length} migrated=${migratedDocs} copiedFiles=${copiedFiles} copiedLocalFiles=${copiedLocalFiles} downloadedFiles=${downloadedFiles} missingSourceFiles=${missingSourceFiles} skipped=${skippedDocs}`,
   )
 }
 

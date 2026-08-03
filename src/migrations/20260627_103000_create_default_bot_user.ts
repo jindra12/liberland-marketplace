@@ -4,25 +4,36 @@ import {
 } from '@/utilities/defaultBotUser'
 
 type DefaultBotUserMigrationPayload = {
-  create: (args: {
-    collection: 'users'
-    data: ReturnType<typeof getDefaultBotUserData>
-    overrideAccess: true
-  }) => Promise<unknown>
-  delete: (args: {
-    collection: 'users'
-    id: string
-    overrideAccess: true
-  }) => Promise<unknown>
+  db: {
+    create: (args: {
+      collection: 'users'
+      data: ReturnType<typeof getDefaultBotUserData>
+      req?: unknown
+    }) => Promise<unknown>
+    delete: (args: {
+      collection: 'users'
+      id: string
+      req?: unknown
+    }) => Promise<unknown>
+  }
   find: (args: {
     collection: 'users'
     depth: 0
     limit: 1
     overrideAccess: true
     where: {
-      bot: {
-        equals: true
-      }
+      OR: Array<
+        | {
+            bot: {
+              equals: true
+            }
+          }
+        | {
+            email: {
+              equals: string
+            }
+          }
+      >
     }
   }) => Promise<{
     docs: Array<{
@@ -38,29 +49,13 @@ type DefaultBotUserMigrationPayload = {
 
 type DefaultBotUserMigrationUpArgs = {
   payload: DefaultBotUserMigrationPayload
+  req?: unknown
   session?: unknown
 }
 
 type DefaultBotUserMigrationDownArgs = DefaultBotUserMigrationUpArgs
 
 export const up = async ({ payload }: DefaultBotUserMigrationUpArgs) => {
-  const existingBots = await payload.find({
-    collection: 'users',
-    depth: 0,
-    limit: 1,
-    overrideAccess: true,
-    where: {
-      bot: {
-        equals: true,
-      },
-    },
-  })
-
-  if (existingBots.totalDocs > 0) {
-    payload.logger.info('[migration:create_default_bot_user] Bot user already exists, skipping.')
-    return
-  }
-
   const credentials = getDefaultBotUserCredentials()
 
   if (!credentials) {
@@ -69,10 +64,35 @@ export const up = async ({ payload }: DefaultBotUserMigrationUpArgs) => {
     )
   }
 
-  await payload.create({
+  const existingBots = await payload.find({
+    collection: 'users',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: {
+      OR: [
+        {
+          bot: {
+            equals: true,
+          },
+        },
+        {
+          email: {
+            equals: credentials.email,
+          },
+        },
+      ],
+    },
+  })
+
+  if (existingBots.totalDocs > 0) {
+    payload.logger.info('[migration:create_default_bot_user] Bot user already exists, skipping.')
+    return
+  }
+
+  await payload.db.create({
     collection: 'users',
     data: getDefaultBotUserData(credentials),
-    overrideAccess: true,
   })
 
   payload.logger.info('[migration:create_default_bot_user] Created the default bot user.')
@@ -85,9 +105,13 @@ export const down = async ({ payload }: DefaultBotUserMigrationDownArgs) => {
     limit: 1,
     overrideAccess: true,
     where: {
-      bot: {
-        equals: true,
-      },
+      OR: [
+        {
+          bot: {
+            equals: true,
+          },
+        },
+      ],
     },
   })
 
@@ -102,10 +126,9 @@ export const down = async ({ payload }: DefaultBotUserMigrationDownArgs) => {
     return
   }
 
-  await payload.delete({
+  await payload.db.delete({
     collection: 'users',
     id: String(botUser.id),
-    overrideAccess: true,
   })
 
   payload.logger.info('[migration:create_default_bot_user] Removed the default bot user.')

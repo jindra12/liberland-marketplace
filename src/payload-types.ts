@@ -1832,6 +1832,18 @@ export interface Order {
         id?: string | null;
       }[]
     | null;
+  paymentTargets?:
+    | {
+        chain: 'ethereum' | 'solana' | 'tron';
+        productID: string;
+        quantity: number;
+        recipientAddress: string;
+        normalizedRecipientAddress: string;
+        stableAmount: number;
+        unitAmount: number;
+        id?: string | null;
+      }[]
+    | null;
   paymentProofs?:
     | {
         product: string | Product;
@@ -3264,6 +3276,18 @@ export interface OrdersSelect<T extends boolean = true> {
         nativePerStable?: T;
         expectedNativeAmount?: T;
         fetchedAt?: T;
+        id?: T;
+      };
+  paymentTargets?:
+    | T
+    | {
+        chain?: T;
+        productID?: T;
+        quantity?: T;
+        recipientAddress?: T;
+        normalizedRecipientAddress?: T;
+        stableAmount?: T;
+        unitAmount?: T;
         id?: T;
       };
   paymentProofs?:

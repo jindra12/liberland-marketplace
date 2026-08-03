@@ -12,3 +12,99 @@ index ff16f61..1d79f3e 100644
  /**
   * @internal this is used to mock the IP `lookup` function in integration tests
   */ export const _internal_safeFetchGlobal = {
+diff --git a/dist/bin/index.js b/dist/bin/index.js
+index 1c2d3e4..5f6a7b8 100644
+--- a/dist/bin/index.js
++++ b/dist/bin/index.js
+@@ -14,6 +14,11 @@ const availableScripts = [
+ export const bin = async ()=>{
+     loadEnv();
+     process.env.DISABLE_PAYLOAD_HMR = 'true';
+     const args = minimist(process.argv.slice(2));
+     const script = (typeof args._[0] === 'string' ? args._[0] : '').toLowerCase();
++    console.log('[payload-bin] start', {
++        script,
++        argv: process.argv.slice(2),
++        cwd: process.cwd()
++    });
+     if (args.cron) {
+         new Cron(args.cron, async ()=>{
+             // If the bin script initializes payload (getPayload), this will only happen once, as getPayload
+@@ -43,6 +48,11 @@ export const bin = async ()=>{
+     }
+     process.exit(0);
+ };
+ async function runBinScript({ args, script }) {
++    console.log('[payload-bin] runBinScript', {
++        script,
++        args: args._,
++        hasCron: Boolean(args.cron)
++    });
+     if (script === 'info') {
+         await info();
+         return {};
+@@ -79,6 +89,11 @@ async function runBinScript({ args, script }) {
+     const configPromise = await import(pathToFileURL(configPath).toString());
+     let config = await configPromise;
+     if (config.default) {
+         config = await config.default;
+     }
+     const userBinScript = Array.isArray(config.bin) ? config.bin.find(({ key })=>key === script) : false;
++    console.log('[payload-bin] config loaded', {
++        script,
++        migrationDir: config?.db?.migrationDir ?? null,
++        hasUserBinScript: Boolean(userBinScript)
++    });
+     if (userBinScript) {
+         try {
+             const module = await import(pathToFileURL(userBinScript.scriptPath).toString());
+@@ -94,8 +109,16 @@ async function runBinScript({ args, script }) {
+         return {};
+     }
+     if (script.startsWith('migrate')) {
++        console.log('[payload-bin] entering migrate branch', {
++            script,
++            migrationDir: config?.db?.migrationDir ?? null
++        });
+         await migrate({
+             config,
+             parsedArgs: args
+         });
++        console.log('[payload-bin] migrate branch completed', {
++            script
++        });
+         return {};
+     }
+diff --git a/dist/database/migrations/readMigrationFiles.js b/dist/database/migrations/readMigrationFiles.js
+index 6f2c1a1..4c5d6e7 100644
+--- a/dist/database/migrations/readMigrationFiles.js
++++ b/dist/database/migrations/readMigrationFiles.js
+@@ -1,5 +1,11 @@
+ import fs from 'fs';
+ import path from 'path';
++import { pathToFileURL } from 'url';
+ import { dynamicImport } from '../../utilities/dynamicImport.js';
++const loadTsxImport = async (filePath)=>{
++    const { tsImport } = await Function('return import("tsx/esm/api")')();
++    return tsImport(filePath, `${pathToFileURL(path.dirname(filePath)).toString()}/`);
++};
+ /**
+  * Read the migration files from disk
+ */ export const readMigrationFiles = async ({ payload })=>{
+@@ -15,7 +17,7 @@
+     const files = fs.readdirSync(payload.db.migrationDir).sort().filter((f)=>{
+         return (f.endsWith('.ts') || f.endsWith('.js')) && f !== 'index.js' && f !== 'index.ts';
+     }).map((file)=>{
+         return path.resolve(payload.db.migrationDir, file);
+     });
+     return Promise.all(files.map(async (filePath)=>{
++        const migrationModule = filePath.endsWith('.ts') ? await loadTsxImport(filePath) : await dynamicImport(filePath);
+         const migration = 'default' in migrationModule ? migrationModule.default : migrationModule;
+         const result = {
+             name: path.basename(filePath).split('.')[0],
+             down: migration.down,
+             up: migration.up
+         };
+         return result;
+     }));
+ };
