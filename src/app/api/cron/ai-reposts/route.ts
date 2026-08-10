@@ -56,13 +56,18 @@ const runAiRepostJob = async (trigger: 'admin' | 'cron'): Promise<Response> => {
 
     return Response.json(result)
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+
     console.error('[ai-reposts] run failed', {
       durationMs: Date.now() - startedAt,
-      error: error instanceof Error ? error.message : String(error),
+      error: message,
       trigger,
     })
 
-    return Response.json({ error: 'AI repost run failed.' }, { status: 500 })
+    return Response.json(
+      { error: `AI repost run failed: ${message}` },
+      { status: 500 },
+    )
   }
 }
 

@@ -92,8 +92,11 @@ const getBotSession = async (payload: Payload): Promise<AiBotSession | null> => 
         role: botUser.role,
       },
     }
-  } catch {
-    return null
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+
+    console.error('[ai-reposts] failed to load bot user', { error: message })
+    throw new Error(`Failed to load the ChatGPT bot user: ${message}`)
   }
 }
 

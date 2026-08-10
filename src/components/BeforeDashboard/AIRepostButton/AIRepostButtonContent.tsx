@@ -1,17 +1,25 @@
 'use client'
 
 import React, { useState } from 'react'
-import { toast } from '@payloadcms/ui'
+import { toast, useAuth } from '@payloadcms/ui'
+
+import type { User } from '@/payload-types'
 
 type AiRepostResponse = {
   companiesScanned: number
   created: number
+  error?: string
   skipped: boolean
   skippedReason: string | null
 }
 
 const AIRepostButtonContent = () => {
+  const { user } = useAuth<User>()
   const [loading, setLoading] = useState(false)
+
+  if (!user?.role?.includes('admin')) {
+    return null
+  }
 
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -28,11 +36,11 @@ const AIRepostButtonContent = () => {
         credentials: 'include',
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to generate posts.')
-      }
-
       const result = (await response.json()) as AiRepostResponse
+
+      if (!response.ok) {
+        throw new Error(result.error || `Post generation failed with status ${response.status}.`)
+      }
 
       if (result.skipped) {
         toast.error(`Post generation skipped: ${result.skippedReason || 'Unknown reason.'}`)
