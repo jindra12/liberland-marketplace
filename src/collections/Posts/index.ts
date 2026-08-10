@@ -90,7 +90,17 @@ export const Posts: CollectionConfig<'posts'> = {
       type: 'relationship',
       relationTo: 'companies',
       required: true,
-      filterOptions: onlyOwnDocsOrAdminFilter,
+      filterOptions: ({ user }) => {
+        if (user?.bot === true) {
+          return {
+            noAutoPost: {
+              not_equals: true,
+            },
+          }
+        }
+
+        return onlyOwnDocsOrAdminFilter({ user })
+      },
       admin: {
         position: 'sidebar',
       },
