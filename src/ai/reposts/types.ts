@@ -30,6 +30,7 @@ export type AiRepostBatchResult = {
   candidate: AiSocialCandidate
   companyId: string
   decision: AiRepostBatchPlan
+  isFallback: boolean
 }
 
 export type AiRepostDecision = {

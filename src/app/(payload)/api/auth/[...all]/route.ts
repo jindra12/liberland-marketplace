@@ -32,8 +32,41 @@ const isAllowedOrigin = (req: Request): string | null => {
   return origin && ALLOWED_ORIGINS.includes(origin) ? origin : null
 }
 
+const getSignOutRedirect = (req: Request): string => {
+  const fallback = ALLOWED_ORIGINS[0] ?? new URL(req.url).origin
+  const callbackURL = new URL(req.url).searchParams.get('callbackURL')
+
+  if (!callbackURL) {
+    return fallback
+  }
+
+  try {
+    const callback = new URL(callbackURL)
+    return ALLOWED_ORIGINS.includes(callback.origin) ? callback.toString() : fallback
+  } catch {
+    return fallback
+  }
+}
+
+const handleSignOutRedirect = async (req: Request, payloadAuth: Awaited<ReturnType<typeof getPayloadAuthInstance>>) => {
+  const signOutRequest = new Request(req, { method: 'POST' })
+  const signOutResponse = await payloadAuth.betterAuth.handler(signOutRequest)
+  const redirectResponse = Response.redirect(getSignOutRedirect(req), 303)
+
+  signOutResponse.headers.getSetCookie().forEach((cookie) => {
+    redirectResponse.headers.append('Set-Cookie', cookie)
+  })
+
+  return redirectResponse
+}
+
 const handler = async (req: Request) => {
   const payloadAuth = await getPayloadAuthInstance()
+
+  if (req.method === 'GET' && new URL(req.url).pathname.endsWith('/sign-out')) {
+    return handleSignOutRedirect(req, payloadAuth)
+  }
+
   const origin = isAllowedOrigin(req)
 
   if (req.method === 'OPTIONS' && origin) {

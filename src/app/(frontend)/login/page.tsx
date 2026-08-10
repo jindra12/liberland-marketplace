@@ -115,6 +115,12 @@ export default function LoginPage() {
           </form>
 
           <p className="text-muted-foreground text-center text-sm">
+            <Link href={`/forgot-password${queryString}`} className="text-primary underline">
+              Forgot your password?
+            </Link>
+          </p>
+
+          <p className="text-muted-foreground text-center text-sm">
             Don&apos;t have an account?{' '}
             <Link href={`/signup${queryString}`} className="text-primary underline">
               Sign up

@@ -4,7 +4,7 @@ import OpenAI from 'openai'
 
 import { AI_REPOST_BATCH_SIZE } from './constants'
 import type { AiRepostCompany, AiRepostBatchPlan, AiSocialCandidate } from './types'
-import { buildRepostContent, discoverBatchRepostPlans } from './utils'
+import { buildRepostContent, discoverBatchRepostPlans, discoverFallbackPost } from './utils'
 
 const isBotUser = (user: unknown): boolean => {
   if (!user || typeof user !== 'object' || !('bot' in user)) {
@@ -286,10 +286,10 @@ export const runAiRepostCycle = async ({
       }, {})
 
       const createdPosts = await Promise.all(
-        plans.map(async ({ candidate, companyId, decision }) => {
+        plans.map(async ({ candidate, companyId, decision, isFallback }) => {
           const company = companyByID[companyId]
 
-          if (!company || !decision.shouldRepost || decision.qualityScore < 70) {
+          if (!company || !decision.shouldRepost || (!isFallback && decision.qualityScore < 70)) {
             return 0
           }
 
@@ -306,12 +306,32 @@ export const runAiRepostCycle = async ({
         }),
       )
 
-      return createdPosts.reduce<number>((sum, value) => sum + value, 0)
+      return {
+        created: createdPosts.reduce<number>((sum, value) => sum + value, 0),
+        discovered: plans.length,
+      }
     }),
   )
 
+  const created = batchResults.reduce<number>((sum, result) => sum + result.created, 0)
+  const discovered = batchResults.reduce<number>((sum, result) => sum + result.discovered, 0)
+  const fallback = discovered === 0 ? await discoverFallbackPost({ client: openai, companies }) : null
+  const fallbackCompany = fallback
+    ? companies.find((company) => company.id === fallback.companyId)
+    : null
+  const fallbackCreated = fallback && fallbackCompany
+    ? await createRepost({
+        candidate: fallback.candidate,
+        company: fallbackCompany,
+        decision: fallback.decision,
+        payload,
+        req: session.request,
+        session,
+      })
+    : false
+
   return {
-    created: batchResults.reduce<number>((sum, value) => sum + value, 0),
+    created: created + (fallbackCreated ? 1 : 0),
     companiesScanned: companies.length,
     skipped: false,
     skippedReason: null,
