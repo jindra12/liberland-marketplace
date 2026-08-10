@@ -49,7 +49,13 @@ const AIRepostButtonContent = () => {
   }
 
   return (
-    <button aria-busy={loading} className="seedButton" disabled={loading} onClick={handleClick}>
+    <button
+      aria-busy={loading}
+      className="before-dashboard__ai-button"
+      disabled={loading}
+      onClick={handleClick}
+      type="button"
+    >
       {loading ? 'Generating posts...' : 'Generate posts'}
     </button>
   )

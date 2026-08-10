@@ -2,6 +2,8 @@ import { createLocalReq, type Payload } from 'payload'
 import chunk from 'lodash/chunk'
 import OpenAI from 'openai'
 
+import type { User } from '@/payload-types'
+
 import { AI_REPOST_BATCH_SIZE } from './constants'
 import type { AiRepostCompany, AiRepostBatchPlan, AiSocialCandidate } from './types'
 import { buildRepostContent, discoverBatchRepostPlans, discoverFallbackPost } from './utils'
@@ -27,7 +29,6 @@ const getUniquePostSlug = (title: string, companyID: string): string => {
 
 type AiBotSession = {
   request: Awaited<ReturnType<typeof createLocalReq>>
-  token: string
   user: {
     bot?: boolean | null
     id: string
@@ -36,19 +37,6 @@ type AiBotSession = {
 }
 
 const getChatGPTKey = (): string | null => process.env.CHATGPT_KEY || null
-
-const getBotCredentials = (): { email: string; password: string } | null => {
-  const password = process.env.CHATGPT_KEY || null
-
-  if (!password) {
-    return null
-  }
-
-  return {
-    email: process.env.CHATGPT_BOT_EMAIL || 'chatgpt-bot@liberland.marketplace',
-    password,
-  }
-}
 
 const getOpenAIClient = (): OpenAI | null => {
   const key = getChatGPTKey()
@@ -61,40 +49,43 @@ const getOpenAIClient = (): OpenAI | null => {
 }
 
 const getBotSession = async (payload: Payload): Promise<AiBotSession | null> => {
-  const credentials = getBotCredentials()
-
-  if (!credentials) {
-    return null
-  }
+  const botEmail = process.env.CHATGPT_BOT_EMAIL || 'chatgpt-bot@liberland.marketplace'
 
   try {
-    const login = await payload.login({
+    const result = await payload.find({
       collection: 'users',
-      data: {
-        email: credentials.email,
-        password: credentials.password,
+      depth: 0,
+      limit: 1,
+      overrideAccess: true,
+      where: {
+        OR: [
+          {
+            bot: {
+              equals: true,
+            },
+          },
+          {
+            email: {
+              equals: botEmail,
+            },
+          },
+        ],
       },
     })
 
-    if (!login.token) {
-      return null
-    }
-
-    const auth = await payload.auth({
-      headers: new Headers({
-        authorization: `JWT ${login.token}`,
-      }),
-    })
-
-    const botUser = auth.user
+    const botUser = result.docs.find((user): user is User => user.bot === true)
 
     if (!botUser || !isBotUser(botUser)) {
       return null
     }
 
+    const botUserWithCollection = {
+      ...botUser,
+      collection: 'users' as const,
+    }
+
     return {
-      request: await createLocalReq({ user: botUser }, payload),
-      token: login.token,
+      request: await createLocalReq({ user: botUserWithCollection }, payload),
       user: {
         bot: true,
         id: botUser.id.toString(),

@@ -42,6 +42,11 @@ export const Users: CollectionConfig = {
           const existing = await req.payload.find({
             collection: 'users',
             limit: 1,
+            where: {
+              bot: {
+                not_equals: true,
+              },
+            },
           })
 
           return sanitizeUserCreateData({
