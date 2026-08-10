@@ -326,6 +326,9 @@ export const discoverBatchRepostPlans = async ({
   const result = await withTimeout({
     promise: client.responses.parse({
       model: AI_REPOST_MODEL,
+      reasoning: {
+        effort: 'medium',
+      },
       input: prompt,
       text: {
         format: zodTextFormat(batchResponseSchema, 'ai_repost_batch_candidates'),
@@ -395,6 +398,9 @@ export const discoverFallbackPost = async ({
   const result = await withTimeout({
     promise: client.responses.parse({
       model: AI_REPOST_MODEL,
+      reasoning: {
+        effort: 'medium',
+      },
       input: getFallbackSearchPrompt(companies),
       text: {
         format: zodTextFormat(batchResponseSchema, 'ai_repost_fallback_candidate'),

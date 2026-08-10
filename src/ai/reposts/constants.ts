@@ -1,4 +1,4 @@
-export const AI_REPOST_MODEL = 'gpt-5.6-luna-medium-reasoning'
+export const AI_REPOST_MODEL = 'gpt-5.6-luna'
 
 export const AI_REPOST_BATCH_SIZE = 10
 export const AI_REPOST_BATCH_TIMEOUT_MS = 120_000

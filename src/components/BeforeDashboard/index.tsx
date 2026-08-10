@@ -17,6 +17,12 @@ const BeforeDashboard: React.FC = () => {
       <p className={`${baseClass}__analytics`}>
         Local analytics are now available at <Link href="/admin/analytics">/admin/analytics</Link>.
       </p>
+      {process.env.CHATGPT_KEY ? (
+        <div className={`${baseClass}__ai-action`}>
+          <AIRepostButton />
+          <span>Generate posts from recent public company updates.</span>
+        </div>
+      ) : null}
       Here&apos;s what to do next:
       <ul className={`${baseClass}__instructions`}>
         <li>
@@ -27,12 +33,6 @@ const BeforeDashboard: React.FC = () => {
           </a>
           {' to see the results.'}
         </li>
-        {process.env.CHATGPT_KEY ? (
-          <li>
-            <AIRepostButton />
-            {' to scan recent social posts and create reposts automatically.'}
-          </li>
-        ) : null}
         <li>
           {'Modify your '}
           <a

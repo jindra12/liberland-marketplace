@@ -3,6 +3,13 @@
 import React, { useState } from 'react'
 import { toast } from '@payloadcms/ui'
 
+type AiRepostResponse = {
+  companiesScanned: number
+  created: number
+  skipped: boolean
+  skippedReason: string | null
+}
+
 const AIRepostButtonContent = () => {
   const [loading, setLoading] = useState(false)
 
@@ -22,20 +29,28 @@ const AIRepostButtonContent = () => {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to run AI repost scan.')
+        throw new Error('Failed to generate posts.')
       }
 
-      toast.success('AI repost scan started.')
-    } catch {
-      toast.error('Failed to run AI repost scan.')
+      const result = (await response.json()) as AiRepostResponse
+
+      if (result.skipped) {
+        toast.error(`Post generation skipped: ${result.skippedReason || 'Unknown reason.'}`)
+        return
+      }
+
+      const postLabel = result.created === 1 ? 'post' : 'posts'
+      toast.success(`Generated ${result.created} ${postLabel}.`)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to generate posts.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <button className="seedButton" disabled={loading} onClick={handleClick}>
-      {loading ? 'Scanning AI reposts...' : 'Run AI repost scan'}
+    <button aria-busy={loading} className="seedButton" disabled={loading} onClick={handleClick}>
+      {loading ? 'Generating posts...' : 'Generate posts'}
     </button>
   )
 }
