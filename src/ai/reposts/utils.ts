@@ -185,7 +185,6 @@ const logAiRepostDiscoveryRequest = ({
         companies,
         prompt,
         model: AI_REPOST_MODEL,
-        temperature: 0.2,
         textFormat: 'ai_repost_batch_candidates',
         tools: [
           {
@@ -340,7 +339,6 @@ export const discoverBatchRepostPlans = async ({
           type: 'web_search',
         },
       ],
-      temperature: 0.2,
     }),
     timeoutMessage: 'Timed out while discovering social candidates.',
     timeoutMs: AI_REPOST_BATCH_TIMEOUT_MS,
@@ -412,7 +410,6 @@ export const discoverFallbackPost = async ({
           type: 'web_search',
         },
       ],
-      temperature: 0.2,
     }),
     timeoutMessage: 'Timed out while researching the fallback post.',
     timeoutMs: AI_REPOST_BATCH_TIMEOUT_MS,
