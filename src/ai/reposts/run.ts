@@ -312,6 +312,11 @@ export const runAiRepostCycle = async ({
   const fallbackPosts = discovered === 0
     ? await discoverFallbackPosts({ client: openai, companies })
     : []
+  console.info('[ai-reposts] discovery summary', {
+    companiesScanned: companies.length,
+    discovered,
+    fallbackPosts: fallbackPosts.length,
+  })
   const fallbackCreated = await Promise.all(
     fallbackPosts.map(async (fallbackPost) => {
       const fallbackCompany = companies.find((company) => company.id === fallbackPost.companyId)

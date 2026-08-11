@@ -52,7 +52,7 @@ const batchResponseSchema = z.object({
 })
 
 const fallbackResponseSchema = z.object({
-  items: z.array(batchPlanSchema).min(AI_REPOST_FALLBACK_MIN_POSTS).max(AI_REPOST_BATCH_SIZE),
+  items: z.array(batchPlanSchema).max(AI_REPOST_BATCH_SIZE),
 })
 
 const toISOOrNull = (value: string | null | undefined): string | null => {
@@ -313,6 +313,39 @@ const getFallbackBatchPlan = (company: AiRepostCompany): AiRepostBatchPlan => {
   }
 }
 
+const getFallbackCompanyURL = (company: AiRepostCompany): string | null => {
+  try {
+    const url = new URL(company.website || '')
+
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return null
+    }
+
+    return url.toString()
+  } catch {
+    return null
+  }
+}
+
+const getFallbackCompanyPlan = (company: AiRepostCompany): AiRepostBatchPlan | null => {
+  const url = getFallbackCompanyURL(company)
+
+  if (!url) {
+    return null
+  }
+
+  return {
+    concernFlags: ['evergreen_company_profile'],
+    companyId: company.id,
+    description: (company.description || `Learn more about ${company.name}.`).slice(0, 400),
+    qualityScore: 0,
+    reason: 'Evergreen company profile generated from the company website.',
+    shouldRepost: true,
+    title: `${company.name} company profile`.slice(0, 140),
+    url,
+  }
+}
+
 export const discoverBatchRepostPlans = async ({
   client,
   companies,
@@ -420,10 +453,16 @@ export const discoverFallbackPosts = async ({
     timeoutMs: AI_REPOST_BATCH_TIMEOUT_MS,
   })
 
-  const plans = result.output_parsed?.items.slice(0, AI_REPOST_FALLBACK_MIN_POSTS) ?? []
+  const modelPlans = result.output_parsed?.items ?? []
+  const companyPlans = companies
+    .map((company) => getFallbackCompanyPlan(company))
+    .filter((plan): plan is AiRepostBatchPlan => Boolean(plan))
+  const plans = [...modelPlans, ...companyPlans]
+    .filter((plan) => plan.shouldRepost && Boolean(plan.url))
+    .slice(0, AI_REPOST_FALLBACK_MIN_POSTS)
   const fallbackResults = await Promise.all(
     plans.map(async (plan) => {
-      if (!plan.shouldRepost || !plan.url) {
+      if (!plan.url) {
         return null
       }
 
@@ -433,18 +472,31 @@ export const discoverFallbackPosts = async ({
         return null
       }
 
-      const candidate = await fetchPermittedCandidate({
-        allowAnySource: true,
-        company,
-        url: plan.url,
-      })
+      let candidate: AiSocialCandidate | null = null
 
-      if (!candidate) {
-        return null
+      try {
+        candidate = await fetchPermittedCandidate({
+          allowAnySource: true,
+          company,
+          url: plan.url,
+        })
+      } catch (error) {
+        console.warn('[ai-reposts] fallback source fetch failed', {
+          error: error instanceof Error ? error.message : String(error),
+          url: plan.url,
+        })
+      }
+
+      const effectiveCandidate = candidate || {
+        description: plan.description,
+        imageURL: null,
+        publishedAtISO: null,
+        title: plan.title,
+        url: plan.url,
       }
 
       return {
-        candidate,
+        candidate: effectiveCandidate,
         companyId: plan.companyId,
         decision: plan,
         isFallback: true as const,
