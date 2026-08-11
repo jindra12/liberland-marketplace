@@ -19,9 +19,12 @@ load_env_file() {
 }
 
 load_env_file ".env"
-load_env_file ".env.development"
 load_env_file ".env.local"
-load_env_file ".env.development.local"
+
+if [[ "${NODE_ENV:-}" != "production" ]]; then
+  load_env_file ".env.development"
+  load_env_file ".env.development.local"
+fi
 
 PORT="${PORT:-3001}"
 CRON_HOST="${CRON_HOST:-127.0.0.1}"
