@@ -6,7 +6,7 @@ import type { User } from '@/payload-types'
 
 import { AI_REPOST_BATCH_SIZE } from './constants'
 import type { AiRepostCompany, AiRepostBatchPlan, AiSocialCandidate } from './types'
-import { buildRepostContent, discoverBatchRepostPlans, discoverFallbackPost } from './utils'
+import { buildRepostContent, discoverBatchRepostPlans, discoverFallbackPosts } from './utils'
 
 const isBotUser = (user: unknown): boolean => {
   if (!user || typeof user !== 'object' || !('bot' in user)) {
@@ -309,23 +309,30 @@ export const runAiRepostCycle = async ({
 
   const created = batchResults.reduce<number>((sum, result) => sum + result.created, 0)
   const discovered = batchResults.reduce<number>((sum, result) => sum + result.discovered, 0)
-  const fallback = discovered === 0 ? await discoverFallbackPost({ client: openai, companies }) : null
-  const fallbackCompany = fallback
-    ? companies.find((company) => company.id === fallback.companyId)
-    : null
-  const fallbackCreated = fallback && fallbackCompany
-    ? await createRepost({
-        candidate: fallback.candidate,
+  const fallbackPosts = discovered === 0
+    ? await discoverFallbackPosts({ client: openai, companies })
+    : []
+  const fallbackCreated = await Promise.all(
+    fallbackPosts.map(async (fallbackPost) => {
+      const fallbackCompany = companies.find((company) => company.id === fallbackPost.companyId)
+
+      if (!fallbackCompany) {
+        return false
+      }
+
+      return createRepost({
+        candidate: fallbackPost.candidate,
         company: fallbackCompany,
-        decision: fallback.decision,
+        decision: fallbackPost.decision,
         payload,
         req: session.request,
         session,
       })
-    : false
+    }),
+  )
 
   return {
-    created: created + (fallbackCreated ? 1 : 0),
+    created: created + fallbackCreated.filter(Boolean).length,
     companiesScanned: companies.length,
     skipped: false,
     skippedReason: null,

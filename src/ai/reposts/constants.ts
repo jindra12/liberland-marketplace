@@ -1,6 +1,7 @@
 export const AI_REPOST_MODEL = 'gpt-5.6-luna'
 
 export const AI_REPOST_BATCH_SIZE = 10
+export const AI_REPOST_FALLBACK_MIN_POSTS = 3
 export const AI_REPOST_BATCH_TIMEOUT_MS = 120_000
 export const AI_REPOST_SEARCH_TIMEOUT_MS = 15_000
 export const AI_REPOST_RECENT_WINDOW_MS = 5 * 60 * 60 * 1000

@@ -35,6 +35,29 @@ log_cron_message() {
   printf '[%s] %s\n' "$(date -Iseconds)" "$message" >> "${CRON_LOG_FILE}"
 }
 
+run_ai_repost_request() {
+  local response_file
+  local response_body
+  local response_code
+
+  response_file="$(mktemp)"
+  response_code="$(curl -sS --max-time 300 \
+    -o "${response_file}" \
+    -w '%{http_code}' \
+    -H "Authorization: Bearer ${CRON_SECRET}" \
+    "${CRON_ENDPOINT}" || true)"
+  response_body="$(tr '\n' ' ' < "${response_file}" | cut -c 1-2000)"
+  rm -f "${response_file}"
+
+  if [[ "${response_code}" =~ ^2 ]]; then
+    log_cron_message "[ai-repost-cron] Request completed (HTTP ${response_code}): ${response_body}"
+    return 0
+  fi
+
+  log_cron_message "[ai-repost-cron] Request failed (HTTP ${response_code}): ${response_body}"
+  return 1
+}
+
 if [[ -z "${CRON_SECRET:-}" && -n "${PAYLOAD_SECRET:-}" ]]; then
   CRON_SECRET="${PAYLOAD_SECRET}"
   export CRON_SECRET
@@ -57,9 +80,7 @@ start_ai_repost_cron_loop() {
     printf '[%s] [ai-repost-cron] Starting managed refresh loop for %s.\n' "$(date -Iseconds)" "${CRON_ENDPOINT}"
 
     while true; do
-      if curl -sS --fail --max-time 300 \
-        -H "Authorization: Bearer ${CRON_SECRET}" \
-        "${CRON_ENDPOINT}" >/dev/null; then
+      if run_ai_repost_request; then
         printf '[%s] [ai-repost-cron] Initial refresh completed.\n' "$(date -Iseconds)"
         break
       fi
@@ -70,9 +91,7 @@ start_ai_repost_cron_loop() {
     while true; do
       sleep "${CRON_INTERVAL_SECONDS}"
 
-      if curl -sS --fail --max-time 300 \
-        -H "Authorization: Bearer ${CRON_SECRET}" \
-        "${CRON_ENDPOINT}" >/dev/null; then
+      if run_ai_repost_request; then
         printf '[%s] [ai-repost-cron] Scheduled refresh completed.\n' "$(date -Iseconds)"
       else
         printf '[%s] [ai-repost-cron] Scheduled refresh failed.\n' "$(date -Iseconds)"
