@@ -57,7 +57,7 @@ start_ai_repost_cron_loop() {
     printf '[%s] [ai-repost-cron] Starting managed refresh loop for %s.\n' "$(date -Iseconds)" "${CRON_ENDPOINT}"
 
     while true; do
-      if curl -sS --fail --max-time 120 \
+      if curl -sS --fail --max-time 300 \
         -H "Authorization: Bearer ${CRON_SECRET}" \
         "${CRON_ENDPOINT}" >/dev/null; then
         printf '[%s] [ai-repost-cron] Initial refresh completed.\n' "$(date -Iseconds)"
@@ -70,7 +70,7 @@ start_ai_repost_cron_loop() {
     while true; do
       sleep "${CRON_INTERVAL_SECONDS}"
 
-      if curl -sS --fail --max-time 120 \
+      if curl -sS --fail --max-time 300 \
         -H "Authorization: Bearer ${CRON_SECRET}" \
         "${CRON_ENDPOINT}" >/dev/null; then
         printf '[%s] [ai-repost-cron] Scheduled refresh completed.\n' "$(date -Iseconds)"
