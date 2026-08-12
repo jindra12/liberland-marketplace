@@ -267,8 +267,9 @@ export const runAiRepostCycle = async ({
     }
   }
 
-  const batchResults = await Promise.all(
-    chunk(companies, AI_REPOST_BATCH_SIZE).map(async (companyBatch) => {
+  const batchResults = await chunk(companies, AI_REPOST_BATCH_SIZE).reduce(
+    async (resultsPromise, companyBatch) => {
+      const results = await resultsPromise
       const plans = await discoverBatchRepostPlans({
         client: openai,
         companies: companyBatch,
@@ -300,11 +301,15 @@ export const runAiRepostCycle = async ({
         }),
       )
 
-      return {
-        created: createdPosts.reduce<number>((sum, value) => sum + value, 0),
-        discovered: plans.length,
-      }
-    }),
+      return [
+        ...results,
+        {
+          created: createdPosts.reduce<number>((sum, value) => sum + value, 0),
+          discovered: plans.length,
+        },
+      ]
+    },
+    Promise.resolve([] as Array<{ created: number; discovered: number }>),
   )
 
   const created = batchResults.reduce<number>((sum, result) => sum + result.created, 0)

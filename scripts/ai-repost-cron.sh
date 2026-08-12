@@ -30,6 +30,13 @@ PORT="${PORT:-3001}"
 CRON_HOST="${CRON_HOST:-127.0.0.1}"
 CRON_INTERVAL_SECONDS="${AI_REPOST_REFRESH_INTERVAL_SECONDS:-18000}"
 CRON_LOG_FILE="${AI_REPOST_CRON_LOG_FILE:-/tmp/liberland-ai-repost-cron.log}"
+CRON_LOCK_FILE="${AI_REPOST_CRON_LOCK_FILE:-/tmp/liberland-ai-repost-cron.lock}"
+
+exec 9>"${CRON_LOCK_FILE}"
+if ! flock -n 9; then
+  printf '[%s] [ai-repost-cron] Another cron loop is already running. Exiting.\n' "$(date -Iseconds)" >> "${CRON_LOG_FILE}"
+  exit 0
+fi
 
 CRON_ENDPOINT="http://${CRON_HOST}:${PORT}/api/cron/ai-reposts"
 
