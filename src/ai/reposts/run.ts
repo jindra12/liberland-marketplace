@@ -309,12 +309,13 @@ export const runAiRepostCycle = async ({
 
   const created = batchResults.reduce<number>((sum, result) => sum + result.created, 0)
   const discovered = batchResults.reduce<number>((sum, result) => sum + result.discovered, 0)
-  const fallbackPosts = discovered === 0
+  const fallbackPosts = created === 0
     ? await discoverFallbackPosts({ client: openai, companies })
     : []
   console.info('[ai-reposts] discovery summary', {
     companiesScanned: companies.length,
     discovered,
+    regularCreated: created,
     fallbackPosts: fallbackPosts.length,
   })
   const fallbackCreated = await Promise.all(
