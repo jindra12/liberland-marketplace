@@ -27,6 +27,39 @@ const getUniquePostSlug = (title: string, companyID: string): string => {
   return toSlug(`${title}-${companyID}-${Date.now()}`)
 }
 
+const getImageUploadType = ({
+  buffer,
+  responseType,
+}: {
+  buffer: Buffer
+  responseType: string
+}): { extension: string; mimeType: string } | null => {
+  const normalizedResponseType = responseType.toLowerCase()
+  const contentStart = buffer.subarray(0, 512).toString('utf8').trimStart()
+
+  if (normalizedResponseType === 'image/svg+xml' || contentStart.startsWith('<svg')) {
+    return {
+      extension: 'svg',
+      mimeType: 'image/svg+xml',
+    }
+  }
+
+  if (!normalizedResponseType.startsWith('image/')) {
+    return null
+  }
+
+  const extension = normalizedResponseType.split('/')[1]?.split('+')[0]
+
+  if (!extension) {
+    return null
+  }
+
+  return {
+    extension,
+    mimeType: normalizedResponseType,
+  }
+}
+
 type AiBotSession = {
   request: Awaited<ReturnType<typeof createLocalReq>>
   user: {
@@ -122,13 +155,16 @@ const uploadImage = async ({
       return null
     }
 
-    const mimeType = response.headers.get('content-type')?.split(';')[0] || 'image/jpeg'
+    const fileBuffer = Buffer.from(await response.arrayBuffer())
+    const uploadType = getImageUploadType({
+      buffer: fileBuffer,
+      responseType: response.headers.get('content-type')?.split(';')[0] || '',
+    })
 
-    if (!mimeType.startsWith('image/')) {
+    if (!uploadType) {
       return null
     }
 
-    const fileBuffer = Buffer.from(await response.arrayBuffer())
     const media = await payload.create({
       collection: 'media',
       data: {
@@ -137,8 +173,8 @@ const uploadImage = async ({
       },
       file: {
         data: fileBuffer,
-        mimetype: mimeType,
-        name: 'ai-repost-image',
+        mimetype: uploadType.mimeType,
+        name: `ai-repost-image.${uploadType.extension}`,
         size: fileBuffer.byteLength,
       },
       draft: false,
