@@ -4,7 +4,7 @@ import OpenAI from 'openai'
 
 import type { User } from '@/payload-types'
 
-import { AI_REPOST_BATCH_SIZE } from './constants'
+import { AI_REPOST_BATCH_DELAY_MS, AI_REPOST_BATCH_SIZE } from './constants'
 import type { AiRepostCompany, AiRepostBatchPlan, AiSocialCandidate } from './types'
 import { buildRepostContent, discoverBatchRepostPlans, discoverFallbackPosts } from './utils'
 
@@ -25,6 +25,12 @@ const toSlug = (value: string): string => {
 
 const getUniquePostSlug = (title: string, companyID: string): string => {
   return toSlug(`${title}-${companyID}-${Date.now()}`)
+}
+
+const waitForBatchDelay = async (): Promise<void> => {
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve, AI_REPOST_BATCH_DELAY_MS)
+  })
 }
 
 const getImageUploadType = ({
@@ -304,8 +310,13 @@ export const runAiRepostCycle = async ({
   }
 
   const batchResults = await chunk(companies, AI_REPOST_BATCH_SIZE).reduce(
-    async (resultsPromise, companyBatch) => {
+    async (resultsPromise, companyBatch, batchIndex) => {
       const results = await resultsPromise
+
+      if (batchIndex > 0) {
+        await waitForBatchDelay()
+      }
+
       const plans = await discoverBatchRepostPlans({
         client: openai,
         companies: companyBatch,

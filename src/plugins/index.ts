@@ -105,7 +105,7 @@ export const plugins: Plugin[] = [
         oidcProvider({
           loginPage: '/login',
           requirePKCE: true,
-          allowDynamicClientRegistration: false,
+          allowDynamicClientRegistration: true,
           trustedClients: process.env.OIDC_CLIENT_ID
             ? [
                 {
