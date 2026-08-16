@@ -1,17 +1,6 @@
-import config from '@payload-config'
-import { getPayloadAuth } from 'payload-auth/better-auth'
+import { getPayloadAuthInstance } from '../auth-instance'
 
 export const dynamic = 'force-dynamic'
-
-let payloadAuthPromise: ReturnType<typeof getPayloadAuth> | null = null
-
-const getPayloadAuthInstance = async () => {
-  if (!payloadAuthPromise) {
-    payloadAuthPromise = getPayloadAuth(config)
-  }
-
-  return payloadAuthPromise
-}
 
 const ALLOWED_ORIGINS = (process.env.OIDC_REDIRECT_URLS || '')
   .split(',')
