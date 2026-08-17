@@ -1,4 +1,4 @@
-import { getOAuthAuthorizationServerMetadata } from '../../oauth-metadata'
+import { getOAuthAuthorizationServerMetadata } from '../../api/auth/oauth-metadata'
 
 export const dynamic = 'force-dynamic'
 
