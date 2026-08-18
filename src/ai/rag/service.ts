@@ -29,10 +29,10 @@ type RagDocumentMetadata = {
 let cachedIndex: Promise<RagIndex> | null = null
 
 const getOpenAIKey = (): string => {
-  const key = process.env.OPENAI_API_KEY || process.env.CHATGPT_KEY
+  const key = process.env.CHATGPT_KEY
 
   if (!key) {
-    throw new Error('OPENAI_API_KEY or CHATGPT_KEY is required for RAG.')
+    throw new Error('CHATGPT_KEY is required for RAG.')
   }
 
   return key
@@ -133,8 +133,18 @@ const getIndex = async (req: PayloadRequest): Promise<VectorStoreIndex> => {
     }
   }
 
-  cachedIndex = buildIndex(req)
-  return (await cachedIndex).index
+  const nextIndex = buildIndex(req)
+  cachedIndex = nextIndex
+
+  try {
+    return (await nextIndex).index
+  } catch (error) {
+    if (cachedIndex === nextIndex) {
+      cachedIndex = null
+    }
+
+    throw error
+  }
 }
 
 const toSource = (metadata: RagDocumentMetadata): RagSource => ({

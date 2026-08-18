@@ -80,18 +80,36 @@ export const createBackendMcpServer = (authorization?: string): McpServer => {
   }, async (args) => {
     const definition = getEntityDefinition(args.entity)
     const extraWhere = args.where as McpJsonObject | undefined
-    const searchFilters: McpJsonValue[] = [
-      { title: { contains: args.query } },
-      { doc: { relationTo: definition.collection } },
-    ]
+    const searchFilters: McpJsonValue[] = [{ title: { contains: args.query } }]
     if (extraWhere) searchFilters.push(extraWhere)
     const where: McpJsonObject = { AND: searchFilters }
     const data = await executeGraphQL({
       authorization,
       query: `query SearchEntities($page: Int!, $limit: Int!) { Searches(page: $page, limit: $limit, where: ${toGraphQLLiteral(where)}) { totalDocs totalPages page hasNextPage docs { title priority doc { relationTo value { ... on ${definition.item} { ${definition.selection} } } } } } }`,
-      variables: { page: args.page, limit: args.limit },
+      variables: { page: args.page, limit: 100 },
     })
-    return result(data.Searches)
+
+    const searchResults = data.Searches
+
+    if (!searchResults || typeof searchResults !== 'object' || Array.isArray(searchResults)) {
+      return result(searchResults)
+    }
+
+    const matchingDocs = Array.isArray(searchResults.docs)
+      ? searchResults.docs.filter((doc) => {
+        if (!doc || typeof doc !== 'object' || Array.isArray(doc)) return false
+        const relation = doc.doc
+        return relation && typeof relation === 'object' && !Array.isArray(relation) && relation.relationTo === definition.collection
+      }).slice(0, args.limit)
+      : []
+
+    return result({
+      ...searchResults,
+      docs: matchingDocs,
+      totalDocs: matchingDocs.length,
+      totalPages: matchingDocs.length > 0 ? 1 : 0,
+      hasNextPage: false,
+    })
   })
 
   server.registerTool('find_related_entities', {

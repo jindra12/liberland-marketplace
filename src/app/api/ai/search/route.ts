@@ -26,7 +26,11 @@ export const POST = async (request: Request): Promise<Response> => {
     return Response.json(result)
   } catch (error) {
     const message = error instanceof Error ? error.message : 'RAG search failed.'
-    const status = message.includes('required') || message.includes('at most') ? 400 : 500
+    const status = message.includes('required') || message.includes('at most')
+      ? 400
+      : message.includes('429') || message.includes('no credits')
+        ? 503
+        : 500
 
     return Response.json({ error: message }, { status })
   }
