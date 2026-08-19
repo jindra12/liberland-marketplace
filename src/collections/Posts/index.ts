@@ -5,7 +5,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { createdByField } from '@/fields/createdByField'
-import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
+import { TEXT_INPUT_MAX_LENGTH, URL_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { markdownField } from '@/fields/markdownField'
@@ -80,7 +80,7 @@ export const Posts: CollectionConfig<'posts'> = {
     {
       name: 'repost',
       type: 'text',
-      maxLength: TEXT_INPUT_MAX_LENGTH,
+      maxLength: URL_INPUT_MAX_LENGTH,
       admin: {
         position: 'sidebar',
       },
@@ -90,7 +90,17 @@ export const Posts: CollectionConfig<'posts'> = {
       type: 'relationship',
       relationTo: 'companies',
       required: true,
-      filterOptions: onlyOwnDocsOrAdminFilter,
+      filterOptions: ({ user }) => {
+        if (user?.bot === true) {
+          return {
+            noAutoPost: {
+              not_equals: true,
+            },
+          }
+        }
+
+        return onlyOwnDocsOrAdminFilter({ user })
+      },
       admin: {
         position: 'sidebar',
       },

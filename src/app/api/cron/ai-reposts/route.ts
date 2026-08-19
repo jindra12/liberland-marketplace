@@ -24,22 +24,51 @@ const isAdminAuthorized = async (request: Request): Promise<boolean> => {
   return Boolean(auth.user?.role?.includes('admin'))
 }
 
-const runAiRepostJob = async (): Promise<Response> => {
-  const runner = await loadAiRepostRunner()
+const runAiRepostJob = async (trigger: 'admin' | 'cron'): Promise<Response> => {
+  const startedAt = Date.now()
 
-  if (!runner) {
-    return Response.json({
-      created: 0,
-      companiesScanned: 0,
-      skipped: true,
-      skippedReason: 'missing-chatgpt-key',
+  console.info('[ai-reposts] run started', { trigger })
+
+  try {
+    const runner = await loadAiRepostRunner()
+
+    if (!runner) {
+      const result = {
+        created: 0,
+        companiesScanned: 0,
+        skipped: true,
+        skippedReason: 'missing-chatgpt-key',
+      } as const
+
+      console.info('[ai-reposts] run skipped', { ...result, durationMs: Date.now() - startedAt, trigger })
+
+      return Response.json(result)
+    }
+
+    const payload = await getPayload({ config })
+    const result = await runner.runAiRepostCycle({ payload })
+
+    console.info('[ai-reposts] run completed', {
+      ...result,
+      durationMs: Date.now() - startedAt,
+      trigger,
     })
+
+    return Response.json(result)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+
+    console.error('[ai-reposts] run failed', {
+      durationMs: Date.now() - startedAt,
+      error: message,
+      trigger,
+    })
+
+    return Response.json(
+      { error: `AI repost run failed: ${message}` },
+      { status: 500 },
+    )
   }
-
-  const payload = await getPayload({ config })
-  const result = await runner.runAiRepostCycle({ payload })
-
-  return Response.json(result)
 }
 
 export const GET = async (request: Request): Promise<Response> => {
@@ -54,7 +83,7 @@ export const GET = async (request: Request): Promise<Response> => {
     return Response.json({ error: 'Unauthorized.' }, { status: 401 })
   }
 
-  return runAiRepostJob()
+  return runAiRepostJob('cron')
 }
 
 export const POST = async (request: Request): Promise<Response> => {
@@ -62,5 +91,5 @@ export const POST = async (request: Request): Promise<Response> => {
     return Response.json({ error: 'Admin access required.' }, { status: 403 })
   }
 
-  return runAiRepostJob()
+  return runAiRepostJob('admin')
 }

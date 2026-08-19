@@ -2,9 +2,11 @@ import { createLocalReq, type Payload } from 'payload'
 import chunk from 'lodash/chunk'
 import OpenAI from 'openai'
 
-import { AI_REPOST_BATCH_SIZE } from './constants'
+import type { User } from '@/payload-types'
+
+import { AI_REPOST_BATCH_DELAY_MS, AI_REPOST_BATCH_SIZE } from './constants'
 import type { AiRepostCompany, AiRepostBatchPlan, AiSocialCandidate } from './types'
-import { buildRepostContent, discoverBatchRepostPlans } from './utils'
+import { buildRepostContent, discoverBatchRepostPlans, discoverFallbackPosts } from './utils'
 
 const isBotUser = (user: unknown): boolean => {
   if (!user || typeof user !== 'object' || !('bot' in user)) {
@@ -25,9 +27,47 @@ const getUniquePostSlug = (title: string, companyID: string): string => {
   return toSlug(`${title}-${companyID}-${Date.now()}`)
 }
 
+const waitForBatchDelay = async (): Promise<void> => {
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve, AI_REPOST_BATCH_DELAY_MS)
+  })
+}
+
+const getImageUploadType = ({
+  buffer,
+  responseType,
+}: {
+  buffer: Buffer
+  responseType: string
+}): { extension: string; mimeType: string } | null => {
+  const normalizedResponseType = responseType.toLowerCase()
+  const contentStart = buffer.subarray(0, 512).toString('utf8').trimStart()
+
+  if (normalizedResponseType === 'image/svg+xml' || contentStart.startsWith('<svg')) {
+    return {
+      extension: 'svg',
+      mimeType: 'image/svg+xml',
+    }
+  }
+
+  if (!normalizedResponseType.startsWith('image/')) {
+    return null
+  }
+
+  const extension = normalizedResponseType.split('/')[1]?.split('+')[0]
+
+  if (!extension) {
+    return null
+  }
+
+  return {
+    extension,
+    mimeType: normalizedResponseType,
+  }
+}
+
 type AiBotSession = {
   request: Awaited<ReturnType<typeof createLocalReq>>
-  token: string
   user: {
     bot?: boolean | null
     id: string
@@ -36,19 +76,6 @@ type AiBotSession = {
 }
 
 const getChatGPTKey = (): string | null => process.env.CHATGPT_KEY || null
-
-const getBotCredentials = (): { email: string; password: string } | null => {
-  const password = process.env.CHATGPT_KEY || null
-
-  if (!password) {
-    return null
-  }
-
-  return {
-    email: process.env.CHATGPT_BOT_EMAIL || 'chatgpt-bot@liberland.marketplace',
-    password,
-  }
-}
 
 const getOpenAIClient = (): OpenAI | null => {
   const key = getChatGPTKey()
@@ -61,48 +88,54 @@ const getOpenAIClient = (): OpenAI | null => {
 }
 
 const getBotSession = async (payload: Payload): Promise<AiBotSession | null> => {
-  const credentials = getBotCredentials()
-
-  if (!credentials) {
-    return null
-  }
+  const botEmail = process.env.CHATGPT_BOT_EMAIL || 'chatgpt-bot@liberland.marketplace'
 
   try {
-    const login = await payload.login({
+    const result = await payload.find({
       collection: 'users',
-      data: {
-        email: credentials.email,
-        password: credentials.password,
+      depth: 0,
+      limit: 1,
+      overrideAccess: true,
+      where: {
+        OR: [
+          {
+            bot: {
+              equals: true,
+            },
+          },
+          {
+            email: {
+              equals: botEmail,
+            },
+          },
+        ],
       },
     })
 
-    if (!login.token) {
-      return null
-    }
-
-    const auth = await payload.auth({
-      headers: new Headers({
-        authorization: `JWT ${login.token}`,
-      }),
-    })
-
-    const botUser = auth.user
+    const botUser = result.docs.find((user): user is User => user.bot === true)
 
     if (!botUser || !isBotUser(botUser)) {
       return null
     }
 
+    const botUserWithCollection = {
+      ...botUser,
+      collection: 'users' as const,
+    }
+
     return {
-      request: await createLocalReq({ user: botUser }, payload),
-      token: login.token,
+      request: await createLocalReq({ user: botUserWithCollection }, payload),
       user: {
         bot: true,
         id: botUser.id.toString(),
         role: botUser.role,
       },
     }
-  } catch {
-    return null
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+
+    console.error('[ai-reposts] failed to load bot user', { error: message })
+    throw new Error(`Failed to load the ChatGPT bot user: ${message}`)
   }
 }
 
@@ -128,13 +161,16 @@ const uploadImage = async ({
       return null
     }
 
-    const mimeType = response.headers.get('content-type')?.split(';')[0] || 'image/jpeg'
+    const fileBuffer = Buffer.from(await response.arrayBuffer())
+    const uploadType = getImageUploadType({
+      buffer: fileBuffer,
+      responseType: response.headers.get('content-type')?.split(';')[0] || '',
+    })
 
-    if (!mimeType.startsWith('image/')) {
+    if (!uploadType) {
       return null
     }
 
-    const fileBuffer = Buffer.from(await response.arrayBuffer())
     const media = await payload.create({
       collection: 'media',
       data: {
@@ -143,8 +179,8 @@ const uploadImage = async ({
       },
       file: {
         data: fileBuffer,
-        mimetype: mimeType,
-        name: 'ai-repost-image',
+        mimetype: uploadType.mimeType,
+        name: `ai-repost-image.${uploadType.extension}`,
         size: fileBuffer.byteLength,
       },
       draft: false,
@@ -273,8 +309,14 @@ export const runAiRepostCycle = async ({
     }
   }
 
-  const batchResults = await Promise.all(
-    chunk(companies, AI_REPOST_BATCH_SIZE).map(async (companyBatch) => {
+  const batchResults = await chunk(companies, AI_REPOST_BATCH_SIZE).reduce(
+    async (resultsPromise, companyBatch, batchIndex) => {
+      const results = await resultsPromise
+
+      if (batchIndex > 0) {
+        await waitForBatchDelay()
+      }
+
       const plans = await discoverBatchRepostPlans({
         client: openai,
         companies: companyBatch,
@@ -286,10 +328,10 @@ export const runAiRepostCycle = async ({
       }, {})
 
       const createdPosts = await Promise.all(
-        plans.map(async ({ candidate, companyId, decision }) => {
+        plans.map(async ({ candidate, companyId, decision, isFallback }) => {
           const company = companyByID[companyId]
 
-          if (!company || !decision.shouldRepost || decision.qualityScore < 70) {
+          if (!company || !decision.shouldRepost || (!isFallback && decision.qualityScore < 70)) {
             return 0
           }
 
@@ -306,12 +348,49 @@ export const runAiRepostCycle = async ({
         }),
       )
 
-      return createdPosts.reduce<number>((sum, value) => sum + value, 0)
+      return [
+        ...results,
+        {
+          created: createdPosts.reduce<number>((sum, value) => sum + value, 0),
+          discovered: plans.length,
+        },
+      ]
+    },
+    Promise.resolve([] as Array<{ created: number; discovered: number }>),
+  )
+
+  const created = batchResults.reduce<number>((sum, result) => sum + result.created, 0)
+  const discovered = batchResults.reduce<number>((sum, result) => sum + result.discovered, 0)
+  const fallbackPosts = created === 0
+    ? await discoverFallbackPosts({ client: openai, companies })
+    : []
+  console.info('[ai-reposts] discovery summary', {
+    companiesScanned: companies.length,
+    discovered,
+    regularCreated: created,
+    fallbackPosts: fallbackPosts.length,
+  })
+  const fallbackCreated = await Promise.all(
+    fallbackPosts.map(async (fallbackPost) => {
+      const fallbackCompany = companies.find((company) => company.id === fallbackPost.companyId)
+
+      if (!fallbackCompany) {
+        return false
+      }
+
+      return createRepost({
+        candidate: fallbackPost.candidate,
+        company: fallbackCompany,
+        decision: fallbackPost.decision,
+        payload,
+        req: session.request,
+        session,
+      })
     }),
   )
 
   return {
-    created: batchResults.reduce<number>((sum, value) => sum + value, 0),
+    created: created + fallbackCreated.filter(Boolean).length,
     companiesScanned: companies.length,
     skipped: false,
     skippedReason: null,

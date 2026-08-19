@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 export const dynamic = 'force-dynamic'
 
 const HomePage = async () => {
-  redirect('https://nswap.io')
+  redirect('/admin')
 }
 
 export default HomePage

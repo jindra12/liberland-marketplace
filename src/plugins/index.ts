@@ -24,6 +24,7 @@ import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
 import { likesPlugin } from './likes'
 import { deferSearchSyncPlugin } from './deferSearchSync'
+import { sendAuthEmail } from '@/utilities/sendAuthEmail'
 
 const betterAuthSecret = process.env.BETTER_AUTH_SECRET
 
@@ -56,28 +57,28 @@ export const plugins: Plugin[] = [
         .map((url) => new URL(url).origin),
       emailAndPassword: {
         enabled: true,
+        sendResetPassword: async ({ user, url }) => {
+          await sendAuthEmail({
+            to: user.email,
+            subject: 'Reset your password — Nswap Marketplace',
+            html: `
+              <h1>Reset your password</h1>
+              <p>We received a request to reset the password for your Nswap Marketplace account.</p>
+              <p><a href="${url}">Reset Password</a></p>
+              <p>This link will expire. If you did not request a password reset, you can safely ignore this email.</p>
+            `,
+          })
+        },
       },
       emailVerification: {
         sendOnSignUp: true,
         autoSignInAfterVerification: true,
         sendVerificationEmail: async ({ user, url }) => {
-          const { default: nodemailer } = await import('nodemailer')
-          const smtpTransport = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: Number(process.env.SMTP_PORT) || 587,
-            auth: {
-              user: process.env.SMTP_USER,
-              pass: process.env.SMTP_PASS,
-            },
-          })
-          const fromAddress = process.env.SMTP_FROM_ADDRESS || 'noreply@liberland.org'
-          const fromName = process.env.SMTP_FROM_NAME || 'Liberland Marketplace'
-          await smtpTransport.sendMail({
-            from: `"${fromName}" <${fromAddress}>`,
+          await sendAuthEmail({
             to: user.email,
-            subject: 'Verify your email — Liberland Marketplace',
+            subject: 'Verify your email — Nswap Marketplace',
             html: `
-              <h1>Welcome to Liberland Marketplace!</h1>
+              <h1>Welcome to Nswap Marketplace!</h1>
               <p>Please verify your email address by clicking the link below:</p>
               <p><a href="${url}">Verify Email</a></p>
               <p>If you did not create an account, you can safely ignore this email.</p>
@@ -103,8 +104,9 @@ export const plugins: Plugin[] = [
       plugins: [
         oidcProvider({
           loginPage: '/login',
+          consentPage: '/oauth-consent',
           requirePKCE: true,
-          allowDynamicClientRegistration: false,
+          allowDynamicClientRegistration: true,
           trustedClients: process.env.OIDC_CLIENT_ID
             ? [
                 {

@@ -179,6 +179,27 @@ prompt_value_or_env() {
   prompt_value "$__target" "$__label" "$__default"
 }
 
+prompt_secret_or_env() {
+  local __target="$1"
+  local __env_name="$2"
+  local __label="$3"
+  local __value="${!__env_name:-}"
+
+  if [[ -n "$__value" ]]; then
+    printf -v "$__target" '%s' "$__value"
+    return
+  fi
+
+  if [[ "$SILENT" == "true" ]]; then
+    echo "Error: $__env_name must be set when using --silent." >&2
+    exit 1
+  fi
+
+  read -r -s -p "$__label: " __value
+  printf '\n' >&2
+  printf -v "$__target" '%s' "$__value"
+}
+
 prompt_yes_no_or_env() {
   local __target="$1"
   local __env_name="$2"
@@ -498,6 +519,8 @@ COMPOSE_PROJECT_NAME="${COMPOSE_PROJECT_NAME:-liberland_${APP_SUBDOMAIN}}"
 
 APP_DOMAIN="$(make_nip_domain "$PUBLIC_IP" "$APP_SUBDOMAIN")"
 
+prompt_secret_or_env CHATGPT_KEY CHATGPT_KEY "OpenAI API key for the default bot user"
+
 PAYLOAD_SECRET="${PAYLOAD_SECRET:-$(generate_secret)}"
 BETTER_AUTH_SECRET="${BETTER_AUTH_SECRET:-$(generate_secret)}"
 CRON_SECRET="${CRON_SECRET:-$(generate_secret)}"
@@ -523,6 +546,9 @@ OIDC_REDIRECT_URLS="${OIDC_REDIRECT_URLS:-https://${APP_DOMAIN}/auth/callback}"
 
 THIRDWEB_SECRET_KEY="${THIRDWEB_SECRET_KEY:-}"
 THIRDWEB_CLIENT_ID="${THIRDWEB_CLIENT_ID:-}"
+
+CHATGPT_KEY="${CHATGPT_KEY:-}"
+CHATGPT_BOT_EMAIL="${CHATGPT_BOT_EMAIL:-chatgpt-bot@liberland.marketplace}"
 
 TRONWEB_API="${TRONWEB_API:-https://api.trongrid.io}"
 TRONWEB_SECRET="${TRONWEB_SECRET:-}"
@@ -596,6 +622,8 @@ set_and_export OIDC_CLIENT_SECRET "$OIDC_CLIENT_SECRET"
 set_and_export OIDC_REDIRECT_URLS "$OIDC_REDIRECT_URLS"
 set_and_export THIRDWEB_SECRET_KEY "$THIRDWEB_SECRET_KEY"
 set_and_export THIRDWEB_CLIENT_ID "$THIRDWEB_CLIENT_ID"
+set_and_export CHATGPT_KEY "$CHATGPT_KEY"
+set_and_export CHATGPT_BOT_EMAIL "$CHATGPT_BOT_EMAIL"
 set_and_export TRONWEB_API "$TRONWEB_API"
 set_and_export TRONWEB_SECRET "$TRONWEB_SECRET"
 set_and_export CRYPTO_ETH_NATIVE_TOKEN_ADDRESS "$CRYPTO_ETH_NATIVE_TOKEN_ADDRESS"
@@ -664,6 +692,8 @@ OIDC_CLIENT_SECRET=$(quote_env_value "$OIDC_CLIENT_SECRET")
 OIDC_REDIRECT_URLS=$(quote_env_value "$OIDC_REDIRECT_URLS")
 THIRDWEB_SECRET_KEY=$(quote_env_value "$THIRDWEB_SECRET_KEY")
 THIRDWEB_CLIENT_ID=$(quote_env_value "$THIRDWEB_CLIENT_ID")
+CHATGPT_KEY=$(quote_env_value "$CHATGPT_KEY")
+CHATGPT_BOT_EMAIL=$(quote_env_value "$CHATGPT_BOT_EMAIL")
 TRONWEB_API=$(quote_env_value "$TRONWEB_API")
 TRONWEB_SECRET=$(quote_env_value "$TRONWEB_SECRET")
 CRYPTO_ETH_POOL_ADDRESS=$(quote_env_value "$CRYPTO_ETH_POOL_ADDRESS")
@@ -1107,6 +1137,58 @@ echo "Building and starting the stack..."
 run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" down -v --remove-orphans >/dev/null 2>&1 || true
 run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" up -d --build --remove-orphans
 
+echo "Creating the default bot user..."
+for bot_attempt in {1..60}; do
+  if run_compose -p "$COMPOSE_PROJECT_NAME" --env-file "$RUNTIME_ENV_FILE" -f "$COMPOSE_FILE" exec -T app pnpm exec tsx -e '
+    import config from "./src/payload.config"
+    import { getPayload } from "payload"
+
+    const password = process.env.CHATGPT_KEY
+    const email = process.env.CHATGPT_BOT_EMAIL || "chatgpt-bot@liberland.marketplace"
+
+    if (!password) {
+      throw new Error("CHATGPT_KEY must be set to create the default bot user.")
+    }
+
+    const payload = await getPayload({ config })
+    const existing = await payload.find({
+      collection: "users",
+      depth: 0,
+      limit: 1,
+      overrideAccess: true,
+      where: { email: { equals: email } },
+    })
+
+    if (existing.totalDocs === 0) {
+      await payload.db.create({
+        collection: "users",
+        data: {
+          bot: true,
+          email,
+          emailVerified: true,
+          name: "ChatGPT",
+          password,
+          role: ["user"],
+        },
+      })
+      console.log("Created the default bot user.")
+    } else {
+      console.log("Default bot user already exists.")
+    }
+
+    await payload.db.destroy()
+  '; then
+    break
+  fi
+
+  if [[ "$bot_attempt" -eq 60 ]]; then
+    echo "Error: default bot user creation did not complete after the application started." >&2
+    exit 1
+  fi
+
+  sleep 2
+done
+
 reindex_search_if_needed
 
 echo
@@ -1135,6 +1217,9 @@ server {
   location / {
     proxy_pass http://127.0.0.1:$APP_PORT;
     proxy_http_version 1.1;
+    proxy_connect_timeout 15s;
+    proxy_read_timeout 300s;
+    proxy_send_timeout 300s;
     proxy_set_header Host \$host;
     proxy_set_header X-Real-IP \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;

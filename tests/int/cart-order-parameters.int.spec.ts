@@ -52,6 +52,10 @@ type GraphQLResponseBody = {
         }>
       }>
     }
+    updateOrder?: {
+      id?: string
+      payerAddress?: string | null
+    }
   }
   errors?: Array<{ message?: string }>
 }
