@@ -108,6 +108,11 @@ fi
 cleanup() {
   if [[ -n "${CRON_PID}" ]]; then
     kill "${CRON_PID}" >/dev/null 2>&1 || true
+    wait "${CRON_PID}" >/dev/null 2>&1 || true
+  fi
+
+  if [[ -f "${CRON_LOCK_FILE}" ]] && [[ "$(tr -d '[:space:]' < "${CRON_LOCK_FILE}" 2>/dev/null || true)" == "$$" ]]; then
+    rm -f "${CRON_LOCK_FILE}"
   fi
 }
 
@@ -143,7 +148,15 @@ start_ai_repost_cron_loop() {
       if run_ai_repost_request; then
         printf '[%s] [ai-repost-cron] Scheduled refresh completed.\n' "$(date -Iseconds)"
       else
-        printf '[%s] [ai-repost-cron] Scheduled refresh failed.\n' "$(date -Iseconds)"
+        request_status="$?"
+
+        if [[ "${request_status}" -eq 2 ]]; then
+          log_cron_message "[ai-repost-cron] Scheduled refresh was rate limited. Retrying in ${RATE_LIMIT_RETRY_SECONDS}s."
+        else
+          log_cron_message "[ai-repost-cron] Scheduled refresh failed. Retrying in ${RATE_LIMIT_RETRY_SECONDS}s."
+        fi
+
+        sleep "${RATE_LIMIT_RETRY_SECONDS}"
       fi
     done
   ) >> "${CRON_LOG_FILE}" 2>&1 &
