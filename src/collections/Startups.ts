@@ -22,6 +22,7 @@ import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { getCurrencies } from '@/utilities/getCurrencies'
+import { contractDeploymentsField } from '@/fields/contractDeploymentsField'
 import type { CollectionConfig } from 'payload'
 
 const resourceOptions = [
@@ -107,6 +108,7 @@ export const Startups: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
     },
+    contractDeploymentsField(),
     {
       name: 'identity',
       label: 'Tribe',
