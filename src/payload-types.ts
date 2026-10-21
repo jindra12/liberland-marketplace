@@ -89,6 +89,8 @@ export interface Config {
     jobs: Job;
     'comment-likes': CommentLike;
     startups: Startup;
+    'venture-chain-indexes': VentureChainIndex;
+    'venture-deployment-recoveries': VentureDeploymentRecovery;
     syndications: Syndication;
     reports: Report;
     'information-requests': InformationRequest;
@@ -153,6 +155,8 @@ export interface Config {
     jobs: JobsSelect<false> | JobsSelect<true>;
     'comment-likes': CommentLikesSelect<false> | CommentLikesSelect<true>;
     startups: StartupsSelect<false> | StartupsSelect<true>;
+    'venture-chain-indexes': VentureChainIndexesSelect<false> | VentureChainIndexesSelect<true>;
+    'venture-deployment-recoveries': VentureDeploymentRecoveriesSelect<false> | VentureDeploymentRecoveriesSelect<true>;
     syndications: SyndicationsSelect<false> | SyndicationsSelect<true>;
     reports: ReportsSelect<false> | ReportsSelect<true>;
     'information-requests': InformationRequestsSelect<false> | InformationRequestsSelect<true>;
@@ -1080,6 +1084,40 @@ export interface Startup {
    */
   description?: string | null;
   image?: (string | null) | Media;
+  /**
+   * Addresses for the token, exchange, DAO, reward token, PoolManager, and their implementations. Keep one entry per deployed chain.
+   */
+  contractDeployments?:
+    | {
+        chain: 'ethereum' | 'tron';
+        network?: string | null;
+        chainId?: string | null;
+        deployedAt?: string | null;
+        deploymentBlock?: number | null;
+        tokenName?: string | null;
+        tokenSymbol?: string | null;
+        tokenDecimals?: number | null;
+        initialSupply?: string | null;
+        deployerWalletAddress?: string | null;
+        positionManagerAddress?: string | null;
+        permit2Address?: string | null;
+        forwarderAddress?: string | null;
+        timelockAddress?: string | null;
+        timelockImplementationAddress?: string | null;
+        poolManagerAddress?: string | null;
+        exchangePoolAddress?: string | null;
+        exchangePoolId?: string | null;
+        tokenAddress?: string | null;
+        swapRouterAddress?: string | null;
+        rewardTokenAddress?: string | null;
+        daoAddress?: string | null;
+        tokenImplementationAddress?: string | null;
+        swapRouterImplementationAddress?: string | null;
+        rewardTokenImplementationAddress?: string | null;
+        daoImplementationAddress?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   identity: string | Identity;
   fundsNeeded?: {
     amount?: number | null;
@@ -1481,6 +1519,57 @@ export interface CommentLike {
   createdBy?: (string | null) | User;
   userId: string | User;
   targetID: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venture-chain-indexes".
+ */
+export interface VentureChainIndex {
+  id: string;
+  createdBy?: (string | null) | User;
+  key: string;
+  lastBlock: number;
+  blockHash: string;
+  pools:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  proposals:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venture-deployment-recoveries".
+ */
+export interface VentureDeploymentRecovery {
+  id: string;
+  createdBy?: (string | null) | User;
+  key: string;
+  record:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2185,6 +2274,14 @@ export interface PayloadLockedDocument {
         value: string | Startup;
       } | null)
     | ({
+        relationTo: 'venture-chain-indexes';
+        value: string | VentureChainIndex;
+      } | null)
+    | ({
+        relationTo: 'venture-deployment-recoveries';
+        value: string | VentureDeploymentRecovery;
+      } | null)
+    | ({
         relationTo: 'syndications';
         value: string | Syndication;
       } | null)
@@ -2884,6 +2981,37 @@ export interface StartupsSelect<T extends boolean = true> {
   company?: T;
   description?: T;
   image?: T;
+  contractDeployments?:
+    | T
+    | {
+        chain?: T;
+        network?: T;
+        chainId?: T;
+        deployedAt?: T;
+        deploymentBlock?: T;
+        tokenName?: T;
+        tokenSymbol?: T;
+        tokenDecimals?: T;
+        initialSupply?: T;
+        deployerWalletAddress?: T;
+        positionManagerAddress?: T;
+        permit2Address?: T;
+        forwarderAddress?: T;
+        timelockAddress?: T;
+        timelockImplementationAddress?: T;
+        poolManagerAddress?: T;
+        exchangePoolAddress?: T;
+        exchangePoolId?: T;
+        tokenAddress?: T;
+        swapRouterAddress?: T;
+        rewardTokenAddress?: T;
+        daoAddress?: T;
+        tokenImplementationAddress?: T;
+        swapRouterImplementationAddress?: T;
+        rewardTokenImplementationAddress?: T;
+        daoImplementationAddress?: T;
+        id?: T;
+      };
   identity?: T;
   fundsNeeded?:
     | T
@@ -2905,6 +3033,31 @@ export interface StartupsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venture-chain-indexes_select".
+ */
+export interface VentureChainIndexesSelect<T extends boolean = true> {
+  createdBy?: T;
+  key?: T;
+  lastBlock?: T;
+  blockHash?: T;
+  pools?: T;
+  proposals?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venture-deployment-recoveries_select".
+ */
+export interface VentureDeploymentRecoveriesSelect<T extends boolean = true> {
+  createdBy?: T;
+  key?: T;
+  record?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
