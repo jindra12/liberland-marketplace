@@ -205,6 +205,11 @@ const normalizeFixtureDocument = (collectionSlug: string, document: JsonObject):
     delete nextDocument.price
   }
 
+  // Payload adds this auth discriminator to returned users, not stored fixtures.
+  if (collectionSlug === 'users') {
+    nextDocument.collection = collectionSlug
+  }
+
   return nextDocument
 }
 

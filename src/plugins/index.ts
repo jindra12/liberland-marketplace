@@ -46,7 +46,6 @@ export const plugins: Plugin[] = [
   comments,
   addCreatedBy,
   betterAuthPlugin({
-    disableDefaultPayloadAuth: true,
     hidePluginCollections: true,
     betterAuthOptions: {
       secret: betterAuthSecret,

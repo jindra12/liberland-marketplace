@@ -2,21 +2,15 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { down, up } from '@/migrations/20260627_103000_create_default_bot_user'
 
-type MockPayload = {
-  create: ReturnType<typeof vi.fn>
-  delete: ReturnType<typeof vi.fn>
-  find: ReturnType<typeof vi.fn>
-  logger: {
-    info: ReturnType<typeof vi.fn>
-    warn: ReturnType<typeof vi.fn>
-  }
-}
+type MigrationPayload = Parameters<typeof up>[0]['payload']
 
-const createMockPayload = (): MockPayload => {
+const createMockPayload = () => {
   return {
-    create: vi.fn(async () => ({ id: 'bot-user-id' })),
-    delete: vi.fn(async () => undefined),
-    find: vi.fn(async () => ({
+    db: {
+      create: vi.fn<MigrationPayload['db']['create']>(async () => ({ id: 'bot-user-id' })),
+      delete: vi.fn<MigrationPayload['db']['delete']>(async () => undefined),
+    },
+    find: vi.fn<MigrationPayload['find']>(async () => ({
       docs: [],
       totalDocs: 0,
     })),
@@ -24,7 +18,7 @@ const createMockPayload = (): MockPayload => {
       info: vi.fn(),
       warn: vi.fn(),
     },
-  }
+  } satisfies MigrationPayload
 }
 
 afterEach(() => {
@@ -39,8 +33,7 @@ describe('default bot user migration', () => {
     const payload = createMockPayload()
 
     await up({
-      payload: payload as never,
-      session: undefined as never,
+      payload,
     })
 
     expect(payload.find).toHaveBeenCalledWith(
@@ -50,13 +43,14 @@ describe('default bot user migration', () => {
         limit: 1,
         overrideAccess: true,
         where: {
-          bot: {
-            equals: true,
-          },
+          OR: [
+            { bot: { equals: true } },
+            { email: { equals: 'chatgpt-bot@liberland.marketplace' } },
+          ],
         },
       }),
     )
-    expect(payload.create).toHaveBeenCalledWith(
+    expect(payload.db.create).toHaveBeenCalledWith(
       expect.objectContaining({
         collection: 'users',
         data: expect.objectContaining({
@@ -67,7 +61,6 @@ describe('default bot user migration', () => {
           password: 'test-bot-secret',
           role: ['user'],
         }),
-        overrideAccess: true,
       }),
     )
   })
@@ -86,11 +79,10 @@ describe('default bot user migration', () => {
     })
 
     await up({
-      payload: payload as never,
-      session: undefined as never,
+      payload,
     })
 
-    expect(payload.create).not.toHaveBeenCalled()
+    expect(payload.db.create).not.toHaveBeenCalled()
     expect(payload.logger.info).toHaveBeenCalledWith(
       '[migration:create_default_bot_user] Bot user already exists, skipping.',
     )
@@ -108,14 +100,13 @@ describe('default bot user migration', () => {
     })
 
     await down({
-      payload: payload as never,
+      payload,
     })
 
-    expect(payload.delete).toHaveBeenCalledWith(
+    expect(payload.db.delete).toHaveBeenCalledWith(
       expect.objectContaining({
         collection: 'users',
         id: 'existing-bot-user',
-        overrideAccess: true,
       }),
     )
   })

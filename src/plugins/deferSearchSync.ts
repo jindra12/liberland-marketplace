@@ -58,6 +58,7 @@ const buildSearchDoc = async (args: {
     title: '',
   }
   const preparedSearchDoc = await beforeSyncWithSearch({
+    collectionSlug: args.collectionSlug,
     originalDoc: args.doc,
     payload: args.req.payload,
     req: args.req,
