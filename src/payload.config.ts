@@ -20,6 +20,9 @@ import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
 import CommentLikes from './collections/CommentLikes'
 import { Startups } from './collections/Startups'
+import { VentureChainIndexes } from './collections/VentureChainIndexes'
+import { VentureDeploymentRecoveries } from './collections/VentureDeploymentRecoveries'
+import { ventureTestRpcEndpoint } from './endpoints/ventureChainIndex'
 import { Syndications } from './collections/Syndications'
 import { backfillEndpoint } from './endpoints/backfill'
 import { confirmCryptoOrderEndpoint } from './endpoints/confirmCryptoOrder'
@@ -186,6 +189,8 @@ export default buildConfig({
     Jobs,
     CommentLikes,
     Startups,
+    VentureChainIndexes,
+    VentureDeploymentRecoveries,
     Syndications,
     Reports,
     InformationRequests,
@@ -193,7 +198,12 @@ export default buildConfig({
     NotificationSubscriptions,
   ],
   cors: '*',
-  endpoints: [analyticsConfigEndpoint, backfillEndpoint, confirmCryptoOrderEndpoint],
+  endpoints: [
+    analyticsConfigEndpoint,
+    backfillEndpoint,
+    confirmCryptoOrderEndpoint,
+    ventureTestRpcEndpoint,
+  ],
   globals: [Header, Footer],
   plugins,
   debug: payloadDebug,

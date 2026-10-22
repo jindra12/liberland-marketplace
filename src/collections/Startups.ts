@@ -22,6 +22,9 @@ import { validateInvolvedUsers } from '@/hooks/validateInvolvedUsers'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { requirePublicCompany } from '@/hooks/requirePublicCompany'
 import { getCurrencies } from '@/utilities/getCurrencies'
+import { contractDeploymentsField } from '@/fields/contractDeploymentsField'
+import { ventureChainIndexEndpoint } from '@/endpoints/ventureChainIndex'
+import { ventureDeploymentRecoveryEndpoints } from '@/endpoints/ventureDeploymentRecovery'
 import type { CollectionConfig } from 'payload'
 
 const resourceOptions = [
@@ -37,6 +40,7 @@ const resourceOptions = [
 
 export const Startups: CollectionConfig = {
   slug: 'startups',
+  endpoints: [ventureChainIndexEndpoint, ...ventureDeploymentRecoveryEndpoints],
   labels: {
     singular: 'Venture',
     plural: 'Ventures',
@@ -107,6 +111,7 @@ export const Startups: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
     },
+    contractDeploymentsField(),
     {
       name: 'identity',
       label: 'Tribe',
