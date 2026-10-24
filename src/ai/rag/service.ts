@@ -3,6 +3,7 @@ import { OpenAI, OpenAIEmbedding } from '@llamaindex/openai'
 import { createLocalReq, type PayloadRequest } from 'payload'
 
 import { getServerSideURL } from '@/utilities/getURL'
+import { consumeRagQuota } from '@/security/utils'
 
 import {
   RAG_COLLECTIONS,
@@ -162,6 +163,7 @@ export const searchRag = async (req: PayloadRequest, input: RagSearchRequest): P
     throw new Error('A search query is required.')
   }
 
+  await consumeRagQuota(req.headers, req.user ? `${req.user.collection}:${req.user.id}` : undefined)
   const limit = getLimit(input.limit)
   const queryEngine = (await getIndex(req)).asQueryEngine({ similarityTopK: limit })
   const response = await queryEngine.query({ query })

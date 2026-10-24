@@ -1,8 +1,10 @@
 import config from '@payload-config'
 import { createPayloadRequest } from 'payload'
+import { RateLimiterRes } from 'rate-limiter-flexible'
 
 import { searchRag } from '@/ai/rag/service'
 import type { RagSearchRequest } from '@/ai/rag/types'
+import { limitBackendRequest, rateLimitResponse } from '@/security/utils'
 
 const parseRequest = async (request: Request): Promise<RagSearchRequest> => {
   const body =
@@ -25,6 +27,10 @@ const parseRequest = async (request: Request): Promise<RagSearchRequest> => {
 }
 
 const handleSearch = async (request: Request): Promise<Response> => {
+  const limited = await limitBackendRequest(request)
+  if (limited) {
+    return limited
+  }
   try {
     const req = await createPayloadRequest({
       canSetHeaders: false,
@@ -35,6 +41,9 @@ const handleSearch = async (request: Request): Promise<Response> => {
 
     return Response.json(result)
   } catch (error) {
+    if (error instanceof RateLimiterRes) {
+      return rateLimitResponse(error)
+    }
     const message = error instanceof Error ? error.message : 'RAG search failed.'
     const status =
       message.includes('required') || message.includes('at most')

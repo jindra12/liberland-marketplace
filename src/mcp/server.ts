@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
+import { MCP_MAX_TOOL_INPUT_ELEMENTS } from '@/security/constants'
 import { getEntityCatalog, getEntityDefinition, getEntitySchema } from './catalog'
 import { executeGraphQL } from './graphql'
 import { addCartItemForMcp, clearCartForMcp, getCartForMcp, removeCartItemForMcp, setCartItemQuantityForMcp } from './cart'
@@ -56,7 +57,7 @@ const executeEntityQuery = async ({ authorization, entity, id, limit, page, wher
 }
 
 export const createBackendMcpServer = (authorization?: string): McpServer => {
-  const server = new McpServer({ name: 'nswap-syndicated-backend', version: '1.0.0' }, { instructions: DISCOVERY_INSTRUCTIONS })
+  const server = new McpServer({ name: 'nswap-syndicated-backend', version: '1.0.0' }, { instructions: DISCOVERY_INSTRUCTIONS, maxToolInputElements: MCP_MAX_TOOL_INPUT_ELEMENTS })
 
   server.registerTool('list_entities', {
     description: 'List companies, products/services, jobs, ventures, identities, posts, comments, orders, carts, users, media, syndications, reports, information requests, notification subscriptions, and subscribers through GraphQL.',
