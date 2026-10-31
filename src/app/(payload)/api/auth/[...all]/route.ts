@@ -50,6 +50,14 @@ const handleSignOutRedirect = async (req: Request, payloadAuth: Awaited<ReturnTy
 }
 
 const handler = async (req: Request) => {
+  const path = new URL(req.url).pathname
+  if (['/api/auth/oauth2/authorize', '/api/auth/oauth2/token', '/api/auth/oauth2/revoke'].includes(path)) {
+    const { maybeHandlePoppyOAuth } = await import('@/poppy/http/utils')
+    const poppy = await maybeHandlePoppyOAuth(req)
+    if (poppy) {
+      return poppy
+    }
+  }
   const payloadAuth = await getPayloadAuthInstance()
 
   if (req.method === 'GET' && new URL(req.url).pathname.endsWith('/sign-out')) {

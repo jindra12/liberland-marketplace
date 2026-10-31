@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import { MCP_MAX_TOOL_INPUT_ELEMENTS } from '@/security/constants'
 import { getEntityCatalog, getEntityDefinition, getEntitySchema } from './catalog'
-import { executeGraphQL } from './graphql'
+import { executeGraphQL, getMutationDataType } from './graphql'
 import { addCartItemForMcp, clearCartForMcp, getCartForMcp, removeCartItemForMcp, setCartItemQuantityForMcp } from './cart'
 import { getPayloadEntitySchema } from './schema'
 import { createPost, createReply, deleteComment, deleteShippingAddress, getWalletCapabilities, listSellerOrders, listShippingAddresses, preparePayment, saveShippingAddress, unsubscribe, updateComment, updatePost, updateSellerOrderProductFulfilled, updateSellerOrderProductRejected, updateShippingAddress } from './actions'
@@ -228,7 +228,8 @@ export const createBackendMcpServer = (authorization?: string): McpServer => {
     inputSchema: { entity: entitySchema, data: jsonObjectSchema },
   }, async (args) => {
     const definition = getEntityDefinition(args.entity)
-    const data = await executeGraphQL({ authorization, query: `mutation Create${definition.item}($data: ${definition.input}!) { create${definition.item}(data: $data) { ${definition.selection} } }`, variables: { data: args.data as McpJsonObject } })
+    const input = await getMutationDataType(`create${definition.item}`)
+    const data = await executeGraphQL({ authorization, query: `mutation Create${definition.item}($data: ${input}) { create${definition.item}(data: $data) { ${definition.selection} } }`, variables: { data: args.data as McpJsonObject } })
     return result(data[`create${definition.item}`])
   })
 
@@ -237,7 +238,8 @@ export const createBackendMcpServer = (authorization?: string): McpServer => {
     inputSchema: { entity: entitySchema, id: z.string().min(1), data: jsonObjectSchema },
   }, async (args) => {
     const definition = getEntityDefinition(args.entity)
-    const data = await executeGraphQL({ authorization, query: `mutation Update${definition.item}($id: String!, $data: ${definition.updateInput}!) { update${definition.item}(id: $id, data: $data) { ${definition.selection} } }`, variables: { id: args.id, data: args.data as McpJsonObject } })
+    const input = await getMutationDataType(`update${definition.item}`)
+    const data = await executeGraphQL({ authorization, query: `mutation Update${definition.item}($id: String!, $data: ${input}) { update${definition.item}(id: $id, data: $data) { ${definition.selection} } }`, variables: { id: args.id, data: args.data as McpJsonObject } })
     return result(data[`update${definition.item}`])
   })
 
