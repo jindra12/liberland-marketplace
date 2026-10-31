@@ -37,6 +37,8 @@ import { startupGraphQLMutations } from './graphql/startups'
 import { userGraphQLMutations, userGraphQLQueries } from './graphql/users'
 import { Reports } from './collections/Reports'
 import { InformationRequests } from './collections/InformationRequests'
+import { PoppyProtocolState } from './collections/PoppyProtocolState'
+import { ensurePoppyIndexes } from './poppy/collection/utils'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,6 +52,7 @@ if (!payloadSecret) {
 }
 
 export default buildConfig({
+  onInit: ensurePoppyIndexes,
   admin: {
     ...(enablePayloadLivePreview
       ? {
@@ -196,6 +199,7 @@ export default buildConfig({
     InformationRequests,
     Subscribers,
     NotificationSubscriptions,
+    PoppyProtocolState,
   ],
   cors: '*',
   endpoints: [

@@ -7,7 +7,7 @@ export const POPPY_SCOPE_DESCRIPTIONS = {
     'Change your carts, saved addresses and seller fulfillment within your existing permissions.',
 }
 export const POPPY_WRITE_SCOPES = ['marketplace:write', 'account:write']
-export const POPPY_COLLECTION = 'poppy_protocol_state'
+export const POPPY_COLLECTION = 'poppy-protocol-state'
 export const POPPY_MAX_REQUEST_BYTES = 64 * 1024
 export const PUBLIC_MCP_ENTITIES = new Set([
   'companies',

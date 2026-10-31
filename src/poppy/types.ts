@@ -1,8 +1,4 @@
-export type PoppyRecord = {
-  _id: string
-  tenant: string
-  kind: string
-  value: string
-  version: string
-  expiresAt?: Date
-}
+import type { DataFromCollectionSlug } from 'payload'
+import type { POPPY_COLLECTION } from './constants'
+
+export type PoppyRecord = DataFromCollectionSlug<typeof POPPY_COLLECTION>

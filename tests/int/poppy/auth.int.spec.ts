@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { MongoClient } from 'mongodb'
 import { randomUUID } from 'node:crypto'
+import type { Payload } from 'payload'
 import {
   JWT_CLIENT_ASSERTION,
   parseTokenResponse,
@@ -9,8 +9,8 @@ import {
   parseOAuthServerMetadata,
   listsResource,
 } from '@datalayer/personal-agent-protocol'
-import { createMongoPoppyStore } from '@/poppy/store/utils'
-import type { PoppyRecord } from '@/poppy/types'
+import { createPayloadPoppyStore } from '@/poppy/store/utils'
+import { createPoppyTestPayload, destroyPoppyTestPayload } from '../../poppy/payload/utils'
 import {
   createTestAgent,
   createTestCompany,
@@ -21,22 +21,25 @@ import {
   TEST_ISSUER,
 } from '../../poppy/utils'
 
-const client = new MongoClient('mongodb://127.0.0.1:27018')
-const database = client.db(`poppy_auth_test_${randomUUID()}`)
+const holder: { payload?: Payload } = {}
 const createFixture = async () => {
   const agent = await createTestAgent()
-  const records = database.collection<PoppyRecord>(`state_${randomUUID()}`)
-  const store = createMongoPoppyStore(records, TEST_ISSUER, 'test-only-poppy-secret')
+  const store = createPayloadPoppyStore(
+    holder.payload!,
+    `${TEST_ISSUER}/${randomUUID()}`,
+    'test-only-poppy-secret',
+  )
   return { agent, store, service: createTestCompany(store, agent) }
 }
 
 describe('Poppy cryptographic sign-in, sessions and refresh', () => {
   beforeAll(async () => {
-    await client.connect()
+    holder.payload = await createPoppyTestPayload('auth')
   })
   afterAll(async () => {
-    await database.dropDatabase()
-    await client.close()
+    if (holder.payload) {
+      await destroyPoppyTestPayload(holder.payload)
+    }
   })
 
   it('publishes a verifiable alias/issuer relationship and keeps scoped account access after service recreation', async () => {
