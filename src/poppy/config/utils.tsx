@@ -9,7 +9,9 @@ export const createPoppyConfig = () => {
   if (backend.protocol !== 'https:' && process.env.NODE_ENV === 'production') {
     throw new Error('Poppy requires an HTTPS NEXT_PUBLIC_SERVER_URL in production')
   }
-  const frontend = process.env.FRONTEND_URL ? new URL(process.env.FRONTEND_URL) : undefined
+  const frontend = process.env.NEXT_PUBLIC_FRONTEND_URL
+    ? new URL(process.env.NEXT_PUBLIC_FRONTEND_URL)
+    : undefined
   const aliases =
     frontend?.protocol === 'https:' && !frontend.port && frontend.hostname !== backend.hostname
       ? [frontend.hostname]
