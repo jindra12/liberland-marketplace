@@ -10,7 +10,7 @@ export const getServerSideURL = () => {
 }
 
 export const getFrontendURL = () => {
-  return process.env.FRONTEND_URL || 'http://localhost:3001'
+  return process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3001'
 }
 
 export const getClientSideURL = () => {

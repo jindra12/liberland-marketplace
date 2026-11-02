@@ -56,6 +56,10 @@ export const plugins: Plugin[] = [
         .map((url) => new URL(url).origin),
       emailAndPassword: {
         enabled: true,
+        onPasswordReset: async ({ user }) => {
+          const { revokePoppyAccountGrants } = await import('@/poppy/accounts/utils')
+          await revokePoppyAccountGrants(user.id)
+        },
         sendResetPassword: async ({ user, url }) => {
           await sendAuthEmail({
             to: user.email,
@@ -108,17 +112,17 @@ export const plugins: Plugin[] = [
           allowDynamicClientRegistration: true,
           trustedClients: process.env.OIDC_CLIENT_ID
             ? [
-                {
-                  clientId: process.env.OIDC_CLIENT_ID,
-                  clientSecret: process.env.OIDC_CLIENT_SECRET || '',
-                  name: 'Frontend App',
-                  type: 'web' as const,
-                  redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
-                  metadata: null,
-                  skipConsent: true,
-                  disabled: false,
-                },
-              ]
+              {
+                clientId: process.env.OIDC_CLIENT_ID,
+                clientSecret: process.env.OIDC_CLIENT_SECRET || '',
+                name: 'Frontend App',
+                type: 'web' as const,
+                redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
+                metadata: null,
+                skipConsent: true,
+                disabled: false,
+              },
+            ]
             : [],
         }),
       ],

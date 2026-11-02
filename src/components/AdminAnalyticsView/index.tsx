@@ -33,7 +33,7 @@ const AdminAnalyticsView = async ({
     payload: initPageResult.req.payload,
     recentPage: requestedEventsPage,
   })
-  const frontendBaseURL = process.env.FRONTEND_URL ?? null
+  const frontendBaseURL = process.env.NEXT_PUBLIC_FRONTEND_URL ?? null
   const { end: recentRangeEnd, start: recentRangeStart } = getRecentEventsRange(analytics)
 
   return (

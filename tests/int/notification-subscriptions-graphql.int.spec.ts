@@ -10,7 +10,7 @@ import { toStringID } from '@/utilities/toStringID'
 let payload: Payload | null = null
 let bootstrapError: Error | null = null
 let graphqlPost: ((request: Request) => Promise<Response>) | null = null
-const originalFrontendURL = process.env.FRONTEND_URL
+const originalFrontendURL = process.env.NEXT_PUBLIC_FRONTEND_URL
 type SentEmailArgs = Parameters<Payload['sendEmail']>[0]
 
 const trackedCollections = [
@@ -187,7 +187,7 @@ const createAuthenticatedUser = async (email: string): Promise<AuthenticatedTest
 
 describe('Notification subscriptions collection GraphQL', () => {
   beforeAll(async () => {
-    process.env.FRONTEND_URL = 'https://frontend.example.com'
+    process.env.NEXT_PUBLIC_FRONTEND_URL = 'https://frontend.example.com'
 
     try {
       const [{ getPayload }, configModule, graphqlRouteModule] = await Promise.all([
@@ -205,7 +205,7 @@ describe('Notification subscriptions collection GraphQL', () => {
   })
 
   afterAll(() => {
-    process.env.FRONTEND_URL = originalFrontendURL
+    process.env.NEXT_PUBLIC_FRONTEND_URL = originalFrontendURL
   })
 
   afterEach(async () => {

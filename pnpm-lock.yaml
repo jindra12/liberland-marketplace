@@ -18,6 +18,12 @@ importers:
       '@bradgarropy/use-countdown':
         specifier: ^2.0.1
         version: 2.0.1(react@19.2.9)
+      '@datalayer/personal-agent-protocol':
+        specifier: 0.28.0
+        version: 0.28.0(@types/react@19.2.9)(immer@11.1.4)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))
+      '@datalayer/reactor':
+        specifier: 1.3.4
+        version: 1.3.4(@types/react@19.2.9)(immer@11.1.4)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))
       '@ethersproject/address':
         specifier: ^5.8.0
         version: 5.8.0
@@ -48,6 +54,9 @@ importers:
       '@payloadcms/email-nodemailer':
         specifier: 3.91.0
         version: 3.91.0(payload@3.91.0(patch_hash=95870b09ce911fa35226b20e8242a670627286fe5137acc991393f5e56929bad)(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.7.3)(utf-8-validate@6.0.6))
+      '@payloadcms/graphql':
+        specifier: 3.91.0
+        version: 3.91.0(graphql@16.12.0)(payload@3.91.0(patch_hash=95870b09ce911fa35226b20e8242a670627286fe5137acc991393f5e56929bad)(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.7.3)(utf-8-validate@6.0.6))(typescript@5.7.3)
       '@payloadcms/live-preview-react':
         specifier: 3.91.0
         version: 3.91.0(react-dom@19.2.9(react@19.2.9))(react@19.2.9)
@@ -116,7 +125,7 @@ importers:
         version: 8.17.1
       better-auth:
         specifier: ^1.4.18
-        version: 1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))
+        version: 1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -138,12 +147,21 @@ importers:
       geist:
         specifier: ^1.3.0
         version: 1.7.0(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))
+      get-stream:
+        specifier: 9.0.1
+        version: 9.0.1
       graphql:
         specifier: ^16.8.2
         version: 16.12.0
+      graphql-http:
+        specifier: ^1.22.4
+        version: 1.22.4(graphql@16.12.0)
       ipaddr.js:
         specifier: 2.2.0
         version: 2.2.0
+      jose:
+        specifier: ^6.2.14
+        version: 6.2.14
       llamaindex:
         specifier: ^0.12.1
         version: 0.12.1(@modelcontextprotocol/sdk@1.32.1(zod@4.3.6))(hono@4.12.5)(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(tree-sitter@0.22.4)(web-tree-sitter@0.24.7)(zod@4.3.6)
@@ -159,6 +177,9 @@ importers:
       mongodb:
         specifier: 6.20.0
         version: 6.20.0(socks@2.8.7)
+      mongoose:
+        specifier: 8.24.1
+        version: 8.24.1(socks@2.8.7)
       multicoin-address-validator:
         specifier: ^0.5.26
         version: 0.5.26
@@ -179,7 +200,7 @@ importers:
         version: 3.91.0(patch_hash=95870b09ce911fa35226b20e8242a670627286fe5137acc991393f5e56929bad)(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.7.3)(utf-8-validate@6.0.6)
       payload-auth:
         specifier: ^1.9.4
-        version: 1.9.4(fcc2c6aa3698948455c2a30b49dc00b3)
+        version: 1.9.4(f7c99daff700df0c7e8adcfab6516450)
       payload-plugin-comments:
         specifier: ^1.0.2
         version: 1.0.2
@@ -282,7 +303,7 @@ importers:
         version: 4.0.3
       '@vitejs/plugin-react':
         specifier: 4.5.2
-        version: 4.5.2(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))
+        version: 4.5.2(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.24(postcss@8.5.6)
@@ -324,10 +345,10 @@ importers:
         version: 5.7.3
       vite-tsconfig-paths:
         specifier: 5.1.4
-        version: 5.1.4(typescript@5.7.3)(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))
+        version: 5.1.4(typescript@5.7.3)(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))
       vitest:
         specifier: 3.2.3
-        version: 3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
+        version: 3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
 
 packages:
 
@@ -544,6 +565,19 @@ packages:
   '@csstools/css-tokenizer@3.0.4':
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
+
+  '@datalayer/personal-agent-protocol@0.28.0':
+    resolution: {integrity: sha512-8nnQAQUsaWUyr4M/UEN8LqBfeztOLx424GdysQreebtxXmgfPAsduY3gZevX3FfvdfsvLfmW7HuUbHl7TME37A==}
+
+  '@datalayer/reactor@1.3.4':
+    resolution: {integrity: sha512-tp+eXXrjEulwcI6HHLglgGwX2qi7gjXd1p7bhNq5PhCq9hfhSXE+SWi4psBL++F8RTR2BM5cPNlmnv0AazS9EA==}
+    peerDependencies:
+      '@module-federation/runtime': '>=0.8'
+      react: '>=18'
+      react-dom: '>=18'
+    peerDependenciesMeta:
+      '@module-federation/runtime':
+        optional: true
 
   '@date-fns/tz@1.2.0':
     resolution: {integrity: sha512-LBrd7MiJZ9McsOgxqWX7AaxrDjcFVjWH/tIKJd7pnR7McaslGYOP1QmmiBXdJH/H/yLCT+rcQ7FaPBUxRGUtrg==}
@@ -2993,6 +3027,9 @@ packages:
 
   '@scure/bip39@1.6.0':
     resolution: {integrity: sha512-+lF0BbLiJNwVlev4eKelw1WWLaiKXw7sSl8T6FvBlWkdX+94aGJ4o8XjUdlyhTCjd8c+B3KT3JfS8P0bLRNU6A==}
+
+  '@sec-ant/readable-stream@0.4.1':
+    resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
@@ -6324,6 +6361,10 @@ packages:
     resolution: {integrity: sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==}
     engines: {node: '>= 0.4'}
 
+  get-stream@9.0.1:
+    resolution: {integrity: sha512-kVCxPF3vQM/N0B1PmoqVUqgHP+EeVjmZSQn+1oCRPxd2P21P2F19lIgbR3HBosbB1PUhOAoctJnfEn2GbN2eZA==}
+    engines: {node: '>=18'}
+
   get-symbol-description@1.1.0:
     resolution: {integrity: sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg==}
     engines: {node: '>= 0.4'}
@@ -6863,6 +6904,10 @@ packages:
     resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
     engines: {node: '>=8'}
 
+  is-stream@4.0.1:
+    resolution: {integrity: sha512-Dnz92NInDqYckGEUJv689RbRiTSEHCQ7wOVeALbkOz999YpqT46yMRIGtSNl2iCL1waAZSx40+h59NV/EwzV/A==}
+    engines: {node: '>=18'}
+
   is-string@1.1.1:
     resolution: {integrity: sha512-BtEeSsoaQjlSPBemMQIrY1MY0uM6vnS1g5fmufYOtnxLGUZM2178PKbhsk7Ffv58IX+ZtcvoGwccYsh0PglkAA==}
     engines: {node: '>= 0.4'}
@@ -6954,6 +6999,9 @@ packages:
 
   jose@6.1.3:
     resolution: {integrity: sha512-0TpaTfihd4QMNwrz/ob2Bp7X04yuxJkjRGi4aKmOqwhov54i6u79oCv7T+C7lo70MKH6BesI3vscD1yb/yzKXQ==}
+
+  jose@6.2.14:
+    resolution: {integrity: sha512-3JasLuki1NRLQvY4wCoC37KZk4qxoBx2k2aFqLxT84IezqW0bkJKnNtxnZj/Fu1xsQivoc/lytxaRHJoGLjJ1A==}
 
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -10312,6 +10360,11 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
 
+  yaml@2.9.1:
+    resolution: {integrity: sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
   yargs-parser@18.1.3:
     resolution: {integrity: sha512-o50j0JeToy/4K6OZcaQmW6lyXXKhq7csREXcDwk2omFPJEwUNOVtJKvmDr9EI1fAJZUyZcRF7kxGBWmRXudrCQ==}
     engines: {node: '>=6'}
@@ -10389,8 +10442,8 @@ packages:
       use-sync-external-store:
         optional: true
 
-  zustand@5.0.11:
-    resolution: {integrity: sha512-fdZY+dk7zn/vbWNCYmzZULHRrss0jx5pPFiOuMZ/5HJN6Yv3u+1Wswy/4MpZEkEGhtNH+pwxZB8OKgUBPzYAGg==}
+  zustand@5.0.16:
+    resolution: {integrity: sha512-Uv7e327ihlCfayfja3hDc0M64Upev1LWBKpRobdK4NyovDDPeeX4imWXc/wzC1yc6fkYPoAY/ncKVPAs2jrtQw==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=18.0.0'
@@ -10633,32 +10686,32 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0)':
+  '@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0)':
     dependencies:
       '@better-auth/utils': 0.3.0
       '@better-fetch/fetch': 1.1.21
       '@standard-schema/spec': 1.1.0
       better-call: 1.1.8(zod@4.3.6)
-      jose: 6.1.3
+      jose: 6.2.14
       kysely: 0.28.14
       nanostores: 1.1.0
       zod: 4.3.6
 
-  '@better-auth/passkey@1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0))(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-auth@1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)))(better-call@1.1.8(zod@4.3.6))(nanostores@1.1.0)':
+  '@better-auth/passkey@1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0))(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-auth@1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)))(better-call@1.1.8(zod@4.3.6))(nanostores@1.1.0)':
     dependencies:
-      '@better-auth/core': 1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0)
+      '@better-auth/core': 1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0)
       '@better-auth/utils': 0.3.0
       '@better-fetch/fetch': 1.1.21
       '@simplewebauthn/browser': 13.2.2
       '@simplewebauthn/server': 13.2.2
-      better-auth: 1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))
+      better-auth: 1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))
       better-call: 1.1.8(zod@4.3.6)
       nanostores: 1.1.0
       zod: 4.3.6
 
-  '@better-auth/telemetry@1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0))':
+  '@better-auth/telemetry@1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0))':
     dependencies:
-      '@better-auth/core': 1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0)
+      '@better-auth/core': 1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0)
       '@better-auth/utils': 0.3.0
       '@better-fetch/fetch': 1.1.21
 
@@ -10687,7 +10740,7 @@ snapshots:
       abitype: 1.0.6(typescript@5.7.3)(zod@3.25.75)
       axios: 1.13.6
       axios-retry: 4.5.0(axios@1.13.6)
-      jose: 6.1.3
+      jose: 6.2.14
       md5: 2.3.0
       uncrypto: 0.1.3
       viem: 2.39.0(bufferutil@4.1.0)(typescript@5.7.3)(utf-8-validate@6.0.6)(zod@3.25.75)
@@ -10762,6 +10815,29 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
 
   '@csstools/css-tokenizer@3.0.4': {}
+
+  '@datalayer/personal-agent-protocol@0.28.0(@types/react@19.2.9)(immer@11.1.4)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))':
+    dependencies:
+      '@datalayer/reactor': 1.3.4(@types/react@19.2.9)(immer@11.1.4)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))
+      jose: 6.2.14
+      yaml: 2.9.1
+    transitivePeerDependencies:
+      - '@module-federation/runtime'
+      - '@types/react'
+      - immer
+      - react
+      - react-dom
+      - use-sync-external-store
+
+  '@datalayer/reactor@1.3.4(@types/react@19.2.9)(immer@11.1.4)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))':
+    dependencies:
+      react: 19.2.9
+      react-dom: 19.2.9(react@19.2.9)
+      zustand: 5.0.16(@types/react@19.2.9)(immer@11.1.4)(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))
+    transitivePeerDependencies:
+      - '@types/react'
+      - immer
+      - use-sync-external-store
 
   '@date-fns/tz@1.2.0': {}
 
@@ -12194,7 +12270,7 @@ snapshots:
       express: 5.2.1
       express-rate-limit: 8.7.1(express@5.2.1)
       hono: 4.12.5
-      jose: 6.1.3
+      jose: 6.2.14
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
       raw-body: 3.0.2
@@ -13597,6 +13673,8 @@ snapshots:
     dependencies:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
+
+  '@sec-ant/readable-stream@0.4.1': {}
 
   '@selderee/plugin-htmlparser2@0.11.0':
     dependencies:
@@ -15278,7 +15356,7 @@ snapshots:
       smol-toml: 1.5.2
       zod: 3.22.4
 
-  '@vitejs/plugin-react@4.5.2(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))':
+  '@vitejs/plugin-react@4.5.2(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -15286,7 +15364,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.11
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
+      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -15298,13 +15376,13 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.2.3(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))':
+  '@vitest/mocker@3.2.3(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))':
     dependencies:
       '@vitest/spy': 3.2.3
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
+      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
 
   '@vitest/pretty-format@3.2.3':
     dependencies:
@@ -16464,17 +16542,17 @@ snapshots:
 
   bech32@1.1.4: {}
 
-  better-auth@1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)):
+  better-auth@1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)):
     dependencies:
-      '@better-auth/core': 1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0)
-      '@better-auth/telemetry': 1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0))
+      '@better-auth/core': 1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0)
+      '@better-auth/telemetry': 1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0))
       '@better-auth/utils': 0.3.0
       '@better-fetch/fetch': 1.1.21
       '@noble/ciphers': 2.1.1
       '@noble/hashes': 2.0.1
       better-call: 1.1.8(zod@4.3.6)
       defu: 6.1.4
-      jose: 6.1.3
+      jose: 6.2.14
       kysely: 0.28.14
       nanostores: 1.1.0
       zod: 4.3.6
@@ -16484,7 +16562,7 @@ snapshots:
       next: 16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4)
       react: 19.2.9
       react-dom: 19.2.9(react@19.2.9)
-      vitest: 3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
+      vitest: 3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
 
   better-call@1.1.8(zod@4.3.6):
     dependencies:
@@ -18188,6 +18266,11 @@ snapshots:
       dunder-proto: 1.0.1
       es-object-atoms: 1.1.1
 
+  get-stream@9.0.1:
+    dependencies:
+      '@sec-ant/readable-stream': 0.4.1
+      is-stream: 4.0.1
+
   get-symbol-description@1.1.0:
     dependencies:
       call-bound: 1.0.4
@@ -18852,6 +18935,8 @@ snapshots:
 
   is-stream@2.0.1: {}
 
+  is-stream@4.0.1: {}
+
   is-string@1.1.1:
     dependencies:
       call-bound: 1.0.4
@@ -18948,6 +19033,8 @@ snapshots:
   jose@5.9.6: {}
 
   jose@6.1.3: {}
+
+  jose@6.2.14: {}
 
   joycon@3.1.1: {}
 
@@ -20413,14 +20500,14 @@ snapshots:
 
   pathval@2.0.1: {}
 
-  payload-auth@1.9.4(fcc2c6aa3698948455c2a30b49dc00b3):
+  payload-auth@1.9.4(f7c99daff700df0c7e8adcfab6516450):
     dependencies:
-      '@better-auth/passkey': 1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.1.0))(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-auth@1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)))(better-call@1.1.8(zod@4.3.6))(nanostores@1.1.0)
+      '@better-auth/passkey': 1.4.18(@better-auth/core@1.4.18(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.2.14)(kysely@0.28.14)(nanostores@1.1.0))(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-auth@1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)))(better-call@1.1.8(zod@4.3.6))(nanostores@1.1.0)
       '@better-auth/utils': 0.3.1
       '@payloadcms/next': 3.91.0(@types/react@19.2.9)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(payload@3.91.0(patch_hash=95870b09ce911fa35226b20e8242a670627286fe5137acc991393f5e56929bad)(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.7.3)(utf-8-validate@6.0.6))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(typescript@5.7.3)
       '@payloadcms/ui': 3.91.0(@types/react@19.2.9)(monaco-editor@0.55.1)(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(payload@3.91.0(patch_hash=95870b09ce911fa35226b20e8242a670627286fe5137acc991393f5e56929bad)(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.7.3)(utf-8-validate@6.0.6))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(typescript@5.7.3)
       '@tanstack/react-form': 1.27.7(react-dom@19.2.9(react@19.2.9))(react@19.2.9)
-      better-auth: 1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))
+      better-auth: 1.4.18(better-sqlite3@12.8.0)(mongodb@6.20.0(socks@2.8.7))(next@16.4.2(@babel/core@7.29.0)(@playwright/test@1.56.1)(@types/node@26.6.5)(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(sass@1.77.4))(react-dom@19.2.9(react@19.2.9))(react@19.2.9)(vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       jose: 6.1.3
@@ -20671,7 +20758,7 @@ snapshots:
       ox: 0.9.17(typescript@5.7.3)(zod@4.3.6)
       viem: 2.39.0(bufferutil@4.1.0)(typescript@5.7.3)(utf-8-validate@6.0.6)(zod@3.25.75)
       zod: 4.3.6
-      zustand: 5.0.11(@types/react@19.2.9)(immer@11.1.4)(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))
+      zustand: 5.0.16(@types/react@19.2.9)(immer@11.1.4)(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9))
     optionalDependencies:
       '@tanstack/react-query': 5.81.5(react@19.2.9)
       react: 19.2.9
@@ -22631,13 +22718,13 @@ snapshots:
       - utf-8-validate
       - zod
 
-  vite-node@3.2.3(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15):
+  vite-node@3.2.3(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3(supports-color@8.1.1)
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
+      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -22652,18 +22739,18 @@ snapshots:
       - tsx
       - yaml
 
-  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)):
+  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
       globrex: 0.1.2
       tsconfck: 3.1.6(typescript@5.7.3)
     optionalDependencies:
-      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
+      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15):
+  vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1):
     dependencies:
       esbuild: 0.27.3
       fdir: 6.5.0(picomatch@4.0.3)
@@ -22678,12 +22765,13 @@ snapshots:
       lightningcss: 1.30.2
       sass: 1.77.4
       tsx: 4.23.15
+      yaml: 2.9.1
 
-  vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15):
+  vitest@3.2.3(@types/debug@4.1.12)(@types/node@26.6.5)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.6.1)(jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.3
-      '@vitest/mocker': 3.2.3(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15))
+      '@vitest/mocker': 3.2.3(vite@7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1))
       '@vitest/pretty-format': 3.2.4
       '@vitest/runner': 3.2.3
       '@vitest/snapshot': 3.2.3
@@ -22701,8 +22789,8 @@ snapshots:
       tinyglobby: 0.2.15
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
-      vite-node: 3.2.3(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)
+      vite: 7.3.1(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
+      vite-node: 3.2.3(@types/node@26.6.5)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.77.4)(tsx@4.23.15)(yaml@2.9.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.12
@@ -23010,6 +23098,8 @@ snapshots:
 
   yaml@1.10.2: {}
 
+  yaml@2.9.1: {}
+
   yargs-parser@18.1.3:
     dependencies:
       camelcase: 5.3.1
@@ -23089,7 +23179,7 @@ snapshots:
       react: 19.2.9
       use-sync-external-store: 1.4.0(react@19.2.9)
 
-  zustand@5.0.11(@types/react@19.2.9)(immer@11.1.4)(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9)):
+  zustand@5.0.16(@types/react@19.2.9)(immer@11.1.4)(react@19.2.9)(use-sync-external-store@1.4.0(react@19.2.9)):
     optionalDependencies:
       '@types/react': 19.2.9
       immer: 11.1.4

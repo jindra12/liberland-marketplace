@@ -96,6 +96,7 @@ export interface Config {
     'information-requests': InformationRequest;
     subscribers: Subscriber;
     'notification-subscriptions': NotificationSubscription;
+    'poppy-protocol-state': PoppyProtocolState;
     comments: Comment;
     'company-likes': CompanyLike;
     'identity-likes': IdentityLike;
@@ -162,6 +163,7 @@ export interface Config {
     'information-requests': InformationRequestsSelect<false> | InformationRequestsSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'notification-subscriptions': NotificationSubscriptionsSelect<false> | NotificationSubscriptionsSelect<true>;
+    'poppy-protocol-state': PoppyProtocolStateSelect<false> | PoppyProtocolStateSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     'company-likes': CompanyLikesSelect<false> | CompanyLikesSelect<true>;
     'identity-likes': IdentityLikesSelect<false> | IdentityLikesSelect<true>;
@@ -1642,6 +1644,19 @@ export interface NotificationSubscription {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "poppy-protocol-state".
+ */
+export interface PoppyProtocolState {
+  createdBy?: (string | null) | User;
+  id: string;
+  tenant: string;
+  kind: string;
+  version: string;
+  value: string;
+  expiresAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "comments".
  */
 export interface Comment {
@@ -3118,6 +3133,19 @@ export interface NotificationSubscriptionsSelect<T extends boolean = true> {
   targetID?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "poppy-protocol-state_select".
+ */
+export interface PoppyProtocolStateSelect<T extends boolean = true> {
+  createdBy?: T;
+  id?: T;
+  tenant?: T;
+  kind?: T;
+  version?: T;
+  value?: T;
+  expiresAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
