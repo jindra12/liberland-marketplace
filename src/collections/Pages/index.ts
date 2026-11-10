@@ -21,7 +21,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
-import { anyone } from '@/access/anyone'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { authenticated } from '@/access/authenticated'
 
 export const Pages: CollectionConfig<'pages'> = {
@@ -29,7 +29,7 @@ export const Pages: CollectionConfig<'pages'> = {
   access: {
     create: authenticated,
     delete: onlyOwnDocsOrAdmin,
-    read: anyone,
+    read: authenticatedOrPublished,
     update: onlyOwnDocsOrAdmin,
   },
   // This config controls what's populated by default when a page is referenced

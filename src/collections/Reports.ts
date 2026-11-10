@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { createdByField } from '@/fields/createdByField'
-import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
+import { TEXTAREA_MAX_LENGTH, URL_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { lazySendReportCreatedNotifications } from '@/hooks/lazyCollectionHooks'
 import { adminOnly, adminOnlyFieldAccess, isAdminUser } from '@/access/admin'
 
@@ -15,12 +15,20 @@ export const Reports: CollectionConfig = {
   },
   access: {
     admin: ({ req }) => isAdminUser(req.user),
-    create: adminOnly,
+    create: ({ req }) => isAdminUser(req.user) || Boolean(req.user?.emailVerified),
     delete: adminOnly,
     read: adminOnly,
     update: adminOnly,
   },
   hooks: {
+    beforeChange: [
+      ({ data, operation, req }) => {
+        if (operation !== 'create' || isAdminUser(req.user)) {
+          return data
+        }
+        return { ...data, userId: req.user?.id, status: 'waiting' }
+      },
+    ],
     afterChange: [lazySendReportCreatedNotifications],
   },
   indexes: [
@@ -71,13 +79,13 @@ export const Reports: CollectionConfig = {
       name: 'contentLink',
       type: 'text',
       required: true,
-      maxLength: TEXT_INPUT_MAX_LENGTH,
+      maxLength: URL_INPUT_MAX_LENGTH,
     },
     {
       name: 'reason',
-      type: 'text',
+      type: 'textarea',
       required: true,
-      maxLength: TEXT_INPUT_MAX_LENGTH,
+      maxLength: TEXTAREA_MAX_LENGTH,
     },
   ],
   timestamps: true,

@@ -1,5 +1,8 @@
 import type { Company, Identity, Job, Product, Startup } from '@/payload-types'
-import { NOTIFICATION_TARGET_LABELS, type NotificationTargetCollection } from '@/newsletter/constants'
+import {
+  NOTIFICATION_TARGET_LABELS,
+  type NotificationTargetCollection,
+} from '@/newsletter/constants'
 import {
   buildNotificationSubscriptionUnsubscribeURL,
   getNotificationRecipientsForTarget,
@@ -7,6 +10,7 @@ import {
 import type { CollectionAfterChangeHook, PayloadRequest } from 'payload'
 import { getNotificationDocumentTitle, renderItemUpdateEmail } from '@/utilities/notificationDiff'
 import { getServerSideURL } from '@/utilities/getURL'
+import { deliverNotificationEmail } from '@/newsletter/utils'
 
 type ParentNotificationDoc = Company | Identity
 type ParentNotificationTargetCollection = 'companies' | 'identities'
@@ -83,6 +87,27 @@ export const sendRelatedItemPublishedNotifications = <TDoc extends ChildNotifica
       return doc
     }
 
+    // This receipt lives on the canonical record, independently of draft versions.
+    const claimed = await req.payload.db.updateOne({
+      collection: childCollection,
+      where: {
+        and: [
+          { id: { equals: doc.id } },
+          {
+            or: [
+              { publicationNotifiedAt: { exists: false } },
+              { publicationNotifiedAt: { equals: null } },
+            ],
+          },
+        ],
+      },
+      data: { publicationNotifiedAt: new Date().toISOString() },
+      req,
+    })
+    if (!claimed) {
+      return doc
+    }
+
     const recipients = await getNotificationRecipientsForTarget({
       req,
       targetCollection: parentCollection,
@@ -131,14 +156,13 @@ export const sendRelatedItemPublishedNotifications = <TDoc extends ChildNotifica
           intro,
           title: childTitle,
           unsubscribeURL: buildNotificationSubscriptionUnsubscribeURL({
-            email: recipient.email,
             targetCollection: parentCollection,
             targetID: parentID,
             serverUrl: parentDoc.serverURL ?? getServerSideURL(),
           }),
         })
 
-        return req.payload.sendEmail({
+        return deliverNotificationEmail(req, {
           html: email.html,
           subject: `New ${NOTIFICATION_TARGET_LABELS[childCollection]}: ${childTitle}`,
           text: email.text,

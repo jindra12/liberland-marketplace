@@ -1,4 +1,8 @@
 import type { RagCollection } from './constants'
+import type { VectorStoreIndex } from 'llamaindex'
+
+export type RagIndex = { createdAt: number; index: VectorStoreIndex }
+export type RagBuildFailure = { error: Error; retryAt: number }
 
 export type RagSearchRequest = {
   query: string

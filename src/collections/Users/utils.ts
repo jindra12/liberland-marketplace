@@ -1,5 +1,6 @@
 type UserCreateData = {
   bot?: boolean
+  emailVerified?: boolean
   role?: string[]
 }
 
@@ -7,10 +8,12 @@ export const sanitizeUserCreateData = ({
   data,
   existingUserCount,
   isAdmin,
+  verifiedByAuthService = false,
 }: {
   data?: UserCreateData | null
   existingUserCount: number
   isAdmin: boolean
+  verifiedByAuthService?: boolean
 }): UserCreateData | undefined => {
   if (!data) {
     return undefined
@@ -20,6 +23,7 @@ export const sanitizeUserCreateData = ({
     return {
       ...data,
       bot: false,
+      emailVerified: verifiedByAuthService ? data.emailVerified : false,
       role: ['admin'],
     }
   }
@@ -31,6 +35,7 @@ export const sanitizeUserCreateData = ({
   return {
     ...data,
     bot: false,
+    emailVerified: verifiedByAuthService ? data.emailVerified : false,
     role: ['user'],
   }
 }

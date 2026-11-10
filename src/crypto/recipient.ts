@@ -1,24 +1,27 @@
 import BigNumber from 'bignumber.js'
 import type { Payload, PayloadRequest } from 'payload'
 import type { SupportedChain } from './types'
+import type { Company, Order, Product, Variant } from '@/payload-types'
+import { toStringID } from '@/utilities/toStringID'
 
 type PayloadLike = Pick<Payload, 'findByID'>
 type WalletCollection = 'companies' | 'products' | 'variants'
 
-type ProductWalletDoc = {
-  company?: unknown
-  cryptoAddresses?: unknown
-  priceInUSD?: unknown
-  priceInUSDEnabled?: unknown
-}
+type ProductWalletDoc = Pick<
+  Product,
+  | 'company'
+  | 'cryptoAddresses'
+  | 'priceInUSD'
+  | 'priceInUSDEnabled'
+  | 'orderable'
+  | 'inventory'
+  | 'unlimitedInventory'
+>
 
-type CompanyWalletDoc = {
-  cryptoAddresses?: unknown
-}
+type CompanyWalletDoc = Pick<Company, 'cryptoAddresses'>
 
-type VariantWalletDoc = {
-  product?: unknown
-}
+type VariantWalletDoc = Pick<Variant, 'product' | 'priceInUSD' | 'priceInUSDEnabled' | 'inventory'>
+type OrderItem = NonNullable<Order['items']>[number]
 
 type ResolvedWallet = {
   address: string
@@ -42,12 +45,8 @@ const toDocID = (value: unknown): string =>
     ? String((value as { id: unknown }).id)
     : String(value)
 
-const parseWallet = (value: unknown): ResolvedWallet => {
-  const wallet = value as { address: unknown; chain: SupportedChain }
-  return {
-    address: String(wallet.address),
-    chain: wallet.chain,
-  }
+const parseWallet = (wallet: Product['cryptoAddresses']): ResolvedWallet | null => {
+  return wallet?.address && wallet.chain ? { address: wallet.address, chain: wallet.chain } : null
 }
 
 const normalizeAddressForComparison = async ({
@@ -182,22 +181,21 @@ const resolveProductIDFromItem = async ({
   req?: PayloadRequest
   variantCache: Map<string, VariantWalletDoc>
 }): Promise<string> => {
-  const rawItem = item as { product?: unknown; variant?: unknown }
-  if (rawItem.product !== undefined && rawItem.product !== null) {
-    const directProductID = toDocID(rawItem.product)
-    return directProductID
+  const rawItem = item as OrderItem
+  const productID = toStringID(rawItem.product)
+  const variantID = toStringID(rawItem.variant)
+  if (variantID) {
+    const variant = await loadVariant({ cache: variantCache, payload, req, variantID })
+    const parentID = toStringID(variant.product)
+    if (!parentID || (productID && productID !== parentID)) {
+      throw new Error('The variant must belong to the ordered product.')
+    }
+    return parentID
   }
-
-  const variantID = toDocID(rawItem.variant)
-
-  const variant = await loadVariant({
-    cache: variantCache,
-    payload,
-    req,
-    variantID,
-  })
-
-  return toDocID(variant.product)
+  if (!productID) {
+    throw new Error('Each order item must include a product or a linked variant.')
+  }
+  return productID
 }
 
 const resolveWalletForProduct = async ({
@@ -211,9 +209,9 @@ const resolveWalletForProduct = async ({
   product: ProductWalletDoc
   req?: PayloadRequest
 }): Promise<ResolvedWallet> => {
-  const productWallet = product.cryptoAddresses
+  const productWallet = parseWallet(product.cryptoAddresses)
   if (productWallet) {
-    return parseWallet(productWallet)
+    return productWallet
   }
 
   const companyID = toDocID(product.company)
@@ -225,11 +223,22 @@ const resolveWalletForProduct = async ({
     req,
   })
 
-  return parseWallet(company.cryptoAddresses)
+  const companyWallet = parseWallet(company.cryptoAddresses)
+  if (!companyWallet) {
+    throw new Error('The product and its company have no complete payment wallet.')
+  }
+  return companyWallet
 }
 
-const getProductUnitAmount = (product: ProductWalletDoc): number => {
-  const amount = Number(product.priceInUSD)
+const getProductUnitAmount = (product: ProductWalletDoc, variant?: VariantWalletDoc): number => {
+  const priced =
+    typeof variant?.priceInUSD === 'number' && variant.priceInUSDEnabled !== false
+      ? variant
+      : product
+  const amount = Number(priced.priceInUSD)
+  if (priced.priceInUSDEnabled === false || !Number.isFinite(amount) || amount < 0) {
+    throw new Error('The ordered item has no enabled, finite USD price.')
+  }
   return new BigNumber(amount).div(USD_BASE_DIVISOR).toNumber()
 }
 
@@ -284,14 +293,15 @@ export const resolveProductPaymentTargetsFromItems = async ({
   const productCache = new Map<string, ProductWalletDoc>()
   const companyCache = new Map<string, CompanyWalletDoc>()
   const paymentByProductID = new Map<string, ProductPaymentTarget>()
+  const requestedQuantities = new Map<string, number>()
 
   for (let index = 0; index < items.length; index += 1) {
     const item = items[index]
-    const rawItem = item as { quantity?: unknown }
+    const rawItem = item as OrderItem
 
     const quantity = Number(rawItem.quantity)
-    if (!Number.isFinite(quantity) || quantity <= 0) {
-      throw new Error(`Item at index ${index} has invalid quantity.`)
+    if (!Number.isSafeInteger(quantity) || quantity <= 0) {
+      throw new Error(`Item at index ${index} must have a positive integer quantity.`)
     }
 
     const productID = await resolveProductIDFromItem({
@@ -308,7 +318,21 @@ export const resolveProductPaymentTargetsFromItems = async ({
       req,
     })
 
-    const unitAmount = getProductUnitAmount(product)
+    const variantID = toStringID(rawItem.variant)
+    const variant = variantID
+      ? await loadVariant({ cache: variantCache, payload, req, variantID })
+      : undefined
+    const unitAmount = getProductUnitAmount(product, variant)
+    if (product.orderable === false) {
+      throw new Error('This product is not orderable.')
+    }
+    const stock = typeof variant?.inventory === 'number' ? variant.inventory : product.inventory
+    const stockKey = typeof variant?.inventory === 'number' && variantID ? variantID : productID
+    const requested = (requestedQuantities.get(stockKey) || 0) + quantity
+    if (product.unlimitedInventory === false && (typeof stock !== 'number' || stock < requested)) {
+      throw new Error('The ordered quantity exceeds the available inventory.')
+    }
+    requestedQuantities.set(stockKey, requested)
 
     const wallet = await resolveWalletForProduct({
       companyCache,
@@ -322,7 +346,7 @@ export const resolveProductPaymentTargetsFromItems = async ({
       chain: wallet.chain,
     })
 
-    const stableAmount = unitAmount * quantity
+    const stableAmount = new BigNumber(unitAmount).times(quantity).toNumber()
     const existing = paymentByProductID.get(productID)
 
     if (existing) {
@@ -330,11 +354,13 @@ export const resolveProductPaymentTargetsFromItems = async ({
         existing.chain !== wallet.chain ||
         existing.normalizedRecipientAddress !== normalizedRecipientAddress
       ) {
-        throw new Error(`Product ${productID} resolved to inconsistent payout wallets within the same order.`)
+        throw new Error(
+          `Product ${productID} resolved to inconsistent payout wallets within the same order.`,
+        )
       }
 
       existing.quantity += quantity
-      existing.stableAmount += stableAmount
+      existing.stableAmount = new BigNumber(existing.stableAmount).plus(stableAmount).toNumber()
       continue
     }
 

@@ -4,64 +4,23 @@ import { toStringID } from '@/utilities/toStringID'
 
 export type IdentityResolver = 'companyIdentityId' | 'identity'
 
-type RawCollection = {
-  updateOne: (
-    filter: { _id: string },
-    update: { $set: Record<string, unknown> },
-  ) => Promise<unknown>
-}
-
-type RawCollectionMap = Record<string, { collection?: RawCollection }>
-
 const recalculateItemCount = async (req: PayloadRequest, identityId: string): Promise<void> => {
-  const [jobCount, productCount, companyCount, startupCount] = await Promise.all([
-    req.payload
-      .count({
-        collection: 'jobs',
-        where: { companyIdentityId: { equals: identityId }, _status: { equals: 'published' } },
-        req,
-      })
-      .then((res) => res.totalDocs),
-    req.payload
-      .count({
-        collection: 'products',
-        where: { companyIdentityId: { equals: identityId } },
-        req,
-      })
-      .then((res) => res.totalDocs),
-    req.payload
-      .count({
-        collection: 'companies',
-        where: { identity: { equals: identityId } },
-        req,
-      })
-      .then((res) => res.totalDocs),
-    req.payload
-      .count({
-        collection: 'startups',
-        where: { identity: { equals: identityId } },
-        req,
-      })
-      .then((res) => res.totalDocs),
-  ])
+  const counts = await Promise.all(([
+    { collection: 'jobs', field: 'companyIdentityId' },
+    { collection: 'products', field: 'companyIdentityId' },
+    { collection: 'companies', field: 'identity' },
+    { collection: 'startups', field: 'identity' },
+  ] as const).map(({ collection, field }) => req.payload.count({
+    collection,
+    where: { [field]: { equals: identityId }, _status: { equals: 'published' } },
+    req,
+  })))
 
-  const collectionMap = req.payload.db.collections as unknown as RawCollectionMap
-  const collection = collectionMap.identities?.collection
-
-  if (!collection) {
-    throw new Error('Missing raw collection for "identities".')
-  }
-
-  await collection.updateOne(
-    {
-      _id: identityId,
-    },
-    {
-      $set: {
-        itemCount: jobCount + productCount + companyCount + startupCount,
-      },
-    },
-  )
+  await req.payload.db.updateOne({
+    collection: 'identities', id: identityId, req,
+    data: { itemCount: counts.reduce((total, count) => total + count.totalDocs, 0) },
+    returning: false,
+  })
 }
 
 export const updateIdentityItemCountAfterChange = (

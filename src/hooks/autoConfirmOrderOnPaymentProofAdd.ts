@@ -1,4 +1,5 @@
 import type { CollectionAfterChangeHook } from 'payload'
+import { resolveProductIDsForItems } from '@/crypto/recipient'
 
 type PaymentProofRow = {
   chain?: unknown
@@ -71,6 +72,19 @@ export const autoConfirmOrderOnPaymentProofAdd: CollectionAfterChangeHook = asyn
   const previousKeys = new Set(previousRows.map(rowKey))
   const hasNewRow = currentRows.some((row) => !previousKeys.has(rowKey(row)))
   if (!hasNewRow) {
+    return doc
+  }
+  const products = await resolveProductIDsForItems({
+    items: orderDoc.items,
+    payload: req.payload,
+    req,
+  })
+  if (
+    products.some(
+      (product) =>
+        !currentRows.some((row) => toDocID(row.product) === product && row.transactionHash),
+    )
+  ) {
     return doc
   }
 

@@ -68,7 +68,7 @@ export const verifySolanaPayTransaction = async (
 ): Promise<VerifyTransactionResult> => {
   try {
     const config = getSolanaBaseConfig()
-    const connection = new Connection(config.rpcUrl, { commitment: 'confirmed' })
+    const connection = new Connection(config.rpcUrl, { commitment: 'finalized' })
     const recipient = new PublicKey(input.recipientAddress)
     const reference = getSolanaOrderReference(input.orderId)
     if (
@@ -86,13 +86,18 @@ export const verifySolanaPayTransaction = async (
       }
     }
 
-    await validateTransfer(connection, input.transactionHash, {
-      recipient,
-      amount: new BigNumber(String(input.expectedAmount)),
-    })
+    await validateTransfer(
+      connection,
+      input.transactionHash,
+      {
+        recipient,
+        amount: new BigNumber(String(input.expectedAmount)),
+      },
+      { commitment: 'finalized' },
+    )
 
     const tx = await connection.getTransaction(input.transactionHash, {
-      commitment: 'confirmed',
+      commitment: 'finalized',
       maxSupportedTransactionVersion: 0,
     })
     if (!tx) {

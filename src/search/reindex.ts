@@ -1,97 +1,27 @@
 import type { Search } from '@/payload-types'
 import type { PayloadRequest } from 'payload'
+import { replaceSearchIndex } from './replacement/utils'
+import { toStringID } from '@/utilities/toStringID'
 
-export const indexedCollections = ['jobs', 'companies', 'identities', 'products', 'startups', 'posts'] as const
+import { indexedCollections } from './constants'
+import type {
+  SearchIndexedCollectionSlug,
+  SearchReindexDoc,
+  SearchReindexService,
+  SearchableDoc,
+} from './types'
 
-export type SearchIndexedCollectionSlug = (typeof indexedCollections)[number]
-
-type SearchDocRelation = Search['doc']['relationTo']
-
-export type SearchCategoryDoc = {
-  id?: string | number | null
-  title?: string | null
-}
-
-export type SearchableDoc = {
-  id: string | number
-  _status?: string | null
-  title?: string | null
-  name?: string | null
-  slug?: string | null
-  meta?: {
-    title?: string | null
-    description?: string | null
-    image?: NonNullable<Search['meta']>['image']
-  } | null
-  categories?: Array<
-    | string
-    | number
-    | {
-        id?: string | number | null
-        title?: string | null
-      }
-  > | null
-}
-
-export type SearchCollectionResult = {
-  docs: SearchableDoc[]
-  hasNextPage: boolean
-}
-
-type SearchReindexDoc = {
-  doc: Search['doc']
-  title: string
-  slug?: string | null
-  meta?: {
-    title?: string | null
-    description?: string | null
-    image?: NonNullable<Search['meta']>['image']
-  }
-  categories?: Array<{
-    relationTo: 'categories'
-    categoryID: string
-    title: string
-  }> | null
-  priority: number
-}
-
-export type SearchReindexService = {
+export const createSearchReindexService = (req: PayloadRequest): SearchReindexService => ({
+  req,
   payload: {
-    find: (args: {
-      collection: SearchIndexedCollectionSlug
-      depth: number
-      limit: number
-      overrideAccess: boolean
-      page: number
-    }) => Promise<SearchCollectionResult>
-    findByID: (args: {
-      collection: 'categories'
-      depth: number
-      id: string | number
-      overrideAccess: boolean
-      req?: Partial<PayloadRequest>
-      select: {
-        title: true
-      }
-    }) => Promise<SearchCategoryDoc | null>
-    create: (args: {
-      collection: 'search'
-      data: SearchReindexDoc
-      draft: false
-      depth: 0
-      overrideAccess: true
-    }) => Promise<unknown>
-    deleteMany: (args: {
-      collection: 'search'
-      where: Record<string, never>
-    }) => Promise<unknown> | unknown
-    logger: {
-      info: (message: string) => void
-    }
-  }
-}
+    replace: (docs) => replaceSearchIndex(req, docs),
+    find: (args) => req.payload.find({ ...args, req }),
+    findByID: (args) => req.payload.findByID({ ...args, req }),
+    logger: req.payload.logger,
+  },
+})
 
-const createSearchDoc = (relationTo: SearchDocRelation, value: string): Search['doc'] => {
+const createSearchDoc = (relationTo: Search['doc']['relationTo'], value: string): Search['doc'] => {
   const searchDoc: Search['doc'] = {
     relationTo,
     value,
@@ -137,44 +67,49 @@ const resolveCategories = async (
     return []
   }
 
-  const resolvedCategories = await Promise.all(
-    categories.map(async (category) => {
-      if (typeof category === 'object' && category !== null) {
-        const title = category.title ?? ''
-        return title.length > 0
-          ? {
+  return categories.reduce(async (previous, category) => {
+    const resolved = await previous
+    if (typeof category === 'object' && category !== null) {
+      const title = category.title ?? ''
+      return title.length > 0
+        ? [
+            ...resolved,
+            {
               relationTo: 'categories' as const,
               categoryID: String(category.id),
               title,
-            }
-          : null
-      }
+            },
+          ]
+        : resolved
+    }
 
-      const foundCategory = await service.payload.findByID({
-        collection: 'categories',
-        depth: 0,
-        id: category,
-        overrideAccess: true,
-        select: {
-          title: true,
-        },
-      })
+    const foundCategory = await service.payload.findByID({
+      collection: 'categories',
+      depth: 0,
+      id: category,
+      overrideAccess: true,
+      select: {
+        title: true,
+      },
+    })
 
-      if (!foundCategory || typeof foundCategory.title !== 'string' || foundCategory.title.length === 0) {
-        return null
-      }
+    if (
+      !foundCategory ||
+      typeof foundCategory.title !== 'string' ||
+      foundCategory.title.length === 0
+    ) {
+      return resolved
+    }
 
-      return {
+    return [
+      ...resolved,
+      {
         relationTo: 'categories' as const,
         categoryID: String(foundCategory.id),
         title: foundCategory.title,
-      }
-    }),
-  )
-
-  return resolvedCategories.filter(
-    (category): category is NonNullable<(typeof resolvedCategories)[number]> => category !== null,
-  )
+      },
+    ]
+  }, Promise.resolve<NonNullable<SearchReindexDoc['categories']>>([]))
 }
 
 const buildSearchReindexDoc = async (
@@ -193,7 +128,7 @@ const buildSearchReindexDoc = async (
       ? {
           title: resolveTitle(doc),
           description: doc.meta?.description,
-          image: doc.meta?.image ?? null,
+          image: toStringID(doc.meta.image),
         }
       : undefined,
     categories: resolvedCategories,
@@ -201,43 +136,33 @@ const buildSearchReindexDoc = async (
   }
 }
 
-export const syncSearchCollection = async (
+const prepareSearchCollection = async (
   service: SearchReindexService,
   collection: SearchIndexedCollectionSlug,
-): Promise<number> => {
+): Promise<SearchReindexDoc[]> => {
   const docs = await loadAllDocs(service, collection)
   const publishedDocs = docs.filter((doc) => doc._status !== 'draft')
-  const searchDocs = await Promise.all(
-    publishedDocs.map(async (doc) => buildSearchReindexDoc(service, collection, doc)),
+  return publishedDocs.reduce(
+    async (previous, doc) => [
+      ...(await previous),
+      await buildSearchReindexDoc(service, collection, doc),
+    ],
+    Promise.resolve<SearchReindexDoc[]>([]),
   )
-
-  await Promise.all(
-    searchDocs.map(async (data) =>
-      service.payload.create({
-        collection: 'search',
-        data,
-        draft: false,
-        depth: 0,
-        overrideAccess: true,
-      }),
-    ),
-  )
-
-  return searchDocs.length
 }
 
 export const reindexSearch = async (
   service: SearchReindexService,
 ): Promise<Array<{ collection: SearchIndexedCollectionSlug; count: number }>> => {
-  await service.payload.deleteMany({
-    collection: 'search',
-    where: {},
-  })
-
-  return Promise.all(
-    indexedCollections.map(async (collection) => ({
-      collection,
-      count: await syncSearchCollection(service, collection),
-    })),
+  const prepared = await indexedCollections.reduce(
+    async (previous, collection) => [
+      ...(await previous),
+      { collection, docs: await prepareSearchCollection(service, collection) },
+    ],
+    Promise.resolve<Array<{ collection: SearchIndexedCollectionSlug; docs: SearchReindexDoc[] }>>(
+      [],
+    ),
   )
+  await service.payload.replace(prepared.flatMap((item) => item.docs))
+  return prepared.map((item) => ({ collection: item.collection, count: item.docs.length }))
 }

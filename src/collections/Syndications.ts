@@ -19,7 +19,11 @@ const publishedOrAdmin: Access = ({ req: { user } }) => {
   }
 }
 
-const forceDraftOnCreate: CollectionBeforeValidateHook<Syndication> = ({ data, operation, req }) => {
+const forceDraftOnCreate: CollectionBeforeValidateHook<Syndication> = ({
+  data,
+  operation,
+  req,
+}) => {
   if (operation !== 'create' || isAdminUser(req.user)) {
     return data
   }
@@ -27,6 +31,7 @@ const forceDraftOnCreate: CollectionBeforeValidateHook<Syndication> = ({ data, o
   return {
     ...data,
     _status: 'draft',
+    autoEnable: false,
   }
 }
 

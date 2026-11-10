@@ -84,7 +84,7 @@ const getLikeStatus = async ({
     collection: collection.collectionSlug,
     depth: 0,
     id,
-    overrideAccess: true,
+    overrideAccess: false,
     req,
   })
 
@@ -129,6 +129,14 @@ const setLikeState = async ({
   })
 
   requireVerifiedEmail(req, 'You must verify your email before liking content.')
+
+  await req.payload.findByID({
+    collection: collection.collectionSlug,
+    depth: 0,
+    id,
+    overrideAccess: false,
+    req,
+  })
 
   const likeCollectionSlug = getLikeCollectionSlug(collection.collectionSlug)
 

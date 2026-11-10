@@ -97,6 +97,7 @@ export interface Config {
     subscribers: Subscriber;
     'notification-subscriptions': NotificationSubscription;
     'poppy-protocol-state': PoppyProtocolState;
+    'payment-settlements': PaymentSettlement;
     comments: Comment;
     'company-likes': CompanyLike;
     'identity-likes': IdentityLike;
@@ -164,6 +165,7 @@ export interface Config {
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'notification-subscriptions': NotificationSubscriptionsSelect<false> | NotificationSubscriptionsSelect<true>;
     'poppy-protocol-state': PoppyProtocolStateSelect<false> | PoppyProtocolStateSelect<true>;
+    'payment-settlements': PaymentSettlementsSelect<false> | PaymentSettlementsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     'company-likes': CompanyLikesSelect<false> | CompanyLikesSelect<true>;
     'identity-likes': IdentityLikesSelect<false> | IdentityLikesSelect<true>;
@@ -209,6 +211,7 @@ export interface Config {
   user: User;
   jobs: {
     tasks: {
+      sendNotificationEmail: TaskSendNotificationEmail;
       schedulePublish: TaskSchedulePublish;
       inline: {
         input: unknown;
@@ -258,6 +261,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  initialAdministrator?: string | null;
   banned?: boolean | null;
   phone?: string | null;
   bot?: boolean | null;
@@ -497,10 +501,7 @@ export interface OauthAccessToken {
    * Expiration date of the refresh token
    */
   refreshTokenExpiresAt?: string | null;
-  /**
-   * OAuth application associated with the access token
-   */
-  client?: (string | null) | OauthApplication;
+  client?: string | null;
   /**
    * User associated with the access token
    */
@@ -520,10 +521,7 @@ export interface OauthAccessToken {
  */
 export interface OauthConsent {
   id: string;
-  /**
-   * OAuth client associated with the consent
-   */
-  client?: (string | null) | OauthApplication;
+  client?: string | null;
   /**
    * User associated with the consent
    */
@@ -628,12 +626,17 @@ export interface Page {
 export interface Post {
   id: string;
   createdBy?: (string | null) | User;
+  /**
+   * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
+   */
+  serverURL?: string | null;
+  aiPublicationKey?: string | null;
   title: string;
   repost?: string | null;
   company: string | Company;
   heroImage?: (string | null) | Media;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   content: string;
   relatedPosts?:
@@ -726,7 +729,7 @@ export interface Company {
   };
   image?: (string | null) | Media;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   description?: string | null;
   identity: string | Identity;
@@ -739,6 +742,7 @@ export interface Company {
   subscriberCount?: number | null;
   contentRankScore?: number | null;
   hasLiked?: boolean | null;
+  publicationNotifiedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -881,7 +885,7 @@ export interface Identity {
   website?: string | null;
   image?: (string | null) | Media;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   description?: string | null;
   itemCount?: number | null;
@@ -927,7 +931,7 @@ export interface Job {
   allowedIdentities?: (string | Identity)[] | null;
   disallowedIdentities?: (string | Identity)[] | null;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   description?: string | null;
   applyUrl?: string | null;
@@ -938,6 +942,7 @@ export interface Job {
   subscriberCount?: number | null;
   contentRankScore?: number | null;
   hasLiked?: boolean | null;
+  publicationNotifiedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -982,7 +987,7 @@ export interface Product {
   };
   image?: (string | null) | Media;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   description?: string | null;
   properties?:
@@ -1014,6 +1019,10 @@ export interface Product {
   subscriberCount?: number | null;
   contentRankScore?: number | null;
   hasLiked?: boolean | null;
+  operationalUpdatedAt?: string | null;
+  inventoryApplications?: string[] | null;
+  purchaseApplications?: string[] | null;
+  publicationNotifiedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
@@ -1059,6 +1068,7 @@ export interface VariantOption {
  */
 export interface Variant {
   id: string;
+  operationalUpdatedAt?: string | null;
   /**
    * Used for administrative purposes, not shown to customers. This is populated by default.
    */
@@ -1068,6 +1078,7 @@ export interface Variant {
   inventory?: number | null;
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
+  inventoryApplications?: string[] | null;
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
@@ -1079,6 +1090,7 @@ export interface Variant {
  */
 export interface Startup {
   id: string;
+  operationalUpdatedAt?: string | null;
   createdBy?: (string | null) | User;
   /**
    * Read from NEXT_PUBLIC_SERVER_URL (fallback: http://localhost:3001).
@@ -1087,12 +1099,12 @@ export interface Startup {
   title: string;
   company: string | Company;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   description?: string | null;
   image?: (string | null) | Media;
   /**
-   * Addresses for the token, exchange, DAO, reward token, PoolManager, and their implementations. Keep one entry per deployed chain.
+   * Append-only registrations for deployed contracts. Existing addresses cannot be overwritten or removed by submitting an older list.
    */
   contractDeployments?:
     | {
@@ -1145,6 +1157,7 @@ export interface Startup {
   subscriberCount?: number | null;
   contentRankScore?: number | null;
   hasLiked?: boolean | null;
+  publicationNotifiedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1568,6 +1581,7 @@ export interface VentureDeploymentRecovery {
     | number
     | boolean
     | null;
+  revision?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1583,7 +1597,7 @@ export interface Syndication {
   autoEnable?: boolean | null;
   nsfw?: boolean | null;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   description?: string | null;
   updatedAt: string;
@@ -1657,13 +1671,198 @@ export interface PoppyProtocolState {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-settlements".
+ */
+export interface PaymentSettlement {
+  id: string;
+  createdBy?: (string | null) | User;
+  key: string;
+  order: string | Order;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  items?:
+    | {
+        product?: (string | null) | Product;
+        variant?: (string | null) | Variant;
+        quantity: number;
+        parameters?:
+          | {
+              name: string;
+              values?:
+                | {
+                    key: string;
+                    name: string;
+                    selected?: boolean | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  shippingAddress?: {
+    title?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    company?: string | null;
+    addressLine1?: string | null;
+    addressLine2?: string | null;
+    city?: string | null;
+    state?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+    phone?: string | null;
+  };
+  customer?: (string | null) | User;
+  customerEmail?: string | null;
+  transactions?: (string | Transaction)[] | null;
+  status?: OrderStatus;
+  amount?: number | null;
+  currency?: 'USD' | null;
+  payerAddress?: string | null;
+  cryptoPrices?:
+    | {
+        chain: 'ethereum' | 'solana' | 'tron';
+        stablePerNative: number;
+        nativePerStable: string;
+        expectedNativeAmount?: string | null;
+        fetchedAt: string;
+        id?: string | null;
+      }[]
+    | null;
+  paymentTargets?:
+    | {
+        chain: 'ethereum' | 'solana' | 'tron';
+        productID: string;
+        quantity: number;
+        recipientAddress: string;
+        normalizedRecipientAddress: string;
+        stableAmount: number;
+        unitAmount: number;
+        id?: string | null;
+      }[]
+    | null;
+  paymentProofs?:
+    | {
+        product: string | Product;
+        chain: 'ethereum' | 'solana' | 'tron';
+        transactionHash: string;
+        /**
+         * Mark this payment proof as fulfilled after the order has been shipped or delivered.
+         */
+        fulfilled?: boolean | null;
+        /**
+         * Mark this payment proof as rejected if the payment was invalid or should not be counted.
+         */
+        rejected?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  operationalUpdatedAt?: string | null;
+  inventoryAppliedAt?: string | null;
+  purchaseCountAppliedAt?: string | null;
+  purchaseCountStartedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "transactions".
+ */
+export interface Transaction {
+  id: string;
+  items?:
+    | {
+        product?: (string | null) | Product;
+        variant?: (string | null) | Variant;
+        quantity: number;
+        id?: string | null;
+      }[]
+    | null;
+  paymentMethod?: 'crypto' | null;
+  crypto?: {
+    paymentRef?: string | null;
+    txHash?: string | null;
+  };
+  billingAddress?: {
+    title?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    company?: string | null;
+    addressLine1?: string | null;
+    addressLine2?: string | null;
+    city?: string | null;
+    state?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+    phone?: string | null;
+  };
+  status: 'pending' | 'processing' | 'succeeded' | 'failed' | 'cancelled' | 'expired' | 'refunded';
+  customer?: (string | null) | User;
+  customerEmail?: string | null;
+  order?: (string | null) | Order;
+  cart?: (string | null) | Cart;
+  amount?: number | null;
+  currency?: 'USD' | null;
+  settlementKey?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carts".
+ */
+export interface Cart {
+  id: string;
+  items?:
+    | {
+        product?: (string | null) | Product;
+        variant?: (string | null) | Variant;
+        quantity: number;
+        parameters?:
+          | {
+              name: string;
+              values?:
+                | {
+                    key: string;
+                    name: string;
+                    selected?: boolean | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  secret?: string | null;
+  customer?: (string | null) | User;
+  purchasedAt?: string | null;
+  status?: ('active' | 'purchased' | 'abandoned') | null;
+  subtotal?: number | null;
+  currency?: 'USD' | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "comments".
  */
 export interface Comment {
   id: string;
   createdBy?: (string | null) | User;
   /**
-   * Supports Markdown with toolbar + preview. Raw HTML is sanitized on save and read.
+   * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
    */
   content: string;
   company: string | Company;
@@ -1839,174 +2038,6 @@ export interface Address {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "carts".
- */
-export interface Cart {
-  id: string;
-  items?:
-    | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
-        quantity: number;
-        parameters?:
-          | {
-              name: string;
-              values?:
-                | {
-                    key: string;
-                    name: string;
-                    selected?: boolean | null;
-                    id?: string | null;
-                  }[]
-                | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  secret?: string | null;
-  customer?: (string | null) | User;
-  purchasedAt?: string | null;
-  status?: ('active' | 'purchased' | 'abandoned') | null;
-  subtotal?: number | null;
-  currency?: 'USD' | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "orders".
- */
-export interface Order {
-  id: string;
-  items?:
-    | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
-        quantity: number;
-        parameters?:
-          | {
-              name: string;
-              values?:
-                | {
-                    key: string;
-                    name: string;
-                    selected?: boolean | null;
-                    id?: string | null;
-                  }[]
-                | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  shippingAddress?: {
-    title?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
-    company?: string | null;
-    addressLine1?: string | null;
-    addressLine2?: string | null;
-    city?: string | null;
-    state?: string | null;
-    postalCode?: string | null;
-    country?: string | null;
-    phone?: string | null;
-  };
-  customer?: (string | null) | User;
-  customerEmail?: string | null;
-  transactions?: (string | Transaction)[] | null;
-  status?: OrderStatus;
-  amount?: number | null;
-  currency?: 'USD' | null;
-  payerAddress?: string | null;
-  cryptoPrices?:
-    | {
-        chain: 'ethereum' | 'solana' | 'tron';
-        stablePerNative: number;
-        nativePerStable: string;
-        expectedNativeAmount?: string | null;
-        fetchedAt: string;
-        id?: string | null;
-      }[]
-    | null;
-  paymentTargets?:
-    | {
-        chain: 'ethereum' | 'solana' | 'tron';
-        productID: string;
-        quantity: number;
-        recipientAddress: string;
-        normalizedRecipientAddress: string;
-        stableAmount: number;
-        unitAmount: number;
-        id?: string | null;
-      }[]
-    | null;
-  paymentProofs?:
-    | {
-        product: string | Product;
-        chain: 'ethereum' | 'solana' | 'tron';
-        transactionHash: string;
-        /**
-         * Mark this payment proof as fulfilled after the order has been shipped or delivered.
-         */
-        fulfilled?: boolean | null;
-        /**
-         * Mark this payment proof as rejected if the payment was invalid or should not be counted.
-         */
-        rejected?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "transactions".
- */
-export interface Transaction {
-  id: string;
-  items?:
-    | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
-  paymentMethod?: 'crypto' | null;
-  crypto?: {
-    paymentRef?: string | null;
-    txHash?: string | null;
-  };
-  billingAddress?: {
-    title?: string | null;
-    firstName?: string | null;
-    lastName?: string | null;
-    company?: string | null;
-    addressLine1?: string | null;
-    addressLine2?: string | null;
-    city?: string | null;
-    state?: string | null;
-    postalCode?: string | null;
-    country?: string | null;
-    phone?: string | null;
-  };
-  status: 'pending' | 'processing' | 'succeeded' | 'failed' | 'cancelled' | 'expired' | 'refunded';
-  customer?: (string | null) | User;
-  customerEmail?: string | null;
-  order?: (string | null) | Order;
-  cart?: (string | null) | Cart;
-  amount?: number | null;
-  currency?: 'USD' | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2169,7 +2200,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish';
+        taskSlug: 'inline' | 'sendNotificationEmail' | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -2202,7 +2233,7 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'schedulePublish') | null;
+  taskSlug?: ('inline' | 'sendNotificationEmail' | 'schedulePublish') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -2311,6 +2342,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'notification-subscriptions';
         value: string | NotificationSubscription;
+      } | null)
+    | ({
+        relationTo: 'payment-settlements';
+        value: string | PaymentSettlement;
       } | null)
     | ({
         relationTo: 'comments';
@@ -2439,6 +2474,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  initialAdministrator?: T;
   banned?: T;
   phone?: T;
   bot?: T;
@@ -2716,6 +2752,8 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   createdBy?: T;
+  serverURL?: T;
+  aiPublicationKey?: T;
   title?: T;
   repost?: T;
   company?: T;
@@ -2922,6 +2960,7 @@ export interface CompaniesSelect<T extends boolean = true> {
   subscriberCount?: T;
   contentRankScore?: T;
   hasLiked?: T;
+  publicationNotifiedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2966,6 +3005,7 @@ export interface JobsSelect<T extends boolean = true> {
   subscriberCount?: T;
   contentRankScore?: T;
   hasLiked?: T;
+  publicationNotifiedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2986,6 +3026,7 @@ export interface CommentLikesSelect<T extends boolean = true> {
  * via the `definition` "startups_select".
  */
 export interface StartupsSelect<T extends boolean = true> {
+  operationalUpdatedAt?: T;
   createdBy?: T;
   serverURL?: T;
   title?: T;
@@ -3041,6 +3082,7 @@ export interface StartupsSelect<T extends boolean = true> {
   subscriberCount?: T;
   contentRankScore?: T;
   hasLiked?: T;
+  publicationNotifiedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3067,6 +3109,7 @@ export interface VentureDeploymentRecoveriesSelect<T extends boolean = true> {
   createdBy?: T;
   key?: T;
   record?: T;
+  revision?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3146,6 +3189,17 @@ export interface PoppyProtocolStateSelect<T extends boolean = true> {
   version?: T;
   value?: T;
   expiresAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-settlements_select".
+ */
+export interface PaymentSettlementsSelect<T extends boolean = true> {
+  createdBy?: T;
+  key?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3259,12 +3313,14 @@ export interface AddressesSelect<T extends boolean = true> {
  * via the `definition` "variants_select".
  */
 export interface VariantsSelect<T extends boolean = true> {
+  operationalUpdatedAt?: T;
   title?: T;
   product?: T;
   options?: T;
   inventory?: T;
   priceInUSDEnabled?: T;
   priceInUSD?: T;
+  inventoryApplications?: T;
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;
@@ -3355,6 +3411,10 @@ export interface ProductsSelect<T extends boolean = true> {
   subscriberCount?: T;
   contentRankScore?: T;
   hasLiked?: T;
+  operationalUpdatedAt?: T;
+  inventoryApplications?: T;
+  purchaseApplications?: T;
+  publicationNotifiedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;
@@ -3477,6 +3537,10 @@ export interface OrdersSelect<T extends boolean = true> {
         rejected?: T;
         id?: T;
       };
+  operationalUpdatedAt?: T;
+  inventoryAppliedAt?: T;
+  purchaseCountAppliedAt?: T;
+  purchaseCountStartedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3522,6 +3586,7 @@ export interface TransactionsSelect<T extends boolean = true> {
   cart?: T;
   amount?: T;
   currency?: T;
+  settlementKey?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3913,6 +3978,19 @@ export interface CollectionsWidget {
     [k: string]: unknown;
   };
   width: 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskSendNotificationEmail".
+ */
+export interface TaskSendNotificationEmail {
+  input: {
+    to: string;
+    subject: string;
+    html: string;
+    text: string;
+  };
+  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

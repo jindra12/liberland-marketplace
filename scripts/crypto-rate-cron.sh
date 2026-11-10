@@ -35,12 +35,6 @@ log_cron_message() {
   printf '[%s] %s\n' "$(date -Iseconds)" "$message" >> "${CRON_LOG_FILE}"
 }
 
-if [[ -z "${CRON_SECRET:-}" && -n "${PAYLOAD_SECRET:-}" ]]; then
-  CRON_SECRET="${PAYLOAD_SECRET}"
-  export CRON_SECRET
-  log_cron_message "[crypto-rate-cron] CRON_SECRET is not set. Falling back to PAYLOAD_SECRET for the managed local/server loop."
-fi
-
 cleanup() {
   if [[ -n "${CRON_PID}" ]]; then
     kill "${CRON_PID}" >/dev/null 2>&1 || true
@@ -58,8 +52,8 @@ start_crypto_rate_cron_loop() {
 
     while true; do
       if curl -sS --fail --max-time 30 \
-        -H "Authorization: Bearer ${CRON_SECRET}" \
-        "${CRON_ENDPOINT}" >/dev/null; then
+        -H @- \
+        "${CRON_ENDPOINT}" <<< "Authorization: Bearer ${CRON_SECRET}" >/dev/null; then
         printf '[%s] [crypto-rate-cron] Initial refresh completed.\n' "$(date -Iseconds)"
         break
       fi
@@ -71,8 +65,8 @@ start_crypto_rate_cron_loop() {
       sleep "${CRON_INTERVAL_SECONDS}"
 
       if curl -sS --fail --max-time 30 \
-        -H "Authorization: Bearer ${CRON_SECRET}" \
-        "${CRON_ENDPOINT}" >/dev/null; then
+        -H @- \
+        "${CRON_ENDPOINT}" <<< "Authorization: Bearer ${CRON_SECRET}" >/dev/null; then
         printf '[%s] [crypto-rate-cron] Scheduled refresh completed.\n' "$(date -Iseconds)"
       else
         printf '[%s] [crypto-rate-cron] Scheduled refresh failed.\n' "$(date -Iseconds)"

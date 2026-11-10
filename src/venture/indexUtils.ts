@@ -20,6 +20,9 @@ const currencyMetadata = async (provider: StaticJsonRpcProvider, address: string
   }
   const token = new Contract(address, TOKEN_METADATA, provider)
   const [symbol, decimals] = await Promise.all([token.symbol(), token.decimals()])
+  if (!Number.isSafeInteger(Number(decimals)) || Number(decimals) < 0 || Number(decimals) > 255) {
+    throw new Error(`Token ${address} returned invalid decimals.`)
+  }
   return { address, symbol: String(symbol), decimals: Number(decimals) }
 }
 
@@ -100,7 +103,7 @@ export const syncVentureIndex = async (
     ),
     dao.queryFilter(dao.filters.ProposalCreated(), fromBlock, toBlock),
   ])
-  const discoveredPools = await Promise.all(
+  const poolResults = await Promise.allSettled(
     [...firstPools, ...secondPools].map(async (event): Promise<IndexedPool> => {
       const args = event.args!
       const currency0 = await currencyMetadata(provider, String(args.currency0))
@@ -119,6 +122,18 @@ export const syncVentureIndex = async (
       }
     }),
   )
+  const discoveredPools = poolResults.flatMap((result, index) => {
+    if (result.status === 'fulfilled') {
+      return [result.value]
+    }
+    req.payload.logger.error({
+      err: result.reason,
+      ventureID,
+      poolID: String([...firstPools, ...secondPools][index].args!.id),
+      msg: 'Skipping an unusable Venture pool: token metadata could not be read. No token decimals were assumed.',
+    })
+    return []
+  })
   const discoveredProposals = proposalEvents.map(
     (event): IndexedProposal => ({
       id: String(event.args!.proposalId),

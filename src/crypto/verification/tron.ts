@@ -16,11 +16,14 @@ type TronTransactionInfo = Awaited<ReturnType<TronWeb['trx']['getTransactionInfo
 
 const isTronTxSuccessful = (tx: TronTransaction, txInfo?: TronTransactionInfo): boolean => {
   const txStatus = tx?.ret?.[0]?.contractRet
+  const txInfoStatus = txInfo?.receipt?.result
+  if ((txStatus && txStatus !== 'SUCCESS') || (txInfoStatus && txInfoStatus !== 'SUCCESS')) {
+    return false
+  }
   if (txStatus === 'SUCCESS') {
     return true
   }
 
-  const txInfoStatus = txInfo?.receipt?.result
   return txInfoStatus === 'SUCCESS'
 }
 
@@ -55,9 +58,18 @@ export const verifyTronNativeTransfer = async (
     const config = getTronBaseConfig()
     const tronWeb = await createTronClient(config)
     const [tx, txInfo] = await Promise.all([
-      tronWeb.trx.getTransaction(input.transactionHash),
-      tronWeb.trx.getTransactionInfo(input.transactionHash).catch(() => undefined),
+      tronWeb.trx.getConfirmedTransaction(input.transactionHash),
+      tronWeb.trx.getTransactionInfo(input.transactionHash),
     ])
+
+    if (!txInfo?.blockNumber || !txInfo.blockTimeStamp) {
+      return {
+        chain: 'tron',
+        ok: false,
+        transactionHash: input.transactionHash,
+        error: 'Awaiting solidified TRON confirmation.',
+      }
+    }
 
     if (!hasMatchingOrderReferenceHex({ actual: tx?.raw_data?.data, orderId: input.orderId })) {
       return {
@@ -119,7 +131,7 @@ export const verifyTronNativeTransfer = async (
       }
     }
 
-    const observedTimestampMs = Number(tx?.raw_data?.timestamp ?? txInfo?.blockTimeStamp ?? 0)
+    const observedTimestampMs = Number(txInfo.blockTimeStamp)
     if (!observedTimestampMs) {
       return {
         chain: 'tron',

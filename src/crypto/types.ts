@@ -3,6 +3,7 @@ export type SupportedChain = 'ethereum' | 'solana' | 'tron'
 export type StableTokenSymbol = 'USDC' | 'USDT'
 
 export type ChainPoolRate = {
+  sourceId?: string
   chain: SupportedChain
   fetchedAt: number
   nativePerStable: number

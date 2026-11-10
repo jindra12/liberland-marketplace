@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb'
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
@@ -16,25 +15,6 @@ import {
   syncLastLikeAtAfterLikeDelete,
 } from '@/hooks/updateContentRankingSignals'
 
-type LikeCountCollection = {
-  updateOne: (filter: { _id: ObjectId | string }, update: { $inc: { likeCount: number } }) => Promise<unknown>
-}
-
-type LikeCountCollectionMap = Record<string, { collection?: LikeCountCollection }>
-
-const getLikeCountCollection = (
-  collectionMap: LikeCountCollectionMap,
-  collectionSlug: LikeableCollectionSlug,
-): LikeCountCollection => {
-  const collection = collectionMap[collectionSlug]?.collection
-
-  if (!collection) {
-    throw new Error(`Missing Mongo collection for "${collectionSlug}".`)
-  }
-
-  return collection
-}
-
 const updateLikeCount = async ({
   collectionSlug,
   delta,
@@ -46,20 +26,10 @@ const updateLikeCount = async ({
   req: Parameters<CollectionAfterChangeHook>[0]['req']
   targetID: string
 }): Promise<void> => {
-  const collectionMap = req.payload.db.collections as LikeCountCollectionMap
-  const targetCollection = getLikeCountCollection(collectionMap, collectionSlug)
-  const mongoID = ObjectId.isValid(targetID) ? new ObjectId(targetID) : targetID
-
-  await targetCollection.updateOne(
-    {
-      _id: mongoID,
-    },
-    {
-      $inc: {
-        likeCount: delta,
-      },
-    },
-  )
+  await req.payload.db.updateOne({
+    collection: collectionSlug, id: targetID, req,
+    data: { likeCount: { $inc: delta } }, returning: false,
+  })
 }
 
 const setLikeActorKey: CollectionBeforeValidateHook = ({ data, operation, req }) => {

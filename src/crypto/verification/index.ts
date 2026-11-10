@@ -1,4 +1,6 @@
 import BigNumber from 'bignumber.js'
+import { PAYMENT_QUOTE_VALIDITY_MS } from '../constants'
+import { normalizeTransactionHash } from '../utils'
 import { quantizeNativeAmount } from '../nativeAmount'
 import {
   getOrderById,
@@ -17,7 +19,7 @@ import type {
 
 type VerificationGroup = {
   chain: SupportedChain
-  expectedStableAmount: number
+  expectedStableAmount: BigNumber
   normalizedRecipientAddress: string
   productIDs: string[]
   recipientAddress: string
@@ -34,9 +36,6 @@ const toPriceMap = (
   }
 }
 
-const getNativePerStable = (price?: OrderCryptoPrice): string =>
-  new BigNumber(String(price?.nativePerStable)).toFixed()
-
 const buildGroupKey = ({
   chain,
   normalizedRecipientAddress,
@@ -46,7 +45,7 @@ const buildGroupKey = ({
   normalizedRecipientAddress: string
   transactionHash: string
 }): string => {
-  return `${chain}:${transactionHash}:${normalizedRecipientAddress}`
+  return `${chain}:${normalizeTransactionHash(chain, transactionHash)}:${normalizedRecipientAddress}`
 }
 
 const pushEntryFailure = ({
@@ -209,18 +208,18 @@ export const verifyTransactionOccurred = async (
 
     const existing = groupsByKey.get(groupKey)
     if (existing) {
-      existing.expectedStableAmount += target.stableAmount
+      existing.expectedStableAmount = existing.expectedStableAmount.plus(target.stableAmount)
       existing.productIDs.push(txEntry.productID)
       continue
     }
 
     groupsByKey.set(groupKey, {
       chain: txEntry.chain,
-      expectedStableAmount: target.stableAmount,
+      expectedStableAmount: new BigNumber(target.stableAmount),
       normalizedRecipientAddress: target.normalizedRecipientAddress,
       productIDs: [txEntry.productID],
       recipientAddress: target.recipientAddress,
-      transactionHash: txEntry.transactionHash,
+      transactionHash: normalizeTransactionHash(txEntry.chain, txEntry.transactionHash),
     })
   }
 
@@ -241,17 +240,43 @@ export const verifyTransactionOccurred = async (
   const minTimestampMs = getOrderCreatedAtMs(order)
 
   for (const group of groupsByKey.values()) {
-    const nativePerStable = getNativePerStable(priceMap[group.chain])
+    const price = priceMap[group.chain]
+    const rate = new BigNumber(String(price?.nativePerStable))
+    const fetchedAt = Date.parse(price?.fetchedAt || '')
+    if (
+      !rate.isFinite() ||
+      !rate.isPositive() ||
+      !Number.isFinite(fetchedAt) ||
+      fetchedAt > Date.now()
+    ) {
+      results.push({
+        chain: group.chain,
+        ok: false,
+        productIDs: group.productIDs,
+        transactionHash: group.transactionHash,
+        error: 'The locked payment quote is missing or invalid.',
+      })
+      continue
+    }
 
     const groupResult = await verifyGroup({
       group,
       minTimestampMs,
-      nativePerStable,
+      nativePerStable: rate.toFixed(),
       orderID: order.id,
     })
 
+    const paidAt = groupResult.observedTimestampMs
+    const validQuote =
+      paidAt !== undefined && paidAt >= fetchedAt && paidAt <= fetchedAt + PAYMENT_QUOTE_VALIDITY_MS
     results.push({
       ...groupResult,
+      ...(groupResult.ok && !validQuote
+        ? {
+            ok: false,
+            error: 'The payment was not included within the locked quote validity period.',
+          }
+        : {}),
       productIDs: group.productIDs,
       recipientAddress: group.recipientAddress,
       transactionHash: groupResult.transactionHash ?? group.transactionHash,

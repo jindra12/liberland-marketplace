@@ -18,6 +18,8 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Identities } from './collections/Identities'
 import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
+import { sendNotificationEmailTask } from './tasks/sendNotificationEmail'
+import { PaymentSettlements } from './collections/PaymentSettlements'
 import CommentLikes from './collections/CommentLikes'
 import { Startups } from './collections/Startups'
 import { VentureChainIndexes } from './collections/VentureChainIndexes'
@@ -39,6 +41,8 @@ import { Reports } from './collections/Reports'
 import { InformationRequests } from './collections/InformationRequests'
 import { PoppyProtocolState } from './collections/PoppyProtocolState'
 import { ensurePoppyIndexes } from './poppy/collection/utils'
+import { getTrustedBrowserOrigins } from './security/utils'
+import { isAdminUser } from './access/admin'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -107,6 +111,8 @@ export default buildConfig({
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   db: mongooseAdapter({
+    ensureIndexes: true,
+    transactionOptions: false,
     url: process.env.DATABASE_URL || '',
     afterCreateConnection: (adapter) => {
       if (!payloadDebug) return
@@ -200,8 +206,11 @@ export default buildConfig({
     Subscribers,
     NotificationSubscriptions,
     PoppyProtocolState,
+    PaymentSettlements,
   ],
   cors: '*',
+  // Public bearer/anonymous federation remains cross-origin; cookie auth is origin-scoped.
+  csrf: getTrustedBrowserOrigins(),
   endpoints: [
     analyticsConfigEndpoint,
     backfillEndpoint,
@@ -254,10 +263,23 @@ export default buildConfig({
     ],
   },
   jobs: {
+    autoRun: [{ cron: '* * * * *', queue: 'notifications', limit: 20 }],
+    jobsCollectionOverrides: ({ defaultJobsCollection }) => ({
+      ...defaultJobsCollection,
+      access: {
+        create: ({ req }) => isAdminUser(req.user),
+        read: ({ req }) => isAdminUser(req.user),
+        update: ({ req }) => isAdminUser(req.user),
+        delete: ({ req }) => isAdminUser(req.user),
+      },
+    }),
     access: {
+      queue: ({ req }) => isAdminUser(req.user),
+      cancel: ({ req }) => isAdminUser(req.user),
       run: ({ req }: { req: PayloadRequest }): boolean => {
-        // Allow logged in users to execute this endpoint (default)
-        if (req.user) return true
+        if (isAdminUser(req.user)) {
+          return true
+        }
 
         const secret = process.env.CRON_SECRET
         if (!secret) return false
@@ -269,7 +291,7 @@ export default buildConfig({
         return authHeader === `Bearer ${secret}`
       },
     },
-    tasks: [],
+    tasks: [sendNotificationEmailTask],
   },
   graphQL: {
     disable: false,

@@ -1,12 +1,16 @@
-import { createLocalReq, type Payload } from 'payload'
+import { createLocalReq, ValidationError, type Payload } from 'payload'
 import chunk from 'lodash/chunk'
 import OpenAI from 'openai'
+import { randomUUID } from 'node:crypto'
 
 import type { User } from '@/payload-types'
 
 import { AI_REPOST_BATCH_DELAY_MS, AI_REPOST_BATCH_SIZE } from './constants'
 import type { AiRepostCompany, AiRepostBatchPlan, AiSocialCandidate } from './types'
 import { buildRepostContent, discoverBatchRepostPlans, discoverFallbackPosts } from './utils'
+import { fetchPublicResource } from '@/security/utils'
+import { PUBLIC_IMAGE_MAX_BYTES } from '@/security/constants'
+import { buildAiPublicationKey } from './publicationUtils'
 
 const isBotUser = (user: unknown): boolean => {
   if (!user || typeof user !== 'object' || !('bot' in user)) {
@@ -24,7 +28,7 @@ const toSlug = (value: string): string => {
 }
 
 const getUniquePostSlug = (title: string, companyID: string): string => {
-  return toSlug(`${title}-${companyID}-${Date.now()}`)
+  return toSlug(`${title}-${companyID}-${randomUUID()}`)
 }
 
 const waitForBatchDelay = async (): Promise<void> => {
@@ -155,16 +159,16 @@ const uploadImage = async ({
   }
 
   try {
-    const response = await fetch(candidate.imageURL)
+    const resource = await fetchPublicResource(candidate.imageURL, PUBLIC_IMAGE_MAX_BYTES)
 
-    if (!response.ok) {
+    if (!resource.response.ok) {
       return null
     }
 
-    const fileBuffer = Buffer.from(await response.arrayBuffer())
+    const fileBuffer = Buffer.from(resource.bytes)
     const uploadType = getImageUploadType({
       buffer: fileBuffer,
-      responseType: response.headers.get('content-type')?.split(';')[0] || '',
+      responseType: resource.response.headers.get('content-type')?.split(';')[0] || '',
     })
 
     if (!uploadType) {
@@ -210,6 +214,29 @@ const createRepost = async ({
   req: Awaited<ReturnType<typeof createLocalReq>>
   session: AiBotSession
 }): Promise<boolean> => {
+  const key = buildAiPublicationKey(company.id, candidate.url)
+  const existing = await payload.find({
+    collection: 'posts',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    req,
+    where: {
+      or: [
+        { aiPublicationKey: { equals: key } },
+        {
+          and: [
+            { company: { equals: company.id } },
+            { repost: { equals: candidate.url } },
+            { createdBy: { equals: session.user.id } },
+          ],
+        },
+      ],
+    },
+  })
+  if (existing.docs.length) {
+    return false
+  }
   const heroImageID = await uploadImage({
     candidate,
     payload,
@@ -237,14 +264,24 @@ const createRepost = async ({
     repost: string
   }
 
-  await payload.create({
-    collection: 'posts',
-    data: postData,
-    draft: false,
-    overrideAccess: false,
-    req,
-    user: req.user,
-  })
+  try {
+    await payload.create({
+      collection: 'posts',
+      data: postData,
+      draft: false,
+      overrideAccess: false,
+      req,
+      user: req.user,
+    })
+  } catch (error) {
+    if (
+      error instanceof ValidationError &&
+      error.data.errors.some((entry) => entry.path === 'aiPublicationKey')
+    ) {
+      return false
+    }
+    throw error
+  }
 
   return true
 }
@@ -322,16 +359,26 @@ export const runAiRepostCycle = async ({
         companies: companyBatch,
       })
 
-      const companyByID = companyBatch.reduce<Record<string, AiRepostCompany>>((accumulator, company) => {
-        accumulator[company.id] = company
-        return accumulator
-      }, {})
+      const companyByID = companyBatch.reduce<Record<string, AiRepostCompany>>(
+        (accumulator, company) => {
+          accumulator[company.id] = company
+          return accumulator
+        },
+        {},
+      )
 
       const createdPosts = await Promise.all(
         plans.map(async ({ candidate, companyId, decision, isFallback }) => {
           const company = companyByID[companyId]
 
-          if (!company || !decision.shouldRepost || (!isFallback && decision.qualityScore < 70)) {
+          if (
+            !company ||
+            !decision.shouldRepost ||
+            decision.concernFlags.some(
+              (flag) => !isFallback || flag !== 'evergreen_company_profile',
+            ) ||
+            (!isFallback && decision.qualityScore < 70)
+          ) {
             return 0
           }
 
@@ -361,9 +408,8 @@ export const runAiRepostCycle = async ({
 
   const created = batchResults.reduce<number>((sum, result) => sum + result.created, 0)
   const discovered = batchResults.reduce<number>((sum, result) => sum + result.discovered, 0)
-  const fallbackPosts = created === 0
-    ? await discoverFallbackPosts({ client: openai, companies })
-    : []
+  const fallbackPosts =
+    created === 0 ? await discoverFallbackPosts({ client: openai, companies }) : []
   console.info('[ai-reposts] discovery summary', {
     companiesScanned: companies.length,
     discovered,
@@ -375,6 +421,12 @@ export const runAiRepostCycle = async ({
       const fallbackCompany = companies.find((company) => company.id === fallbackPost.companyId)
 
       if (!fallbackCompany) {
+        return false
+      }
+      if (
+        !fallbackPost.decision.shouldRepost ||
+        fallbackPost.decision.concernFlags.some((flag) => flag !== 'evergreen_company_profile')
+      ) {
         return false
       }
 

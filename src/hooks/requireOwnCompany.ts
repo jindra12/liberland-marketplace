@@ -3,24 +3,8 @@ import { APIError, type CollectionBeforeChangeHook } from 'payload'
 import type { AccessUser } from '@/access/types'
 import { toStringID, type MaybeID } from '@/utilities/toStringID'
 
-type MaybeOwnerDoc = {
-  authors?: unknown
-  createdBy?: unknown
-}
-
 type BotAccessUser = Exclude<AccessUser, null | undefined> & {
   bot?: boolean | null
-}
-
-const getOwnerID = (doc?: MaybeOwnerDoc | null): null | string => {
-  const authors = Array.isArray(doc?.authors) ? doc.authors : []
-  const authorID = authors.map((author) => toStringID(author as MaybeID)).find(Boolean)
-
-  if (authorID) {
-    return authorID
-  }
-
-  return toStringID(doc?.createdBy as MaybeID)
 }
 
 const isBotUser = (user: AccessUser): user is BotAccessUser => {
@@ -90,10 +74,18 @@ export const requireOwnCompany: CollectionBeforeChangeHook = async ({
   if (operation !== 'create' && !(data && 'company' in data)) {
     return data
   }
+  // Payload merges unchanged relationships into update data. Joining a Venture
+  // does not attach it to another company; the collection/resolver guards edits.
+  if (
+    operation === 'update' &&
+    !isBotUser(req.user) &&
+    companyID === toStringID(originalDoc?.company as MaybeID)
+  ) {
+    return data
+  }
 
-  const ownerSource = data && ('authors' in data || 'createdBy' in data) ? data : originalDoc
-  const ownerID =
-    getOwnerID(ownerSource) ?? (operation === 'create' ? toStringID(req.user?.id as MaybeID) : null)
+  // Supplied attribution is not evidence of the acting user's company ownership.
+  const ownerID = toStringID(req.user?.id)
 
   if (!ownerID) {
     throw new APIError('You can only attach records to companies you own.', 403)

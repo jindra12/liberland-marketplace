@@ -89,17 +89,9 @@ const getOrderNotificationRecipients = async ({
     }),
   )
 
-  const uniqueCompanyEmails = Array.from(
-    new Set(companyEmails.filter((email): email is string => Boolean(email))),
-  )
-
-  if (uniqueCompanyEmails.length > 0) {
-    return uniqueCompanyEmails
-  }
-
-  return typeof order.customerEmail === 'string' && order.customerEmail.length > 0
-    ? [order.customerEmail]
-    : []
+  return Array.from(new Set(
+    [...companyEmails, order.customerEmail].filter((email): email is string => Boolean(email)),
+  ))
 }
 
 export const sendOrderCompletedNotifications: CollectionAfterChangeHook = async ({
@@ -123,7 +115,7 @@ export const sendOrderCompletedNotifications: CollectionAfterChangeHook = async 
     return doc
   }
 
-  const amount = typeof order.amount === 'number' ? order.amount.toFixed(2) : 'unknown'
+  const amount = typeof order.amount === 'number' ? (order.amount / 100).toFixed(2) : 'unknown'
   const content = await buildNotificationEmail({
     details: [
       {

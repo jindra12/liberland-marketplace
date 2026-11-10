@@ -5,12 +5,14 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { completenessScoreField } from '@/fields/completenessScoreField'
 import { createdByField } from '@/fields/createdByField'
+import { serverURLField } from '@/fields/serverURLField'
 import { TEXT_INPUT_MAX_LENGTH, URL_INPUT_MAX_LENGTH } from '@/fields/constants'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { markdownField } from '@/fields/markdownField'
 import { populateAuthors } from './hooks/populateAuthors'
 import { setPostAuthors } from './hooks/setPostAuthors'
+import { setAiPublicationKey } from './hooks/setAiPublicationKey'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 import { requireOwnCompany } from '@/hooks/requireOwnCompany'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
@@ -38,6 +40,7 @@ export const Posts: CollectionConfig<'posts'> = {
   // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
   defaultPopulate: {
     title: true,
+    serverURL: true,
     slug: true,
     categories: true,
     meta: {
@@ -71,6 +74,14 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   fields: [
     createdByField,
+    serverURLField(),
+    {
+      name: 'aiPublicationKey',
+      type: 'text',
+      unique: true,
+      hidden: true,
+      access: { create: () => false, update: () => false },
+    },
     {
       name: 'title',
       type: 'text',
@@ -229,16 +240,16 @@ export const Posts: CollectionConfig<'posts'> = {
         readOnly: true,
       },
       fields: [
-            {
-              name: 'id',
-              type: 'text',
-              maxLength: TEXT_INPUT_MAX_LENGTH,
-            },
-            {
-              name: 'name',
-              type: 'text',
-              maxLength: TEXT_INPUT_MAX_LENGTH,
-            },
+        {
+          name: 'id',
+          type: 'text',
+          maxLength: TEXT_INPUT_MAX_LENGTH,
+        },
+        {
+          name: 'name',
+          type: 'text',
+          maxLength: TEXT_INPUT_MAX_LENGTH,
+        },
       ],
     },
     slugField(),
@@ -246,10 +257,20 @@ export const Posts: CollectionConfig<'posts'> = {
   hooks: {
     beforeChange: [
       setPostAuthors,
+      setAiPublicationKey,
       requireOwnCompany,
       requireVerifiedEmailToPublish,
       computeContentRanking({
-        fieldPaths: ['title', 'heroImage', 'content', 'relatedPosts', 'categories', 'meta.title', 'meta.description', 'meta.image'],
+        fieldPaths: [
+          'title',
+          'heroImage',
+          'content',
+          'relatedPosts',
+          'categories',
+          'meta.title',
+          'meta.description',
+          'meta.image',
+        ],
       }),
     ],
     afterChange: [revalidatePost],

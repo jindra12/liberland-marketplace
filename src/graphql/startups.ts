@@ -1,5 +1,8 @@
 import type { GraphQLOutputType } from 'graphql'
 import type { GraphQLExtension, PayloadRequest } from 'payload'
+import { updateAtomically } from '@/utilities/atomicUpdates/utils'
+import { toStringID } from '@/utilities/toStringID'
+import type { Startup } from '@/payload-types'
 
 type ExistingGraphQLField = {
   type: GraphQLOutputType
@@ -13,30 +16,12 @@ type StartupMembershipArgs = {
   id: string
 }
 
-type StartupDocument = {
-  involvedUsers?: unknown
-}
-
 type StartupMembershipResult = {
   message: string
-  startup: unknown
+  startup: Startup
 }
 
 type StartupMembershipAction = 'join' | 'leave'
-
-const toId = (value: unknown): null | string => {
-  if (typeof value === 'string') return value
-  if (typeof value === 'number') return String(value)
-
-  if (value && typeof value === 'object') {
-    const id = (value as { id?: unknown }).id
-
-    if (typeof id === 'string') return id
-    if (typeof id === 'number') return String(id)
-  }
-
-  return null
-}
 
 const getExistingField = ({
   fields,
@@ -70,70 +55,45 @@ const requireAuthorizedUser = ({
   }
 }
 
-const updateStartupMembership = async ({
-  action,
-  id,
-  req,
-}: {
+const updateStartupMembership = async (args: {
   action: StartupMembershipAction
   id: string
   req: PayloadRequest
 }): Promise<StartupMembershipResult> => {
-  const userId = String(req.user?.id)
-  const startup = (await req.payload.findByID({
+  await args.req.payload.findByID({
     collection: 'startups',
+    id: args.id,
     depth: 0,
-    id,
-    overrideAccess: true,
-    req,
-  })) as StartupDocument
-
-  const currentIds = ((startup.involvedUsers as unknown[]) ?? []).map(toId).filter(Boolean) as string[]
-
-  if (action === 'join') {
-    if (currentIds.includes(userId)) {
-      return {
-        message: 'You are already involved in this venture.',
-        startup,
-      }
-    }
-
-    const updatedStartup = await req.payload.update({
-      collection: 'startups',
-      data: {
-        involvedUsers: [...currentIds, userId],
-      },
-      id,
-      overrideAccess: true,
-      req,
-    })
-
-    return {
-      message: 'Successfully joined venture.',
-      startup: updatedStartup,
-    }
-  }
-
-  if (!currentIds.includes(userId)) {
-    return {
-      message: 'You are not involved in this venture.',
-      startup,
-    }
-  }
-
-  const updatedStartup = await req.payload.update({
-    collection: 'startups',
-    data: {
-      involvedUsers: currentIds.filter((currentId) => currentId !== userId),
-    },
-    id,
-    overrideAccess: true,
-    req,
+    overrideAccess: false,
+    req: args.req,
   })
-
+  const userId = String(args.req.user!.id)
+  await updateAtomically({
+    collection: 'startups',
+    id: args.id,
+    req: args.req,
+    update: (current) => {
+      const members = (current.involvedUsers || [])
+        .map(toStringID)
+        .filter((id): id is string => Boolean(id))
+      if (args.action === 'join') {
+        return members.includes(userId) ? null : { involvedUsers: [...members, userId] }
+      }
+      return members.includes(userId)
+        ? { involvedUsers: members.filter((id) => id !== userId) }
+        : null
+    },
+  })
+  const startup = await args.req.payload.findByID({
+    collection: 'startups',
+    id: args.id,
+    depth: 0,
+    overrideAccess: false,
+    req: args.req,
+  })
   return {
-    message: 'Successfully left venture.',
-    startup: updatedStartup,
+    message: args.action === 'join' ? 'Successfully joined venture.' : 'Successfully left venture.',
+    startup,
   }
 }
 
@@ -164,7 +124,11 @@ export const startupGraphQLMutations: GraphQLExtension = (graphQL, context) => {
   return {
     joinStartup: {
       args: membershipArgs,
-      resolve: async (_source: unknown, args: StartupMembershipArgs, resolverContext: GraphQLContext) => {
+      resolve: async (
+        _source: unknown,
+        args: StartupMembershipArgs,
+        resolverContext: GraphQLContext,
+      ) => {
         requireAuthorizedUser({
           graphQL,
           req: resolverContext.req,
@@ -180,7 +144,11 @@ export const startupGraphQLMutations: GraphQLExtension = (graphQL, context) => {
     },
     leaveStartup: {
       args: membershipArgs,
-      resolve: async (_source: unknown, args: StartupMembershipArgs, resolverContext: GraphQLContext) => {
+      resolve: async (
+        _source: unknown,
+        args: StartupMembershipArgs,
+        resolverContext: GraphQLContext,
+      ) => {
         requireAuthorizedUser({
           graphQL,
           req: resolverContext.req,

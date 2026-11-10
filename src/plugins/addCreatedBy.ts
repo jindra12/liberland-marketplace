@@ -1,6 +1,7 @@
 import type { CollectionBeforeChangeHook, CollectionConfig, Config } from 'payload'
 
 import { createdByField } from '@/fields/createdByField'
+import { onlyOwnVersionsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 
 const getRelationshipID = (value: unknown): string | null => {
   if (!value) return null
@@ -54,4 +55,16 @@ export const addCreatedBy = (config: Config): Config => ({
       },
     }
   }),
+})
+
+/** Run after plugins that add versioned collections, including ecommerce products. */
+export const protectHistoricalVersions = (config: Config): Config => ({
+  ...config,
+  collections: config.collections?.map((collection) => ({
+    ...collection,
+    access: {
+      ...collection.access,
+      ...(collection.versions ? { readVersions: onlyOwnVersionsOrAdmin } : {}),
+    },
+  })),
 })

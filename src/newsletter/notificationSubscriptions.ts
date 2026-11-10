@@ -47,12 +47,10 @@ export const buildNotificationSubscriptionDocumentID = ({
     .digest('hex')
 
 export const buildNotificationSubscriptionUnsubscribeURL = ({
-  email,
   targetCollection,
   targetID,
   serverUrl,
 }: {
-  email: string
   targetCollection: NotificationTargetCollection
   targetID: string
   serverUrl: string
@@ -61,7 +59,6 @@ export const buildNotificationSubscriptionUnsubscribeURL = ({
 
   unsubscribeURL.searchParams.set('type', NOTIFICATION_TARGET_QUERY_TYPES[targetCollection])
   unsubscribeURL.searchParams.set('id', targetID)
-  unsubscribeURL.searchParams.set('email', email)
   unsubscribeURL.searchParams.set('serverUrl', encodeServerUrlSegment(serverUrl))
 
   return unsubscribeURL.toString()
@@ -180,17 +177,15 @@ export const getNotificationSubscriptionByID = async ({
   id: string
   req: PayloadRequest
 }): Promise<NotificationSubscription | null> => {
-  try {
-    return (await req.payload.findByID({
-      collection: NOTIFICATION_SUBSCRIPTIONS_SLUG,
-      depth: 0,
-      id,
-      overrideAccess: true,
-      req,
-    })) as unknown as NotificationSubscription
-  } catch {
-    return null
-  }
+  const result = await req.payloadDataLoader.find({
+    collection: NOTIFICATION_SUBSCRIPTIONS_SLUG,
+    depth: 0,
+    limit: 1,
+    where: { id: { equals: id } },
+    overrideAccess: true,
+    req,
+  })
+  return result.docs[0] || null
 }
 
 export const isCurrentUserSubscribedToTarget = async ({
@@ -233,6 +228,7 @@ export const getNotificationRecipientsForTarget = async ({
     collection: NOTIFICATION_SUBSCRIPTIONS_SLUG,
     depth: 0,
     limit: 1000,
+    pagination: false,
     overrideAccess: true,
     req,
     where: {

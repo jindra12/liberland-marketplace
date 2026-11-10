@@ -1,37 +1,35 @@
-import type { CollectionAfterReadHook } from 'payload'
-import { User } from 'src/payload-types'
+import { APIError, type CollectionAfterReadHook } from 'payload'
+import type { Post } from '@/payload-types'
+import { toStringID } from '@/utilities/toStringID'
 
-// The `user` collection has access control locked so that users are not publicly accessible
-// This means that we need to populate the authors manually here to protect user privacy
-// GraphQL will not return mutated user data that differs from the underlying schema
-// So we use an alternative `populatedAuthors` field to populate the user data, hidden from the admin UI
-export const populateAuthors: CollectionAfterReadHook = async ({ doc, req: { payload } }) => {
-  if (doc?.authors && doc?.authors?.length > 0) {
-    const authorDocs: User[] = []
-
-    for (const author of doc.authors) {
-      try {
-        const authorDoc = await payload.findByID({
-          id: typeof author === 'object' ? author?.id : author,
-          collection: 'users',
-          depth: 0,
-        }) as User
-
-        if (authorDoc) {
-          authorDocs.push(authorDoc)
-        }
-
-        if (authorDocs.length > 0) {
-          doc.populatedAuthors = authorDocs.map((authorDoc) => ({
-            id: authorDoc.id,
-            name: authorDoc.name,
-          }))
-        }
-      } catch {
-        // swallow error
+export const populateAuthors: CollectionAfterReadHook<Post> = async ({ doc, req }) => {
+  const authors = await Promise.all(
+    (doc.authors || []).map(async (author) => {
+      const id = toStringID(author)
+      if (!id) {
+        return null
       }
-    }
-  }
-
+      try {
+        const result = await req.payloadDataLoader.find({
+          collection: 'users',
+          where: { id: { equals: id } },
+          limit: 1,
+          depth: 0,
+          overrideAccess: false,
+          req,
+          select: { name: true },
+        })
+        const authorDoc = result.docs[0]
+        return authorDoc ? { id: authorDoc.id, name: authorDoc.name } : null
+      } catch (error) {
+        // Inaccessible authors must not leak through a public post.
+        if (error instanceof APIError && (error.status === 403 || error.status === 404)) {
+          return null
+        }
+        throw error
+      }
+    }),
+  )
+  doc.populatedAuthors = authors.filter((author) => author !== null)
   return doc
 }

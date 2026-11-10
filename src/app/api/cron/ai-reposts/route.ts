@@ -2,20 +2,7 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 
 import { loadAiRepostRunner } from '@/ai/reposts'
-
-const getCronSecret = (): null | string => {
-  return process.env.CRON_SECRET || process.env.PAYLOAD_SECRET || null
-}
-
-const isCronAuthorized = (request: Request): boolean => {
-  const secret = getCronSecret()
-
-  if (!secret) {
-    return false
-  }
-
-  return request.headers.get('authorization') === `Bearer ${secret}`
-}
+import { getCronSecret, isCronAuthorized } from '@/security/cron/utils'
 
 const isAdminAuthorized = async (request: Request): Promise<boolean> => {
   const payload = await getPayload({ config })
@@ -74,7 +61,7 @@ const runAiRepostJob = async (trigger: 'admin' | 'cron'): Promise<Response> => {
 export const GET = async (request: Request): Promise<Response> => {
   if (!getCronSecret()) {
     return Response.json(
-      { error: 'Missing CRON_SECRET or PAYLOAD_SECRET environment variable.' },
+      { error: 'Missing CRON_SECRET environment variable.' },
       { status: 500 },
     )
   }

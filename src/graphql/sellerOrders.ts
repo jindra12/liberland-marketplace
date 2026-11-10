@@ -1,9 +1,10 @@
 import type { GraphQLExtension, PayloadRequest } from 'payload'
 import type { Where } from 'payload'
 
-import type { AccessUser } from '@/access/types'
 import type { Order, Product } from '@/payload-types'
 import { toStringID } from '@/utilities/toStringID'
+import { updateAtomically } from '@/utilities/atomicUpdates/utils'
+import chunk from 'lodash/chunk.js'
 
 type GraphQLContext = {
   req: PayloadRequest
@@ -21,48 +22,21 @@ type SellerOrderPaymentProof = {
 }
 
 type SellerOrderDoc = Omit<
-  Pick<Order, 'createdAt' | 'customerEmail' | 'id' | 'items' | 'payerAddress' | 'shippingAddress' | 'status'>,
+  Pick<
+    Order,
+    'createdAt' | 'customerEmail' | 'id' | 'items' | 'payerAddress' | 'shippingAddress' | 'status'
+  >,
   never
 > & {
   paymentProofs?: SellerOrderPaymentProof[] | null
 }
 
-type SellerProductDoc = Pick<Product, 'company' | 'createdBy' | 'createdAt' | 'id' | 'name' | 'updatedAt'>
+type SellerProductDoc = Pick<
+  Product,
+  'company' | 'createdBy' | 'createdAt' | 'id' | 'name' | 'updatedAt'
+>
 
-export type SellerOrdersRequest = {
-  payload: SellerOrdersPayload
-  user?: AccessUser
-}
-
-type SellerOrdersPayload = {
-  find: (args: {
-    collection: 'companies' | 'orders' | 'products'
-    depth: number
-    limit: number
-    page?: number
-    pagination?: boolean
-    overrideAccess: boolean
-    req?: SellerOrdersRequest
-    select?: Record<string, boolean>
-    sort: string
-    where?: Where
-  }) => Promise<{ docs: unknown[]; hasNextPage: boolean }>
-  findByID: (args: {
-    collection: string
-    depth: number
-    id: string
-    overrideAccess: boolean
-    req?: SellerOrdersRequest
-  }) => Promise<unknown>
-  update: (args: {
-    collection: 'orders'
-    data: Partial<SellerOrderDoc>
-    id: string
-    context?: Record<string, unknown>
-    overrideAccess: boolean
-    req?: SellerOrdersRequest
-  }) => Promise<unknown>
-}
+export type SellerOrdersRequest = PayloadRequest
 
 type SellerOrderProductsArgs = {
   fulfilled?: boolean | null
@@ -122,7 +96,7 @@ type SellerOrderProductsPage = {
 
 type ProductCatalog = {
   ids: string[]
-  products: Map<string, Product>
+  products: Map<string, SellerProductDoc>
 }
 
 type OrderItemRow = NonNullable<SellerOrderDoc['items']>[number]
@@ -132,13 +106,7 @@ const MAX_LIMIT = 100
 const ORDER_PAGE_SIZE = 50
 let shippingAddressType: import('graphql').GraphQLObjectType | null = null
 
-const getExistingField = ({
-  fields,
-  name,
-}: {
-  fields: Record<string, unknown>
-  name: string
-}) => {
+const getExistingField = ({ fields, name }: { fields: Record<string, unknown>; name: string }) => {
   const field = fields[name]
 
   if (!field || typeof field !== 'object' || !('type' in field)) {
@@ -221,14 +189,16 @@ const getUserID = (user: SellerOrdersRequest['user']): string | null => {
 
 const loadProductCatalog = async ({
   req,
+  productIDs,
 }: {
   req: SellerOrdersRequest
+  productIDs: string[]
 }): Promise<ProductCatalog> => {
   const userID = getUserID(req.user)
   if (!userID) {
     return {
       ids: [],
-      products: new Map<string, Product>(),
+      products: new Map<string, SellerProductDoc>(),
     }
   }
 
@@ -238,34 +208,42 @@ const loadProductCatalog = async ({
     },
   }
 
-  const products = (await req.payload.find({
-    collection: 'products',
-    depth: 0,
-    limit: 0,
-    overrideAccess: true,
-    pagination: false,
-    req,
-    select: {
-      createdBy: true,
-      createdAt: true,
-      id: true,
-      name: true,
-      updatedAt: true,
+  const productDocs = await chunk(Array.from(new Set(productIDs)), 100).reduce(
+    async (previous, ids) => {
+      const docs = await previous
+      const products = await req.payload.find({
+        collection: 'products',
+        depth: 0,
+        limit: 100,
+        overrideAccess: true,
+        pagination: true,
+        req,
+        select: {
+          createdBy: true,
+          company: true,
+          createdAt: true,
+          id: true,
+          name: true,
+          updatedAt: true,
+        },
+        sort: '-createdAt',
+        where: { and: [ownedByUserWhere, { id: { in: ids } }] },
+      })
+      return [...docs, ...products.docs]
     },
-    sort: '-createdAt',
-    where: ownedByUserWhere,
-  })) as { docs: SellerProductDoc[] }
+    Promise.resolve<SellerProductDoc[]>([]),
+  )
 
-  const productEntries = products.docs
+  const productEntries = productDocs
     .map((product) => {
       const productID = toStringID(product.id)
       if (!productID) {
         return null
       }
 
-      return [productID, product as Product] as const
+      return [productID, product] as const
     })
-    .filter((entry): entry is readonly [string, Product] => Boolean(entry))
+    .filter((entry): entry is readonly [string, SellerProductDoc] => Boolean(entry))
 
   return {
     ids: productEntries.map(([productID]) => productID),
@@ -306,7 +284,6 @@ const buildListing = async ({
   page: number
   req: SellerOrdersRequest
 }): Promise<SellerOrderProductsPage> => {
-  const productCatalog = await loadProductCatalog({ req })
   const targetStart = (page - 1) * limit
   const targetEnd = targetStart + limit
   const docs: SellerOrderProductListing[] = []
@@ -314,12 +291,12 @@ const buildListing = async ({
   let hasMore = true
   let orderPage = 1
   const orderWhere: Where = {
-    'paymentProofs.product': {
-      in: productCatalog.ids,
+    'paymentProofs.product.createdBy': {
+      equals: getUserID(req.user),
     },
   }
 
-  if (productCatalog.ids.length === 0) {
+  if (!getUserID(req.user)) {
     return {
       docs,
       hasNextPage: false,
@@ -344,70 +321,81 @@ const buildListing = async ({
       where: orderWhere,
     })) as { docs: SellerOrderDoc[]; hasNextPage: boolean }
 
+    const productCatalog = await loadProductCatalog({
+      req,
+      productIDs: orders.docs.flatMap((order) =>
+        (order.paymentProofs || [])
+          .map((proof) => toStringID(proof.product))
+          .filter((id): id is string => Boolean(id)),
+      ),
+    })
+
     const pageDocs = await Promise.all(
       orders.docs.flatMap((order) => {
         const paymentProofs = Array.isArray(order.paymentProofs) ? order.paymentProofs : []
 
-        return paymentProofs.map(async (paymentProof): Promise<SellerOrderProductListing | null> => {
-          const productID = toStringID(paymentProof.product)
-          if (!productID) {
-            return null
-          }
+        return paymentProofs.map(
+          async (paymentProof): Promise<SellerOrderProductListing | null> => {
+            const productID = toStringID(paymentProof.product)
+            if (!productID) {
+              return null
+            }
 
-          const product = productCatalog.products.get(productID)
-          if (!product) {
-            return null
-          }
+            const product = productCatalog.products.get(productID)
+            if (!product) {
+              return null
+            }
 
-          const isFulfilled = Boolean(paymentProof.fulfilled)
-          if (typeof fulfilled === 'boolean' && isFulfilled !== fulfilled) {
-            return null
-          }
+            const isFulfilled = Boolean(paymentProof.fulfilled)
+            if (typeof fulfilled === 'boolean' && isFulfilled !== fulfilled) {
+              return null
+            }
 
-          const isRejected = Boolean(paymentProof.rejected)
-          if (typeof rejected === 'boolean' && isRejected !== rejected) {
-            return null
-          }
+            const isRejected = Boolean(paymentProof.rejected)
+            if (typeof rejected === 'boolean' && isRejected !== rejected) {
+              return null
+            }
 
-          const paymentProofId = toStringID(paymentProof.id)
-          if (!paymentProofId) {
-            return null
-          }
+            const paymentProofId = toStringID(paymentProof.id)
+            if (!paymentProofId) {
+              return null
+            }
 
-          const nextIndex = totalDocs
-          totalDocs += 1
-          if (nextIndex < targetStart || nextIndex >= targetEnd) {
-            return null
-          }
+            const nextIndex = totalDocs
+            totalDocs += 1
+            if (nextIndex < targetStart || nextIndex >= targetEnd) {
+              return null
+            }
 
-          return {
-            id: paymentProofId,
-            chain: paymentProof.chain,
-            fulfilled: isFulfilled,
-            customerEmail: order.customerEmail,
-            orderCreatedAt: order.createdAt,
-            orderId: order.id,
-            orderStatus: String(order.status ?? ''),
-            payerAddress: order.payerAddress,
-            paymentProof: {
+            return {
+              id: paymentProofId,
               chain: paymentProof.chain,
               fulfilled: isFulfilled,
-              id: paymentProofId,
+              customerEmail: order.customerEmail,
+              orderCreatedAt: order.createdAt,
+              orderId: order.id,
+              orderStatus: String(order.status ?? ''),
+              payerAddress: order.payerAddress,
+              paymentProof: {
+                chain: paymentProof.chain,
+                fulfilled: isFulfilled,
+                id: paymentProofId,
+                rejected: isRejected,
+                transactionHash: paymentProof.transactionHash,
+              },
+              paymentProofId,
+              product,
+              productId: productID,
+              quantity: getOrderProductQuantity({
+                items: order.items,
+                productID,
+              }),
+              shippingAddress: order.shippingAddress,
               rejected: isRejected,
               transactionHash: paymentProof.transactionHash,
-            },
-            paymentProofId,
-            product,
-            productId: productID,
-            quantity: getOrderProductQuantity({
-              items: order.items,
-              productID,
-            }),
-            shippingAddress: order.shippingAddress,
-            rejected: isRejected,
-            transactionHash: paymentProof.transactionHash,
-          }
-        })
+            }
+          },
+        )
       }),
     )
 
@@ -466,63 +454,49 @@ const updateSellerOrderProductState = async ({
   paymentProofValue: boolean
   req: SellerOrdersRequest
 }): Promise<SellerOrderProductListing> => {
-  const paymentProofOppositeKey = paymentProofKey === 'fulfilled' ? 'rejected' : 'fulfilled'
-  const order = (await req.payload.findByID({
+  const order = await updateAtomically({
     collection: 'orders',
-    depth: 0,
     id: orderId,
-    overrideAccess: true,
     req,
-  })) as SellerOrderDoc
-
-  const paymentProofs = Array.isArray(order.paymentProofs) ? [...order.paymentProofs] : []
-  const paymentProofIndex = paymentProofs.findIndex((paymentProof) => {
-    return toStringID(paymentProof.id) === paymentProofId
-  })
-
-  if (paymentProofIndex < 0) {
-    throw new Error('Payment proof not found.')
-  }
-
-  const currentProof = paymentProofs[paymentProofIndex]
-  const productID = toStringID(currentProof.product)
-
-  if (!productID) {
-    throw new Error('Payment proof is missing a product.')
-  }
-
-  const productCatalog = await loadProductCatalog({ req })
-  const product = productCatalog.products.get(productID)
-
-  if (!product) {
-    throw new Error('You do not own this product.')
-  }
-
-  paymentProofs[paymentProofIndex] = {
-    ...currentProof,
-    [paymentProofKey]: paymentProofValue,
-    [paymentProofOppositeKey]: false,
-  }
-
-  const updatedProof = paymentProofs[paymentProofIndex] as SellerOrderPaymentProof
-
-  await req.payload.update({
-    collection: 'orders',
-    data: {
-      paymentProofs,
+    update: async (current) => {
+      const proof = current.paymentProofs?.find((entry) => toStringID(entry.id) === paymentProofId)
+      if (!proof) {
+        throw new Error('Payment proof not found.')
+      }
+      const productID = toStringID(proof.product)
+      if (!productID) {
+        throw new Error('Payment proof is missing a product.')
+      }
+      const catalog = await loadProductCatalog({ req, productIDs: [productID] })
+      if (!catalog.products.has(productID)) {
+        throw new Error('You do not own this product.')
+      }
+      if (paymentProofKey === 'fulfilled' && paymentProofValue && current.status !== 'completed') {
+        throw new Error('Fulfillment requires a verified completed order.')
+      }
+      const opposite = paymentProofKey === 'fulfilled' ? 'rejected' : 'fulfilled'
+      if (Boolean(proof[paymentProofKey]) === paymentProofValue && !proof[opposite]) {
+        return null
+      }
+      return {
+        paymentProofs: current.paymentProofs!.map((entry) =>
+          toStringID(entry.id) === paymentProofId
+            ? { ...entry, [paymentProofKey]: paymentProofValue, [opposite]: false }
+            : entry,
+        ),
+      }
     },
-    id: orderId,
-    context: {
-      skipPaymentProofMerge: true,
-    },
-    overrideAccess: true,
-    req,
   })
-
+  const currentProof = order.paymentProofs!.find(
+    (entry) => toStringID(entry.id) === paymentProofId,
+  )!
+  const productID = toStringID(currentProof.product)!
+  const productCatalog = await loadProductCatalog({ req, productIDs: [productID] })
+  const product = productCatalog.products.get(productID)!
   return {
     id: paymentProofId,
     chain: currentProof.chain,
-    fulfilled: Boolean(updatedProof.fulfilled),
+    fulfilled: Boolean(currentProof.fulfilled),
     customerEmail: order.customerEmail,
     orderCreatedAt: order.createdAt,
     orderId: order.id,
@@ -530,9 +504,9 @@ const updateSellerOrderProductState = async ({
     payerAddress: order.payerAddress,
     paymentProof: {
       chain: currentProof.chain,
-      fulfilled: Boolean(updatedProof.fulfilled),
+      fulfilled: Boolean(currentProof.fulfilled),
       id: paymentProofId,
-      rejected: Boolean(updatedProof.rejected),
+      rejected: Boolean(currentProof.rejected),
       transactionHash: currentProof.transactionHash,
     },
     paymentProofId,
@@ -543,11 +517,10 @@ const updateSellerOrderProductState = async ({
       productID,
     }),
     shippingAddress: order.shippingAddress,
-    rejected: Boolean(updatedProof.rejected),
+    rejected: Boolean(currentProof.rejected),
     transactionHash: currentProof.transactionHash,
   }
 }
-
 export const updateSellerOrderProductFulfilled = async ({
   fulfilled,
   orderId,
@@ -582,10 +555,7 @@ export const updateSellerOrderProductRejected = async ({
   })
 }
 
-export const sellerOrderGraphQLQueries: GraphQLExtension = (
-  graphQL: GraphQLFactory,
-  context,
-) => {
+export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL: GraphQLFactory, context) => {
   const productField = getExistingField({
     fields: context.Query.fields,
     name: 'Product',
@@ -731,10 +701,7 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (
   }
 }
 
-export const sellerOrderGraphQLMutations: GraphQLExtension = (
-  graphQL: GraphQLFactory,
-  context,
-) => {
+export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL: GraphQLFactory, context) => {
   const productField = getExistingField({
     fields: context.Query.fields,
     name: 'Product',

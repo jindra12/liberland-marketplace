@@ -26,7 +26,9 @@ export const requiredPoppyScope = (
     return undefined
   }
   if (ENTITY_READ_TOOLS.has(name)) {
-    return typeof args.entity === 'string' && PUBLIC_MCP_ENTITIES.has(args.entity)
+    const entities =
+      name === 'find_related_entities' ? [args.entity, args.relatedEntity] : [args.entity]
+    return entities.every((entity) => typeof entity === 'string' && PUBLIC_MCP_ENTITIES.has(entity))
       ? undefined
       : 'account:read'
   }

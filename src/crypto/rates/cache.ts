@@ -3,15 +3,12 @@ import type { Payload } from 'payload'
 import type { ChainPoolRate, OrderCryptoPrice, SupportedChain } from '../types'
 import { quantizeNativeAmount } from '../nativeAmount'
 import { withTimeout } from '../timeout'
+import { CRYPTO_RATE_CACHE_KEY } from './constants'
+import type { CryptoRatesCacheValue } from './types'
+import { isFreshPoolRate, observePoolRate } from './utils'
 
 const DEFAULT_RATE_FETCH_TIMEOUT_MS = 60_000
 const DEFAULT_CACHE_MAX_AGE_MS = 15 * 60 * 1000
-const CRYPTO_RATE_CACHE_KEY = 'crypto:pool-rates:v1'
-
-type CryptoRatesCacheValue = {
-  cachedAtISO: string
-  rates: Partial<Record<SupportedChain, ChainPoolRate>>
-}
 
 let inFlightRefresh: Promise<void> | null = null
 
@@ -113,7 +110,19 @@ export const refreshCryptoRateCache = async ({
   inFlightRefresh = (async () => {
     const timeoutMs = parseRateFetchTimeoutMs()
     const existing = await readCacheValue({ payload })
-    const mergedRates: Partial<Record<SupportedChain, ChainPoolRate>> = { ...(existing?.rates ?? {}) }
+    const mergedRates: Partial<Record<SupportedChain, ChainPoolRate>> = {
+      ...(existing?.rates ?? {}),
+    }
+    const observations = { ...(existing?.observations ?? {}) }
+    const record = (rate: ChainPoolRate) => {
+      const observation = observePoolRate(rate, observations[rate.chain] || [])
+      observations[rate.chain] = observation.observations
+      if (observation.rate) {
+        mergedRates[rate.chain] = observation.rate
+      } else {
+        delete mergedRates[rate.chain]
+      }
+    }
 
     const [ethereum, solana, tron] = await Promise.allSettled([
       withTimeout({
@@ -134,26 +143,33 @@ export const refreshCryptoRateCache = async ({
     ])
 
     if (ethereum.status === 'fulfilled') {
-      mergedRates.ethereum = ethereum.value
+      record(ethereum.value)
     } else {
-      payload.logger.error(`[crypto-rate-cache] Failed refreshing ethereum rate: ${String(ethereum.reason)}`)
+      payload.logger.error(
+        `[crypto-rate-cache] Failed refreshing ethereum rate: ${String(ethereum.reason)}`,
+      )
     }
 
     if (solana.status === 'fulfilled') {
-      mergedRates.solana = solana.value
+      record(solana.value)
     } else {
-      payload.logger.error(`[crypto-rate-cache] Failed refreshing solana rate: ${String(solana.reason)}`)
+      payload.logger.error(
+        `[crypto-rate-cache] Failed refreshing solana rate: ${String(solana.reason)}`,
+      )
     }
 
     if (tron.status === 'fulfilled') {
-      mergedRates.tron = tron.value
+      record(tron.value)
     } else {
-      payload.logger.error(`[crypto-rate-cache] Failed refreshing tron rate: ${String(tron.reason)}`)
+      payload.logger.error(
+        `[crypto-rate-cache] Failed refreshing tron rate: ${String(tron.reason)}`,
+      )
     }
 
     await payload.kv.set(CRYPTO_RATE_CACHE_KEY, {
       cachedAtISO: new Date().toISOString(),
       rates: mergedRates,
+      observations,
     } satisfies CryptoRatesCacheValue)
   })()
 
@@ -176,14 +192,19 @@ export const buildOrderCryptoPricesFromCache = async ({
   const effectiveChains = unique(chains)
   const maxAgeMs = parseCacheMaxAgeMs()
   let cacheValue = await readCacheValue({ payload })
-  let missingChains = effectiveChains.filter((chain) => !cacheValue?.rates[chain])
+  const unavailableChains = (value: CryptoRatesCacheValue | null) =>
+    effectiveChains.filter((chain) => {
+      const rate = value?.rates[chain]
+      return !rate || !isFreshPoolRate(rate, maxAgeMs)
+    })
+  let missingChains = unavailableChains(cacheValue)
   const cachedAt = cacheValue ? new Date(cacheValue.cachedAtISO).getTime() : Number.NaN
   const cacheIsStale = !Number.isFinite(cachedAt) || Date.now() - cachedAt > maxAgeMs
 
   if (!cacheValue || cacheIsStale || missingChains.length > 0) {
     await refreshCryptoRateCache({ payload })
     cacheValue = await readCacheValue({ payload })
-    missingChains = effectiveChains.filter((chain) => !cacheValue?.rates[chain])
+    missingChains = unavailableChains(cacheValue)
   }
 
   if (!cacheValue) {
@@ -192,7 +213,7 @@ export const buildOrderCryptoPricesFromCache = async ({
 
   if (missingChains.length > 0) {
     throw new Error(
-      `Missing cached crypto rates for ${missingChains.join(', ')}. Please retry in a few seconds.`,
+      `Fresh verified crypto rates unavailable for ${missingChains.join(', ')}. New pools require a 30-minute observation window; check the crypto-rate refresh logs.`,
     )
   }
 

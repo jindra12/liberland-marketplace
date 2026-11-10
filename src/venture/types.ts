@@ -1,3 +1,6 @@
+import type { PayloadRequest } from 'payload'
+import type { Startup } from '@/payload-types'
+
 export type IndexedPool = {
   id: string
   key: { currency0: string; currency1: string; fee: number; tickSpacing: number; hooks: string }
@@ -18,4 +21,10 @@ export type VentureIndexSnapshot = {
   lastBlock: number
   blockHash: string
   hasMore: boolean
+}
+
+export type VentureIndexContext = {
+  req: PayloadRequest
+  ventureID: string
+  deployment: NonNullable<Startup['contractDeployments']>[number]
 }

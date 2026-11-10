@@ -3,14 +3,17 @@ import { z } from 'zod'
 import { trackAnalyticsEvent } from './locallytics'
 import { getAnalyticsRequestMetadata } from './shared'
 
-const stringIdSchema = z.union([z.number(), z.string()]).transform(String).pipe(z.string().min(1))
+const stringIdSchema = z.union([z.number().finite(), z.string()]).transform(String).pipe(z.string().min(1).max(200))
 
 export const analyticsTrackInputSchema = z.object({
   distinctId: stringIdSchema.optional(),
-  metadata: z.record(z.string(), z.unknown()).default({}),
-  route: z.string().trim().min(1).optional(),
+  metadata: z.record(z.string().max(100), z.json())
+    .refine((metadata) => Object.keys(metadata).length <= 50, 'Too many analytics metadata fields.')
+    .refine((metadata) => Buffer.byteLength(JSON.stringify(metadata)) <= 16384, 'Analytics metadata is too large.')
+    .default({}),
+  route: z.string().trim().min(1).max(2048).optional(),
   sessionId: stringIdSchema.optional(),
-  type: z.string().trim().min(1),
+  type: z.string().trim().min(1).max(100),
 })
 
 export type AnalyticsTrackInput = z.output<typeof analyticsTrackInputSchema>

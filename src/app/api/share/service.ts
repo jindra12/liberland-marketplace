@@ -3,7 +3,9 @@ import type { Payload, PayloadRequest } from 'payload'
 import { getPayload } from 'payload'
 
 import { toStringID } from '@/utilities/toStringID'
-import { fetchSafeURLResponse, resolveSafeURL } from './security'
+import { resolveSafeURL } from './security'
+import { fetchPublicResource } from '@/security/utils'
+import { PUBLIC_IMAGE_MAX_BYTES } from '@/security/constants'
 import {
   ShareApiError,
   extractShareMetadataFromHTML,
@@ -66,26 +68,26 @@ const createSharedImage = async ({
   req?: PayloadRequest
   user: ShareUser
   title: string
-  }): Promise<string | null> => {
+}): Promise<string | null> => {
   const targetURL = await resolveSafeURL(imageURL)
 
   if (!targetURL) {
     return null
   }
 
-  const response = await fetchSafeURLResponse(targetURL)
+  const resource = await fetchPublicResource(targetURL, PUBLIC_IMAGE_MAX_BYTES)
 
-  if (!response.ok) {
+  if (!resource.response.ok) {
     return null
   }
 
-  const mimeType = response.headers.get('content-type')?.split(';')[0] || 'image/jpeg'
+  const mimeType = resource.response.headers.get('content-type')?.split(';')[0] || 'image/jpeg'
 
   if (!mimeType.startsWith('image/')) {
     return null
   }
 
-  const fileBuffer = Buffer.from(await response.arrayBuffer())
+  const fileBuffer = Buffer.from(resource.bytes)
   const file = {
     data: fileBuffer,
     mimetype: mimeType,
@@ -139,22 +141,22 @@ export const createShareRepost = async ({
     throw new ShareApiError('Automated posting is disabled for this company.', 403)
   }
 
-  const response = await fetchSafeURLResponse(targetURL)
+  const resource = await fetchPublicResource(targetURL)
 
-  if (!response.ok) {
+  if (!resource.response.ok) {
     throw new ShareApiError(`Unable to fetch ${targetURL.toString()}.`, 400)
   }
 
-  const contentType = response.headers.get('content-type') || ''
+  const contentType = resource.response.headers.get('content-type') || ''
 
   if (!contentType.includes('text/html') && !contentType.includes('application/xhtml+xml')) {
     throw new ShareApiError('link must point to an HTML page.', 400)
   }
 
-  const html = await response.text()
+  const html = new TextDecoder().decode(resource.bytes)
   const metadata = await extractShareMetadataFromHTML({
     html,
-    pageURL: targetURL.toString(),
+    pageURL: resource.response.url || targetURL.toString(),
   })
   const effectiveDescription = description || metadata.description
   const imageID = metadata.imageURL

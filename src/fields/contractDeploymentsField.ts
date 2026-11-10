@@ -1,4 +1,7 @@
-import type { Field } from 'payload'
+import type { Field, FieldHookArgs } from 'payload'
+import type { Startup } from '@/payload-types'
+import { updateAtomically } from '@/utilities/atomicUpdates/utils'
+import { mergeDeploymentRecords } from '@/venture/deploymentUtils'
 
 const CONTRACT_ADDRESS_MAX_LENGTH = 128
 
@@ -13,9 +16,34 @@ export const contractDeploymentsField = (): Field => ({
   name: 'contractDeployments',
   label: 'Contract Deployments',
   type: 'array',
+  hooks: {
+    beforeChange: [
+      async ({
+        operation,
+        value,
+        originalDoc,
+        siblingData,
+        req,
+      }: FieldHookArgs<Startup, Startup['contractDeployments'], Partial<Startup>>) => {
+        if (operation !== 'update' || !Array.isArray(value)) {
+          return value
+        }
+        await updateAtomically({
+          collection: 'startups',
+          id: originalDoc!.id,
+          req,
+          update: (current) => ({
+            contractDeployments: mergeDeploymentRecords(current.contractDeployments || [], value),
+          }),
+        })
+        delete siblingData.contractDeployments
+        return undefined
+      },
+    ],
+  },
   admin: {
     description:
-      'Addresses for the token, exchange, DAO, reward token, PoolManager, and their implementations. Keep one entry per deployed chain.',
+      'Append-only registrations for deployed contracts. Existing addresses cannot be overwritten or removed by submitting an older list.',
     initCollapsed: true,
   },
   labels: {

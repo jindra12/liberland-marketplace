@@ -2,6 +2,7 @@ import { getTronRateConfig } from '../env'
 import { computePoolRate } from '../math'
 import { normalizeTronAddress } from '../tron'
 import type { ChainPoolRate } from '../types'
+import { assertFreshReserveTimestamp, getRateSourceId } from './utils'
 
 type TriggerConstantResponse = {
   Error?: string
@@ -40,7 +41,9 @@ const getConstantResultHex = (response: TriggerConstantResponse, method: string)
   }
 
   if (response.result?.result === false) {
-    const message = response.result.message ? decodeTronErrorMessage(response.result.message) : 'unknown TRON error'
+    const message = response.result.message
+      ? decodeTronErrorMessage(response.result.message)
+      : 'unknown TRON error'
     throw new Error(`TRON constant call ${method} returned failure: ${message}`)
   }
 
@@ -107,7 +110,9 @@ const callTronConstantMethod = async ({
   })
 
   if (!response.ok) {
-    throw new Error(`TRON constant call ${functionSelector} failed at ${endpoint}: HTTP ${response.status}`)
+    throw new Error(
+      `TRON constant call ${functionSelector} failed at ${endpoint}: HTTP ${response.status}`,
+    )
   }
 
   const payload = (await response.json()) as TriggerConstantResponse
@@ -144,6 +149,7 @@ export const getTronPoolRate = async (): Promise<ChainPoolRate> => {
   const token0 = decodeAddressFromWord(getConstantResultHex(token0Result, 'token0()'), 'token0()')
   const token1 = decodeAddressFromWord(getConstantResultHex(token1Result, 'token1()'), 'token1()')
   const reservesHex = getConstantResultHex(reservesResult, 'getReserves()')
+  assertFreshReserveTimestamp(Number(decodeUintFromWord(reservesHex, 2, 'getReserves()')))
 
   const normalizedNative = normalizeTronAddress(config.nativeTokenAddress)
   const normalizedStable = normalizeTronAddress(config.stableTokenAddress)
@@ -174,6 +180,7 @@ export const getTronPoolRate = async (): Promise<ChainPoolRate> => {
 
   return {
     chain: 'tron',
+    sourceId: getRateSourceId(config),
     poolAddress: config.poolAddress,
     nativeSymbol: config.nativeSymbol,
     stableSymbol: config.stableSymbol,

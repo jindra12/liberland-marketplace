@@ -1,7 +1,12 @@
-import type { Field } from 'payload'
+import type { Field, FieldHookArgs } from 'payload'
+import type { Order } from '@/payload-types'
 
 import { adminOnlyFieldAccess } from '@/access/admin'
 import { TEXT_INPUT_MAX_LENGTH } from './constants'
+import { toStringID } from '@/utilities/toStringID'
+import { updateAtomically } from '@/utilities/atomicUpdates/utils'
+import { mergeCustomerPaymentProofs } from '@/crypto/proofs/utils'
+import { APIError } from 'payload'
 
 const chainOptions = [
   { label: 'Ethereum', value: 'ethereum' },
@@ -25,17 +30,6 @@ export type PaymentTargetRow = {
   recipientAddress?: string | null
   stableAmount?: number | null
   unitAmount?: number | null
-}
-
-const getPaymentProofRowKey = (row: PaymentProofRow): string => {
-  const product =
-    typeof row.product === 'string'
-      ? row.product
-      : row.product && typeof row.product === 'object' && 'id' in row.product
-        ? String((row.product as { id?: unknown }).id ?? '')
-        : ''
-
-  return `${product}|${String(row.chain ?? '')}|${String(row.transactionHash ?? '')}`
 }
 
 const buildPriceValueFields = ({ required = false }: { required?: boolean } = {}): Field[] => [
@@ -193,35 +187,40 @@ export const orderFields: Field[] = [
     },
     hooks: {
       beforeChange: [
-        ({ operation, req, originalDoc, value }) => {
-          if (req.context?.skipPaymentProofMerge === true) {
+        async ({
+          operation,
+          req,
+          originalDoc,
+          value,
+          siblingData,
+        }: FieldHookArgs<Order, Order['paymentProofs'], Partial<Order>>) => {
+          if (
+            operation !== 'update' ||
+            adminOnlyFieldAccess({ req }) ||
+            req.context.skipPaymentProofMerge
+          ) {
             return value
           }
-
-          if (operation !== 'update' || adminOnlyFieldAccess({ req })) {
+          if (value === undefined) {
             return value
           }
-
-          const existingRows = Array.isArray(originalDoc?.paymentProofs)
-            ? (originalDoc.paymentProofs as PaymentProofRow[])
-            : []
-          const incomingRows = Array.isArray(value) ? (value as PaymentProofRow[]) : []
-
-          if (incomingRows.length === 0) {
-            return existingRows
-          }
-
-          const existingKeys = new Set(existingRows.map(getPaymentProofRowKey))
-          const appendedRows = incomingRows.filter((row) => {
-            const key = getPaymentProofRowKey(row)
-            if (existingKeys.has(key)) {
-              return false
-            }
-            existingKeys.add(key)
-            return true
+          const incoming = Array.isArray(value) ? value : []
+          await updateAtomically({
+            collection: 'orders',
+            id: originalDoc!.id,
+            req,
+            update: async (current) => {
+              if (toStringID(current.customer) !== String(req.user!.id)) {
+                throw new APIError('You do not own this order.', 403)
+              }
+              const paymentProofs = await mergeCustomerPaymentProofs(current, incoming, req)
+              return paymentProofs ? { paymentProofs } : null
+            },
           })
-
-          return [...existingRows, ...appendedRows]
+          // The canonical CAS write already applied the append. The enclosing update
+          // must not replace that array using its earlier read snapshot.
+          delete siblingData.paymentProofs
+          return undefined
         },
       ],
     },

@@ -1,4 +1,5 @@
 import type { AuthStrategy, CollectionConfig, Config } from 'payload'
+import { MARKETPLACE_ACCESS_SCOPE } from '@/security/constants'
 
 /**
  * Payload auth strategy that validates OIDC access tokens from the Authorization header.
@@ -26,8 +27,12 @@ const oidcAccessTokenStrategy: AuthStrategy = {
 
       const record = docs[0]
       if (!record) return { user: null }
+      if (!record.scopes?.split(' ').includes(MARKETPLACE_ACCESS_SCOPE)) {
+        return { user: null }
+      }
 
-      if (record.accessTokenExpiresAt && new Date(record.accessTokenExpiresAt) < new Date()) {
+      const expiresAt = Date.parse(record.accessTokenExpiresAt || '')
+      if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
         return { user: null }
       }
 
@@ -35,7 +40,9 @@ const oidcAccessTokenStrategy: AuthStrategy = {
       if (!userId) return { user: null }
 
       const user = await payload.findByID({ collection: 'users', id: userId })
-      if (!user) return { user: null }
+      if (!user || user.banned) {
+        return { user: null }
+      }
 
       return {
         user: {

@@ -26,6 +26,8 @@ import { contractDeploymentsField } from '@/fields/contractDeploymentsField'
 import { ventureChainIndexEndpoint } from '@/endpoints/ventureChainIndex'
 import { ventureDeploymentRecoveryEndpoints } from '@/endpoints/ventureDeploymentRecovery'
 import type { CollectionConfig } from 'payload'
+import { operationalUpdatedAtField } from '@/fields/operationalUpdatedAtField'
+import { ventureMembershipField } from '@/fields/ventureMembershipField'
 
 const resourceOptions = [
   { label: 'Funding', value: 'funding' },
@@ -92,6 +94,7 @@ export const Startups: CollectionConfig = {
     update: onlyOwnDocsOrAdmin,
   },
   fields: [
+    operationalUpdatedAtField(),
     createdByField,
     serverURLField(),
     { name: 'title', type: 'text', required: true, maxLength: TEXT_INPUT_MAX_LENGTH },
@@ -100,7 +103,10 @@ export const Startups: CollectionConfig = {
       type: 'relationship',
       relationTo: 'companies',
       required: true,
-      filterOptions: publicCompanyFilter,
+      filterOptions: ({ req, user }) =>
+        req.context.ventureMembershipUpdate
+          ? publicCompanyFilter({})
+          : publicCompanyFilter({ user }),
     },
     markdownField({
       name: 'description',
@@ -170,13 +176,7 @@ export const Startups: CollectionConfig = {
         { label: 'Scaling', value: 'scaling' },
       ],
     },
-    {
-      name: 'involvedUsers',
-      label: 'Involved Users',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: true,
-    },
+    ventureMembershipField(),
     notificationSubscriberCountField(),
     notificationSubscriptionStatusField('startups'),
     completenessScoreField,

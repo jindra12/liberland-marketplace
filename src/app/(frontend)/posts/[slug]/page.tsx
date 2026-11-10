@@ -5,7 +5,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { PostMarkdown } from '@/components/PostMarkdown'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import { draftMode } from 'next/headers'
+import { draftMode, headers } from 'next/headers'
 import React, { cache } from 'react'
 
 import type { Post as PostType } from '@/payload-types'
@@ -80,12 +80,14 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }): Promise<PostTy
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
+  const { user } = await payload.auth({ headers: await headers() })
 
   const result = await payload.find({
     collection: 'posts',
     draft,
     limit: 1,
-    overrideAccess: draft,
+    overrideAccess: false,
+    user,
     pagination: false,
     where: {
       slug: {

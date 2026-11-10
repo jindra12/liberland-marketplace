@@ -18,3 +18,5 @@ cleanup() {
 }
 
 trap cleanup EXIT INT TERM
+
+wait "$MAILDEV_PID"

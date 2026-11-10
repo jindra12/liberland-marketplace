@@ -19,7 +19,9 @@ vi.mock('node:dns/promises', () => ({
   }),
 }))
 
-import { fetchSafeURLResponse, resolveSafeURL } from '@/app/api/share/security'
+import { resolveSafeURL } from '@/app/api/share/security'
+import { fetchPublicResource } from '@/security/utils'
+import { GuardedFetchErrorCode } from 'guarded-fetch'
 
 describe('share security helpers', () => {
   beforeEach(() => {
@@ -38,20 +40,18 @@ describe('share security helpers', () => {
       protocol: 'https:',
     })
 
-    const fetchMock = vi
-      .spyOn(globalThis, 'fetch')
-      .mockResolvedValueOnce(
-        new Response(null, {
-          headers: {
-            location: 'http://127.0.0.1/metadata',
-          },
-          status: 302,
-        }),
-      )
-
-    await expect(fetchSafeURLResponse(new URL('https://example.com/path'))).rejects.toThrow(
-      'link must not target a private or local address.',
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+      new Response(null, {
+        headers: {
+          location: 'http://127.0.0.1/metadata',
+        },
+        status: 302,
+      }),
     )
+
+    await expect(fetchPublicResource(new URL('https://example.com/path'))).rejects.toMatchObject({
+      code: GuardedFetchErrorCode.REDIRECT_TO_UNSAFE_HOST,
+    })
     expect(fetchMock).toHaveBeenCalledTimes(1)
   })
 })

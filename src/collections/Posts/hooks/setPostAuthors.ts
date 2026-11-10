@@ -1,30 +1,18 @@
 import type { CollectionBeforeChangeHook } from 'payload'
+import type { Post } from '@/payload-types'
+import { isAdminUser } from '@/access/admin'
 
-const getUserID = (value: unknown): string | null => {
-  if (typeof value === 'string') {
-    return value
-  }
-
-  if (typeof value === 'number') {
-    return String(value)
-  }
-
-  return null
-}
-
-export const setPostAuthors: CollectionBeforeChangeHook = ({ data, operation, req }) => {
-  if (operation !== 'create') {
+export const setPostAuthors: CollectionBeforeChangeHook<Post> = ({
+  data,
+  operation,
+  originalDoc,
+  req,
+}) => {
+  if (!req.user || isAdminUser(req.user)) {
     return data
   }
-
-  const userID = getUserID(req.user?.id)
-
-  if (!userID) {
-    return data
-  }
-
   return {
-    ...(data ?? {}),
-    authors: [userID],
+    ...data,
+    authors: operation === 'create' ? [req.user.id] : originalDoc?.authors,
   }
 }

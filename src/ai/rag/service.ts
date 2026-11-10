@@ -1,5 +1,6 @@
 import { Document, Settings, VectorStoreIndex } from 'llamaindex'
-import { OpenAI, OpenAIEmbedding } from '@llamaindex/openai'
+import { OpenAI } from '@llamaindex/openai'
+import { createPersistedEmbeddingModel } from './utils'
 import { createLocalReq, type PayloadRequest } from 'payload'
 
 import { getServerSideURL } from '@/utilities/getURL'
@@ -9,15 +10,12 @@ import {
   RAG_COLLECTIONS,
   RAG_DEFAULT_LIMIT,
   RAG_INDEX_TTL_MS,
+  RAG_INDEX_MAX_STALE_MS,
+  RAG_BUILD_RETRY_DELAY_MS,
   RAG_MAX_LIMIT,
   type RagCollection,
 } from './constants'
-import type { RagRecord, RagSearchRequest, RagSearchResponse, RagSource } from './types'
-
-type RagIndex = {
-  createdAt: number
-  index: VectorStoreIndex
-}
+import type { RagIndex, RagBuildFailure, RagRecord, RagSearchRequest, RagSearchResponse, RagSource } from './types'
 
 type RagDocumentMetadata = {
   collection: RagCollection
@@ -28,6 +26,8 @@ type RagDocumentMetadata = {
 }
 
 let cachedIndex: Promise<RagIndex> | null = null
+let usableIndex: RagIndex | null = null
+let buildFailure: RagBuildFailure | null = null
 
 const getOpenAIKey = (): string => {
   const key = process.env.CHATGPT_KEY
@@ -68,16 +68,21 @@ const getRecordText = (collection: RagCollection, record: RagRecord): string => 
     .join('\n')
 }
 
-const getRecords = async (req: PayloadRequest, collection: RagCollection): Promise<RagRecord[]> => {
+const getRecords = async (req: PayloadRequest, collection: RagCollection, page = 1): Promise<RagRecord[]> => {
   const result = await req.payload.find({
     collection,
     depth: 1,
     limit: 1000,
+    page,
+    sort: 'id',
     overrideAccess: false,
     req,
   })
 
-  return result.docs as RagRecord[]
+  if (result.hasNextPage && result.nextPage && result.nextPage > page) {
+    return [...result.docs, ...await getRecords(req, collection, result.nextPage)]
+  }
+  return result.docs
 }
 
 const createDocuments = async (req: PayloadRequest): Promise<Document<RagDocumentMetadata>[]> => {
@@ -112,7 +117,7 @@ const createDocuments = async (req: PayloadRequest): Promise<Document<RagDocumen
 const buildIndex = async (req: PayloadRequest): Promise<RagIndex> => {
   const apiKey = getOpenAIKey()
   Settings.llm = new OpenAI({ apiKey, model: process.env.RAG_MODEL || 'gpt-4o-mini' })
-  Settings.embedModel = new OpenAIEmbedding({
+  Settings.embedModel = createPersistedEmbeddingModel(req.payload, {
     apiKey,
     model: process.env.RAG_EMBEDDING_MODEL || 'text-embedding-3-small',
   })
@@ -124,27 +129,40 @@ const buildIndex = async (req: PayloadRequest): Promise<RagIndex> => {
 }
 
 const getIndex = async (req: PayloadRequest): Promise<VectorStoreIndex> => {
-  const current = cachedIndex
-
-  if (current) {
-    const resolved = await current
-
-    if (Date.now() - resolved.createdAt < RAG_INDEX_TTL_MS) {
-      return resolved.index
+  if (usableIndex && Date.now() - usableIndex.createdAt < RAG_INDEX_TTL_MS) {
+    return usableIndex.index
+  }
+  if (buildFailure && Date.now() < buildFailure.retryAt) {
+    if (usableIndex && Date.now() - usableIndex.createdAt < RAG_INDEX_MAX_STALE_MS) {
+      return usableIndex.index
     }
+    throw buildFailure.error
   }
 
-  const nextIndex = buildIndex(req)
+  const nextIndex = cachedIndex || buildIndex(req)
   cachedIndex = nextIndex
 
   try {
-    return (await nextIndex).index
+    const built = await nextIndex
+    if (cachedIndex === nextIndex) {
+      usableIndex = built
+      buildFailure = null
+    }
+    return built.index
   } catch (error) {
+    if (cachedIndex === nextIndex) {
+      buildFailure = { error: error instanceof Error ? error : new Error(String(error)),
+        retryAt: Date.now() + RAG_BUILD_RETRY_DELAY_MS }
+      req.payload.logger.error({ err: error, msg: 'RAG index refresh failed; rebuilds are temporarily backed off.' })
+    }
+    if (usableIndex && Date.now() - usableIndex.createdAt < RAG_INDEX_MAX_STALE_MS) {
+      return usableIndex.index
+    }
+    throw error
+  } finally {
     if (cachedIndex === nextIndex) {
       cachedIndex = null
     }
-
-    throw error
   }
 }
 
@@ -181,4 +199,6 @@ export const searchRag = async (req: PayloadRequest, input: RagSearchRequest): P
 
 export const invalidateRagIndex = (): void => {
   cachedIndex = null
+  usableIndex = null
+  buildFailure = null
 }

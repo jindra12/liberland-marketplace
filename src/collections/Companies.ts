@@ -10,6 +10,7 @@ import { publishedOrOwnDocsOrAdmin } from '@/access/publishedOrOwnDocsOrAdmin'
 import { canCreateContentWithPublicCompany } from '@/access/publicCompanyAccess'
 import { requireVerifiedEmailToPublish } from '@/hooks/requireVerifiedEmailToPublish'
 import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
+import { syncCompanyChildrenIdentity } from '@/hooks/syncCompanyIdentityId'
 import {
   lazySendItemUpdateNotifications,
   lazySendRelatedItemPublishedNotifications,
@@ -42,6 +43,7 @@ export const Companies: CollectionConfig = {
       requireVerifiedEmailToPublish,
     ],
     afterChange: [
+      syncCompanyChildrenIdentity,
       lazySendItemUpdateNotifications('companies'),
       lazySendRelatedItemPublishedNotifications({
         childCollection: 'companies',

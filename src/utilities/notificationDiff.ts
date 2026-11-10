@@ -9,6 +9,8 @@ import {
   type NotificationTargetCollection,
 } from '@/newsletter/constants'
 import { getFrontendURL } from '@/utilities/getURL'
+import { getServerSideURL } from '@/utilities/getURL'
+import { encodeServerUrlSegment } from '@/newsletter/notificationSubscriptions'
 
 export type NotificationChange = {
   after: string
@@ -114,7 +116,9 @@ const shouldExcludeNotificationPath = ({
     'readOnly' in field.admin &&
     field.admin.readOnly === true
 
-  return isFieldHidden || isAdminHidden || isAdminReadOnly
+  const isPopulatedRelationship =
+    (field.type === 'relationship' || field.type === 'upload') && path !== topLevelFieldName
+  return isFieldHidden || isAdminHidden || isAdminReadOnly || isPopulatedRelationship
 }
 
 const getNotificationChangeLabel = ({
@@ -215,7 +219,7 @@ export const buildFrontendDocumentURL = ({
   collection: NotificationTargetCollection
   id: string
 }): string =>
-  new URL(`/${NOTIFICATION_TARGET_FRONTEND_PATHS[collection]}/${id}`, getFrontendURL()).toString()
+  new URL(`/${NOTIFICATION_TARGET_FRONTEND_PATHS[collection]}/${id}/${encodeServerUrlSegment(getServerSideURL())}`, getFrontendURL()).toString()
 
 export const getNotificationDocumentTitle = ({
   collection,

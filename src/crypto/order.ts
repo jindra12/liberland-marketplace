@@ -55,7 +55,7 @@ export const getOrderCryptoPriceEntries = (order: Order): OrderCryptoPriceEntry[
 }
 
 export const getOrderPaymentTargetEntries = (
-  order: OrderWithPaymentProofs,
+  order: Pick<Order, 'paymentTargets'>,
 ): ProductPaymentTarget[] => {
   if (!Array.isArray(order.paymentTargets)) {
     return []

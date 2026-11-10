@@ -1,11 +1,14 @@
 import { describe, expect, it, vi } from 'vitest'
+import { mock, mockDeep } from 'vitest-mock-extended'
+import type { Media } from '@/payload-types'
+import type { PayloadRequest } from 'payload'
 
 import { reindexSearch } from '@/search/reindex'
+import type { SearchReindexDoc } from '@/search/types'
 
 describe('reindexSearch', () => {
-  it('clears search and rebuilds it from published docs across paginated results', async () => {
-    const create = vi.fn(async () => ({}))
-    const deleteMany = vi.fn(async () => ({}))
+  it('prepares published records across all pages before replacing the live index', async () => {
+    const replace = vi.fn<(docs: SearchReindexDoc[]) => Promise<void>>(async () => {})
     const logger = {
       info: vi.fn(),
     }
@@ -24,6 +27,7 @@ describe('reindexSearch', () => {
               _status: 'published',
               id: 'product-1',
               name: 'Product One',
+              meta: { image: mock<Media>({ id: 'product-image' }) },
             },
             {
               _status: 'draft',
@@ -48,9 +52,9 @@ describe('reindexSearch', () => {
     })
 
     const service = {
+      req: mockDeep<PayloadRequest>(),
       payload: {
-        create,
-        deleteMany,
+        replace,
         find,
         findByID: vi.fn(async () => null),
         logger,
@@ -59,11 +63,6 @@ describe('reindexSearch', () => {
 
     const result = await reindexSearch(service)
 
-    expect(deleteMany).toHaveBeenCalledTimes(1)
-    expect(deleteMany).toHaveBeenCalledWith({
-      collection: 'search',
-      where: {},
-    })
     expect(find).toHaveBeenCalledWith(
       expect.objectContaining({
         collection: 'products',
@@ -76,35 +75,17 @@ describe('reindexSearch', () => {
         page: 2,
       }),
     )
-    expect(create).toHaveBeenCalledTimes(2)
-    expect(create).toHaveBeenNthCalledWith(
-      1,
+    expect(replace).toHaveBeenCalledExactlyOnceWith([
       expect.objectContaining({
-        collection: 'search',
-        data: expect.objectContaining({
-          doc: {
-            relationTo: 'products',
-            value: 'product-1',
-          },
-          priority: 0,
-          title: 'Product One',
-        }),
+        doc: { relationTo: 'products', value: 'product-1' },
+        title: 'Product One',
+        meta: expect.objectContaining({ image: 'product-image' }),
       }),
-    )
-    expect(create).toHaveBeenNthCalledWith(
-      2,
       expect.objectContaining({
-        collection: 'search',
-        data: expect.objectContaining({
-          doc: {
-            relationTo: 'products',
-            value: 'product-3',
-          },
-          priority: 0,
-          title: 'Product Three',
-        }),
+        doc: { relationTo: 'products', value: 'product-3' },
+        title: 'Product Three',
       }),
-    )
+    ])
     expect(result).toHaveLength(6)
     expect(result.find((entry) => entry.collection === 'products')?.count).toBe(2)
   })

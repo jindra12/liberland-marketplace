@@ -1,0 +1,1 @@
+export const PAYMENT_QUOTE_VALIDITY_MS = 60 * 60 * 1000

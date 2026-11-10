@@ -21,31 +21,58 @@ const getSchema = (resolvedConfig: SanitizedConfig) => {
   return compiled
 }
 
-export const getMutationDataType = async (mutation: string): Promise<string> => {
+export const getGraphQLArgumentType = async (options: {
+  operation: 'query' | 'mutation'
+  field: string
+  argument: string
+}): Promise<string> => {
   const { schema } = getSchema(await config)
-  const input = schema.getMutationType()?.getFields()[mutation]?.args.find((argument) => argument.name === 'data')
+  const operation = options.operation === 'query' ? schema.getQueryType() : schema.getMutationType()
+  const input = operation
+    ?.getFields()
+    [options.field]?.args.find((argument) => argument.name === options.argument)
   if (!input) {
-    throw new Error(`The backend does not expose a data input for ${mutation}.`)
+    throw new Error(`The backend does not expose ${options.field}(${options.argument}).`)
   }
   return input.type.toString()
 }
 
-export const withMcpAccountRequest = <T>(request: PayloadRequest, run: () => Promise<T>): Promise<T> => accountRequests.run(request, run)
+export const withMcpAccountRequest = <T>(
+  request: PayloadRequest,
+  run: () => Promise<T>,
+): Promise<T> => accountRequests.run(request, run)
 
-export const executeGraphQL = async <T = Record<string, McpJsonValue | undefined>>({ authorization, query, variables }: { authorization?: string; query: string; variables?: McpJsonObject }): Promise<T> => {
+export const executeGraphQL = async <T = Record<string, McpJsonValue | undefined>>({
+  authorization,
+  query,
+  variables,
+}: {
+  authorization?: string
+  query: string
+  variables?: McpJsonObject
+}): Promise<T> => {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   if (authorization) headers.set('Authorization', authorization)
 
   const request = new Request(new URL('/api/graphql', getServerSideURL()), {
-    method: 'POST', headers, body: JSON.stringify({ query, variables }),
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ query, variables }),
   })
   const accountRequest = accountRequests.getStore()
   // Only the verified Poppy adapter supplies this process-local request. Native
   // Payload GraphQL resolvers retain their access checks; no bypass token is minted.
-  const response = accountRequest ? await executeAccountGraphQL(request, accountRequest) : await graphqlPost(request)
-  const result = await response.json() as McpGraphQLResult
+  const response = accountRequest
+    ? await executeAccountGraphQL(request, accountRequest)
+    : await graphqlPost(request)
+  const result = (await response.json()) as McpGraphQLResult
   if (!response.ok || result.errors?.length) {
-    throw new Error(result.errors?.map((error) => error.message).filter(Boolean).join('; ') || 'GraphQL request failed.')
+    throw new Error(
+      result.errors
+        ?.map((error) => error.message)
+        .filter(Boolean)
+        .join('; ') || 'GraphQL request failed.',
+    )
   }
   return (result.data ?? {}) as T
 }

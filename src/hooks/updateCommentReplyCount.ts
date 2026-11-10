@@ -2,25 +2,8 @@ import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, PayloadReque
 
 import { toStringID } from '@/utilities/toStringID'
 
-type ReplyCountCollection = {
-  updateOne: (filter: { _id: string }, update: { $inc: Record<string, number> }) => Promise<unknown>
-}
-
-type ReplyCountCollectionMap = Record<string, { collection?: ReplyCountCollection }>
-
 type CommentDoc = {
   replyComment?: unknown
-}
-
-const getCommentsCollection = (req: PayloadRequest): ReplyCountCollection => {
-  const collectionMap = req.payload.db.collections as unknown as ReplyCountCollectionMap
-  const collection = collectionMap.comments?.collection
-
-  if (!collection) {
-    throw new Error('Missing raw collection for "comments".')
-  }
-
-  return collection
 }
 
 const updateReplyCount = async ({
@@ -36,16 +19,11 @@ const updateReplyCount = async ({
     return
   }
 
-  await getCommentsCollection(req).updateOne(
-    {
-      _id: commentID,
-    },
-    {
-      $inc: {
-        replyCount: delta,
-      },
-    },
-  )
+  await req.payload.db.updateOne({
+    collection: 'comments', id: commentID, req,
+    data: { replyCount: { $inc: delta } },
+    returning: false,
+  })
 }
 
 const getReplyCommentID = (doc: CommentDoc | undefined): string | null => {

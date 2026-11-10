@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { BETTER_AUTH_CONTEXT_KEY } from 'payload-auth/better-auth'
 
 import { adminOnlyFieldAccess, isAdminUser } from '@/access/admin'
 import { anyone } from '@/access/anyone'
@@ -42,6 +43,7 @@ export const Users: CollectionConfig = {
           const existing = await req.payload.find({
             collection: 'users',
             limit: 1,
+            pagination: false,
             where: {
               bot: {
                 not_equals: true,
@@ -49,7 +51,7 @@ export const Users: CollectionConfig = {
             },
           })
 
-          return sanitizeUserCreateData({
+          const sanitized = sanitizeUserCreateData({
             data: data as {
               bot?: boolean
               emailVerified?: boolean
@@ -57,7 +59,12 @@ export const Users: CollectionConfig = {
             },
             existingUserCount: existing.totalDocs,
             isAdmin: isAdminUser(req.user),
+            verifiedByAuthService: Boolean(req.context[BETTER_AUTH_CONTEXT_KEY]),
           })
+          return {
+            ...sanitized,
+            initialAdministrator: existing.totalDocs === 0 ? 'initial-administrator' : undefined,
+          }
         }
         return data
       },
@@ -87,6 +94,13 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   fields: [
+    {
+      name: 'initialAdministrator',
+      type: 'text',
+      unique: true,
+      hidden: true,
+      access: { create: () => false, update: () => false },
+    },
     {
       name: 'banned',
       type: 'checkbox',

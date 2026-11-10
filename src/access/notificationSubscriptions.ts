@@ -11,7 +11,7 @@ export const canReadNotificationSubscriptions: Access<NotificationSubscription> 
 export const canCreateNotificationSubscriptions: Access<NotificationSubscription> = async ({
   req,
 }) => {
-  return Boolean(req.user?.id && getCurrentUserNotificationEmail(req))
+  return Boolean(req.user?.id && req.user.emailVerified && getCurrentUserNotificationEmail(req))
 }
 
 export const canDeleteNotificationSubscriptions: Access<NotificationSubscription> = async ({

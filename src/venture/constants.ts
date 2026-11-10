@@ -10,3 +10,15 @@ export const TOKEN_METADATA = [
 ]
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 export const INDEX_BLOCK_PAGE_SIZE = 1000
+export const VENTURE_INDEX_CACHE_TTL_MS = 15_000
+export const VENTURE_INDEX_CACHE_MAX_BYTES = 8 * 1024 * 1024
+
+export const PUBLIC_TEST_RPC_METHODS = [
+  'eth_chainId', 'eth_blockNumber', 'eth_call', 'eth_estimateGas',
+  'eth_gasPrice', 'eth_maxPriorityFeePerGas', 'eth_feeHistory',
+  'eth_getBalance', 'eth_getCode', 'eth_getStorageAt', 'eth_getLogs',
+  'eth_getBlockByHash', 'eth_getBlockByNumber',
+  'eth_getBlockTransactionCountByHash', 'eth_getBlockTransactionCountByNumber',
+  'eth_getTransactionByHash', 'eth_getTransactionCount', 'eth_getTransactionReceipt',
+  'eth_sendRawTransaction', 'net_version', 'web3_clientVersion',
+] as const

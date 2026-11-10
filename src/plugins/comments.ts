@@ -11,6 +11,7 @@ import { onlyOwnDocsOrAdmin } from '@/access/onlyOwnDocsOrAdmin'
 import { onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import { computeContentRanking } from '@/hooks/computeContentRanking'
 import { setCommentServerUrl } from '@/hooks/setCommentServerUrl'
+import { syncCommentTarget } from '@/hooks/syncCommentTarget'
 import {
   updateCommentReplyCountAfterChange,
   updateCommentReplyCountAfterDelete,
@@ -88,6 +89,11 @@ export const comments: Plugin = (config: Config): Config => {
       return {
         ...collection,
         defaultSort: '-contentRankScore',
+        // This legacy plugin's Express handlers are not Payload endpoints; use native CRUD.
+        endpoints: (collection.endpoints || []).filter(
+          (endpoint) =>
+            endpoint.path !== '/add-comment' && endpoint.path !== '/has-published-comment',
+        ),
         access: {
           ...collection.access,
           create: authenticated,
@@ -108,6 +114,7 @@ export const comments: Plugin = (config: Config): Config => {
           ...collection.hooks,
           beforeChange: [
             setCommentServerUrl,
+            syncCommentTarget,
             requireOwnCompany,
             requireVerifiedEmailToCreate,
             computeContentRanking({

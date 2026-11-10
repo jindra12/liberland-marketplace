@@ -2,19 +2,17 @@ import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
-import { searchPlugin } from '@payloadcms/plugin-search'
+import { getTrustedBrowserOrigins, guardCookieAuthStrategy } from '@/security/utils'
 import type { Plugin } from 'payload'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
 import { oidcProvider } from 'better-auth/plugins'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { searchFields } from '@/search/fieldOverrides'
-import { beforeSyncWithSearch } from '@/search/beforeSync'
 
 import type { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
-import { addCreatedBy } from './addCreatedBy'
+import { addCreatedBy, protectHistoricalVersions } from './addCreatedBy'
 import { marketplaceEcommercePlugin } from './ecommerce'
 import { hideAdminCollections } from './hideAdminCollections'
 import { protectUserFields } from './protectUserFields'
@@ -23,8 +21,15 @@ import { seedOIDCClient } from './seedOIDCClient'
 import { addOIDCTokenStrategy } from './oidcTokenStrategy'
 import { fixOAuthClientId } from './fixOAuthClientId'
 import { likesPlugin } from './likes'
-import { deferSearchSyncPlugin } from './deferSearchSync'
+import { marketplaceSearchPlugin } from './search'
+import { notificationCleanupPlugin } from './notificationSubscriptions'
 import { sendAuthEmail } from '@/utilities/sendAuthEmail'
+import {
+  restrictAuthenticationCollection,
+  retireExchangedRefreshToken,
+  revokeOAuthGrantsForUser,
+} from './utils'
+import { OAUTH_SCOPES } from '@/security/constants'
 
 const betterAuthSecret = process.env.BETTER_AUTH_SECRET
 
@@ -47,16 +52,27 @@ export const plugins: Plugin[] = [
   addCreatedBy,
   betterAuthPlugin({
     hidePluginCollections: true,
+    accounts: { collectionOverrides: restrictAuthenticationCollection },
+    sessions: { collectionOverrides: restrictAuthenticationCollection },
+    verifications: { collectionOverrides: restrictAuthenticationCollection },
+    adminInvitations: { collectionOverrides: restrictAuthenticationCollection },
+    pluginCollectionOverrides: {
+      oauthApplications: restrictAuthenticationCollection,
+      oauthAccessTokens: restrictAuthenticationCollection,
+      oauthConsents: restrictAuthenticationCollection,
+    },
     betterAuthOptions: {
       secret: betterAuthSecret,
       baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-      trustedOrigins: (process.env.OIDC_REDIRECT_URLS || '')
-        .split(',')
-        .filter(Boolean)
-        .map((url) => new URL(url).origin),
+      trustedOrigins: getTrustedBrowserOrigins(),
+      hooks: { after: retireExchangedRefreshToken },
+      session: { cookieCache: { enabled: false } },
       emailAndPassword: {
         enabled: true,
+        requireEmailVerification: true,
+        revokeSessionsOnPasswordReset: true,
         onPasswordReset: async ({ user }) => {
+          await revokeOAuthGrantsForUser(user.id)
           const { revokePoppyAccountGrants } = await import('@/poppy/accounts/utils')
           await revokePoppyAccountGrants(user.id)
         },
@@ -106,36 +122,55 @@ export const plugins: Plugin[] = [
       },
       plugins: [
         oidcProvider({
+          scopes: OAUTH_SCOPES,
+          schema: {
+            oauthApplication: { modelName: 'oauthApplications', fields: { userId: 'user' } },
+            oauthAccessToken: {
+              modelName: 'oauthAccessTokens',
+              fields: { userId: 'user', clientId: 'client' },
+            },
+            oauthConsent: {
+              modelName: 'oauthConsents',
+              fields: { userId: 'user', clientId: 'client' },
+            },
+          },
           loginPage: '/login',
           consentPage: '/oauth-consent',
           requirePKCE: true,
           allowDynamicClientRegistration: true,
           trustedClients: process.env.OIDC_CLIENT_ID
             ? [
-              {
-                clientId: process.env.OIDC_CLIENT_ID,
-                clientSecret: process.env.OIDC_CLIENT_SECRET || '',
-                name: 'Frontend App',
-                type: 'web' as const,
-                redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
-                metadata: null,
-                skipConsent: true,
-                disabled: false,
-              },
-            ]
+                {
+                  clientId: process.env.OIDC_CLIENT_ID,
+                  clientSecret: process.env.OIDC_CLIENT_SECRET || '',
+                  name: 'Frontend App',
+                  type: 'web' as const,
+                  redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
+                  metadata: null,
+                  skipConsent: true,
+                  disabled: false,
+                },
+              ]
             : [],
         }),
       ],
     },
     users: {
       slug: 'users',
-      adminRoles: ['admin', 'user'],
+      adminRoles: ['admin'],
       defaultRole: 'user',
       defaultAdminRole: 'admin',
       roles: ['user', 'admin'],
       allowedFields: ['name', 'identity'],
       collectionOverrides: ({ collection }) => ({
         ...collection,
+        auth:
+          typeof collection.auth === 'object'
+            ? {
+                ...collection.auth,
+                strategies: collection.auth.strategies?.map(guardCookieAuthStrategy),
+              }
+            : collection.auth,
         admin: {
           ...collection.admin,
           components: {
@@ -214,18 +249,8 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  searchPlugin({
-    collections: ['jobs', 'companies', 'identities', 'products', 'startups', 'posts'],
-    beforeSync: beforeSyncWithSearch,
-    searchOverrides: {
-      fields: ({ defaultFields }) => {
-        return [...defaultFields, ...searchFields]
-      },
-      admin: {
-        group: 'Directory',
-      },
-    },
-  }),
-  deferSearchSyncPlugin,
+  marketplaceSearchPlugin,
   hideAdminCollections,
+  protectHistoricalVersions,
+  notificationCleanupPlugin,
 ]

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     server: {
-      deps: { inline: ['payload-auth'] },
+      deps: { inline: ['payload-auth', 'guarded-fetch'] },
     },
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],

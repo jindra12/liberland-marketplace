@@ -1,4 +1,3 @@
-import type { CollectionSlug, PayloadRequest } from 'payload'
 import { getPayload } from 'payload'
 
 import { draftMode } from 'next/headers'
@@ -15,7 +14,7 @@ export const GET = async (req: NextRequest): Promise<Response> => {
   const { searchParams } = new URL(req.url)
 
   const path = searchParams.get('path')
-  const collection = searchParams.get('collection') as CollectionSlug
+  const collection = searchParams.get('collection')
   const slug = searchParams.get('slug')
   const previewSecret = searchParams.get('previewSecret')
 
@@ -27,21 +26,12 @@ export const GET = async (req: NextRequest): Promise<Response> => {
     return new Response('Insufficient search params', { status: 404 })
   }
 
-  if (!path.startsWith('/')) {
-    return new Response('This endpoint can only be used for relative previews', { status: 500 })
+  const destination = new URL(path, req.url)
+  if (!path.startsWith('/') || destination.origin !== req.nextUrl.origin) {
+    return new Response('This endpoint can only be used for same-origin previews', { status: 400 })
   }
 
-  let user
-
-  try {
-    user = await payload.auth({
-      req: req as unknown as PayloadRequest,
-      headers: req.headers,
-    })
-  } catch (error) {
-    payload.logger.error({ err: error }, 'Error verifying token for live preview')
-    return new Response('You are not allowed to preview this page', { status: 403 })
-  }
+  const { user } = await payload.auth({ headers: req.headers })
 
   const draft = await draftMode()
 
@@ -54,5 +44,5 @@ export const GET = async (req: NextRequest): Promise<Response> => {
 
   draft.enable()
 
-  redirect(path)
+  redirect(destination.pathname + destination.search + destination.hash)
 }

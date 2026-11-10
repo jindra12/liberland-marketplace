@@ -121,7 +121,10 @@ const getUnitPriceForItem = async ({
   }
 
   if (!productID) {
-    throw new APIError('Each order item must include a product or a variant linked to a product.', 400)
+    throw new APIError(
+      'Each order item must include a product or a variant linked to a product.',
+      400,
+    )
   }
 
   let product = productCache.get(productID)
@@ -181,8 +184,8 @@ export const computeOrderAmountOnCreate: CollectionBeforeChangeHook = async ({
     }
 
     const quantity = Number(item.quantity)
-    if (!Number.isFinite(quantity) || quantity <= 0) {
-      throw new APIError(`Order item at index ${index} has invalid quantity.`, 400)
+    if (!Number.isSafeInteger(quantity) || quantity <= 0) {
+      throw new APIError(`Order item at index ${index} must have a positive integer quantity.`, 400)
     }
 
     const unitPrice = await getUnitPriceForItem({

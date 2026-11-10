@@ -6,3 +6,8 @@ coverage
 tmp
 dist
 .turbo
+.deploy
+.env
+.env.*
+*.env
+!.env.example

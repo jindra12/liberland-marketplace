@@ -1,7 +1,12 @@
 import { beforeEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import type { ShareUser } from '@/app/api/share/utils'
 
-let shareGet: ((request: Request) => Promise<Response>) | null = null
+vi.mock('node:dns/promises', () => {
+  const lookup = vi.fn(async () => [{ address: '93.184.216.34', family: 4 }])
+  return { lookup, default: { lookup } }
+})
+
+let sharePost: ((request: Request) => Promise<Response>) | null = null
 const serverURL = 'http://localhost:3001'
 
 const mockUser = {
@@ -72,7 +77,7 @@ vi.mock('@payload-config', () => ({
 describe('share API', () => {
   beforeAll(async () => {
     const routeModule = await import('@/app/api/share/route')
-    shareGet = routeModule.GET
+    sharePost = routeModule.POST
   })
 
   beforeEach(() => {
@@ -80,11 +85,11 @@ describe('share API', () => {
   })
 
   it('rejects unauthenticated requests before validating the query string', async () => {
-    if (!shareGet) {
+    if (!sharePost) {
       throw new Error('Share route is not available.')
     }
 
-    const response = await shareGet(new Request(`${serverURL}/api/share`))
+    const response = await sharePost(new Request(`${serverURL}/api/share`, { method: 'POST' }))
 
     expect(response.status).toBe(401)
     expect(mockPayload.auth).toHaveBeenCalled()
@@ -93,7 +98,7 @@ describe('share API', () => {
   })
 
   it('creates a repost post from an authenticated share request', async () => {
-    if (!shareGet) {
+    if (!sharePost) {
       throw new Error('Share route is not available.')
     }
 
@@ -144,10 +149,11 @@ describe('share API', () => {
     let response: Response | null = null
 
     try {
-      response = await shareGet(
+      response = await sharePost(
         new Request(
           `${serverURL}/api/share?link=${encodeURIComponent(pageURL)}&companyId=company-1`,
           {
+            method: 'POST',
             headers: {
               authorization: 'Bearer valid-token',
             },
@@ -219,7 +225,7 @@ describe('share API', () => {
   })
 
   it('uses the description query param when present', async () => {
-    if (!shareGet) {
+    if (!sharePost) {
       throw new Error('Share route is not available.')
     }
 
@@ -269,10 +275,11 @@ describe('share API', () => {
     let response: Response | null = null
 
     try {
-      response = await shareGet(
+      response = await sharePost(
         new Request(
           `${serverURL}/api/share?link=${encodeURIComponent(pageURL)}&companyId=company-1&description=${encodeURIComponent(overriddenDescription)}`,
           {
+            method: 'POST',
             headers: {
               authorization: 'Bearer valid-token',
             },
@@ -312,7 +319,7 @@ describe('share API', () => {
   })
 
   it('blocks automated posting when the company opts out', async () => {
-    if (!shareGet) {
+    if (!sharePost) {
       throw new Error('Share route is not available.')
     }
 
@@ -326,10 +333,11 @@ describe('share API', () => {
       ],
     })
 
-    const response = await shareGet(
+    const response = await sharePost(
       new Request(
         `${serverURL}/api/share?link=${encodeURIComponent('https://source.example.com/articles/hello-world')}&companyId=company-2`,
         {
+          method: 'POST',
           headers: {
             authorization: 'Bearer valid-token',
           },
@@ -344,7 +352,7 @@ describe('share API', () => {
   })
 
   it('lets bot users repost to a company they do not own when auto posting is enabled', async () => {
-    if (!shareGet) {
+    if (!sharePost) {
       throw new Error('Share route is not available.')
     }
 
@@ -390,10 +398,11 @@ describe('share API', () => {
     let response: Response | null = null
 
     try {
-      response = await shareGet(
+      response = await sharePost(
         new Request(
           `${serverURL}/api/share?link=${encodeURIComponent('https://source.example.com/articles/hello-world')}&companyId=company-9`,
           {
+            method: 'POST',
             headers: {
               authorization: 'Bearer bot-token',
             },

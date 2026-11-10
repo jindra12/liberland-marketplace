@@ -107,7 +107,22 @@ export const verifyEthereumNativeTransfer = async (
       }
     }
 
-    const block = await withEthereumProvider((provider) => provider.getBlock(receipt.blockNumber))
+    const [block, finalized] = await withEthereumProvider((provider) =>
+      Promise.all([provider.getBlock(receipt.blockNumber), provider.getBlock('finalized')]),
+    )
+    if (
+      !block ||
+      !finalized ||
+      receipt.blockNumber > finalized.number ||
+      block.hash !== receipt.blockHash
+    ) {
+      return {
+        chain: 'ethereum',
+        ok: false,
+        transactionHash: input.transactionHash,
+        error: 'Awaiting finalized Ethereum confirmation.',
+      }
+    }
     const observedTimestampMs = block.timestamp * 1000
 
     if (observedTimestampMs < input.minTimestampMs) {

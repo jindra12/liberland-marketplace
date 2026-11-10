@@ -12,6 +12,7 @@ import {
   renderItemUpdateEmail,
 } from '@/utilities/notificationDiff'
 import { getServerSideURL } from '@/utilities/getURL'
+import { deliverNotificationEmail } from '@/newsletter/utils'
 
 type NotificationTargetDoc = Company | Identity | Job | Product | Startup
 
@@ -19,7 +20,7 @@ export const sendItemUpdateNotifications = (
   targetCollection: NotificationTargetCollection,
 ): CollectionAfterChangeHook<NotificationTargetDoc> => {
   return async ({ doc, operation, previousDoc, req }) => {
-    if (operation !== 'update') {
+    if (operation !== 'update' || ('_status' in doc && doc._status !== 'published')) {
       return doc
     }
 
@@ -59,14 +60,13 @@ export const sendItemUpdateNotifications = (
           docID: String(doc.id),
           title,
           unsubscribeURL: buildNotificationSubscriptionUnsubscribeURL({
-            email: recipient.email,
             targetCollection,
             targetID: String(doc.id),
             serverUrl: doc.serverURL ?? getServerSideURL(),
           }),
         })
 
-        return req.payload.sendEmail({
+        return deliverNotificationEmail(req, {
           html: email.html,
           subject: `${title} just got an update!`,
           text: email.text,

@@ -26,7 +26,9 @@ type LegacyMediaDoc = {
   height?: number | null
   focalX?: number | null
   focalY?: number | null
-  sizes?: Partial<Record<'thumbnail' | 'square' | 'small' | 'medium' | 'large' | 'xlarge' | 'og', MediaSizeDoc>>
+  sizes?: Partial<
+    Record<'thumbnail' | 'square' | 'small' | 'medium' | 'large' | 'xlarge' | 'og', MediaSizeDoc>
+  >
 }
 
 const filename = fileURLToPath(import.meta.url)
@@ -162,6 +164,9 @@ const writeRemoteFileIfMissing = async (
   const blobUrl = await fetchBlobUrlForFilename(targetFilename)
   if (blobUrl) {
     const response = await fetch(blobUrl)
+    if (response.status === 404 || response.status === 410) {
+      return 'missing-source'
+    }
     if (!response.ok) {
       throw new Error(`Failed to download ${blobUrl}: ${response.status} ${response.statusText}`)
     }
@@ -176,6 +181,9 @@ const writeRemoteFileIfMissing = async (
   }
 
   const response = await fetch(remoteUrl)
+  if (response.status === 404 || response.status === 410) {
+    return 'missing-source'
+  }
   if (!response.ok) {
     throw new Error(`Failed to download ${remoteUrl}: ${response.status} ${response.statusText}`)
   }

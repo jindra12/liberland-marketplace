@@ -18,12 +18,6 @@ const isNotificationTargetCollection = (
   value === 'products' ||
   value === 'startups'
 
-type RawCollection = {
-  updateOne: (filter: { _id: string }, update: { $set: Record<string, unknown> }) => Promise<unknown>
-}
-
-type RawCollectionMap = Record<string, { collection?: RawCollection }>
-
 const updateTargetDocument = async ({
   collectionSlug,
   data,
@@ -35,21 +29,7 @@ const updateTargetDocument = async ({
   id: string
   req: PayloadRequest
 }): Promise<void> => {
-  const collectionMap = req.payload.db.collections as unknown as RawCollectionMap
-  const collection = collectionMap[collectionSlug]?.collection
-
-  if (!collection) {
-    throw new Error(`Missing raw collection for "${collectionSlug}".`)
-  }
-
-  await collection.updateOne(
-    {
-      _id: id,
-    },
-    {
-      $set: data,
-    },
-  )
+  await req.payload.db.updateOne({ collection: collectionSlug, id, data, req, returning: false })
 }
 
 const getLatestLikeTimestamp = async ({

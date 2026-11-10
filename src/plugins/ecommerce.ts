@@ -32,6 +32,8 @@ import { replaceEcommerceAdminComponentPaths } from './replaceEcommerceAdminComp
 import type { Field } from 'payload'
 import type { PayloadRequest } from 'payload'
 import type { AccessUser } from '@/access/types'
+import { toStringID } from '@/utilities/toStringID'
+import { operationalUpdatedAtField } from '@/fields/operationalUpdatedAtField'
 
 const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'paymentProofs'])
 
@@ -127,8 +129,12 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
     isAdmin: ({ req }) => req.user?.role?.includes('admin') || false,
     isAuthenticated: authenticated,
     isCustomer: ({ req }) => !req.user?.role?.includes('admin'),
-    isDocumentOwner: ({ req }) =>
-      req.user?.role?.includes('admin') ? true : { customer: { equals: req.user?.id } },
+    isDocumentOwner: ({ req }) => {
+      if (!req.user) {
+        return false
+      }
+      return req.user.role?.includes('admin') ? true : { customer: { equals: req.user.id } }
+    },
   },
   addresses: {
     addressFields: () => addressFields(),
@@ -178,7 +184,17 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
     variants: {
       variantsCollectionOverride: ({ defaultCollection }) => ({
         ...defaultCollection,
-        fields: replaceEcommerceAdminComponentPaths(defaultCollection.fields),
+        fields: replaceEcommerceAdminComponentPaths([
+          operationalUpdatedAtField(),
+          ...defaultCollection.fields,
+          {
+            name: 'inventoryApplications',
+            type: 'text',
+            hasMany: true,
+            hidden: true,
+            access: { create: () => false, update: () => false, read: () => false },
+          },
+        ]),
       }),
     },
     productsCollectionOverride: ({ defaultCollection }) => ({
@@ -209,10 +225,24 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
         },
       },
       fields: replaceEcommerceAdminComponentPaths(
-        mergeFields(
-          mergeProductCollectionFields(defaultCollection.fields),
-          createLikeableFields('products'),
-        ),
+        mergeFields(mergeProductCollectionFields(defaultCollection.fields), [
+          ...createLikeableFields('products'),
+          operationalUpdatedAtField(),
+          {
+            name: 'inventoryApplications',
+            type: 'text',
+            hasMany: true,
+            hidden: true,
+            access: { create: () => false, update: () => false, read: () => false },
+          },
+          {
+            name: 'purchaseApplications',
+            type: 'text',
+            hasMany: true,
+            hidden: true,
+            access: { create: () => false, update: () => false, read: () => false },
+          },
+        ]),
       ),
       hooks: {
         ...defaultCollection.hooks,
@@ -274,7 +304,28 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
         },
       },
       fields: replaceEcommerceAdminComponentPaths(
-        mergeFields(appendParametersToItemsField(defaultCollection.fields), orderFields),
+        mergeFields(appendParametersToItemsField(defaultCollection.fields), [
+          ...orderFields,
+          operationalUpdatedAtField(),
+          {
+            name: 'inventoryAppliedAt',
+            type: 'date',
+            hidden: true,
+            access: { create: () => false, update: () => false },
+          },
+          {
+            name: 'purchaseCountAppliedAt',
+            type: 'date',
+            hidden: true,
+            access: { create: () => false, update: () => false },
+          },
+          {
+            name: 'purchaseCountStartedAt',
+            type: 'date',
+            hidden: true,
+            access: { create: () => false, update: () => false, read: () => false },
+          },
+        ]),
       ),
       hooks: {
         ...defaultCollection.hooks,
@@ -303,6 +354,16 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
           ...(defaultCollection.hooks?.beforeChange ?? []),
           lazyComputeOrderAmountOnCreate,
           lazyLockOrderCryptoPricesOnCreate,
+          ({ data, originalDoc }) => {
+            if (data.status === 'completed' && originalDoc?.status !== 'completed') {
+              return {
+                ...data,
+                purchaseCountStartedAt:
+                  originalDoc?.purchaseCountStartedAt || new Date().toISOString(),
+              }
+            }
+            return data
+          },
         ],
         afterChange: [
           ...(defaultCollection.hooks?.afterChange ?? []),
@@ -316,7 +377,31 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
   transactions: {
     transactionsCollectionOverride: ({ defaultCollection }) => ({
       ...defaultCollection,
-      fields: replaceEcommerceAdminComponentPaths(defaultCollection.fields),
+      fields: replaceEcommerceAdminComponentPaths([
+        ...defaultCollection.fields,
+        {
+          name: 'settlementKey',
+          type: 'text',
+          unique: true,
+          hidden: true,
+          access: { create: () => false, update: () => false, read: () => false },
+        },
+      ]),
+      hooks: {
+        ...defaultCollection.hooks,
+        beforeChange: [
+          ...(defaultCollection.hooks?.beforeChange || []),
+          ({ data, req, operation, originalDoc }) => ({
+            ...data,
+            settlementKey:
+              operation === 'create'
+                ? req.context.verifiedCryptoSettlement && data.paymentMethod === 'crypto'
+                  ? `crypto:${toStringID(data.order)}`
+                  : undefined
+                : originalDoc?.settlementKey,
+          }),
+        ],
+      },
     }),
   },
   payments: {

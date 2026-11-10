@@ -1,7 +1,4 @@
-import {
-  MigrateDownArgs,
-  MigrateUpArgs,
-} from '@payloadcms/db-mongodb'
+import { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-mongodb'
 import type { ObjectId } from 'mongodb'
 
 type LegacyPriceGroup = {
@@ -25,7 +22,10 @@ const STATIC_USD_RATES: Record<string, number> = {
   ETH: 1900,
 }
 
-const toFiniteAmount = (value: unknown): number | null => {
+const toFiniteAmount = (value: number | string | null | undefined): number | null => {
+  if (value === null || value === undefined || value === '') {
+    return null
+  }
   const amount = Number(value)
   if (!Number.isFinite(amount) || amount < 0) {
     return null
@@ -40,7 +40,9 @@ const toLegacyCurrency = (value: unknown): string => {
   return value.trim().toUpperCase()
 }
 
-const resolveLegacyAmountAndCurrency = (doc: LegacyProductDoc): { amount: number; currency: string } | null => {
+const resolveLegacyAmountAndCurrency = (
+  doc: LegacyProductDoc,
+): { amount: number; currency: string } | null => {
   if (doc.price && typeof doc.price === 'object') {
     const amount = toFiniteAmount(doc.price.amount)
     if (amount === null) {
@@ -104,8 +106,8 @@ export const up = async ({ payload, session }: MigrateUpArgs) => {
   let skippedInvalidPrice = 0
 
   for (const doc of docs) {
-    const existingPriceInUSD = Number(doc.priceInUSD)
-    if (Number.isFinite(existingPriceInUSD) && existingPriceInUSD >= 0) {
+    const existingPriceInUSD = toFiniteAmount(doc.priceInUSD)
+    if (existingPriceInUSD !== null) {
       if (doc.priceInUSDEnabled !== true) {
         await productsCollection.updateOne(
           { _id: doc._id },

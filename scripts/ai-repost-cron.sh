@@ -80,8 +80,8 @@ run_ai_repost_request() {
   response_code="$(curl -sS --max-time 300 \
     -o "${response_file}" \
     -w '%{http_code}' \
-    -H "Authorization: Bearer ${CRON_SECRET}" \
-    "${CRON_ENDPOINT}" || true)"
+    -H @- \
+    "${CRON_ENDPOINT}" <<< "Authorization: Bearer ${CRON_SECRET}" || true)"
   response_body="$(tr '\n' ' ' < "${response_file}" | cut -c 1-2000)"
   rm -f "${response_file}"
 
@@ -98,12 +98,6 @@ run_ai_repost_request() {
 
   return 1
 }
-
-if [[ -z "${CRON_SECRET:-}" && -n "${PAYLOAD_SECRET:-}" ]]; then
-  CRON_SECRET="${PAYLOAD_SECRET}"
-  export CRON_SECRET
-  log_cron_message "[ai-repost-cron] CRON_SECRET is not set. Falling back to PAYLOAD_SECRET for the managed local/server loop."
-fi
 
 cleanup() {
   if [[ -n "${CRON_PID}" ]]; then

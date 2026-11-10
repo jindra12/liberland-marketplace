@@ -1,4 +1,5 @@
 import { getPayloadAuthInstance } from '../auth-instance'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export const dynamic = 'force-dynamic'
 
@@ -37,10 +38,22 @@ const getSignOutRedirect = (req: Request): string => {
   }
 }
 
-const handleSignOutRedirect = async (req: Request, payloadAuth: Awaited<ReturnType<typeof getPayloadAuthInstance>>) => {
-  const signOutRequest = new Request(req, { method: 'POST' })
+const handleSignOutRedirect = async (
+  req: Request,
+  payloadAuth: Awaited<ReturnType<typeof getPayloadAuthInstance>>,
+) => {
+  const headers = new Headers(req.headers)
+  headers.set('origin', new URL(getServerSideURL()).origin)
+  headers.set('content-type', 'application/json')
+  const signOutRequest = new Request(req.url, { method: 'POST', headers, body: '{}' })
   const signOutResponse = await payloadAuth.betterAuth.handler(signOutRequest)
-  const redirectResponse = Response.redirect(getSignOutRedirect(req), 303)
+  if (!signOutResponse.ok) {
+    return signOutResponse
+  }
+  const redirectResponse = new Response(null, {
+    status: 303,
+    headers: { Location: getSignOutRedirect(req) },
+  })
 
   signOutResponse.headers.getSetCookie().forEach((cookie) => {
     redirectResponse.headers.append('Set-Cookie', cookie)
@@ -51,7 +64,11 @@ const handleSignOutRedirect = async (req: Request, payloadAuth: Awaited<ReturnTy
 
 const handler = async (req: Request) => {
   const path = new URL(req.url).pathname
-  if (['/api/auth/oauth2/authorize', '/api/auth/oauth2/token', '/api/auth/oauth2/revoke'].includes(path)) {
+  if (
+    ['/api/auth/oauth2/authorize', '/api/auth/oauth2/token', '/api/auth/oauth2/revoke'].includes(
+      path,
+    )
+  ) {
     const { maybeHandlePoppyOAuth } = await import('@/poppy/http/utils')
     const poppy = await maybeHandlePoppyOAuth(req)
     if (poppy) {

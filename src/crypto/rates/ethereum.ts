@@ -4,6 +4,7 @@ import { getEthereumRateConfig } from '../env'
 import { computePoolRate } from '../math'
 import { getRequiredThirdwebClient } from '../thirdweb'
 import type { ChainPoolRate } from '../types'
+import { assertFreshReserveTimestamp, getRateSourceId } from './utils'
 
 const GET_RESERVES_METHOD =
   'function getReserves() public view returns (uint112 _reserve0, uint112 _reserve1, uint32 _blockTimestampLast)'
@@ -45,11 +46,13 @@ const readPairReserves = async ({
 
 export const getEthereumPoolRate = async (): Promise<ChainPoolRate> => {
   const config = getEthereumRateConfig()
-  const [reserve0, reserve1] = await readPairReserves({
+  const [reserve0, reserve1, timestamp] = await readPairReserves({
     poolAddress: config.poolAddress,
   })
+  assertFreshReserveTimestamp(timestamp)
 
-  const nativeFirst = config.nativeTokenAddress.toLowerCase() < config.stableTokenAddress.toLowerCase()
+  const nativeFirst =
+    config.nativeTokenAddress.toLowerCase() < config.stableTokenAddress.toLowerCase()
   const nativeReserveRaw = nativeFirst ? reserve0 : reserve1
   const stableReserveRaw = nativeFirst ? reserve1 : reserve0
 
@@ -62,6 +65,7 @@ export const getEthereumPoolRate = async (): Promise<ChainPoolRate> => {
 
   return {
     chain: 'ethereum',
+    sourceId: getRateSourceId(config),
     poolAddress: config.poolAddress,
     nativeSymbol: config.nativeSymbol,
     stableSymbol: config.stableSymbol,

@@ -61,12 +61,14 @@ const getMetadataRequestIp = (metadata: EventMetadata | undefined) => {
 }
 
 const getVisitorId = ({
+  distinctId,
   requestIp,
   userId,
 }: {
+  distinctId?: string
   requestIp: null | string
   userId: null | string
-}) => userId ?? requestIp ?? `anon_${crypto.randomUUID()}`
+}) => userId ?? distinctId ?? requestIp ?? `anon_${crypto.randomUUID()}`
 
 const getRequiredDocumentId = (document: AnalyticsEventDocument) => {
   if (!document._id) {
@@ -91,7 +93,9 @@ const toStoredEvent = (event: LocallyticsEventInput): StoredEventDocument => {
     timestamp,
     type: event.type,
     user_id: userId,
-    visitor_id: getVisitorId({ requestIp, userId }),
+    visitor_id: getVisitorId({ requestIp, userId,
+      distinctId: typeof metadata?.distinctId === 'string' ? metadata.distinctId : undefined,
+    }),
   }
 }
 

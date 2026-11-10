@@ -1,12 +1,13 @@
 import type { VerifyOrderPaymentResult } from '@/crypto'
 import type { ProductPaymentTarget } from '@/crypto/recipient'
-import { getOrderPaymentTargetEntries, type OrderWithPaymentProofs } from '@/crypto/order'
+import { getOrderPaymentTargetEntries } from '@/crypto/order'
 import type { PaymentProofRow } from '@/fields/orderFields'
 import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
 import type { Order } from '@/payload-types'
 import { toStringID } from '@/utilities/toStringID'
 import uniq from 'lodash/uniq.js'
-import type { GroupField, PayloadRequest } from 'payload'
+import { ValidationError, type GroupField, type PayloadRequest } from 'payload'
+import { recordPaymentSettlements } from '@/crypto/settlements/utils'
 
 type InitiatePaymentArgs = {
   data: unknown
@@ -97,30 +98,13 @@ const appendTransactionToOrder = ({
   order,
   transactionID,
 }: {
-  order: OrderWithPaymentProofs
+  order: Pick<Order, 'transactions'>
   transactionID: string
 }): string[] => {
-  const transactions = Array.isArray(order.transactions) ? order.transactions : []
-  const ids = transactions
-    .map((entry) => {
-      if (typeof entry === 'string' || typeof entry === 'number') {
-        const id = String(entry).trim()
-        return id.length > 0 ? id : null
-      }
-
-      if (entry && typeof entry === 'object' && 'id' in entry) {
-        const candidate = (entry as { id?: unknown }).id
-        if (typeof candidate === 'string' || typeof candidate === 'number') {
-          const id = String(candidate).trim()
-          return id.length > 0 ? id : null
-        }
-      }
-
-      return null
-    })
-    .filter((id): id is string => Boolean(id))
-  ids.push(transactionID)
-  return uniq(ids)
+  return uniq([
+    ...(order.transactions || []).map(toStringID).filter((id): id is string => Boolean(id)),
+    transactionID,
+  ])
 }
 
 const upsertTransaction = async ({
@@ -172,11 +156,36 @@ const upsertTransaction = async ({
     })
   }
 
-  return req.payload.create({
-    collection: 'transactions',
-    data,
-    req,
-  })
+  try {
+    return await req.payload.create({
+      collection: 'transactions',
+      data,
+      req,
+      context: { verifiedCryptoSettlement: true },
+    })
+  } catch (error) {
+    if (
+      !(
+        error instanceof ValidationError &&
+        error.data.errors.some((entry) => entry.path === 'settlementKey')
+      )
+    ) {
+      throw error
+    }
+    const existing = await req.payload.find({
+      collection: 'transactions',
+      where: { settlementKey: { equals: `crypto:${orderID}` } },
+      limit: 1,
+      pagination: false,
+      depth: 0,
+      overrideAccess: true,
+      req,
+    })
+    if (!existing.docs[0]) {
+      throw error
+    }
+    return req.payload.update({ collection: 'transactions', id: existing.docs[0].id, data, req })
+  }
 }
 
 export const cryptoAdapter = () => ({
@@ -190,7 +199,7 @@ export const cryptoAdapter = () => ({
     const { verifyTransactionOccurred } = await import('@/crypto')
     const payloadData = data as { orderID: string }
 
-    const order = (await req.payload.findByID({
+    const order = await req.payload.findByID({
       collection: 'orders',
       id: payloadData.orderID,
       depth: 2,
@@ -206,7 +215,7 @@ export const cryptoAdapter = () => ({
         paymentTargets: true,
         transactions: true,
       },
-    })) as unknown as OrderWithPaymentProofs
+    })
 
     const resolvedPaymentTargets = getOrderPaymentTargetEntries(order)
 
@@ -228,11 +237,7 @@ export const cryptoAdapter = () => ({
 
     const amount = Number(order.amount)
     const currency = 'USD'
-    const transactions = Array.isArray(order.transactions) ? order.transactions : []
     const items = Array.isArray(order.items) ? order.items : []
-    const firstTransaction = transactions[0]
-    const inferredTransactionID =
-      typeof firstTransaction === 'string' ? firstTransaction : firstTransaction?.id
     const customerEmail = typeof order.customerEmail === 'string' ? order.customerEmail : null
 
     if (!customerEmail) {
@@ -240,7 +245,29 @@ export const cryptoAdapter = () => ({
     }
 
     const verification = await verifyTransactionOccurred(payloadData.orderID)
-    const verificationPassed = verification.ok
+    if (!verification.ok) {
+      // Missing proofs and nonfinal receipts must remain retryable, not cancel a paid order.
+      throw new Error(buildVerificationErrorMessage(verification))
+    }
+    await recordPaymentSettlements(req, payloadData.orderID, paymentProofEntries)
+
+    // The caller-authorized order can contain ACL-filtered relationships. Reconcile
+    // against server-owned payment records only after verifying that order's proof.
+    const priorTransactions = await req.payload.find({
+      collection: 'transactions',
+      where: {
+        and: [{ order: { equals: payloadData.orderID } }, { paymentMethod: { equals: 'crypto' } }],
+      },
+      limit: 2,
+      depth: 0,
+      overrideAccess: true,
+      req,
+    })
+    if (priorTransactions.docs.length > 1) {
+      throw new Error(
+        'Multiple crypto transactions exist for this order; administrator review is required.',
+      )
+    }
 
     const transaction = await upsertTransaction({
       amount,
@@ -251,16 +278,16 @@ export const cryptoAdapter = () => ({
       orderID: payloadData.orderID,
       paymentRef,
       req,
-      status: verificationPassed ? 'succeeded' : 'failed',
+      status: 'succeeded',
       transactionHashReference,
-      transactionID: inferredTransactionID,
+      transactionID: priorTransactions.docs[0]?.id,
     })
 
     await req.payload.update({
       collection: 'orders',
       id: payloadData.orderID,
       data: {
-        status: verificationPassed ? 'completed' : 'cancelled',
+        status: 'completed',
         transactions: appendTransactionToOrder({
           order,
           transactionID: toStringID(transaction.id) ?? '',
@@ -271,10 +298,6 @@ export const cryptoAdapter = () => ({
       },
       req,
     })
-
-    if (!verificationPassed) {
-      throw new Error(buildVerificationErrorMessage(verification))
-    }
 
     return {
       message: 'Crypto order confirmed.',

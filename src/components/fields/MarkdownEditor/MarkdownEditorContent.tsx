@@ -1,6 +1,7 @@
 'use client'
 
 import MDEditor, { commands } from '@uiw/react-md-editor/nohighlight'
+import rehypeSanitize from 'rehype-sanitize'
 
 type Props = {
   inputId: string
@@ -43,7 +44,7 @@ const MarkdownEditorContent = (props: Props) => {
       hideToolbar={props.isReadOnly}
       onChange={(nextValue) => props.setValue(nextValue ?? '')}
       preview="live"
-      previewOptions={{ skipHtml: true }}
+      previewOptions={{ skipHtml: true, rehypePlugins: [rehypeSanitize] }}
       textareaProps={{
         disabled: props.isReadOnly,
         id: props.inputId,

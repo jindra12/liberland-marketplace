@@ -267,7 +267,9 @@ export const getAnalyticsDashboardData = async ({
   const collection = await getAnalyticsCollection()
   const sinceTimestamp = Date.now() - DAY_IN_MS
   const trendSinceTimestamp = Date.now() - (days - 1) * DAY_IN_MS
-  const sanitizedRecentLimit = Math.max(1, Math.floor(recentLimit))
+  const sanitizedRecentLimit = Number.isFinite(recentLimit)
+    ? Math.min(1000, Math.max(1, Math.floor(recentLimit)))
+    : 12
   const sanitizedRequestedRecentPage = Math.max(1, Math.floor(recentPage))
 
   const [
