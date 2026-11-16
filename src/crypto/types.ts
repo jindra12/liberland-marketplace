@@ -42,6 +42,7 @@ export type VerifyTransactionInput =
   | VerifySolanaPayTransactionInput
 
 export type VerifyTransactionResult = {
+  provider?: 'thirdweb'
   chain: SupportedChain
   error?: string
   observedTimestampMs?: number

@@ -13,6 +13,7 @@ type GraphQLContext = {
 type GraphQLFactory = typeof import('graphql')
 
 type SellerOrderPaymentProof = {
+  chainId?: number | null
   product: string | Product
   chain: 'ethereum' | 'solana' | 'tron'
   transactionHash: string
@@ -66,6 +67,7 @@ type SellerOrderProductPaymentProof = {
 }
 
 type SellerOrderProductListing = {
+  chainId?: number | null
   id: string
   chain: 'ethereum' | 'solana' | 'tron'
   fulfilled: boolean
@@ -369,6 +371,7 @@ const buildListing = async ({
 
             return {
               id: paymentProofId,
+              chainId: paymentProof.chainId,
               chain: paymentProof.chain,
               fulfilled: isFulfilled,
               customerEmail: order.customerEmail,
@@ -496,6 +499,7 @@ const updateSellerOrderProductState = async ({
   return {
     id: paymentProofId,
     chain: currentProof.chain,
+    chainId: currentProof.chainId,
     fulfilled: Boolean(currentProof.fulfilled),
     customerEmail: order.customerEmail,
     orderCreatedAt: order.createdAt,
@@ -585,6 +589,7 @@ export const sellerOrderGraphQLQueries: GraphQLExtension = (graphQL: GraphQLFact
 
   const sellerOrderProductType = new graphQL.GraphQLObjectType({
     fields: {
+      chainId: { type: graphQL.GraphQLInt },
       chain: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },
@@ -731,6 +736,7 @@ export const sellerOrderGraphQLMutations: GraphQLExtension = (graphQL: GraphQLFa
 
   const sellerOrderProductTypeResult = new graphQL.GraphQLObjectType({
     fields: {
+      chainId: { type: graphQL.GraphQLInt },
       chain: {
         type: new graphQL.GraphQLNonNull(graphQL.GraphQLString),
       },

@@ -7,6 +7,10 @@ import { toStringID } from '@/utilities/toStringID'
 import { updateAtomically } from '@/utilities/atomicUpdates/utils'
 import { mergeCustomerPaymentProofs } from '@/crypto/proofs/utils'
 import { APIError } from 'payload'
+import {
+  getThirdwebOrderRecipients,
+  isThirdwebOrderCheckoutEnabled,
+} from '@/payments/orderCheckout/utils'
 
 const chainOptions = [
   { label: 'Ethereum', value: 'ethereum' },
@@ -63,6 +67,30 @@ const buildPriceValueFields = ({ required = false }: { required?: boolean } = {}
 ]
 
 export const orderFields: Field[] = [
+  {
+    name: 'thirdwebCheckoutRecipients',
+    type: 'text',
+    hasMany: true,
+    virtual: true,
+    admin: { hidden: true, readOnly: true },
+    access: { create: () => false, update: () => false },
+    hooks: {
+      afterRead: [
+        ({ data, req }: FieldHookArgs<Order, string[]>) =>
+          getThirdwebOrderRecipients(data || {}, req),
+      ],
+    },
+  },
+  {
+    name: 'thirdwebCheckoutAvailable',
+    type: 'checkbox',
+    virtual: true,
+    admin: { hidden: true, readOnly: true },
+    access: { create: () => false, update: () => false },
+    hooks: {
+      afterRead: [({ req }) => isThirdwebOrderCheckoutEnabled(req)],
+    },
+  },
   {
     name: 'payerAddress',
     label: 'Payer Address',
@@ -244,6 +272,12 @@ export const orderFields: Field[] = [
         type: 'text',
         maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,
+      },
+      {
+        name: 'chainId',
+        type: 'number',
+        access: { create: () => false, update: () => false },
+        admin: { readOnly: true },
       },
       {
         name: 'fulfilled',

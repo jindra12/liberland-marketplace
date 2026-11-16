@@ -73,6 +73,27 @@ Security regression tests create their own disposable standalone databases and
 force actual conditional-write collisions, duplicate requests and interrupted
 multi-step operations. They do not require changing the production database.
 
+## Thirdweb order checkout
+
+Normal checkout offers direct ETH or Thirdweb crypto/card payment for Ethereum-compatible
+recipients only when their companies opt into `acceptThirdwebPayments` (off by default).
+Configure `THIRDWEB_CLIENT_ID` and `THIRDWEB_WEBHOOK_SECRET`, register and test the
+shared callback, then enable order checkout under **Admin > Marketplace payments**.
+Credentials alone do not turn this option on. The admin setting records operator confirmation
+of setup; it is not an automatic test of Thirdweb's dashboard configuration.
+Register the existing `/api/checkout/thirdweb` callback in Thirdweb. The seller receives
+USDC on Base at the order's saved recipient address; the customer pays provider fees.
+No company donation setting or merchant callback is required for normal orders.
+
+`createOrderCheckoutSession` locks each recipient's session to the saved order USD total.
+`verifyOrderCheckoutSession` lets the order customer retry recording a verified receipt.
+Only a signed, completed Thirdweb callback settles payment. Once every recipient is paid,
+the existing order, inventory, delivery address, and seller fulfillment flow continues.
+Durable confirmation jobs retry interrupted work even after the buyer closes the page.
+Every company sharing one recipient group must opt in. Opting out blocks new payments,
+but does not discard valid receipts for sessions already opened. Separate backends retain
+separate sessions, setup settings, and orders.
+
 ## Notes
 
 - This repo is not a generic Payload template anymore.

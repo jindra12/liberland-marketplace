@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Types } from 'mongoose'
 import { createLocalReq } from 'payload'
+import { configToSchema } from '@payloadcms/graphql'
+import { graphql } from 'graphql/index.js'
 import { ventureDeploymentRecoveryEndpoints } from '@/endpoints/ventureDeploymentRecovery'
 import { recoveryRecordSchema, recoveryActionSchema } from '@/venture/recoveryUtils'
 import { createMongoSecurityFixture, synchronizeMongoWrites } from './mongo/utils'
@@ -17,6 +19,7 @@ vi.mock('@payloadcms/email-nodemailer', () => ({
 vi.mock('next/headers', () => ({ headers: async () => new Headers() }))
 
 const payload = await createMongoSecurityFixture()
+const { schema } = configToSchema(payload.config)
 const userId = new Types.ObjectId()
 const ventureId = new Types.ObjectId()
 const journalId = new Types.ObjectId()
@@ -101,6 +104,49 @@ afterEach(async () => {
 })
 
 describe('Persisted deployment ownership and archival', () => {
+  it('protects GraphQL recovery from anonymous and unrelated users while preserving owner checkpoints', async () => {
+    const source = `query Recovery($id: String!, $wallet: String!) {
+      ventureRecoveryRecord(ventureId: $id, walletAddress: $wallet) { runnerId transactions { hash } }
+    }`
+    const variableValues = { id: String(ventureId), wallet: walletAddress }
+    const anonymous = await graphql({
+      schema,
+      source,
+      variableValues,
+      contextValue: { req: await createLocalReq({}, payload) },
+    })
+    expect(anonymous.errors?.[0].originalError).toMatchObject({ status: 401 })
+    const owner = await payload.findByID({ collection: 'users', id: String(userId) })
+    const unrelated = { ...owner, id: String(new Types.ObjectId()) }
+    const denied = await graphql({
+      schema,
+      source,
+      variableValues,
+      contextValue: { req: await createLocalReq({ user: unrelated }, payload) },
+    })
+    expect(denied.errors?.[0].originalError).toMatchObject({ status: 403 })
+    const req = await createLocalReq({ user: owner }, payload)
+    const read = await graphql({ schema, source, variableValues, contextValue: { req } })
+    expect(read.errors).toBeUndefined()
+    expect(read.data?.ventureRecoveryRecord).toMatchObject({
+      runnerId,
+      transactions: [{ hash: record.transactions[0].hash }],
+    })
+    const save = await graphql({
+      schema,
+      source: `mutation Checkpoint($id: String!, $wallet: String!, $record: VentureDeploymentRecoveryInput!) {
+        saveVentureDeploymentRecovery(ventureId: $id, walletAddress: $wallet, record: $record) { runnerId progress { hash } }
+      }`,
+      variableValues: { ...variableValues, record: { ...record, progress: record.transactions } },
+      contextValue: { req },
+    })
+    expect(save.errors).toBeUndefined()
+    expect(save.data?.saveVentureDeploymentRecovery).toMatchObject({
+      runnerId,
+      progress: [{ hash: record.transactions[0].hash }],
+    })
+  })
+
   it('retains both owner registrations during concurrent saves and rejects a rewrite of an existing contract', async () => {
     const user = await payload.findByID({ collection: 'users', id: userId.toHexString(), depth: 0 })
     const deployments = ['1', '2'].map((digit) => ({
@@ -151,11 +197,22 @@ describe('Persisted deployment ownership and archival', () => {
     })
     expect(retained.contractDeployments).toEqual(stored.contractDeployments)
     await payload.update({
-      collection: 'startups', id: ventureId.toHexString(),
-      data: { contractDeployments: [{ chain: 'ethereum', chainId: '1', tokenAddress: deployments[0].tokenAddress }] },
-      user, overrideAccess: false, req: await createLocalReq({ user }, payload),
+      collection: 'startups',
+      id: ventureId.toHexString(),
+      data: {
+        contractDeployments: [
+          { chain: 'ethereum', chainId: '1', tokenAddress: deployments[0].tokenAddress },
+        ],
+      },
+      user,
+      overrideAccess: false,
+      req: await createLocalReq({ user }, payload),
     })
-    const retried = await payload.findByID({ collection: 'startups', id: ventureId.toHexString(), depth: 0 })
+    const retried = await payload.findByID({
+      collection: 'startups',
+      id: ventureId.toHexString(),
+      depth: 0,
+    })
     expect(retried.contractDeployments).toEqual(stored.contractDeployments)
   })
 
