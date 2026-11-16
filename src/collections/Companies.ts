@@ -19,6 +19,7 @@ import {
 } from '@/hooks/lazyCollectionHooks'
 import { onlyOwnDocsOrAdmin, onlyOwnDocsOrAdminFilter } from '@/access/onlyOwnDocsOrAdmin'
 import type { CollectionConfig } from 'payload'
+import { preserveLegacyPaymentSecret, paymentWebhookFields } from '@/payments/fields'
 
 export const Companies: CollectionConfig = {
   slug: 'companies',
@@ -37,6 +38,7 @@ export const Companies: CollectionConfig = {
       },
     ],
     beforeChange: [
+      preserveLegacyPaymentSecret,
       computeContentRanking({
         fieldPaths: ['website', 'phone', 'email', 'image', 'description'],
       }),
@@ -122,6 +124,7 @@ export const Companies: CollectionConfig = {
     { name: 'phone', type: 'text', maxLength: TEXT_INPUT_MAX_LENGTH },
     { name: 'email', type: 'email' },
     cryptoAddressesField(),
+    ...paymentWebhookFields,
     {
       name: 'image',
       type: 'upload',

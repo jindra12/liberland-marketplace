@@ -1,26 +1,17 @@
-import type { Endpoint } from 'payload'
-import type { VentureIndexContext, VentureIndexSnapshot } from '@/venture/types'
-import { LRUCache } from 'lru-cache'
+import { APIError, type Endpoint } from 'payload'
+import { getVentureIndex } from '@/venture/marketService'
 import { z } from 'zod'
-import { PUBLIC_TEST_RPC_METHODS, VENTURE_INDEX_CACHE_TTL_MS, VENTURE_INDEX_CACHE_MAX_BYTES } from '@/venture/constants'
+import { PUBLIC_TEST_RPC_METHODS } from '@/venture/constants'
 import { limitBackendRequest } from '@/security/utils'
 
-const snapshots = new LRUCache<string, VentureIndexSnapshot, VentureIndexContext>({
-  max: 128,
-  maxSize: VENTURE_INDEX_CACHE_MAX_BYTES,
-  ttl: VENTURE_INDEX_CACHE_TTL_MS,
-  sizeCalculation: (snapshot) => Buffer.byteLength(JSON.stringify(snapshot)),
-  fetchMethod: async (_key, _previous, options) => {
-    const { syncVentureIndex } = await import('@/venture/indexUtils')
-    return syncVentureIndex(options.context.req, options.context.ventureID, options.context.deployment)
-  },
-})
-const publicRpcCall = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.union([z.string().max(100), z.number().int(), z.null()]).optional(),
-  method: z.enum(PUBLIC_TEST_RPC_METHODS),
-  params: z.array(z.json()).max(20).optional(),
-}).strict()
+const publicRpcCall = z
+  .object({
+    jsonrpc: z.literal('2.0'),
+    id: z.union([z.string().max(100), z.number().int(), z.null()]).optional(),
+    method: z.enum(PUBLIC_TEST_RPC_METHODS),
+    params: z.array(z.json()).max(20).optional(),
+  })
+  .strict()
 const publicRpcRequest = z.union([publicRpcCall, z.array(publicRpcCall).min(1).max(20)])
 
 // Disposable public test RPC, with a fixed target that cannot proxy other services.
@@ -61,33 +52,13 @@ export const ventureChainIndexEndpoint: Endpoint = {
       }
       const id = String(req.routeParams?.id || '')
       const deploymentID = req.query.deploymentId
-      const venture = await req.payload.findByID({
-        collection: 'startups',
-        id,
-        depth: 0,
-        overrideAccess: false,
-        user: req.user,
-        req,
-      })
-      const deployment = venture.contractDeployments?.find((entry) => entry.id === deploymentID)
-      if (!deployment) {
-        return Response.json({ error: 'Deployment not found.' }, { status: 404 })
-      }
-      const key = JSON.stringify([id, venture.updatedAt, deployment])
-      const snapshot = await snapshots.fetch(key, { context: { req, ventureID: id, deployment } })
-      if (!snapshot) {
-        return Response.json({ error: 'Venture indexing was interrupted. Please retry.' }, { status: 503 })
-      }
-      // Backfill pages must continue advancing; only caught-up snapshots receive the full TTL.
-      if (snapshot.hasMore && snapshots.peek(key) === snapshot) {
-        snapshots.delete(key)
-      }
+      const snapshot = await getVentureIndex(req, id, String(deploymentID))
       return Response.json(snapshot, { headers: { 'Cache-Control': 'no-store' } })
     } catch (error) {
       console.error(error)
       return Response.json(
         { error: error instanceof Error ? error.message : 'Venture indexing failed.' },
-        { status: 400 },
+        { status: error instanceof APIError ? error.status : 400 },
       )
     }
   },

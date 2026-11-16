@@ -20,6 +20,11 @@ import { Companies } from './collections/Companies'
 import { Jobs } from './collections/Jobs'
 import { sendNotificationEmailTask } from './tasks/sendNotificationEmail'
 import { PaymentSettlements } from './collections/PaymentSettlements'
+import { CheckoutSessions, PaymentWebhookCredentials } from './payments/collections'
+import { checkoutEndpoints } from './payments/endpoints'
+import { deliverPaymentWebhookTask } from './payments/task'
+import { confirmThirdwebOrderTask } from './payments/orderCheckout/task'
+import { MarketplacePayments } from './payments/config'
 import CommentLikes from './collections/CommentLikes'
 import { Startups } from './collections/Startups'
 import { VentureChainIndexes } from './collections/VentureChainIndexes'
@@ -34,8 +39,18 @@ import { Subscribers } from './collections/Subscribers'
 import { analyticsGraphQLMutations } from './graphql/analytics'
 import { sellerOrderGraphQLMutations, sellerOrderGraphQLQueries } from './graphql/sellerOrders'
 import { permissionsGraphQLQueries } from './graphql/permissions'
+import {
+  companyPaymentGraphQLMutations,
+  companyPaymentGraphQLQueries,
+} from './graphql/companyPayments'
 import { shareGraphQLMutations } from './graphql/share'
 import { startupGraphQLMutations } from './graphql/startups'
+import {
+  ventureContractGraphQLMutations,
+  ventureContractGraphQLQueries,
+} from './graphql/ventureContracts'
+import { hostedCheckoutGraphQLMutations, hostedCheckoutGraphQLQueries } from './payments/graphql'
+import { semanticSearchGraphQLQueries } from './ai/rag/graphql'
 import { userGraphQLMutations, userGraphQLQueries } from './graphql/users'
 import { Reports } from './collections/Reports'
 import { InformationRequests } from './collections/InformationRequests'
@@ -207,6 +222,8 @@ export default buildConfig({
     NotificationSubscriptions,
     PoppyProtocolState,
     PaymentSettlements,
+    CheckoutSessions,
+    PaymentWebhookCredentials,
   ],
   cors: '*',
   // Public bearer/anonymous federation remains cross-origin; cookie auth is origin-scoped.
@@ -216,8 +233,9 @@ export default buildConfig({
     backfillEndpoint,
     confirmCryptoOrderEndpoint,
     ventureTestRpcEndpoint,
+    ...checkoutEndpoints,
   ],
-  globals: [Header, Footer],
+  globals: [Header, Footer, MarketplacePayments],
   plugins,
   debug: payloadDebug,
   logger: {
@@ -263,6 +281,7 @@ export default buildConfig({
     ],
   },
   jobs: {
+    enableConcurrencyControl: true,
     autoRun: [{ cron: '* * * * *', queue: 'notifications', limit: 20 }],
     jobsCollectionOverrides: ({ defaultJobsCollection }) => ({
       ...defaultJobsCollection,
@@ -291,13 +310,16 @@ export default buildConfig({
         return authHeader === `Bearer ${secret}`
       },
     },
-    tasks: [sendNotificationEmailTask],
+    tasks: [sendNotificationEmailTask, deliverPaymentWebhookTask, confirmThirdwebOrderTask],
   },
   graphQL: {
     disable: false,
     disableIntrospectionInProduction: false,
     disablePlaygroundInProduction: false,
     mutations: (graphQL, context) => ({
+      ...hostedCheckoutGraphQLMutations(graphQL, context),
+      ...ventureContractGraphQLMutations(graphQL, context),
+      ...companyPaymentGraphQLMutations(graphQL, context),
       ...analyticsGraphQLMutations(graphQL, context),
       ...shareGraphQLMutations(graphQL, context),
       ...sellerOrderGraphQLMutations(graphQL, context),
@@ -305,6 +327,10 @@ export default buildConfig({
       ...userGraphQLMutations(graphQL, context),
     }),
     queries: (graphQL, context) => ({
+      ...hostedCheckoutGraphQLQueries(graphQL, context),
+      ...ventureContractGraphQLQueries(graphQL, context),
+      ...semanticSearchGraphQLQueries(graphQL, context),
+      ...companyPaymentGraphQLQueries(graphQL, context),
       ...permissionsGraphQLQueries(graphQL, context),
       ...sellerOrderGraphQLQueries(graphQL, context),
       ...userGraphQLQueries(graphQL, context),

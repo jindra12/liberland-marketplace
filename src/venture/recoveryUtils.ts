@@ -142,13 +142,17 @@ export const mergeRecoveryRecord = (
   })
 }
 
-export const authorizeVentureRecovery = async (req: PayloadRequest) => {
+export const authorizeVentureRecovery = async (
+  req: PayloadRequest,
+  ventureID = String(req.routeParams?.id),
+  walletAddress = req.query.walletAddress,
+) => {
   if (!req.user) {
-    throw new Error('Log into this marketplace server to recover a deployment.')
+    throw new APIError('Log into this marketplace server to recover a deployment.', 401)
   }
   const venture = await req.payload.findByID({
     collection: 'startups',
-    id: String(req.routeParams?.id),
+    id: ventureID,
     depth: 0,
     overrideAccess: false,
     user: req.user,
@@ -163,7 +167,7 @@ export const authorizeVentureRecovery = async (req: PayloadRequest) => {
   const wallet = z
     .string()
     .regex(/^0x[\da-fA-F]{40}$/)
-    .parse(req.query.walletAddress)
+    .parse(walletAddress)
     .toLowerCase()
   return `${venture.createdBy}:${venture.id}:${wallet}`
 }

@@ -2,7 +2,7 @@ import type { VerifyOrderPaymentResult } from '@/crypto'
 import type { ProductPaymentTarget } from '@/crypto/recipient'
 import { getOrderPaymentTargetEntries } from '@/crypto/order'
 import type { PaymentProofRow } from '@/fields/orderFields'
-import { TEXT_INPUT_MAX_LENGTH } from '@/fields/constants'
+import { TEXTAREA_MAX_LENGTH } from '@/fields/constants'
 import type { Order } from '@/payload-types'
 import { toStringID } from '@/utilities/toStringID'
 import uniq from 'lodash/uniq.js'
@@ -32,15 +32,15 @@ const group: GroupField = {
   fields: [
     {
       name: 'paymentRef',
-      type: 'text',
-      maxLength: TEXT_INPUT_MAX_LENGTH,
+      type: 'textarea',
+      maxLength: TEXTAREA_MAX_LENGTH,
       label: 'Payment reference (invoice / address)',
       admin: { readOnly: true },
     },
     {
       name: 'txHash',
-      type: 'text',
-      maxLength: TEXT_INPUT_MAX_LENGTH,
+      type: 'textarea',
+      maxLength: TEXTAREA_MAX_LENGTH,
       label: 'Transaction hash',
     },
   ],
@@ -249,7 +249,10 @@ export const cryptoAdapter = () => ({
       // Missing proofs and nonfinal receipts must remain retryable, not cancel a paid order.
       throw new Error(buildVerificationErrorMessage(verification))
     }
-    await recordPaymentSettlements(req, payloadData.orderID, paymentProofEntries)
+    const thirdwebHashes = verification.results.flatMap((result) =>
+      result.provider === 'thirdweb' && result.transactionHash ? [result.transactionHash] : [],
+    )
+    await recordPaymentSettlements(req, payloadData.orderID, paymentProofEntries, thirdwebHashes)
 
     // The caller-authorized order can contain ACL-filtered relationships. Reconcile
     // against server-owned payment records only after verifying that order's proof.
@@ -298,6 +301,11 @@ export const cryptoAdapter = () => ({
       },
       req,
     })
+
+    if (thirdwebHashes.length) {
+      const { applyOrderInventory } = await import('@/commerce/inventory/utils')
+      await applyOrderInventory(payloadData.orderID, req)
+    }
 
     return {
       message: 'Crypto order confirmed.',

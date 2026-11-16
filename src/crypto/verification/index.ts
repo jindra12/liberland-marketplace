@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import { verifyOrderCheckoutGroup } from '@/payments/orderCheckout/verification'
 import { PAYMENT_QUOTE_VALIDITY_MS } from '../constants'
 import { normalizeTransactionHash } from '../utils'
 import { quantizeNativeAmount } from '../nativeAmount'
@@ -240,6 +241,11 @@ export const verifyTransactionOccurred = async (
   const minTimestampMs = getOrderCreatedAtMs(order)
 
   for (const group of groupsByKey.values()) {
+    const thirdweb = await verifyOrderCheckoutGroup(payload, order, group)
+    if (thirdweb) {
+      results.push(thirdweb)
+      continue
+    }
     const price = priceMap[group.chain]
     const rate = new BigNumber(String(price?.nativePerStable))
     const fetchedAt = Date.parse(price?.fetchedAt || '')

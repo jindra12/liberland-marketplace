@@ -99,6 +99,10 @@ export const cryptoAddressesField = ({
     name: 'cryptoAddresses',
     label,
     type: 'group',
+    hooks: {
+      // Payload traverses group children after this hook and requires an object.
+      afterRead: [({ value }) => value ?? {}],
+    },
     admin: {
       description,
     },

@@ -98,6 +98,8 @@ export interface Config {
     'notification-subscriptions': NotificationSubscription;
     'poppy-protocol-state': PoppyProtocolState;
     'payment-settlements': PaymentSettlement;
+    'checkout-sessions': CheckoutSession;
+    'payment-webhook-credentials': PaymentWebhookCredential;
     comments: Comment;
     'company-likes': CompanyLike;
     'identity-likes': IdentityLike;
@@ -166,6 +168,8 @@ export interface Config {
     'notification-subscriptions': NotificationSubscriptionsSelect<false> | NotificationSubscriptionsSelect<true>;
     'poppy-protocol-state': PoppyProtocolStateSelect<false> | PoppyProtocolStateSelect<true>;
     'payment-settlements': PaymentSettlementsSelect<false> | PaymentSettlementsSelect<true>;
+    'checkout-sessions': CheckoutSessionsSelect<false> | CheckoutSessionsSelect<true>;
+    'payment-webhook-credentials': PaymentWebhookCredentialsSelect<false> | PaymentWebhookCredentialsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     'company-likes': CompanyLikesSelect<false> | CompanyLikesSelect<true>;
     'identity-likes': IdentityLikesSelect<false> | IdentityLikesSelect<true>;
@@ -199,10 +203,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'marketplace-payments': MarketplacePayment;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'marketplace-payments': MarketplacePaymentsSelect<false> | MarketplacePaymentsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -212,6 +218,8 @@ export interface Config {
   jobs: {
     tasks: {
       sendNotificationEmail: TaskSendNotificationEmail;
+      deliverPaymentWebhook: TaskDeliverPaymentWebhook;
+      confirmThirdwebOrder: TaskConfirmThirdwebOrder;
       schedulePublish: TaskSchedulePublish;
       inline: {
         input: unknown;
@@ -727,6 +735,23 @@ export interface Company {
     chain?: ('ethereum' | 'solana' | 'tron') | null;
     address?: string | null;
   };
+  /**
+   * Allow normal orders to settle in USDC on Base at the saved Ethereum-compatible payout wallet. The marketplace confirms payments automatically; no company webhook is needed.
+   */
+  acceptThirdwebPayments?: boolean | null;
+  canAcceptThirdwebDonations?: boolean | null;
+  /**
+   * Show a Donate button on the company profile. Requires a payout wallet and configured payment notifications.
+   */
+  acceptThirdwebDonations?: boolean | null;
+  /**
+   * Receives signed payment.completed events for hosted product payments and donations.
+   */
+  paymentWebhookUrl?: string | null;
+  /**
+   * Legacy server-only credential. New credentials are issued once through the payment integration actions.
+   */
+  paymentWebhookSecret?: string | null;
   image?: (string | null) | Media;
   /**
    * Supports Markdown with toolbar + preview. HTML is sanitized when rendered.
@@ -1728,6 +1753,8 @@ export interface Order {
   status?: OrderStatus;
   amount?: number | null;
   currency?: 'USD' | null;
+  thirdwebCheckoutRecipients?: string[] | null;
+  thirdwebCheckoutAvailable?: boolean | null;
   payerAddress?: string | null;
   cryptoPrices?:
     | {
@@ -1756,6 +1783,7 @@ export interface Order {
         product: string | Product;
         chain: 'ethereum' | 'solana' | 'tron';
         transactionHash: string;
+        chainId?: number | null;
         /**
          * Mark this payment proof as fulfilled after the order has been shipped or delivered.
          */
@@ -1851,6 +1879,56 @@ export interface Cart {
   status?: ('active' | 'purchased' | 'abandoned') | null;
   subtotal?: number | null;
   currency?: 'USD' | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "checkout-sessions".
+ */
+export interface CheckoutSession {
+  id: string;
+  createdBy?: (string | null) | User;
+  publicId: string;
+  company?: (string | null) | Company;
+  order?: (string | null) | Order;
+  orderPaymentKey?: string | null;
+  orderRecordedAt?: string | null;
+  destinationTransactionHash?: string | null;
+  product?: (string | null) | Product;
+  title: string;
+  kind: 'donation' | 'product' | 'order';
+  quantity: number;
+  amountUsdCents: number;
+  receiver: string;
+  externalReference?: string | null;
+  returnUrl?: string | null;
+  webhookUrl?: string | null;
+  expiresAt: string;
+  status: 'pending' | 'paid';
+  paymentId?: string | null;
+  notification?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  deliveredAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-webhook-credentials".
+ */
+export interface PaymentWebhookCredential {
+  id: string;
+  createdBy?: (string | null) | User;
+  company: string | Company;
+  secret: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -2200,7 +2278,12 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'sendNotificationEmail' | 'schedulePublish';
+        taskSlug:
+          | 'inline'
+          | 'sendNotificationEmail'
+          | 'deliverPaymentWebhook'
+          | 'confirmThirdwebOrder'
+          | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -2233,10 +2316,16 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'sendNotificationEmail' | 'schedulePublish') | null;
+  taskSlug?:
+    | ('inline' | 'sendNotificationEmail' | 'deliverPaymentWebhook' | 'confirmThirdwebOrder' | 'schedulePublish')
+    | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
+  /**
+   * Used for concurrency control. Jobs with the same key are subject to exclusive/supersedes rules.
+   */
+  concurrencyKey?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2346,6 +2435,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'payment-settlements';
         value: string | PaymentSettlement;
+      } | null)
+    | ({
+        relationTo: 'checkout-sessions';
+        value: string | CheckoutSession;
+      } | null)
+    | ({
+        relationTo: 'payment-webhook-credentials';
+        value: string | PaymentWebhookCredential;
       } | null)
     | ({
         relationTo: 'comments';
@@ -2948,6 +3045,11 @@ export interface CompaniesSelect<T extends boolean = true> {
         chain?: T;
         address?: T;
       };
+  acceptThirdwebPayments?: T;
+  canAcceptThirdwebDonations?: T;
+  acceptThirdwebDonations?: T;
+  paymentWebhookUrl?: T;
+  paymentWebhookSecret?: T;
   image?: T;
   description?: T;
   identity?: T;
@@ -3198,6 +3300,46 @@ export interface PaymentSettlementsSelect<T extends boolean = true> {
   createdBy?: T;
   key?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "checkout-sessions_select".
+ */
+export interface CheckoutSessionsSelect<T extends boolean = true> {
+  createdBy?: T;
+  publicId?: T;
+  company?: T;
+  order?: T;
+  orderPaymentKey?: T;
+  orderRecordedAt?: T;
+  destinationTransactionHash?: T;
+  product?: T;
+  title?: T;
+  kind?: T;
+  quantity?: T;
+  amountUsdCents?: T;
+  receiver?: T;
+  externalReference?: T;
+  returnUrl?: T;
+  webhookUrl?: T;
+  expiresAt?: T;
+  status?: T;
+  paymentId?: T;
+  notification?: T;
+  deliveredAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-webhook-credentials_select".
+ */
+export interface PaymentWebhookCredentialsSelect<T extends boolean = true> {
+  createdBy?: T;
+  company?: T;
+  secret?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3504,6 +3646,8 @@ export interface OrdersSelect<T extends boolean = true> {
   status?: T;
   amount?: T;
   currency?: T;
+  thirdwebCheckoutRecipients?: T;
+  thirdwebCheckoutAvailable?: T;
   payerAddress?: T;
   cryptoPrices?:
     | T
@@ -3533,6 +3677,7 @@ export interface OrdersSelect<T extends boolean = true> {
         product?: T;
         chain?: T;
         transactionHash?: T;
+        chainId?: T;
         fulfilled?: T;
         rejected?: T;
         id?: T;
@@ -3818,6 +3963,7 @@ export interface PayloadJobsSelect<T extends boolean = true> {
   queue?: T;
   waitUntil?: T;
   processing?: T;
+  concurrencyKey?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3925,6 +4071,20 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "marketplace-payments".
+ */
+export interface MarketplacePayment {
+  id: string;
+  /**
+   * Enable only after registering the callback below in Thirdweb Bridge > Webhooks, configuring THIRDWEB_CLIENT_ID and THIRDWEB_WEBHOOK_SECRET, and testing delivery. Sellers must also opt in. This switch does not register or test the callback for you.
+   */
+  thirdwebCheckoutEnabled?: boolean | null;
+  thirdwebCallbackUrl?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -3971,6 +4131,17 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "marketplace-payments_select".
+ */
+export interface MarketplacePaymentsSelect<T extends boolean = true> {
+  thirdwebCheckoutEnabled?: T;
+  thirdwebCallbackUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "collections_widget".
  */
 export interface CollectionsWidget {
@@ -3989,6 +4160,26 @@ export interface TaskSendNotificationEmail {
     subject: string;
     html: string;
     text: string;
+  };
+  output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskDeliverPaymentWebhook".
+ */
+export interface TaskDeliverPaymentWebhook {
+  input: {
+    sessionId: string;
+  };
+  output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskConfirmThirdwebOrder".
+ */
+export interface TaskConfirmThirdwebOrder {
+  input: {
+    sessionId: string;
   };
   output?: unknown;
 }

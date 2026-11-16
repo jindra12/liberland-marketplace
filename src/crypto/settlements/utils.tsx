@@ -2,18 +2,21 @@ import { APIError, ValidationError, type PayloadRequest } from 'payload'
 import type { Order } from '@/payload-types'
 import { toStringID } from '@/utilities/toStringID'
 import { normalizeTransactionHash } from '../utils'
+import { CHECKOUT_SETTLEMENT } from '@/payments/constants'
 
 /** Invoke only after on-chain verification. Claims survive interruption for same-order retry. */
 export const recordPaymentSettlements = async (
   req: PayloadRequest,
   orderID: string,
   proofs: NonNullable<Order['paymentProofs']>,
+  thirdwebHashes: string[] = [],
 ) => {
   const keys = Array.from(
     new Set(
-      proofs.map(
-        (proof) => `${proof.chain}:${normalizeTransactionHash(proof.chain, proof.transactionHash)}`,
-      ),
+      proofs.map((proof) => {
+        const hash = normalizeTransactionHash(proof.chain, proof.transactionHash)
+        return `${thirdwebHashes.includes(hash) ? `thirdweb:${CHECKOUT_SETTLEMENT.chainId}` : proof.chain}:${hash}`
+      }),
     ),
   )
   await keys.reduce(async (previous, key) => {
