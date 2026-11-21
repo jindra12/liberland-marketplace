@@ -1,8 +1,49 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Payload, PayloadRequest } from 'payload'
 import { adminOnly, isAdminUser } from '@/access/admin'
 import { createAuthMiddleware } from 'better-auth/api'
 import { z } from 'zod'
 import { getCurrentAuthContext } from '@better-auth/core/context'
+import { MARKETPLACE_ACCESS_SCOPE } from '@/security/constants'
+
+/** Resolve a live marketplace grant for both authentication and Payload's me hook. */
+export const findActiveMarketplaceGrant = async (
+  payload: Payload,
+  accessToken: string,
+  req?: PayloadRequest,
+) => {
+  const { docs } = await payload.find({
+    collection: 'oauthAccessTokens',
+    where: { accessToken: { equals: accessToken } },
+    limit: 1,
+    depth: 0,
+    overrideAccess: true,
+    req,
+  })
+  const record = docs[0]
+  if (!record?.scopes?.split(' ').includes(MARKETPLACE_ACCESS_SCOPE)) return
+
+  const expiresAt = Date.parse(record.accessTokenExpiresAt || '')
+  if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) return
+
+  return { record, expiresAt }
+}
+
+/** Browser clients authenticate with PKCE, never a bundled client secret. */
+export const getFrontendOIDCClients = () => {
+  const clientId = process.env.OIDC_CLIENT_ID
+  if (!clientId) return []
+
+  return [
+    {
+      clientId,
+      clientSecret: '',
+      name: 'Frontend App',
+      type: 'public' as const,
+      redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
+      metadata: null,
+    },
+  ]
+}
 
 /** Auth services use Payload's Local API; their stored credentials are not user-facing CRUD. */
 export const restrictAuthenticationCollection = (options: {

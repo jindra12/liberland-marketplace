@@ -73,6 +73,15 @@ Security regression tests create their own disposable standalone databases and
 force actual conditional-write collisions, duplicate requests and interrupted
 multi-step operations. They do not require changing the production database.
 
+## GraphQL cart access
+
+Send the cart's secret in `X-Cart-Secret` when reading, updating, clearing or deleting
+a guest cart through GraphQL. A `where.secret` filter selects a cart but does not
+authorize access. The existing ecommerce access checks still restrict each secret
+to its matching cart. The secret is returned on creation only; keep it private.
+The frontend and MCP cart tools supply this header automatically. Deploy both
+frontend and backend updates together.
+
 ## Thirdweb order checkout
 
 Normal checkout offers direct ETH or Thirdweb crypto/card payment for Ethereum-compatible

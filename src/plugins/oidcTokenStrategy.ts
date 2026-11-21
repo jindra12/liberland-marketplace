@@ -1,5 +1,21 @@
-import type { AuthStrategy, CollectionConfig, Config } from 'payload'
-import { MARKETPLACE_ACCESS_SCOPE } from '@/security/constants'
+import {
+  AuthenticationError,
+  type AuthStrategy,
+  type CollectionConfig,
+  type Config,
+  type CollectionMeHook,
+} from 'payload'
+import { findActiveMarketplaceGrant } from './utils'
+
+/** Opaque tokens have a stored expiry; Payload must not try to decode them as JWTs. */
+const oidcAccessTokenMe: CollectionMeHook = async ({ args, user }) => {
+  if (user?._strategy !== 'oidc-access-token') return
+
+  const grant = await findActiveMarketplaceGrant(args.req.payload, args.currentToken!, args.req)
+  if (!grant) throw new AuthenticationError()
+
+  return { user, exp: Math.floor(grant.expiresAt / 1000) }
+}
 
 /**
  * Payload auth strategy that validates OIDC access tokens from the Authorization header.
@@ -10,7 +26,7 @@ import { MARKETPLACE_ACCESS_SCOPE } from '@/security/constants'
  */
 const oidcAccessTokenStrategy: AuthStrategy = {
   name: 'oidc-access-token',
-  authenticate: async ({ headers, payload }) => {
+  authenticate: async ({ headers, payload, req }) => {
     const auth = headers.get('authorization')
     if (!auth?.startsWith('Bearer ')) return { user: null }
 
@@ -18,28 +34,14 @@ const oidcAccessTokenStrategy: AuthStrategy = {
     if (!token) return { user: null }
 
     try {
-      const { docs } = await payload.find({
-        collection: 'oauthAccessTokens',
-        where: { accessToken: { equals: token } },
-        limit: 1,
-        depth: 0,
-      })
+      const grant = await findActiveMarketplaceGrant(payload, token, req)
+      if (!grant) return { user: null }
 
-      const record = docs[0]
-      if (!record) return { user: null }
-      if (!record.scopes?.split(' ').includes(MARKETPLACE_ACCESS_SCOPE)) {
-        return { user: null }
-      }
-
-      const expiresAt = Date.parse(record.accessTokenExpiresAt || '')
-      if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
-        return { user: null }
-      }
-
-      const userId = typeof record.user === 'string' ? record.user : record.user?.id
+      const userId =
+        typeof grant.record.user === 'string' ? grant.record.user : grant.record.user?.id
       if (!userId) return { user: null }
 
-      const user = await payload.findByID({ collection: 'users', id: userId })
+      const user = await payload.findByID({ collection: 'users', id: userId, req })
       if (!user || user.banned) {
         return { user: null }
       }
@@ -71,6 +73,10 @@ export const addOIDCTokenStrategy = (config: Config): Config => ({
 
     return {
       ...collection,
+      hooks: {
+        ...collection.hooks,
+        me: [...(collection.hooks?.me ?? []), oidcAccessTokenMe],
+      },
       auth: {
         ...existingAuth,
         strategies: [...existingStrategies, oidcAccessTokenStrategy],

@@ -3,7 +3,7 @@ import type { Where } from 'payload'
 
 import type { AccessUser } from './types'
 
-export const onlyOwnProductsOrAdmin: Access = ({ req }) => {
+export const onlyOwnProductsOrAdmin: Access = ({ req }): boolean | Where => {
   const { user } = req
 
   if (!user) return false
@@ -11,9 +11,16 @@ export const onlyOwnProductsOrAdmin: Access = ({ req }) => {
   if (!user.id) return false
 
   return {
-    'company.createdBy': {
-      equals: user.id,
-    },
+    or: [
+      { 'company.createdBy': { equals: user.id } },
+      {
+        and: [
+          { createdBy: { equals: user.id } },
+          { _status: { equals: 'draft' } },
+          { company: { exists: false } },
+        ],
+      },
+    ],
   }
 }
 

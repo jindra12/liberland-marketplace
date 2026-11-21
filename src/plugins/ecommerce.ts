@@ -34,6 +34,7 @@ import type { PayloadRequest } from 'payload'
 import type { AccessUser } from '@/access/types'
 import { toStringID } from '@/utilities/toStringID'
 import { operationalUpdatedAtField } from '@/fields/operationalUpdatedAtField'
+import { authorizeCartRequest } from '@/hooks/authorizeCartRequest'
 
 const nonAdminOrderUpdateKeys = new Set(['payerAddress', 'paymentProofs'])
 
@@ -162,6 +163,7 @@ export const marketplaceEcommercePlugin = ecommercePlugin({
       ),
       hooks: {
         ...defaultCollection.hooks,
+        beforeOperation: [authorizeCartRequest, ...(defaultCollection.hooks?.beforeOperation ?? [])],
         beforeChange: [
           validateItemParametersBeforeChange,
           ...(defaultCollection.hooks?.beforeChange ?? []),

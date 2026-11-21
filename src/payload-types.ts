@@ -76,6 +76,7 @@ export interface Config {
     sessions: Session;
     accounts: Account;
     verifications: Verification;
+    jwks: Jwk;
     oauthApplications: OauthApplication;
     oauthAccessTokens: OauthAccessToken;
     oauthConsents: OauthConsent;
@@ -146,6 +147,7 @@ export interface Config {
     sessions: SessionsSelect<false> | SessionsSelect<true>;
     accounts: AccountsSelect<false> | AccountsSelect<true>;
     verifications: VerificationsSelect<false> | VerificationsSelect<true>;
+    jwks: JwksSelect<false> | JwksSelect<true>;
     oauthApplications: OauthApplicationsSelect<false> | OauthApplicationsSelect<true>;
     oauthAccessTokens: OauthAccessTokensSelect<false> | OauthAccessTokensSelect<true>;
     oauthConsents: OauthConsentsSelect<false> | OauthConsentsSelect<true>;
@@ -439,6 +441,26 @@ export interface Verification {
   updatedAt: string;
 }
 /**
+ * JWKS are used to verify the signature of the JWT token
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jwks".
+ */
+export interface Jwk {
+  id: string;
+  /**
+   * The public part of the web key
+   */
+  publicKey: string;
+  /**
+   * The private part of the web key
+   */
+  privateKey: string;
+  createdAt: string;
+  expiresAt?: string | null;
+  updatedAt: string;
+}
+/**
  * OAuth applications are custom OAuth clients
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -553,6 +575,10 @@ export interface AdminInvitation {
   id: string;
   role: 'admin' | 'user';
   token: string;
+  /**
+   * The invitation is invalid after this time.
+   */
+  expiresAt: string;
   url?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -2353,6 +2379,10 @@ export interface PayloadLockedDocument {
         value: string | Verification;
       } | null)
     | ({
+        relationTo: 'jwks';
+        value: string | Jwk;
+      } | null)
+    | ({
         relationTo: 'oauthApplications';
         value: string | OauthApplication;
       } | null)
@@ -2654,6 +2684,17 @@ export interface VerificationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jwks_select".
+ */
+export interface JwksSelect<T extends boolean = true> {
+  publicKey?: T;
+  privateKey?: T;
+  createdAt?: T;
+  expiresAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "oauthApplications_select".
  */
 export interface OauthApplicationsSelect<T extends boolean = true> {
@@ -2703,6 +2744,7 @@ export interface OauthConsentsSelect<T extends boolean = true> {
 export interface AdminInvitationsSelect<T extends boolean = true> {
   role?: T;
   token?: T;
+  expiresAt?: T;
   url?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -8,6 +8,7 @@ export const PUBLIC_FETCH_TIMEOUT_MS = 15_000
 export const PUBLIC_FETCH_MAX_BYTES = 2 * 1024 * 1024
 export const PUBLIC_IMAGE_MAX_BYTES = 10 * 1024 * 1024
 export const MARKETPLACE_ACCESS_SCOPE = 'marketplace:access'
+export const CART_SECRET_HEADER = 'x-cart-secret'
 export const OAUTH_SCOPES = [
   'openid',
   'profile',

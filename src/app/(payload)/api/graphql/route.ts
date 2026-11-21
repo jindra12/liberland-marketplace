@@ -11,7 +11,7 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers':
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization, Apollo-Require-Preflight, X-Apollo-Operation-Name',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization, Apollo-Require-Preflight, X-Apollo-Operation-Name, X-Cart-Secret',
 }
 
 export const POST = async (request: Request): Promise<Response> => {

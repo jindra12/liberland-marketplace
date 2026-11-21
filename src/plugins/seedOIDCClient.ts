@@ -1,13 +1,11 @@
 import type { Config } from 'payload'
+import { getFrontendOIDCClients } from './utils'
 
 /**
- * Seeds the oauthApplications collection with the OIDC trusted client.
+ * Reconciles the browser's public PKCE registration without changing its ID.
  *
- * The better-auth oidcProvider plugin keeps trustedClients in-memory only,
- * but the oauthAccessToken collection has a relationship (FK) to oauthApplications.
- * Without a matching DB record, token creation fails with a BSONError.
- *
- * @see https://github.com/better-auth/better-auth/issues/5468
+ * The provider's trusted-client configuration does not update stored clients.
+ * Repair the existing record in place so its identity and grants are preserved.
  */
 export const seedOIDCClient = (config: Config): Config => {
   const existingOnInit = config.onInit
@@ -17,31 +15,43 @@ export const seedOIDCClient = (config: Config): Config => {
     onInit: async (payload) => {
       if (existingOnInit) await existingOnInit(payload)
 
-      const clientId = process.env.OIDC_CLIENT_ID
-      if (!clientId) return
+      const [client] = getFrontendOIDCClients()
+      if (!client) return
 
       const existing = await payload.find({
         collection: 'oauthApplications',
-        where: { clientId: { equals: clientId } },
+        where: { clientId: { equals: client.clientId } },
         limit: 1,
       })
 
-      if (existing.docs.length > 0) return
+      const redirectUrls = client.redirectUrls.join(',')
+      const existingClient = existing.docs[0]
+      if (existingClient) {
+        if (
+          existingClient.type !== client.type ||
+          existingClient.clientSecret ||
+          existingClient.redirectUrls !== redirectUrls
+        ) {
+          await payload.update({
+            collection: 'oauthApplications',
+            id: existingClient.id,
+            data: { type: client.type, clientSecret: '', redirectUrls },
+          })
+          payload.logger.info('Updated frontend OAuth registration to public PKCE')
+        }
+        return
+      }
 
       await payload.create({
         collection: 'oauthApplications',
         data: {
-          clientId,
-          clientSecret: process.env.OIDC_CLIENT_SECRET || '',
-          name: 'Frontend App',
-          type: 'web',
-          redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean).join(','),
-          metadata: null,
+          ...client,
+          redirectUrls,
           disabled: false,
         },
       })
 
-      payload.logger.info(`Seeded oauthApplication for OIDC client "${clientId}"`)
+      payload.logger.info('Created frontend OAuth registration with public PKCE')
     },
   }
 }

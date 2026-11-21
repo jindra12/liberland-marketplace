@@ -1,5 +1,19 @@
+diff --git a/dist/collections/operations/deleteByID.js b/dist/collections/operations/deleteByID.js
+index d92b0f0c70465e9b2c7a6801a2fe6b6ddda88478..43bf0c1d3e03e97ec7515bbc68cd19e031d33047 100644
+--- a/dist/collections/operations/deleteByID.js
++++ b/dist/collections/operations/deleteByID.js
+@@ -134,6 +134,9 @@ export const deleteByIDOperation = async (incomingArgs)=>{
+                 }
+             }
+         });
++        if (!result) {
++            throw new NotFound(req.t);
++        }
+         // /////////////////////////////////////
+         // Add collection property for auth collections
+         // /////////////////////////////////////
 diff --git a/dist/database/migrations/readMigrationFiles.js b/dist/database/migrations/readMigrationFiles.js
-index 47cafc52d13b9abca2557a7e6f6221b200a060ae..c564c51c4683d2dfb7edfbd5efd991db9a048ecf 100644
+index 47cafc52d13b9abca2557a7e6f6221b200a060ae..223eb39140b71109277d5f17101791a2c538f811 100644
 --- a/dist/database/migrations/readMigrationFiles.js
 +++ b/dist/database/migrations/readMigrationFiles.js
 @@ -1,6 +1,11 @@
@@ -24,7 +38,7 @@ index 47cafc52d13b9abca2557a7e6f6221b200a060ae..c564c51c4683d2dfb7edfbd5efd991db
          const result = {
              name: path.basename(filePath).split('.')[0],
 diff --git a/dist/uploads/safeFetch.js b/dist/uploads/safeFetch.js
-index 013adce81b6174ed4509eb9f7b42423228790a66..a195e8ccdde60c7769c8754d0c1aa5ac63e5466d 100644
+index 013adce81b6174ed4509eb9f7b42423228790a66..0c47a9482b6c47bf6c054852cd30630d921d57f3 100644
 --- a/dist/uploads/safeFetch.js
 +++ b/dist/uploads/safeFetch.js
 @@ -1,6 +1,8 @@

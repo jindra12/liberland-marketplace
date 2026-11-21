@@ -6,6 +6,7 @@ import type { PayloadRequest, SanitizedConfig } from 'payload'
 import { configToSchema } from '@payloadcms/graphql'
 import { createHandler } from 'graphql-http/lib/use/fetch'
 import { getServerSideURL } from '@/utilities/getURL'
+import { CART_SECRET_HEADER } from '@/security/constants'
 
 const graphqlPost = GRAPHQL_POST(config)
 const accountRequests = new AsyncLocalStorage<PayloadRequest>()
@@ -46,13 +47,16 @@ export const executeGraphQL = async <T = Record<string, McpJsonValue | undefined
   authorization,
   query,
   variables,
+  cartSecret,
 }: {
   authorization?: string
   query: string
   variables?: McpJsonObject
+  cartSecret?: string
 }): Promise<T> => {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   if (authorization) headers.set('Authorization', authorization)
+  if (cartSecret) headers.set(CART_SECRET_HEADER, cartSecret)
 
   const request = new Request(new URL('/api/graphql', getServerSideURL()), {
     method: 'POST',
@@ -79,9 +83,15 @@ export const executeGraphQL = async <T = Record<string, McpJsonValue | undefined
 
 const executeAccountGraphQL = async (request: Request, req: PayloadRequest): Promise<Response> => {
   const compiled = getSchema(req.payload.config)
+  const cartSecret = request.headers.get(CART_SECRET_HEADER)
+  const headers = new Headers(req.headers)
+  if (cartSecret) headers.set(CART_SECRET_HEADER, cartSecret)
   return createHandler({
     schema: compiled.schema,
-    context: { req, headers: {} },
+    context: {
+      req: cartSecret ? { ...req, headers } : req,
+      headers: {},
+    },
     validationRules: (_, args, rules) => rules.concat(compiled.validationRules(args)),
   })(request)
 }

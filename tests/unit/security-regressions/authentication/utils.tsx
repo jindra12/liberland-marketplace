@@ -45,6 +45,7 @@ export const createAuthenticationFixture = async (
       account: [],
       session: [],
       verification: [],
+      jwks: [],
       oauthApplications: [],
       oauthAccessTokens: [],
       oauthConsents: [],

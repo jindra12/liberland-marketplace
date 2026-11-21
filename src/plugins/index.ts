@@ -5,7 +5,7 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import { getTrustedBrowserOrigins, guardCookieAuthStrategy } from '@/security/utils'
 import type { Plugin } from 'payload'
 import { betterAuthPlugin } from 'payload-auth/better-auth'
-import { oidcProvider } from 'better-auth/plugins'
+import { jwt, oidcProvider } from 'better-auth/plugins'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -26,6 +26,7 @@ import { notificationCleanupPlugin } from './notificationSubscriptions'
 import { sendAuthEmail } from '@/utilities/sendAuthEmail'
 import {
   restrictAuthenticationCollection,
+  getFrontendOIDCClients,
   retireExchangedRefreshToken,
   revokeOAuthGrantsForUser,
 } from './utils'
@@ -57,6 +58,7 @@ export const plugins: Plugin[] = [
     verifications: { collectionOverrides: restrictAuthenticationCollection },
     adminInvitations: { collectionOverrides: restrictAuthenticationCollection },
     pluginCollectionOverrides: {
+      jwks: restrictAuthenticationCollection,
       oauthApplications: restrictAuthenticationCollection,
       oauthAccessTokens: restrictAuthenticationCollection,
       oauthConsents: restrictAuthenticationCollection,
@@ -121,7 +123,12 @@ export const plugins: Plugin[] = [
         },
       },
       plugins: [
+        jwt({
+          jwt: { issuer: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth` },
+          jwks: { keyPairConfig: { alg: 'RS256' } },
+        }),
         oidcProvider({
+          useJWTPlugin: true,
           scopes: OAUTH_SCOPES,
           schema: {
             oauthApplication: { modelName: 'oauthApplications', fields: { userId: 'user' } },
@@ -138,20 +145,11 @@ export const plugins: Plugin[] = [
           consentPage: '/oauth-consent',
           requirePKCE: true,
           allowDynamicClientRegistration: true,
-          trustedClients: process.env.OIDC_CLIENT_ID
-            ? [
-                {
-                  clientId: process.env.OIDC_CLIENT_ID,
-                  clientSecret: process.env.OIDC_CLIENT_SECRET || '',
-                  name: 'Frontend App',
-                  type: 'web' as const,
-                  redirectUrls: (process.env.OIDC_REDIRECT_URLS || '').split(',').filter(Boolean),
-                  metadata: null,
-                  skipConsent: true,
-                  disabled: false,
-                },
-              ]
-            : [],
+          trustedClients: getFrontendOIDCClients().map((client) => ({
+            ...client,
+            skipConsent: true,
+            disabled: false,
+          })),
         }),
       ],
     },
